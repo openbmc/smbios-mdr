@@ -176,6 +176,7 @@ class MDR_V2 : sdbusplus::server::object::object<
     int getTotalDimmSlot(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
+    std::unique_ptr<System> system;
 };
 
 } // namespace smbios
