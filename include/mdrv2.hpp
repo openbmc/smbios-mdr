@@ -24,12 +24,14 @@
 #include <phosphor-logging/log.hpp>
 #include <sdbusplus/server.hpp>
 #include <sdbusplus/timer.hpp>
+#include <smbios.hpp>
+#include <xyz/openbmc_project/Smbios/MDR_V2/server.hpp>
 
 static constexpr uint8_t mdr2Version = 2;
 static constexpr uint32_t mdr2SMSize = 0x00100000;
-static constexpr uint16_t mdrSMBIOSSize = 32 * 1024;
 static constexpr uint32_t mdr2SMBaseAddress = 0x9FF00000;
 static constexpr const char* mdrType2File = "/var/lib/smbios/smbios2";
+static constexpr const char* mdrV2Path = "/xyz/openbmc_project/Smbios/MDR_V2";
 
 enum class MDR2SMBIOSStatusEnum
 {
@@ -95,7 +97,8 @@ namespace phosphor
 namespace smbios
 {
 
-class MDR_V2
+class MDR_V2 : sdbusplus::server::object::object<
+                   sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>
 {
   public:
     MDR_V2() = delete;
@@ -106,6 +109,8 @@ class MDR_V2
     ~MDR_V2() = default;
 
     MDR_V2(sdbusplus::bus::bus& bus, const char* path, sd_event* event) :
+        sdbusplus::server::object::object<
+            sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>(bus, path),
         bus(bus), timer(event, [&](void) { agentSynchronizeData(); })
     {
 
@@ -123,6 +128,29 @@ class MDR_V2
 
         agentSynchronizeData();
     }
+
+    std::vector<uint8_t> getDirectoryInformation(uint8_t dirIndex) override;
+
+    std::vector<uint8_t> getDataInformation(uint8_t idIndex) override;
+
+    bool sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
+                                  uint8_t returnedEntries,
+                                  uint8_t remainingEntries,
+                                  std::vector<uint8_t> dirEntry) override;
+
+    std::vector<uint8_t> getDataOffer() override;
+
+    bool sendDataInformation(uint8_t idIndex, uint8_t flag, uint32_t dataLen,
+                             uint32_t dataVer, uint32_t timeStamp) override;
+
+    int findIdIndex(std::vector<uint8_t> dataInfo) override;
+
+    bool agentSynchronizeData() override;
+
+    std::vector<uint32_t>
+        synchronizeDirectoryCommonData(uint8_t idIndex, uint32_t size) override;
+
+    uint8_t directoryEntries(uint8_t value) override;
 
   private:
     Timer timer;

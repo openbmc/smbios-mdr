@@ -31,6 +31,7 @@ static constexpr uint32_t smbiosSMMemorySize = 1024 * 1024;
 static constexpr uint32_t smbiosTableTimestamp = 0x45464748;
 static constexpr uint32_t smbiosTableStorageSize = 64 * 1024;
 static constexpr const char* smbiosPath = "/var/lib/smbios";
+static constexpr uint16_t mdrSMBIOSSize = 32 * 1024;
 
 enum class DirDataRequestEnum
 {
