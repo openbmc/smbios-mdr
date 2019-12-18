@@ -15,6 +15,7 @@
 */
 
 #pragma once
+#include "cpu.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -166,6 +167,9 @@ class MDR_V2 : sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2
     bool smbiosIsAvailForUpdate(uint8_t index);
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
+
+    int getTotalCpuSlot(void);
+    std::vector<std::unique_ptr<Cpu>> cpus;
 };
 
 } // namespace smbios

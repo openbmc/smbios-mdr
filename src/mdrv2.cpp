@@ -357,6 +357,60 @@ uint8_t MDR_V2::directoryEntries(uint8_t value)
         directoryEntries(value);
 }
 
+void MDR_V2::systemInfoUpdate()
+{
+    cpus.clear();
+
+    int num = getTotalCpuSlot();
+    if (num == -1)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "get cpu total slot failed");
+        return;
+    }
+
+    for (int index = 0; index < num; index++)
+    {
+        std::string path = cpuPath + std::to_string(index);
+        cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+    }
+}
+
+int MDR_V2::getTotalCpuSlot()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    int num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "get cpu total slot failed - no storage data");
+        return -1;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, processorsType);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        num++;
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
 bool MDR_V2::agentSynchronizeData()
 {
     struct MDRSMBIOSHeader mdr2SMBIOS;
@@ -370,6 +424,7 @@ bool MDR_V2::agentSynchronizeData()
     }
     else
     {
+        systemInfoUpdate();
         smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
         smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
         smbiosDir.dir[smbiosDirIndex].common.size = mdr2SMBIOS.dataSize;
