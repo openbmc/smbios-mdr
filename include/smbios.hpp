@@ -67,3 +67,88 @@ typedef enum
     physicalMemoryArrayType = 16,
     memoryDeviceType = 17,
 } SmbiosType;
+
+static constexpr uint8_t separateLen = 2;
+
+static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
+{
+    if (smbiosDataIn == nullptr)
+    {
+        return nullptr;
+    }
+    uint8_t* smbiosData = smbiosDataIn + *(smbiosDataIn + 1);
+    int len = 0;
+    while ((*smbiosData | *(smbiosData + 1)) != 0)
+    {
+        smbiosData++;
+        len++;
+        if (len >= mdrSMBIOSSize) // To avoid endless loop
+        {
+            return nullptr;
+        }
+    }
+    return smbiosData + separateLen;
+}
+
+// When first time run getSMBIOSTypePtr, need to send the RegionS[].regionData
+// to smbiosDataIn
+static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId)
+{
+    if (smbiosDataIn == nullptr)
+    {
+        return nullptr;
+    }
+    char* smbiosData = reinterpret_cast<char*>(smbiosDataIn);
+    while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
+    {
+        if (*smbiosData != typeId)
+        {
+            uint32_t len = *(smbiosData + 1);
+            smbiosData += len;
+            while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
+            {
+                smbiosData++;
+                len++;
+                if (len >= mdrSMBIOSSize) // To avoid endless loop
+                {
+                    return nullptr;
+                }
+            }
+            smbiosData += separateLen;
+            continue;
+        }
+        return reinterpret_cast<uint8_t*>(smbiosData);
+    }
+    return nullptr;
+}
+
+static inline std::string positionToString(uint8_t positionNum,
+                                           uint8_t structLen, uint8_t* dataIn)
+{
+    if (dataIn == nullptr)
+    {
+        return "";
+    }
+    uint16_t limit = mdrSMBIOSSize; // set a limit to avoid endless loop
+
+    char* target = reinterpret_cast<char*>(dataIn + structLen);
+    for (uint8_t index = 1; index < positionNum; index++)
+    {
+        for (; *target != '\0'; target++)
+        {
+            limit--;
+            if (limit < 1)
+            {
+                return "";
+            }
+        }
+        target++;
+        if (*target == '\0')
+        {
+            return ""; // 0x00 0x00 means end of the entry.
+        }
+    }
+
+    std::string result = target;
+    return result;
+}

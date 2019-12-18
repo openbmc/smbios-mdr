@@ -15,6 +15,7 @@
 */
 
 #pragma once
+#include "cpu.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -27,6 +28,7 @@
 #include <smbios.hpp>
 #include <xyz/openbmc_project/Smbios/MDR_V2/server.hpp>
 
+static constexpr int limitEntryLen = 0xff;
 static constexpr uint8_t mdr2Version = 2;
 static constexpr uint32_t mdr2SMSize = 0x00100000;
 static constexpr uint32_t mdr2SMBaseAddress = 0x9FF00000;
@@ -169,6 +171,9 @@ class MDR_V2 : sdbusplus::server::object::object<
     bool smbiosIsAvailForUpdate(uint8_t index);
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
+
+    int getTotalCpuSlot(void);
+    std::vector<std::unique_ptr<Cpu>> cpus;
 };
 
 } // namespace smbios
