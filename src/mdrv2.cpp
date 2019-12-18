@@ -30,6 +30,36 @@ namespace smbios
 
 std::vector<uint8_t> MDR_V2::getDirectoryInformation(uint8_t dirIndex)
 {
+    std::vector<uint8_t> responseDir;
+    if (dirIndex > smbiosDir.dirEntries)
+    {
+        responseDir.push_back(0);
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
+    }
+    responseDir.push_back(mdr2Version);
+    responseDir.push_back(smbiosDir.dirVersion);
+    uint8_t returnedEntries = smbiosDir.dirEntries - dirIndex;
+    responseDir.push_back(returnedEntries);
+    if ((dirIndex + returnedEntries) >= smbiosDir.dirEntries)
+    {
+        responseDir.push_back(0);
+    }
+    else
+    {
+        responseDir.push_back(smbiosDir.dirEntries - dirIndex -
+                              returnedEntries);
+    }
+    for (uint8_t index = dirIndex; index < smbiosDir.dirEntries; index++)
+    {
+        for (uint8_t indexId = 0; indexId < sizeof(DataIdStruct); indexId++)
+        {
+            responseDir.push_back(
+                smbiosDir.dir[index].common.id.dataInfo[indexId]);
+        }
+    }
+
+    return responseDir;
 }
 
 bool MDR_V2::smbiosIsAvailForUpdate(uint8_t index)
@@ -153,6 +183,57 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
                                       uint8_t remainingEntries,
                                       std::vector<uint8_t> dirEntry)
 {
+    bool teminate = false;
+    if ((dirIndex >= maxDirEntries) || (returnedEntries < 1))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Send Dir info failed - input parameter invalid");
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
+    }
+    if (dirEntry.size() < sizeof(Mdr2DirEntry))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Directory size invalid");
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
+    }
+    if (dirVersion == smbiosDir.dirVersion)
+    {
+        teminate = true;
+    }
+    else
+    {
+        if (remainingEntries > 0)
+        {
+            teminate = false;
+        }
+        else
+        {
+            teminate = true;
+            smbiosDir.dirVersion = dirVersion;
+        }
+        uint8_t idIndex = dirIndex;
+
+        uint8_t* pData = dirEntry.data();
+        if (pData == nullptr)
+        {
+            return false;
+        }
+        for (uint8_t index = 0; index < returnedEntries; index++)
+        {
+            auto data = reinterpret_cast<const Mdr2DirEntry*>(pData);
+            smbiosDir.dir[idIndex + index].common.dataVersion =
+                data->dataVersion;
+            std::copy(data->id.dataInfo,
+                      data->id.dataInfo + sizeof(DataIdStruct),
+                      smbiosDir.dir[idIndex + index].common.id.dataInfo);
+            smbiosDir.dir[idIndex + index].common.dataSetSize = data->size;
+            smbiosDir.dir[idIndex + index].common.timestamp = data->timestamp;
+            pData += sizeof(returnedEntries);
+        }
+    }
+    return teminate;
 }
 
 bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t flag,
