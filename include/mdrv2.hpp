@@ -159,6 +159,8 @@ class MDR_V2 : sdbusplus::server::object::object<
 
     Mdr2DirStruct smbiosDir;
 
+    bool readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data);
+
     const std::array<uint8_t, 16> smbiosTableId{
         40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 0x42};
     uint8_t smbiosTableStorage[smbiosTableStorageSize];
