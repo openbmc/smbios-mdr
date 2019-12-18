@@ -169,7 +169,9 @@ class MDR_V2 : sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2
     void systemInfoUpdate(void);
 
     int getTotalCpuSlot(void);
+    int getTotalDimmSlot(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
+    std::vector<std::unique_ptr<Dimm>> dimms;
 };
 
 } // namespace smbios
