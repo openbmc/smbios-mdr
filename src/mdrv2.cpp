@@ -232,6 +232,58 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
     return teminate;
 }
 
+bool MDR_V2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
+{
+    if (mdrHdr == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Invalid mdr header");
+        return false;
+    }
+    if (data == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Invalid data point");
+        return false;
+    }
+    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    if (!smbiosFile.good())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Open MDRV2 table file failure");
+        return false;
+    }
+    smbiosFile.clear();
+    smbiosFile.seekg(0, std::ios_base::end);
+    int fileLength = smbiosFile.tellg();
+    smbiosFile.seekg(0, std::ios_base::beg);
+    if (fileLength < sizeof(MDRSMBIOSHeader))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "MDR V2 file size is smaller than mdr header");
+        return false;
+    }
+    smbiosFile.read(reinterpret_cast<char*>(mdrHdr), sizeof(MDRSMBIOSHeader));
+    if (mdrHdr->dataSize > smbiosTableStorageSize)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Data size out of limitation");
+        smbiosFile.close();
+        return false;
+    }
+    fileLength -= sizeof(MDRSMBIOSHeader);
+    if (fileLength < mdrHdr->dataSize)
+    {
+        smbiosFile.read(reinterpret_cast<char*>(data), fileLength);
+    }
+    else
+    {
+        smbiosFile.read(reinterpret_cast<char*>(data), mdrHdr->dataSize);
+    }
+    smbiosFile.close();
+    return true;
+}
+
 bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t flag,
                                  uint32_t dataLen, uint32_t dataVer,
                                  uint32_t timeStamp)
@@ -307,11 +359,40 @@ uint8_t MDR_V2::directoryEntries(uint8_t value)
 
 bool MDR_V2::agentSynchronizeData()
 {
+    struct MDRSMBIOSHeader mdr2SMBIOS;
+    bool status = readDataFromFlash(&mdr2SMBIOS,
+                                    smbiosDir.dir[smbiosDirIndex].dataStorage);
+    if (!status)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "agent data sync failed - read data from flash failed");
+        return false;
+    }
+    else
+    {
+        smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
+        smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
+        smbiosDir.dir[smbiosDirIndex].common.size = mdr2SMBIOS.dataSize;
+        smbiosDir.dir[smbiosDirIndex].stage = MDR2SMBIOSStatusEnum::mdr2Loaded;
+        smbiosDir.dir[smbiosDirIndex].lock = MDR2DirLockEnum::mdr2DirUnlock;
+    }
+    timer.stop();
+    return true;
 }
 
 std::vector<uint32_t> MDR_V2::synchronizeDirectoryCommonData(uint8_t idIndex,
                                                              uint32_t size)
 {
+    std::chrono::microseconds usec(
+        defaultTimeout); // default lock time out is 2s
+    std::vector<uint32_t> result;
+    smbiosDir.dir[idIndex].common.size = size;
+    result.push_back(smbiosDir.dir[idIndex].common.dataSetSize);
+    result.push_back(smbiosDir.dir[idIndex].common.dataVersion);
+    result.push_back(smbiosDir.dir[idIndex].common.timestamp);
+
+    timer.start(usec);
+    return result;
 }
 
 } // namespace smbios
