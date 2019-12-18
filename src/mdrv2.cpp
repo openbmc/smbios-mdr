@@ -379,6 +379,23 @@ void MDR_V2::systemInfoUpdate()
         cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
             bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
     }
+
+    dimms.clear();
+
+    num = getTotalDimmSlot();
+    if (num == -1)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "get dimm total slot failed");
+        return;
+    }
+
+    for (int index = 0; index < num; index++)
+    {
+        std::string path = dimmPath + std::to_string(index);
+        dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+    }
 }
 
 int MDR_V2::getTotalCpuSlot()
@@ -396,6 +413,40 @@ int MDR_V2::getTotalCpuSlot()
     while (1)
     {
         dataIn = getSMBIOSTypePtr(dataIn, processorsType);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        num++;
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
+int MDR_V2::getTotalDimmSlot()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    uint8_t num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Fail to get dimm total slot - no storage data");
+        return -1;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
         if (dataIn == nullptr)
         {
             break;
