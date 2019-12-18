@@ -392,6 +392,10 @@ void MDR_V2::systemInfoUpdate()
         dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
             bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
     }
+
+    system.reset();
+    system = std::make_unique<System>(
+        bus, systemPath, smbiosDir.dir[smbiosDirIndex].dataStorage);
 }
 
 int MDR_V2::getTotalCpuSlot()
