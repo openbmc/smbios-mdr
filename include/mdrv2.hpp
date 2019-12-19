@@ -16,6 +16,9 @@
 
 #pragma once
 #include "cpu.hpp"
+#include "dimm.hpp"
+#include "smbios.hpp"
+#include "system.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>

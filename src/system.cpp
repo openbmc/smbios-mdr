@@ -28,11 +28,11 @@ namespace smbios
 
 std::string System::uUID(std::string value)
 {
-    uint8_t *dataIn = storage;
+    uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, systemType);
     if (dataIn != nullptr)
     {
-        auto systemInfo = reinterpret_cast<struct SystemInfo *>(dataIn);
+        auto systemInfo = reinterpret_cast<struct SystemInfo*>(dataIn);
         std::stringstream stream;
         stream << std::setfill('0') << std::hex;
         stream << std::setw(8) << systemInfo->uUID.timeLow;
@@ -64,11 +64,11 @@ std::string System::uUID(std::string value)
 std::string System::version(std::string value)
 {
     std::string result = "No BIOS Version";
-    uint8_t *dataIn = storage;
+    uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, biosType);
     if (dataIn != nullptr)
     {
-        auto biosInfo = reinterpret_cast<struct BIOSInfo *>(dataIn);
+        auto biosInfo = reinterpret_cast<struct BIOSInfo*>(dataIn);
         uint8_t biosVerByte = biosInfo->biosVersion;
         std::string tempS =
             positionToString(biosInfo->biosVersion, biosInfo->length, dataIn);

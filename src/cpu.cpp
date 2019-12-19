@@ -25,7 +25,7 @@ namespace smbios
 {
 
 void Cpu::cpuSocket(const uint8_t positionNum, const uint8_t structLen,
-                    uint8_t *dataIn)
+                    uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
@@ -40,7 +40,7 @@ std::string Cpu::processorSocket(std::string value)
 
 void Cpu::cpuType(const uint8_t value)
 {
-    std::map<uint8_t, const char *>::const_iterator it =
+    std::map<uint8_t, const char*>::const_iterator it =
         processorTypeTable.find(value);
     if (it == processorTypeTable.end())
     {
@@ -60,8 +60,7 @@ std::string Cpu::processorType(std::string value)
 
 void Cpu::cpuFamily(const uint8_t value)
 {
-    std::map<uint8_t, const char *>::const_iterator it =
-        familyTable.find(value);
+    std::map<uint8_t, const char*>::const_iterator it = familyTable.find(value);
     if (it == familyTable.end())
     {
         processorFamily("Unknown Processor Family");
@@ -79,7 +78,7 @@ std::string Cpu::processorFamily(std::string value)
 }
 
 void Cpu::cpuManufacturer(const uint8_t positionNum, const uint8_t structLen,
-                          uint8_t *dataIn)
+                          uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
@@ -99,7 +98,7 @@ uint32_t Cpu::processorId(uint32_t value)
 }
 
 void Cpu::cpuVersion(const uint8_t positionNum, const uint8_t structLen,
-                     uint8_t *dataIn)
+                     uint8_t* dataIn)
 {
     std::string result;
 
@@ -189,7 +188,7 @@ bool Cpu::functional(bool value)
 static constexpr uint8_t maxOldVersionCount = 0xff;
 void Cpu::processorInfoUpdate(void)
 {
-    uint8_t *dataIn = storage;
+    uint8_t* dataIn = storage;
 
     dataIn = getSMBIOSTypePtr(dataIn, processorsType);
     if (dataIn == nullptr)
@@ -211,7 +210,7 @@ void Cpu::processorInfoUpdate(void)
         }
     }
 
-    auto cpuInfo = reinterpret_cast<struct ProcessorInfo *>(dataIn);
+    auto cpuInfo = reinterpret_cast<struct ProcessorInfo*>(dataIn);
 
     cpuSocket(cpuInfo->socketDesignation, cpuInfo->length,
               dataIn);               // offset 4h

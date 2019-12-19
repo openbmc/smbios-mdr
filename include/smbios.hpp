@@ -33,6 +33,15 @@ static constexpr uint32_t smbiosTableStorageSize = 64 * 1024;
 static constexpr const char* smbiosPath = "/var/lib/smbios";
 static constexpr uint16_t mdrSMBIOSSize = 32 * 1024;
 
+static constexpr const char* cpuPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
+
+static constexpr const char* dimmPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
+
+static constexpr const char* systemPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
+
 enum class DirDataRequestEnum
 {
     dirDataNotRequested = 0x00,

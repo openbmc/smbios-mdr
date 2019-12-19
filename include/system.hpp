@@ -35,13 +35,13 @@ class System : sdbusplus::server::object::object<
   public:
     System() = delete;
     ~System() = default;
-    System(const System &) = delete;
-    System &operator=(const System &) = delete;
-    System(System &&) = default;
-    System &operator=(System &&) = default;
+    System(const System&) = delete;
+    System& operator=(const System&) = delete;
+    System(System&&) = default;
+    System& operator=(System&&) = default;
 
-    System(sdbusplus::bus::bus &bus, const std::string &objPath,
-           uint8_t *smbiosTableStorage) :
+    System(sdbusplus::bus::bus& bus, const std::string& objPath,
+           uint8_t* smbiosTableStorage) :
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Common::server::UUID>(
             bus, objPath.c_str()),
@@ -63,7 +63,7 @@ class System : sdbusplus::server::object::object<
     /** @brief Path of the group instance */
     std::string path;
 
-    uint8_t *storage;
+    uint8_t* storage;
 
     struct BIOSInfo
     {

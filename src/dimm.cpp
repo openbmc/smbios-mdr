@@ -29,7 +29,7 @@ using DeviceType =
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
 void Dimm::memoryInfoUpdate(void)
 {
-    uint8_t *dataIn = storage;
+    uint8_t* dataIn = storage;
 
     dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
 
@@ -51,7 +51,7 @@ void Dimm::memoryInfoUpdate(void)
         }
     }
 
-    auto memoryInfo = reinterpret_cast<struct MemoryInfo *>(dataIn);
+    auto memoryInfo = reinterpret_cast<struct MemoryInfo*>(dataIn);
 
     memoryDataWidth(memoryInfo->dataWidth);
 
@@ -108,7 +108,7 @@ uint32_t Dimm::memorySizeInKB(uint32_t value)
 }
 
 void Dimm::dimmDeviceLocator(const uint8_t positionNum, const uint8_t structLen,
-                             uint8_t *dataIn)
+                             uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
@@ -167,7 +167,7 @@ uint16_t Dimm::maxMemorySpeedInMhz(uint16_t value)
 }
 
 void Dimm::dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,
-                            uint8_t *dataIn)
+                            uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
@@ -181,7 +181,7 @@ std::string Dimm::manufacturer(std::string value)
 }
 
 void Dimm::dimmSerialNum(const uint8_t positionNum, const uint8_t structLen,
-                         uint8_t *dataIn)
+                         uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
@@ -195,7 +195,7 @@ std::string Dimm::serialNumber(std::string value)
 }
 
 void Dimm::dimmPartNum(const uint8_t positionNum, const uint8_t structLen,
-                       uint8_t *dataIn)
+                       uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
