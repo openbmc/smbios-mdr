@@ -32,7 +32,7 @@ include_directories (${DBUSINTERFACE_INCLUDE_DIRS})
 link_directories (${DBUSINTERFACE_LIBRARY_DIRS})
 
 set (SRC_FILES src/mdrv2.cpp src/mdrv2_main.cpp src/cpu.cpp src/dimm.cpp
-     src/system.cpp)
+               src/system.cpp)
 
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
@@ -48,4 +48,11 @@ target_link_libraries (smbiosmdrv2app ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${SDBUSPLUSPLUS_LIBRARIES})
 target_link_libraries (smbiosmdrv2app phosphor_logging)
 
+set (SERVICE_FILE_SRC_DIR ${PROJECT_SOURCE_DIR}/service_files)
+set (SERVICE_FILE_INSTALL_DIR /lib/systemd/system/)
+
 install (TARGETS smbiosmdrv2app DESTINATION bin)
+install (
+    FILES ${SERVICE_FILE_SRC_DIR}/smbios-mdrv2.service
+    DESTINATION ${SERVICE_FILE_INSTALL_DIR}
+)
