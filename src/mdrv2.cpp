@@ -18,10 +18,11 @@
 
 #include <sys/mman.h>
 
-#include <fstream>
 #include <phosphor-logging/elog-errors.hpp>
 #include <sdbusplus/exception.hpp>
 #include <xyz/openbmc_project/Smbios/MDR_V2/error.hpp>
+
+#include <fstream>
 
 namespace phosphor
 {
@@ -154,6 +155,17 @@ inline uint8_t MDR_V2::smbiosValidFlag(uint8_t index)
     return static_cast<uint8_t>(ret);
 }
 
+// If source variable size is 4 bytes (uint32_t) and destination is Vector type
+// is 1 byte (uint8_t), then by using this API can copy data byte by byte. For
+// Example copying data from smbiosDir.dir[idIndex].common.size and
+// smbiosDir.dir[idIndex].common.timestamp to vector variable responseInfo
+template <typename T>
+void appendReversed(std::vector<uint8_t>& vector, const T& value)
+{
+    auto data = reinterpret_cast<const uint8_t*>(&value);
+    std::reverse_copy(data, data + sizeof(value), std::back_inserter(vector));
+}
+
 std::vector<uint8_t> MDR_V2::getDataInformation(uint8_t idIndex)
 {
     std::vector<uint8_t> responseInfo;
@@ -170,12 +182,65 @@ std::vector<uint8_t> MDR_V2::getDataInformation(uint8_t idIndex)
         responseInfo.push_back(
             smbiosDir.dir[idIndex].common.id.dataInfo[index]);
     }
+
     responseInfo.push_back(smbiosValidFlag(idIndex));
-    responseInfo.push_back(smbiosDir.dir[idIndex].common.size);
+    appendReversed(responseInfo, smbiosDir.dir[idIndex].common.size);
     responseInfo.push_back(smbiosDir.dir[idIndex].common.dataVersion);
-    responseInfo.push_back(smbiosDir.dir[idIndex].common.timestamp);
+    appendReversed(responseInfo, smbiosDir.dir[idIndex].common.timestamp);
 
     return responseInfo;
+}
+
+bool MDR_V2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
+{
+    if (mdrHdr == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Invalid mdr header");
+        return false;
+    }
+    if (data == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Invalid data point");
+        return false;
+    }
+    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    if (!smbiosFile.good())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Open MDRV2 table file failure");
+        return false;
+    }
+    smbiosFile.clear();
+    smbiosFile.seekg(0, std::ios_base::end);
+    int fileLength = smbiosFile.tellg();
+    smbiosFile.seekg(0, std::ios_base::beg);
+    if (fileLength < sizeof(MDRSMBIOSHeader))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "MDR V2 file size is smaller than mdr header");
+        return false;
+    }
+    smbiosFile.read(reinterpret_cast<char*>(mdrHdr), sizeof(MDRSMBIOSHeader));
+    if (mdrHdr->dataSize > smbiosTableStorageSize)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Data size out of limitation");
+        smbiosFile.close();
+        return false;
+    }
+    fileLength -= sizeof(MDRSMBIOSHeader);
+    if (fileLength < mdrHdr->dataSize)
+    {
+        smbiosFile.read(reinterpret_cast<char*>(data), fileLength);
+    }
+    else
+    {
+        smbiosFile.read(reinterpret_cast<char*>(data), mdrHdr->dataSize);
+    }
+    smbiosFile.close();
+    return true;
 }
 
 bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
@@ -234,58 +299,6 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
         }
     }
     return teminate;
-}
-
-bool MDR_V2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
-{
-    if (mdrHdr == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Read data from flash error - Invalid mdr header");
-        return false;
-    }
-    if (data == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Read data from flash error - Invalid data point");
-        return false;
-    }
-    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
-    if (!smbiosFile.good())
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Read data from flash error - Open MDRV2 table file failure");
-        return false;
-    }
-    smbiosFile.clear();
-    smbiosFile.seekg(0, std::ios_base::end);
-    int fileLength = smbiosFile.tellg();
-    smbiosFile.seekg(0, std::ios_base::beg);
-    if (fileLength < sizeof(MDRSMBIOSHeader))
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "MDR V2 file size is smaller than mdr header");
-        return false;
-    }
-    smbiosFile.read(reinterpret_cast<char*>(mdrHdr), sizeof(MDRSMBIOSHeader));
-    if (mdrHdr->dataSize > smbiosTableStorageSize)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Data size out of limitation");
-        smbiosFile.close();
-        return false;
-    }
-    fileLength -= sizeof(MDRSMBIOSHeader);
-    if (fileLength < mdrHdr->dataSize)
-    {
-        smbiosFile.read(reinterpret_cast<char*>(data), fileLength);
-    }
-    else
-    {
-        smbiosFile.read(reinterpret_cast<char*>(data), mdrHdr->dataSize);
-    }
-    smbiosFile.close();
-    return true;
 }
 
 bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t flag,
@@ -380,6 +393,8 @@ void MDR_V2::systemInfoUpdate()
             bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
     }
 
+#ifdef DIMM_DBUS
+
     dimms.clear();
 
     num = getTotalDimmSlot();
@@ -396,6 +411,8 @@ void MDR_V2::systemInfoUpdate()
         dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
             bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
     }
+
+#endif
 
     system.reset();
     system = std::make_unique<System>(
@@ -490,7 +507,6 @@ bool MDR_V2::agentSynchronizeData()
         smbiosDir.dir[smbiosDirIndex].stage = MDR2SMBIOSStatusEnum::mdr2Loaded;
         smbiosDir.dir[smbiosDirIndex].lock = MDR2DirLockEnum::mdr2DirUnlock;
     }
-    timer.stop();
     return true;
 }
 
@@ -505,8 +521,104 @@ std::vector<uint32_t> MDR_V2::synchronizeDirectoryCommonData(uint8_t idIndex,
     result.push_back(smbiosDir.dir[idIndex].common.dataVersion);
     result.push_back(smbiosDir.dir[idIndex].common.timestamp);
 
-    timer.start(usec);
+    timer.expires_after(usec);
+    timer.async_wait([this](boost::system::error_code ec) {
+        if (ec || this == nullptr)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Timer Error!");
+            return;
+        }
+        agentSynchronizeData();
+    });
     return result;
+}
+
+std::vector<boost::container::flat_map<std::string, RecordVariant>>
+    MDR_V2::getRecordType(size_t type)
+{
+
+    std::vector<boost::container::flat_map<std::string, RecordVariant>> ret;
+    if (type == memoryDeviceType)
+    {
+
+        uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+
+        if (dataIn == nullptr)
+        {
+            throw std::runtime_error("Data not populated");
+        }
+
+        do
+        {
+            dataIn =
+                getSMBIOSTypePtr(dataIn, memoryDeviceType, sizeof(MemoryInfo));
+            if (dataIn == nullptr)
+            {
+                break;
+            }
+            boost::container::flat_map<std::string, RecordVariant>& record =
+                ret.emplace_back();
+
+            auto memoryInfo = reinterpret_cast<MemoryInfo*>(dataIn);
+
+            record["Type"] = memoryInfo->type;
+            record["Length"] = memoryInfo->length;
+            record["Handle"] = uint16_t(memoryInfo->handle);
+            record["Physical Memory Array Handle"] =
+                uint16_t(memoryInfo->phyArrayHandle);
+            record["Memory Error Information Handle"] =
+                uint16_t(memoryInfo->errInfoHandle);
+            record["Total Width"] = uint16_t(memoryInfo->totalWidth);
+            record["Data Width"] = uint16_t(memoryInfo->dataWidth);
+            record["Size"] = uint16_t(memoryInfo->size);
+            record["Form Factor"] = memoryInfo->formFactor;
+            record["Device Set"] = memoryInfo->deviceSet;
+            record["Device Locator"] = positionToString(
+                memoryInfo->deviceLocator, memoryInfo->length, dataIn);
+            record["Bank Locator"] = positionToString(
+                memoryInfo->bankLocator, memoryInfo->length, dataIn);
+            record["Memory Type"] = memoryInfo->memoryType;
+            record["Type Detail"] = uint16_t(memoryInfo->typeDetail);
+            record["Speed"] = uint16_t(memoryInfo->speed);
+            record["Manufacturer"] = positionToString(
+                memoryInfo->manufacturer, memoryInfo->length, dataIn);
+            record["Serial Number"] = positionToString(
+                memoryInfo->serialNum, memoryInfo->length, dataIn);
+            record["Asset Tag"] = positionToString(memoryInfo->assetTag,
+                                                   memoryInfo->length, dataIn);
+            record["Part Number"] = positionToString(
+                memoryInfo->partNum, memoryInfo->length, dataIn);
+            record["Attributes"] = memoryInfo->attributes;
+            record["Extended Size"] = uint32_t(memoryInfo->extendedSize);
+            record["Configured Memory Speed"] =
+                uint32_t(memoryInfo->confClockSpeed);
+            record["Minimum voltage"] = uint16_t(memoryInfo->minimumVoltage);
+            record["Maximum voltage"] = uint16_t(memoryInfo->maximumVoltage);
+            record["Configured voltage"] =
+                uint16_t(memoryInfo->configuredVoltage);
+            record["Memory Technology"] = memoryInfo->memoryTechnology;
+            record["Memory Operating Mode Capabilty"] =
+                uint16_t(memoryInfo->memoryOperatingModeCap);
+            record["Firmare Version"] = memoryInfo->firwareVersion;
+            record["Module Manufacturer ID"] =
+                uint16_t(memoryInfo->modelManufId);
+            record["Module Product ID"] = uint16_t(memoryInfo->modelProdId);
+            record["Memory Subsystem Controller Manufacturer ID"] =
+                uint16_t(memoryInfo->memSubConManufId);
+            record["Memory Subsystem Controller Product Id"] =
+                uint16_t(memoryInfo->memSubConProdId);
+            record["Non-volatile Size"] = uint64_t(memoryInfo->nvSize);
+            record["Volatile Size"] = uint64_t(memoryInfo->volatileSize);
+            record["Cache Size"] = uint64_t(memoryInfo->cacheSize);
+            record["Logical Size"] = uint64_t(memoryInfo->logicalSize);
+        } while ((dataIn = smbiosNextPtr(dataIn)) != nullptr);
+
+        return ret;
+    }
+
+    throw std::invalid_argument("Invalid record type");
+    return ret;
 }
 
 } // namespace smbios
