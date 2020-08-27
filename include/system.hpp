@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include "smbios.hpp"
+#include "smbios_mdrv2.hpp"
 
 #include <xyz/openbmc_project/Common/UUID/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
@@ -26,11 +26,11 @@ namespace phosphor
 namespace smbios
 {
 
-class System : sdbusplus::server::object::object<
-                   sdbusplus::xyz::openbmc_project::Common::server::UUID>,
-               sdbusplus::server::object::object<
-                   sdbusplus::xyz::openbmc_project::Inventory::Decorator::
-                       server::Revision>
+class System :
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Common::server::UUID>,
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Revision>
 {
   public:
     System() = delete;

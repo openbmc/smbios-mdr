@@ -16,7 +16,6 @@
 
 #include "cpu.hpp"
 
-#include <iostream>
 #include <map>
 
 namespace phosphor
@@ -82,13 +81,13 @@ void Cpu::cpuManufacturer(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    manufacturer(result);
+    processorManufacturer(result);
 }
 
-std::string Cpu::manufacturer(std::string value)
+std::string Cpu::processorManufacturer(std::string value)
 {
-    return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-        Asset::manufacturer(value);
+    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
+        processorManufacturer(value);
 }
 
 uint32_t Cpu::processorId(uint32_t value)
@@ -152,39 +151,6 @@ uint16_t Cpu::processorThreadCount(uint16_t value)
         processorThreadCount(value);
 }
 
-static constexpr const uint8_t populateMask = 1 << 6;
-static constexpr const uint8_t statusMask = 0x07;
-void Cpu::cpuStatus(uint8_t value)
-{
-    if (!(value & populateMask))
-    {
-        present(false);
-        functional(false);
-        return;
-    }
-    present(true);
-    if ((value & statusMask) == 1)
-    {
-        functional(true);
-    }
-    else
-    {
-        functional(false);
-    }
-}
-
-bool Cpu::present(bool value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::server::Item::present(
-        value);
-}
-
-bool Cpu::functional(bool value)
-{
-    return sdbusplus::xyz::openbmc_project::State::Decorator::server::
-        OperationalStatus::functional(value);
-}
-
 static constexpr uint8_t maxOldVersionCount = 0xff;
 void Cpu::processorInfoUpdate(void)
 {
@@ -240,8 +206,6 @@ void Cpu::processorInfoUpdate(void)
     }
 
     cpuCharacteristics(cpuInfo->characteristics); // offset 26h
-
-    cpuStatus(cpuInfo->status);
 }
 
 } // namespace smbios

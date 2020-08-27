@@ -1,0 +1,12 @@
+[Unit]
+Description=Intel BMC CPU Info
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/cpuinfoapp
+Type=dbus
+BusName=xyz.openbmc_project.CPUInfo
+Nice=19
+
+[Install]
+WantedBy=multi-user.target

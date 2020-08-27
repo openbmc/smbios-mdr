@@ -16,31 +16,50 @@
 
 #pragma once
 
+#include <phosphor-logging/elog-errors.hpp>
+
 #include <array>
 
-static constexpr uint16_t smbiosAgentId = 0x0101;
-static constexpr int smbiosDirIndex = 0;
-static constexpr int firstAgentIndex = 1;
-static constexpr uint8_t maxDirEntries = 4;
-static constexpr uint32_t pageMask = 0xf000;
-static constexpr uint8_t smbiosAgentVersion = 1;
-static constexpr uint32_t defaultTimeout = 20000;
-static constexpr uint32_t smbiosTableVersion = 15;
-static constexpr uint32_t smbiosSMMemoryOffset = 0;
-static constexpr uint32_t smbiosSMMemorySize = 1024 * 1024;
-static constexpr uint32_t smbiosTableTimestamp = 0x45464748;
-static constexpr uint32_t smbiosTableStorageSize = 64 * 1024;
+static constexpr const char* mdrType2File = "/var/lib/smbios/smbios2";
 static constexpr const char* smbiosPath = "/var/lib/smbios";
+
 static constexpr uint16_t mdrSMBIOSSize = 32 * 1024;
 
-static constexpr const char* cpuPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
+constexpr uint16_t smbiosAgentId = 0x0101;
+constexpr int firstAgentIndex = 1;
 
-static constexpr const char* dimmPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
+constexpr uint8_t maxDirEntries = 4;
+constexpr uint32_t mdr2SMSize = 0x00100000;
+constexpr uint32_t mdr2SMBaseAddress = 0x9FF00000;
 
-static constexpr const char* systemPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
+constexpr uint8_t mdrTypeII = 2;
+
+constexpr uint8_t mdr2Version = 2;
+constexpr uint8_t smbiosAgentVersion = 1;
+
+constexpr uint32_t pageMask = 0xf000;
+constexpr int smbiosDirIndex = 0;
+
+constexpr uint32_t smbiosTableVersion = 15;
+constexpr uint32_t smbiosTableTimestamp = 0x45464748;
+constexpr uint32_t smbiosSMMemoryOffset = 0;
+constexpr uint32_t smbiosSMMemorySize = 1024 * 1024;
+constexpr uint32_t smbiosTableStorageSize = 64 * 1024;
+constexpr uint32_t defaultTimeout = 20000;
+
+enum class MDR2SMBIOSStatusEnum
+{
+    mdr2Init = 0,
+    mdr2Loaded = 1,
+    mdr2Updated = 2,
+    mdr2Updating = 3
+};
+
+enum class MDR2DirLockEnum
+{
+    mdr2DirUnlock = 0,
+    mdr2DirLock = 1
+};
 
 enum class DirDataRequestEnum
 {
@@ -54,6 +73,60 @@ enum class FlagStatus
     flagIsValid = 1,
     flagIsLocked = 2
 };
+
+typedef struct
+{
+    uint8_t dataInfo[16];
+} DataIdStruct;
+
+typedef struct
+{
+    DataIdStruct id;
+    uint32_t size;
+    uint32_t dataSetSize;
+    uint8_t dataVersion;
+    uint32_t timestamp;
+} Mdr2DirEntry;
+
+typedef struct
+{
+    Mdr2DirEntry common;
+    MDR2SMBIOSStatusEnum stage;
+    MDR2DirLockEnum lock;
+    uint16_t lockHandle;
+    uint32_t xferBuff;
+    uint32_t xferSize;
+    uint32_t maxDataSize;
+    uint8_t* dataStorage;
+} Mdr2DirLocalStruct;
+
+typedef struct
+{
+    uint8_t agentVersion;
+    uint8_t dirVersion;
+    uint8_t dirEntries;
+    uint8_t status; // valid / locked / etc
+    uint8_t remoteDirVersion;
+    uint16_t sessionHandle;
+    Mdr2DirLocalStruct dir[maxDirEntries];
+} Mdr2DirStruct;
+
+struct MDRSMBIOSHeader
+{
+    uint8_t dirVer;
+    uint8_t mdrType;
+    uint32_t timestamp;
+    uint32_t dataSize;
+} __attribute__((packed));
+
+static constexpr const char* cpuPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
+
+static constexpr const char* dimmPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
+
+static constexpr const char* systemPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
 
 typedef enum
 {
@@ -101,7 +174,8 @@ static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
 
 // When first time run getSMBIOSTypePtr, need to send the RegionS[].regionData
 // to smbiosDataIn
-static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId)
+static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
+                                        size_t size = 0)
 {
     if (smbiosDataIn == nullptr)
     {
@@ -110,9 +184,10 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId)
     char* smbiosData = reinterpret_cast<char*>(smbiosDataIn);
     while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
     {
+        uint32_t len = *(smbiosData + 1);
         if (*smbiosData != typeId)
         {
-            uint32_t len = *(smbiosData + 1);
+
             smbiosData += len;
             while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
             {
@@ -125,6 +200,12 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId)
             }
             smbiosData += separateLen;
             continue;
+        }
+        if (len < size)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Record size mismatch!");
+            return nullptr;
         }
         return reinterpret_cast<uint8_t*>(smbiosData);
     }
