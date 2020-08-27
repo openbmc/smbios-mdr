@@ -17,93 +17,41 @@
 #pragma once
 #include "cpu.hpp"
 #include "dimm.hpp"
-#include "smbios.hpp"
+#include "smbios_mdrv2.hpp"
 #include "system.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/steady_timer.hpp>
+#include <boost/container/flat_map.hpp>
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/log.hpp>
+#include <sdbusplus/asio/object_server.hpp>
 #include <sdbusplus/server.hpp>
 #include <sdbusplus/timer.hpp>
-#include <smbios.hpp>
 #include <xyz/openbmc_project/Smbios/MDR_V2/server.hpp>
 
-static constexpr int limitEntryLen = 0xff;
-static constexpr uint8_t mdr2Version = 2;
-static constexpr uint32_t mdr2SMSize = 0x00100000;
-static constexpr uint32_t mdr2SMBaseAddress = 0x9FF00000;
-static constexpr const char* mdrType2File = "/var/lib/smbios/smbios2";
-static constexpr const char* mdrV2Path = "/xyz/openbmc_project/Smbios/MDR_V2";
+sdbusplus::asio::object_server& getObjectServer(void);
 
-enum class MDR2SMBIOSStatusEnum
-{
-    mdr2Init = 0,
-    mdr2Loaded = 1,
-    mdr2Updated = 2,
-    mdr2Updating = 3
-};
-
-enum class MDR2DirLockEnum
-{
-    mdr2DirUnlock = 0,
-    mdr2DirLock = 1
-};
-
-typedef struct
-{
-    uint8_t dataInfo[16];
-} DataIdStruct;
-
-typedef struct
-{
-    DataIdStruct id;
-    uint32_t size;
-    uint32_t dataSetSize;
-    uint32_t dataVersion;
-    uint32_t timestamp;
-} Mdr2DirEntry;
-
-typedef struct
-{
-    Mdr2DirEntry common;
-    MDR2SMBIOSStatusEnum stage;
-    MDR2DirLockEnum lock;
-    uint16_t lockHandle;
-    uint32_t xferBuff;
-    uint32_t xferSize;
-    uint32_t maxDataSize;
-    uint8_t* dataStorage;
-} Mdr2DirLocalStruct;
-
-typedef struct
-{
-    uint8_t agentVersion;
-    uint8_t dirVersion;
-    uint8_t dirEntries;
-    uint8_t status; // valid / locked / etc
-    uint8_t remoteDirVersion;
-    uint16_t sessionHandle;
-    Mdr2DirLocalStruct dir[maxDirEntries];
-} Mdr2DirStruct;
-
-struct MDRSMBIOSHeader
-{
-    uint8_t dirVer;
-    uint8_t mdrType;
-    uint32_t timestamp;
-    uint32_t dataSize;
-} __attribute__((packed));
-
+using RecordVariant =
+    std::variant<std::string, uint64_t, uint32_t, uint16_t, uint8_t>;
 namespace phosphor
 {
 namespace smbios
 {
 
-class MDR_V2 : sdbusplus::server::object::object<
-                   sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>
+static constexpr const char* mdrV2Path = "/xyz/openbmc_project/Smbios/MDR_V2";
+static constexpr const char* smbiosPath = "/xyz/openbmc_project/Smbios";
+static constexpr const char* smbiosInterfaceName =
+    "xyz.openbmc_project.Smbios.GetRecordType";
+constexpr const int limitEntryLen = 0xff;
+
+class MDR_V2 :
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>
 {
   public:
     MDR_V2() = delete;
@@ -113,10 +61,12 @@ class MDR_V2 : sdbusplus::server::object::object<
     MDR_V2& operator=(MDR_V2&&) = delete;
     ~MDR_V2() = default;
 
-    MDR_V2(sdbusplus::bus::bus& bus, const char* path, sd_event* event) :
+    MDR_V2(sdbusplus::bus::bus& bus, const char* path,
+           boost::asio::io_context& io) :
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>(bus, path),
-        bus(bus), timer(event, [&](void) { agentSynchronizeData(); })
+        bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
+                                 smbiosPath, smbiosInterfaceName))
     {
 
         smbiosDir.agentVersion = smbiosAgentVersion;
@@ -132,6 +82,11 @@ class MDR_V2 : sdbusplus::server::object::object<
         smbiosDir.dir[smbiosDirIndex].dataStorage = smbiosTableStorage;
 
         agentSynchronizeData();
+
+        smbiosInterface->register_method("GetRecordType", [this](size_t type) {
+            return getRecordType(type);
+        });
+        smbiosInterface->initialize();
     }
 
     std::vector<uint8_t> getDirectoryInformation(uint8_t dirIndex) override;
@@ -157,8 +112,11 @@ class MDR_V2 : sdbusplus::server::object::object<
 
     uint8_t directoryEntries(uint8_t value) override;
 
+    std::vector<boost::container::flat_map<std::string, RecordVariant>>
+        getRecordType(size_t type);
+
   private:
-    Timer timer;
+    boost::asio::steady_timer timer;
 
     sdbusplus::bus::bus& bus;
 
@@ -180,6 +138,7 @@ class MDR_V2 : sdbusplus::server::object::object<
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::unique_ptr<System> system;
+    std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
 };
 
 } // namespace smbios
