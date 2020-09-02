@@ -31,6 +31,16 @@ pkg_check_modules (DBUSINTERFACE phosphor-dbus-interfaces REQUIRED)
 include_directories (${DBUSINTERFACE_INCLUDE_DIRS})
 link_directories (${DBUSINTERFACE_LIBRARY_DIRS})
 
+# boost
+include_directories (SYSTEM ${CMAKE_BINARY_DIR}/boost-src)
+set (CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR}/boost-src ${CMAKE_PREFIX_PATH})
+add_definitions (-DBOOST_ERROR_CODE_HEADER_ONLY)
+add_definitions (-DBOOST_SYSTEM_NO_DEPRECATED)
+add_definitions (-DBOOST_ALL_NO_LIB)
+add_definitions (-DBOOST_NO_RTTI)
+add_definitions (-DBOOST_NO_TYPEID)
+add_definitions (-DBOOST_ASIO_DISABLE_THREADS)
+
 set (SRC_FILES src/mdrv2.cpp src/mdrv2_main.cpp src/cpu.cpp src/dimm.cpp
      src/system.cpp)
 
@@ -48,4 +58,27 @@ target_link_libraries (smbiosmdrv2app ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${SDBUSPLUSPLUS_LIBRARIES})
 target_link_libraries (smbiosmdrv2app phosphor_logging)
 
-install (TARGETS smbiosmdrv2app DESTINATION bin)
+add_executable (cpuinfoapp src/cpuinfo_main.cpp)
+target_link_libraries (cpuinfoapp ${SYSTEMD_LIBRARIES})
+target_link_libraries (cpuinfoapp ${DBUSINTERFACE_LIBRARIES})
+target_link_libraries (cpuinfoapp ${SDBUSPLUSPLUS_LIBRARIES})
+target_link_libraries (cpuinfoapp phosphor_logging)
+target_link_libraries (cpuinfoapp i2c)
+target_link_libraries (cpuinfoapp peci)
+
+option (DIMM_DBUS "Expose DIMM D-Bus Interface" ON)
+
+if (DIMM_DBUS)
+    target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_DBUS)
+endif ()
+
+install (TARGETS smbiosmdrv2app DESTINATION sbin)
+
+install (TARGETS cpuinfoapp
+         RUNTIME DESTINATION bin
+         LIBRARY DESTINATION lib
+         ARCHIVE DESTINATION lib/static)
+
+set (SERVICE_FILES
+     ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service)
+install (FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)

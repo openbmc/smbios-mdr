@@ -15,7 +15,7 @@
 */
 
 #pragma once
-#include "smbios.hpp"
+#include "smbios_mdrv2.hpp"
 
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Dimm/server.hpp>
@@ -29,11 +29,11 @@ namespace smbios
 using DeviceType =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::DeviceType;
 
-class Dimm
-    : sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm>,
-      sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset>
+class Dimm :
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm>,
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset>
 {
   public:
     Dimm() = delete;
@@ -88,33 +88,47 @@ class Dimm
                        uint8_t* dataIn);
     void dimmPartNum(const uint8_t positionNum, const uint8_t structLen,
                      uint8_t* dataIn);
-
-    struct MemoryInfo
-    {
-        uint8_t type;
-        uint8_t length;
-        uint16_t handle;
-        uint16_t phyArrayHandle;
-        uint16_t errInfoHandle;
-        uint16_t totalWidth;
-        uint16_t dataWidth;
-        uint16_t size;
-        uint8_t formFactor;
-        uint8_t deviceSet;
-        uint8_t deviceLocator;
-        uint8_t bankLocator;
-        uint8_t memoryType;
-        uint16_t typeDetail;
-        uint16_t speed;
-        uint8_t manufacturer;
-        uint8_t serialNum;
-        uint8_t assetTag;
-        uint8_t partNum;
-        uint8_t attributes;
-        uint32_t extendedSize;
-        uint16_t confClockSpeed;
-    } __attribute__((packed));
 };
+
+struct MemoryInfo
+{
+    uint8_t type;
+    uint8_t length;
+    uint16_t handle;
+    uint16_t phyArrayHandle;
+    uint16_t errInfoHandle;
+    uint16_t totalWidth;
+    uint16_t dataWidth;
+    uint16_t size;
+    uint8_t formFactor;
+    uint8_t deviceSet;
+    uint8_t deviceLocator;
+    uint8_t bankLocator;
+    uint8_t memoryType;
+    uint16_t typeDetail;
+    uint16_t speed;
+    uint8_t manufacturer;
+    uint8_t serialNum;
+    uint8_t assetTag;
+    uint8_t partNum;
+    uint8_t attributes;
+    uint32_t extendedSize;
+    uint16_t confClockSpeed;
+    uint16_t minimumVoltage;
+    uint16_t maximumVoltage;
+    uint16_t configuredVoltage;
+    uint8_t memoryTechnology;
+    uint16_t memoryOperatingModeCap;
+    uint8_t firwareVersion;
+    uint16_t modelManufId;
+    uint16_t modelProdId;
+    uint16_t memSubConManufId;
+    uint16_t memSubConProdId;
+    uint64_t nvSize;
+    uint64_t volatileSize;
+    uint64_t cacheSize;
+    uint64_t logicalSize;
+} __attribute__((packed));
 
 const std::map<uint8_t, DeviceType> dimmTypeTable = {
     {0x1, DeviceType::Other},         {0x2, DeviceType::Unknown},
