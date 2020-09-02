@@ -16,7 +16,7 @@
 
 #include "cpu.hpp"
 
-#include <iostream>
+#include <bitset>
 #include <map>
 
 namespace phosphor
@@ -24,169 +24,67 @@ namespace phosphor
 namespace smbios
 {
 
-void Cpu::cpuSocket(const uint8_t positionNum, const uint8_t structLen,
-                    uint8_t* dataIn)
+void Cpu::socket(const uint8_t positionNum, const uint8_t structLen,
+                 uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    processorSocket(result);
+    processor::socket(result);
 }
 
-std::string Cpu::processorSocket(std::string value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorSocket(value);
-}
-
-void Cpu::cpuType(const uint8_t value)
-{
-    std::map<uint8_t, const char*>::const_iterator it =
-        processorTypeTable.find(value);
-    if (it == processorTypeTable.end())
-    {
-        processorType("Unknown Processor Type");
-    }
-    else
-    {
-        processorType(it->second);
-    }
-}
-
-std::string Cpu::processorType(std::string value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorType(value);
-}
-
-void Cpu::cpuFamily(const uint8_t value)
+void Cpu::family(const uint8_t value)
 {
     std::map<uint8_t, const char*>::const_iterator it = familyTable.find(value);
     if (it == familyTable.end())
     {
-        processorFamily("Unknown Processor Family");
+        processor::family("Unknown Processor Family");
     }
     else
     {
-        processorFamily(it->second);
+        processor::family(it->second);
     }
 }
 
-std::string Cpu::processorFamily(std::string value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorFamily(value);
-}
-
-void Cpu::cpuManufacturer(const uint8_t positionNum, const uint8_t structLen,
-                          uint8_t* dataIn)
+void Cpu::manufacturer(const uint8_t positionNum, const uint8_t structLen,
+                       uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    manufacturer(result);
+    asset::manufacturer(result);
 }
 
-std::string Cpu::manufacturer(std::string value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-        Asset::manufacturer(value);
-}
-
-uint32_t Cpu::processorId(uint32_t value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorId(value);
-}
-
-void Cpu::cpuVersion(const uint8_t positionNum, const uint8_t structLen,
-                     uint8_t* dataIn)
+void Cpu::version(const uint8_t positionNum, const uint8_t structLen,
+                  uint8_t* dataIn)
 {
     std::string result;
 
     result = positionToString(positionNum, structLen, dataIn);
 
-    processorVersion(result);
+    rev::version(result);
 }
 
-std::string Cpu::processorVersion(std::string value)
+void Cpu::characteristics(uint16_t value)
 {
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorVersion(value);
-}
+    std::vector<processor::Capability> result;
+    std::optional<processor::Capability> cap;
 
-uint16_t Cpu::processorMaxSpeed(uint16_t value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorMaxSpeed(value);
-}
-
-void Cpu::cpuCharacteristics(uint16_t value)
-{
-    std::string result = "";
-    for (uint8_t index = 0; index < (8 * sizeof(value)); index++)
+    std::bitset<16> charBits = value;
+    for (uint8_t index = 0; index < charBits.size(); index++)
     {
-        if (value & 0x01)
+        if (charBits.test(index))
         {
-            result += characteristicsTable[index];
+            if (cap = characteristicsTable[index])
+            {
+                result.emplace_back(*cap);
+            }
         }
-        value >>= 1;
     }
 
-    processorCharacteristics(result);
-}
-
-std::string Cpu::processorCharacteristics(std::string value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorCharacteristics(value);
-}
-
-uint16_t Cpu::processorCoreCount(uint16_t value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorCoreCount(value);
-}
-
-uint16_t Cpu::processorThreadCount(uint16_t value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu::
-        processorThreadCount(value);
-}
-
-static constexpr const uint8_t populateMask = 1 << 6;
-static constexpr const uint8_t statusMask = 0x07;
-void Cpu::cpuStatus(uint8_t value)
-{
-    if (!(value & populateMask))
-    {
-        present(false);
-        functional(false);
-        return;
-    }
-    present(true);
-    if ((value & statusMask) == 1)
-    {
-        functional(true);
-    }
-    else
-    {
-        functional(false);
-    }
-}
-
-bool Cpu::present(bool value)
-{
-    return sdbusplus::xyz::openbmc_project::Inventory::server::Item::present(
-        value);
-}
-
-bool Cpu::functional(bool value)
-{
-    return sdbusplus::xyz::openbmc_project::State::Decorator::server::
-        OperationalStatus::functional(value);
+    processor::characteristics(result);
 }
 
 static constexpr uint8_t maxOldVersionCount = 0xff;
-void Cpu::processorInfoUpdate(void)
+void Cpu::infoUpdate(void)
 {
     uint8_t* dataIn = storage;
 
@@ -212,36 +110,34 @@ void Cpu::processorInfoUpdate(void)
 
     auto cpuInfo = reinterpret_cast<struct ProcessorInfo*>(dataIn);
 
-    cpuSocket(cpuInfo->socketDesignation, cpuInfo->length,
-              dataIn);               // offset 4h
-    cpuType(cpuInfo->processorType); // offset 5h
-    cpuFamily(cpuInfo->family);      // offset 6h
-    cpuManufacturer(cpuInfo->manufacturer, cpuInfo->length,
-                    dataIn);                               // offset 7h
-    processorId(cpuInfo->id);                              // offset 8h
-    cpuVersion(cpuInfo->version, cpuInfo->length, dataIn); // offset 10h
-    processorMaxSpeed(cpuInfo->maxSpeed);                  // offset 14h
-    if (cpuInfo->coreCount < maxOldVersionCount)           // offset 23h or 2Ah
+    socket(cpuInfo->socketDesignation, cpuInfo->length,
+           dataIn); // offset 4h
+    // this class is for type CPU  //offset 5h
+    family(cpuInfo->family); // offset 6h
+    manufacturer(cpuInfo->manufacturer, cpuInfo->length,
+                 dataIn);                               // offset 7h
+    id(cpuInfo->id);                                    // offset 8h
+    version(cpuInfo->version, cpuInfo->length, dataIn); // offset 10h
+    maxSpeedInMhz(cpuInfo->maxSpeed);                   // offset 14h
+    if (cpuInfo->coreCount < maxOldVersionCount)        // offset 23h or 2Ah
     {
-        processorCoreCount(cpuInfo->coreCount);
+        coreCount(cpuInfo->coreCount);
     }
     else
     {
-        processorCoreCount(cpuInfo->coreCount2);
+        coreCount(cpuInfo->coreCount2);
     }
 
     if (cpuInfo->threadCount < maxOldVersionCount) // offset 25h or 2Eh)
     {
-        processorThreadCount(cpuInfo->threadCount);
+        threadCount(cpuInfo->threadCount);
     }
     else
     {
-        processorThreadCount(cpuInfo->threadCount2);
+        threadCount(cpuInfo->threadCount2);
     }
 
-    cpuCharacteristics(cpuInfo->characteristics); // offset 26h
-
-    cpuStatus(cpuInfo->status);
+    characteristics(cpuInfo->characteristics); // offset 26h
 }
 
 } // namespace smbios
