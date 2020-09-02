@@ -15,12 +15,11 @@
 */
 
 #pragma once
-#include "smbios.hpp"
+#include "smbios_mdrv2.hpp"
 
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
+#include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Cpu/server.hpp>
-#include <xyz/openbmc_project/Inventory/Item/server.hpp>
-#include <xyz/openbmc_project/State/Decorator/OperationalStatus/server.hpp>
 
 namespace phosphor
 {
@@ -28,11 +27,11 @@ namespace phosphor
 namespace smbios
 {
 
-// Definition follow smbios spec DSP0134 3.0.0
-static const std::map<uint8_t, const char*> processorTypeTable = {
-    {0x1, "Other"},          {0x2, "Unknown"},       {0x3, "Central Processor"},
-    {0x4, "Math Processor"}, {0x5, "DSP Processor"}, {0x6, "Video Processor"},
-};
+using rev =
+    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Revision;
+using asset =
+    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset;
+using processor = sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
 
 // Definition follow smbios spec DSP0134 3.0.0
 static const std::map<uint8_t, const char*> familyTable = {
@@ -71,34 +70,25 @@ static const std::map<uint8_t, const char*> familyTable = {
 };
 
 // Definition follow smbios spec DSP0134 3.0.0
-static const std::array<std::string, 16> characteristicsTable{
-    "Reserved",
-    "Unknown",
-    "64-bit Capable",
-    "Multi-Core",
-    "Hardware Thread",
-    "Execute Protection",
-    "Enhanced Virtualization",
-    "Power/Performance Control",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved",
-    "Reserved"};
+static const std::array<std::optional<processor::Capability>, 16>
+    characteristicsTable{std::nullopt,
+                         std::nullopt,
+                         processor::Capability::Capable64bit,
+                         processor::Capability::MultiCore,
+                         processor::Capability::HardwareThread,
+                         processor::Capability::ExecuteProtection,
+                         processor::Capability::EnhancedVirtualization,
+                         processor::Capability::PowerPerformanceControl,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt,
+                         std::nullopt};
 
-class Cpu
-    : sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu>,
-      sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::Inventory::server::Item>,
-      sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset>,
-      sdbusplus::server::object::object<
-          sdbusplus::xyz::openbmc_project::State::Decorator::server::
-              OperationalStatus>
+class Cpu : sdbusplus::server::object_t<processor, asset, rev>
 {
   public:
     Cpu() = delete;
@@ -110,37 +100,14 @@ class Cpu
 
     Cpu(sdbusplus::bus::bus& bus, const std::string& objPath,
         const uint8_t& cpuId, uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu>(
-            bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-                Asset>(bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::server::Item>(
-            bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::State::Decorator::server::
-                OperationalStatus>(bus, objPath.c_str()),
+        sdbusplus::server::object_t<processor, asset, rev>(bus,
+                                                           objPath.c_str()),
         cpuNum(cpuId), storage(smbiosTableStorage)
     {
-        processorInfoUpdate();
+        infoUpdate();
     }
 
-    void processorInfoUpdate(void);
-
-    std::string processorSocket(std::string value) override;
-    std::string processorType(std::string value) override;
-    std::string processorFamily(std::string value) override;
-    std::string manufacturer(std::string value) override;
-    uint32_t processorId(uint32_t value) override;
-    std::string processorVersion(std::string value) override;
-    uint16_t processorMaxSpeed(uint16_t value) override;
-    std::string processorCharacteristics(std::string value) override;
-    uint16_t processorCoreCount(uint16_t value) override;
-    uint16_t processorThreadCount(uint16_t value) override;
-    bool present(bool value) override;
-    bool functional(bool value) override;
+    void infoUpdate(void);
 
   private:
     uint8_t cpuNum;
@@ -180,16 +147,14 @@ class Cpu
         uint16_t threadCount2;
     } __attribute__((packed));
 
-    void cpuSocket(const uint8_t positionNum, const uint8_t structLen,
-                   uint8_t* dataIn);
-    void cpuType(const uint8_t value);
-    void cpuFamily(const uint8_t value);
-    void cpuManufacturer(const uint8_t positionNum, const uint8_t structLen,
-                         uint8_t* dataIn);
-    void cpuVersion(const uint8_t positionNum, const uint8_t structLen,
-                    uint8_t* dataIn);
-    void cpuCharacteristics(const uint16_t value);
-    void cpuStatus(const uint8_t value);
+    void socket(const uint8_t positionNum, const uint8_t structLen,
+                uint8_t* dataIn);
+    void family(const uint8_t value);
+    void manufacturer(const uint8_t positionNum, const uint8_t structLen,
+                      uint8_t* dataIn);
+    void version(const uint8_t positionNum, const uint8_t structLen,
+                 uint8_t* dataIn);
+    void characteristics(const uint16_t value);
 };
 
 } // namespace smbios
