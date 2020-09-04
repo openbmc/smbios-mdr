@@ -99,5 +99,6 @@ install (TARGETS cpuinfoapp
          ARCHIVE DESTINATION lib/static)
 
 set (SERVICE_FILES
-     ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service)
+     ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
+     ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service)
 install (FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
