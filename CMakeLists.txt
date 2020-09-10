@@ -91,7 +91,7 @@ if (NOT YOCTO)
                                       ${BINARY_DIR}/libpeci.so)
 endif ()
 
-install (TARGETS smbiosmdrv2app DESTINATION sbin)
+install (TARGETS smbiosmdrv2app DESTINATION bin)
 
 install (TARGETS cpuinfoapp
          RUNTIME DESTINATION bin
