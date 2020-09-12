@@ -1,7 +1,9 @@
 [Unit]
 Description=Intel BMC CPU Info
 Requires=smbios-mdrv2.service
+Requires=xyz.openbmc_project.EntityManager.service
 After=smbios-mdrv2.service
+After=xyz.openbmc_project.EntityManager.service
 
 [Service]
 Restart=always
