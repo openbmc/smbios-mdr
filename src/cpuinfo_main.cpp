@@ -24,6 +24,7 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/steady_timer.hpp>
 
+#include <iostream>
 #include <optional>
 #include <sstream>
 #include <string>
@@ -51,19 +52,22 @@ static constexpr const char* cpuInterfaceName =
 static constexpr const char* cpuProcessName =
     "xyz.openbmc_project.Smbios.MDR_V2";
 
-struct ProcessorInfo
-{
-    uint64_t ppin;
-    std::string sspec;
-};
+// constants for reading QDF string from PIROM
+// Currently, they are the same for platforms with icx
+// \todo: move into configuration file to be more robust
+static constexpr uint8_t defaultI2cBus = 13;
+static constexpr uint8_t defaultI2cSlaveAddr0 = 0x50;
+static constexpr uint8_t sspecRegAddr = 0xf;
+static constexpr uint8_t sspecSize = 6;
+static constexpr uint8_t qdfSize = 4;
 
-using CPUMap =
-    boost::container::flat_map<size_t,
-                               std::pair<int, std::shared_ptr<CPUInfo>>>;
+using CPUInfoMap = boost::container::flat_map<size_t, std::shared_ptr<CPUInfo>>;
 
-static CPUMap cpuMap = {};
+static CPUInfoMap cpuInfoMap = {};
 
-static std::unique_ptr<sdbusplus::bus::match_t> cpuUpdatedMatch = nullptr;
+static boost::container::flat_map<size_t,
+                                  std::unique_ptr<sdbusplus::bus::match_t>>
+    cpuUpdatedMatch = {};
 
 static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
                                             uint8_t regAddr, size_t count)
@@ -139,36 +143,13 @@ static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
     return sspec;
 }
 
-// PECI Client Address Map
-static void getPECIAddrMap(CPUMap& cpuMap)
-{
-    int idx = 0;
-    for (size_t i = MIN_CLIENT_ADDR; i <= MAX_CLIENT_ADDR; i++)
-    {
-        if (peci_Ping(i) == PECI_CC_SUCCESS)
-        {
-            cpuMap.emplace(std::make_pair(i, std::make_pair(idx, nullptr)));
-            idx++;
-        }
-    }
-}
-
-static std::shared_ptr<CPUInfo>
-    createCPUInfo(std::shared_ptr<sdbusplus::asio::connection>& conn,
-                  const int& cpu)
-{
-    std::string path = cpuPath + std::to_string(cpu);
-    std::shared_ptr<CPUInfo> cpuInfo = std::make_shared<CPUInfo>(
-        static_cast<sdbusplus::bus::bus&>(*conn), path);
-    return cpuInfo;
-}
-
 static void setAssetProperty(
     std::shared_ptr<sdbusplus::asio::connection>& conn, const int& cpu,
     const std::vector<std::pair<std::string, std::string>>& propValues)
 {
-
-    const std::string objectPath = cpuPath + std::to_string(cpu);
+    // cpuId from configuration is one based as
+    // dbus object path used by smbios is 0 based
+    const std::string objectPath = cpuPath + std::to_string(cpu - 1);
     for (const auto& prop : propValues)
     {
         conn->async_method_call(
@@ -191,51 +172,62 @@ static void createCpuUpdatedMatch(
     std::shared_ptr<sdbusplus::asio::connection>& conn, const int& cpu,
     const std::vector<std::pair<std::string, std::string>>& propValues)
 {
-    if (cpuUpdatedMatch)
+    if (cpuUpdatedMatch[cpu])
     {
         return;
     }
 
-    const std::string objectPath = cpuPath + std::to_string(cpu);
+    const std::string objectPath = cpuPath + std::to_string(cpu - 1);
 
-    cpuUpdatedMatch = std::make_unique<sdbusplus::bus::match::match>(
-        static_cast<sdbusplus::bus::bus&>(*conn),
-        sdbusplus::bus::match::rules::interfacesAdded() +
-            sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
-        [&conn, cpu, propValues](sdbusplus::message::message& msg) {
-            std::string objectName;
-            boost::container::flat_map<
-                std::string,
-                boost::container::flat_map<std::string,
-                                           std::variant<std::string, uint64_t>>>
-                msgData;
+    cpuUpdatedMatch.insert_or_assign(
+        cpu,
+        std::make_unique<sdbusplus::bus::match::match>(
+            static_cast<sdbusplus::bus::bus&>(*conn),
+            sdbusplus::bus::match::rules::interfacesAdded() +
+                sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
+            [&conn, cpu, propValues](sdbusplus::message::message& msg) {
+                std::string objectName;
+                boost::container::flat_map<
+                    std::string,
+                    boost::container::flat_map<
+                        std::string, std::variant<std::string, uint64_t>>>
+                    msgData;
 
-            msg.read(objectName, msgData);
+                msg.read(objectName, msgData);
 
-            // Check for xyz.openbmc_project.Inventory.Item.Cpu
-            // interface match
-            auto intfFound = msgData.find(cpuInterfaceName);
-            if (msgData.end() != intfFound)
-            {
-                setAssetProperty(conn, cpu, propValues);
-            }
-        });
+                // Check for xyz.openbmc_project.Inventory.Item.Cpu
+                // interface match
+                auto intfFound = msgData.find(cpuInterfaceName);
+                if (msgData.end() != intfFound)
+                {
+                    setAssetProperty(conn, cpu, propValues);
+                }
+            }));
 }
 
-// constants for reading QDF string from PIROM
-// Currently, they are the same for platforms with icx
-// \todo: move into configuration file to be more robust
-static constexpr uint8_t i2cBus = 13;
-static constexpr uint8_t slaveAddr0 = 0x50;
-static constexpr uint8_t regAddr = 0xf;
-static constexpr uint8_t sspecSize = 4;
-
-static void getProcessorInfo(std::shared_ptr<sdbusplus::asio::connection>& conn,
-                             sdbusplus::asio::object_server& objServer,
-                             CPUMap& cpuMap)
+static void getProcessorInfo(boost::asio::io_service& io,
+                             std::shared_ptr<sdbusplus::asio::connection>& conn,
+                             const size_t& cpu)
 {
+    if (cpuInfoMap.find(cpu) == cpuInfoMap.end() || cpuInfoMap[cpu] == nullptr)
+    {
+        std::cerr << "No information found for cpu " << cpu << "\n";
+        return;
+    }
 
-    for (auto& cpu : cpuMap)
+    if (cpuInfoMap[cpu]->id != cpu)
+    {
+        std::cerr << "In correct CPU id " << (unsigned)cpuInfoMap[cpu]->id
+                  << " expect " << cpu << "\n";
+        return;
+    }
+
+    uint8_t cpuAddr = cpuInfoMap[cpu]->peciAddr;
+    uint8_t i2cBus = cpuInfoMap[cpu]->i2cBus;
+    uint8_t i2cDevice = cpuInfoMap[cpu]->i2cDevice;
+
+    bool success = false;
+    if (peci_Ping(cpuAddr) == PECI_CC_SUCCESS)
     {
         uint8_t cc = 0;
         CPUModel model{};
@@ -246,139 +238,307 @@ static void getProcessorInfo(std::shared_ptr<sdbusplus::asio::connection>& conn,
         // std::shared_ptr<CPUInfo> cpuInfo =
         //    createCPUInfo(conn, cpu.second.first);
         // cpu.second.second = cpuInfo;
+        if (peci_GetCPUID(cpuAddr, &model, &stepping, &cc) == PECI_CC_SUCCESS)
+        {
+            switch (model)
+            {
+                case icx:
+                {
+                    // get processor ID
+                    static constexpr uint8_t u8Size = 4; // default to a DWORD
+                    static constexpr uint8_t u8PPINPkgIndex = 19;
+                    static constexpr uint16_t u16PPINPkgParamHigh = 2;
+                    static constexpr uint16_t u16PPINPkgParamLow = 1;
+                    uint64_t cpuPPIN = 0;
+                    uint32_t u32PkgValue = 0;
 
-        if (peci_GetCPUID(cpu.first, &model, &stepping, &cc) != PECI_CC_SUCCESS)
+                    int ret = peci_RdPkgConfig(cpuAddr, u8PPINPkgIndex,
+                                               u16PPINPkgParamLow, u8Size,
+                                               (uint8_t*)&u32PkgValue, &cc);
+                    if (0 != ret)
+                    {
+                        phosphor::logging::log<phosphor::logging::level::ERR>(
+                            "peci read package config failed at address",
+                            phosphor::logging::entry("PECIADDR=0x%x",
+                                                     (unsigned)cpuAddr),
+                            phosphor::logging::entry("CC=0x%x", cc));
+                        u32PkgValue = 0;
+                    }
+
+                    cpuPPIN = u32PkgValue;
+                    ret = peci_RdPkgConfig(cpuAddr, u8PPINPkgIndex,
+                                           u16PPINPkgParamHigh, u8Size,
+                                           (uint8_t*)&u32PkgValue, &cc);
+                    if (0 != ret)
+                    {
+                        phosphor::logging::log<phosphor::logging::level::ERR>(
+                            "peci read package config failed at address",
+                            phosphor::logging::entry("PECIADDR=0x%x",
+                                                     (unsigned)cpuAddr),
+                            phosphor::logging::entry("CC=0x%x", cc));
+                        cpuPPIN = 0;
+                        u32PkgValue = 0;
+                    }
+
+                    cpuPPIN |= static_cast<uint64_t>(u32PkgValue) << 32;
+
+                    std::vector<std::pair<std::string, std::string>> values;
+
+                    // set SerialNumber if cpuPPIN is valid
+                    if (0 != cpuPPIN)
+                    {
+                        std::stringstream stream;
+                        stream << std::hex << cpuPPIN;
+                        std::string serialNumber(stream.str());
+                        // cpuInfo->serialNumber(serialNumber);
+                        values.emplace_back(
+                            std::make_pair("SerialNumber", serialNumber));
+                    }
+
+                    // assuming the slaveAddress will be incrementing like peci
+                    // client address
+                    std::optional<std::string> sspec =
+                        readSSpec(i2cBus, i2cDevice, sspecRegAddr, sspecSize);
+                    // QDF is 4 char length
+                    if (sspec && sspec.value()[0] == 'Q')
+                    {
+                        sspec.value().resize(qdfSize);
+                    }
+                    // cpuInfo->model(sspec.value_or(""));
+                    values.emplace_back(
+                        std::make_pair("Model", sspec.value_or("")));
+
+                    /// \todo in followup patch
+                    // CPUInfo is created by this service
+                    // update the below logic, which is needed because smbios
+                    // service creates the cpu object
+                    // cpuInfo creates dbus objects now, no need to use match
+                    createCpuUpdatedMatch(conn, cpu, values);
+                    setAssetProperty(conn, cpu, values);
+                    break;
+                }
+                default:
+                    phosphor::logging::log<phosphor::logging::level::INFO>(
+                        "in-compatible cpu for cpu asset info");
+                    break;
+            }
+            success = true;
+        }
+        else
         {
             phosphor::logging::log<phosphor::logging::level::ERR>(
                 "Cannot get CPUID!",
-                phosphor::logging::entry("PECIADDR=0x%x", cpu.first));
-            continue;
+                phosphor::logging::entry("PECIADDR=0x%x", (unsigned)cpuAddr));
         }
+    }
 
-        switch (model)
-        {
-            case icx:
-            {
-                // get processor ID
-                static constexpr uint8_t u8Size = 4; // default to a DWORD
-                static constexpr uint8_t u8PPINPkgIndex = 19;
-                static constexpr uint16_t u16PPINPkgParamHigh = 2;
-                static constexpr uint16_t u16PPINPkgParamLow = 1;
-                uint64_t cpuPPIN = 0;
-                uint32_t u32PkgValue = 0;
+    if (!success)
+    {
+        // Start the PECI check loop
+        auto waitTimer = std::make_shared<boost::asio::steady_timer>(io);
+        waitTimer->expires_after(
+            std::chrono::seconds(phosphor::cpu_info::peciCheckInterval));
 
-                int ret = peci_RdPkgConfig(cpu.first, u8PPINPkgIndex,
-                                           u16PPINPkgParamLow, u8Size,
-                                           (uint8_t*)&u32PkgValue, &cc);
-                if (0 != ret)
+        waitTimer->async_wait(
+            [waitTimer, &io, &conn, cpu](const boost::system::error_code& ec) {
+                if (ec)
                 {
-                    phosphor::logging::log<phosphor::logging::level::ERR>(
-                        "peci read package config failed at address",
-                        phosphor::logging::entry("PECIADDR=0x%x", cpu.first),
-                        phosphor::logging::entry("CC=0x%x", cc));
-                    u32PkgValue = 0;
+                    // operation_aborted is expected if timer is canceled
+                    // before completion.
+                    if (ec != boost::asio::error::operation_aborted)
+                    {
+                        phosphor::logging::log<phosphor::logging::level::ERR>(
+                            "info update timer async_wait failed ",
+                            phosphor::logging::entry("EC=0x%x", ec.value()));
+                    }
+                    return;
                 }
-
-                cpuPPIN = u32PkgValue;
-                ret = peci_RdPkgConfig(cpu.first, u8PPINPkgIndex,
-                                       u16PPINPkgParamHigh, u8Size,
-                                       (uint8_t*)&u32PkgValue, &cc);
-                if (0 != ret)
-                {
-                    phosphor::logging::log<phosphor::logging::level::ERR>(
-                        "peci read package config failed at address",
-                        phosphor::logging::entry("PECIADDR=0x%x", cpu.first),
-                        phosphor::logging::entry("CC=0x%x", cc));
-                    cpuPPIN = 0;
-                    u32PkgValue = 0;
-                }
-
-                cpuPPIN |= static_cast<uint64_t>(u32PkgValue) << 32;
-
-                std::vector<std::pair<std::string, std::string>> values;
-
-                // set SerialNumber if cpuPPIN is valid
-                if (0 != cpuPPIN)
-                {
-                    std::stringstream stream;
-                    stream << std::hex << cpuPPIN;
-                    std::string serialNumber(stream.str());
-                    // cpuInfo->serialNumber(serialNumber);
-                    values.emplace_back(
-                        std::make_pair("SerialNumber", serialNumber));
-                }
-
-                // assuming the slaveAddress will be incrementing like peci
-                // client address
-                std::optional<std::string> sspec = readSSpec(
-                    i2cBus, static_cast<uint8_t>(slaveAddr0 + cpu.second.first),
-                    regAddr, sspecSize);
-                // cpuInfo->model(sspec.value_or(""));
-                values.emplace_back(
-                    std::make_pair("Model", sspec.value_or("")));
-
-                /// \todo in followup patch
-                // CPUInfo is created by this service
-                // update the below logic, which is needed because smbios
-                // service creates the cpu object
-                createCpuUpdatedMatch(conn, cpu.second.first, values);
-                setAssetProperty(conn, cpu.second.first, values);
-                break;
-            }
-            default:
-                phosphor::logging::log<phosphor::logging::level::INFO>(
-                    "in-compatible cpu for cpu asset info");
-                break;
-        }
+                getProcessorInfo(io, conn, cpu);
+            });
     }
 }
 
-static bool isPECIAvailable(void)
+/**
+ * Get cpu and pirom address
+ */
+static void getCpuAddress(boost::asio::io_service& io,
+                          std::shared_ptr<sdbusplus::asio::connection>& conn,
+                          const std::string& service, const std::string& object,
+                          const std::string& interface)
 {
-    for (size_t i = MIN_CLIENT_ADDR; i <= MAX_CLIENT_ADDR; i++)
-    {
-        if (peci_Ping(i) == PECI_CC_SUCCESS)
-        {
-            return true;
-        }
-    }
-    return false;
-}
+    conn->async_method_call(
+        [&io, &conn](boost::system::error_code ec,
+                     const boost::container::flat_map<
+                         std::string,
+                         std::variant<std::string, uint64_t, uint32_t, uint16_t,
+                                      std::vector<std::string>>>& properties) {
+            const uint64_t* value = NULL;
+            uint8_t peciAddress = 0;
+            uint8_t i2cBus = 0;
+            uint8_t i2cDevice = 0;
+            size_t cpu = 0;
 
-static void
-    peciAvailableCheck(boost::asio::steady_timer& peciWaitTimer,
-                       boost::asio::io_service& io,
-                       std::shared_ptr<sdbusplus::asio::connection>& conn,
-                       sdbusplus::asio::object_server& objServer)
-{
-    bool peciAvailable = isPECIAvailable();
-    if (peciAvailable)
-    {
-        // get the PECI client address list
-        getPECIAddrMap(cpuMap);
-        getProcessorInfo(conn, objServer, cpuMap);
-    }
-    if (!peciAvailable || !cpuMap.size())
-    {
-        peciWaitTimer.expires_after(
-            std::chrono::seconds(6 * peciCheckInterval));
-        peciWaitTimer.async_wait([&peciWaitTimer, &io, &conn, &objServer](
-                                     const boost::system::error_code& ec) {
             if (ec)
             {
-                // operation_aborted is expected if timer is canceled
-                // before completion.
-                if (ec != boost::asio::error::operation_aborted)
-                {
-                    phosphor::logging::log<phosphor::logging::level::ERR>(
-                        "PECI Available Check async_wait failed",
-                        phosphor::logging::entry("EC=0x%x", ec.value()));
-                }
+                std::cerr << "DBUS response error " << ec.value() << ": "
+                          << ec.message() << "\n";
                 return;
             }
-            peciAvailableCheck(peciWaitTimer, io, conn, objServer);
-        });
-    }
+
+            for (const auto& property : properties)
+            {
+                std::cerr << "property " << property.first << "\n";
+                if (property.first == "Address")
+                {
+                    value = std::get_if<uint64_t>(&property.second);
+                    if (value != nullptr)
+                    {
+                        peciAddress = static_cast<uint8_t>(*value);
+                    }
+                }
+                if (property.first == "CpuID")
+                {
+                    value = std::get_if<uint64_t>(&property.second);
+                    if (value != nullptr)
+                    {
+                        cpu = static_cast<size_t>(*value);
+                    }
+                }
+                if (property.first == "PIROM_i2cAddress")
+                {
+                    value = std::get_if<uint64_t>(&property.second);
+                    if (value != nullptr)
+                    {
+                        i2cDevice = static_cast<uint8_t>(*value);
+                    }
+                }
+                if (property.first == "PIROM_i2cBus")
+                {
+                    value = std::get_if<uint64_t>(&property.second);
+                    if (value != nullptr)
+                    {
+                        i2cBus = static_cast<uint8_t>(*value);
+                    }
+                }
+            }
+
+            ///\todo replace this with present + power state
+            if (cpu != 0 && peciAddress != 0)
+            {
+                std::string path = cpuPath + std::to_string(cpu);
+                cpuInfoMap.insert_or_assign(
+                    cpu, std::make_shared<CPUInfo>(
+                             static_cast<sdbusplus::bus::bus&>(*conn), path,
+                             cpu, peciAddress, defaultI2cBus,
+                             defaultI2cSlaveAddr0 + cpu - 1));
+                // need to consider if it exists - not to re-create a new one
+                if (i2cBus)
+                {
+                    cpuInfoMap[cpu]->i2cBus = static_cast<uint8_t>(i2cBus);
+                }
+                if (i2cDevice)
+                {
+                    cpuInfoMap[cpu]->i2cDevice =
+                        static_cast<uint8_t>(i2cDevice);
+                }
+                // update cpuInfo
+                getProcessorInfo(io, conn, cpu);
+            }
+        },
+        service, object, "org.freedesktop.DBus.Properties", "GetAll",
+        interface);
+}
+
+/**
+ * D-Bus client: to get platform specific configs
+ */
+static int
+    getCpuConfiguration(boost::asio::io_service& io,
+                        std::shared_ptr<sdbusplus::asio::connection>& conn,
+                        sdbusplus::asio::object_server& objServer)
+{
+    // Get the Memory device configuration
+    // In case it's not available, set a match for it
+    std::cerr << "get cpu configuration\n";
+    static std::unique_ptr<sdbusplus::bus::match::match> cpuConfigMatch =
+        std::make_unique<sdbusplus::bus::match::match>(
+            *conn,
+            "type='signal',interface='org.freedesktop.DBus.Properties',member='"
+            "PropertiesChanged',arg0namespace='xyz.openbmc_project."
+            "Configuration.XeonCPU'",
+            [&io, &conn, &objServer](sdbusplus::message::message& msg) {
+                std::cerr << "get cpu configuration match\n";
+                static boost::asio::steady_timer filterTimer(io);
+                filterTimer.expires_after(
+                    std::chrono::seconds(configCheckInterval));
+
+                filterTimer.async_wait(
+                    [&io, &conn,
+                     &objServer](const boost::system::error_code& ec) {
+                        if (ec == boost::asio::error::operation_aborted)
+                        {
+                            return; // we're being canceled
+                        }
+                        else if (ec)
+                        {
+                            std::cerr << "Error: " << ec.message() << "\n";
+                            return;
+                        }
+                        cpuConfigMatch.reset();
+                        getCpuConfiguration(io, conn, objServer);
+                    });
+            });
+
+    conn->async_method_call(
+        [&io, &conn, &objServer](
+            boost::system::error_code ec,
+            const boost::container::flat_map<
+                std::string, boost::container::flat_map<
+                                 std::string, std::vector<std::string>>>&
+                subtree) {
+#if DEBUG
+            std::cerr << "async_method_call callback\n";
+#endif
+            if (ec)
+            {
+                std::cerr << "error with async_method_call\n";
+                return;
+            }
+            if (subtree.empty())
+            {
+                // No config data yet, so wait for the match
+                return;
+            }
+
+            cpuConfigMatch.reset();
+
+            for (const auto& object : subtree)
+            {
+                for (const auto& service : object.second)
+                {
+                    for (const auto& interface : service.second)
+                    {
+                        if (interface ==
+                            "xyz.openbmc_project.Configuration.XeonCPU")
+                        {
+                            getCpuAddress(io, conn, service.first, object.first,
+                                          interface);
+                            break;
+                        }
+                    }
+                }
+            }
+            std::cerr << "getCpuConfiguration callback complete\n";
+            return;
+        },
+        "xyz.openbmc_project.ObjectMapper",
+        "/xyz/openbmc_project/object_mapper",
+        "xyz.openbmc_project.ObjectMapper", "GetSubTree",
+        "/xyz/openbmc_project/", 0,
+        std::array<const char*, 1>{
+            "xyz.openbmc_project.Configuration.XeonCPU"});
+
+    return 0;
 }
 
 } // namespace cpu_info
@@ -400,24 +560,8 @@ int main(int argc, char* argv[])
         bus, "/xyz/openbmc_project/inventory");
 
     // Start the PECI check loop
-    boost::asio::steady_timer peciWaitTimer(
-        io, std::chrono::seconds(phosphor::cpu_info::peciCheckInterval));
-    peciWaitTimer.async_wait([&peciWaitTimer, &io, &conn,
-                              &server](const boost::system::error_code& ec) {
-        if (ec)
-        {
-            // operation_aborted is expected if timer is canceled
-            // before completion.
-            if (ec != boost::asio::error::operation_aborted)
-            {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "PECI Available Check async_wait failed ",
-                    phosphor::logging::entry("EC=0x%x", ec.value()));
-            }
-            return;
-        }
-        phosphor::cpu_info::peciAvailableCheck(peciWaitTimer, io, conn, server);
-    });
+    // start get configuration
+    phosphor::cpu_info::getCpuConfiguration(io, conn, server);
 
     io.run();
 
