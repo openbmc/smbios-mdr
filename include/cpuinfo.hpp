@@ -29,30 +29,27 @@ static constexpr char const* cpuInfoInterface = "xyz.openbmc_project.CPUInfo";
 static constexpr const char* cpuPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 
-static constexpr const int peciCheckInterval = 10;
+static constexpr const int configCheckInterval = 10;
+static constexpr const int peciCheckInterval = 60;
 
 /** \ todo add cpu interface to CPUInfo and consolidate with smbios service
  * using processor =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
 */
-using asset =
-    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset;
 
-struct CPUInfo : sdbusplus::server::object_t<asset>
+// This will be expanded to CPUInfo object_server in a future patch
+struct CPUInfo
 {
-  public:
-    CPUInfo() = delete;
-    CPUInfo(const CPUInfo&) = delete;
-    CPUInfo& operator=(const CPUInfo&) = delete;
-    CPUInfo(CPUInfo&&) = delete;
-    CPUInfo& operator=(CPUInfo&&) = delete;
-    ~CPUInfo() = default;
-
-    CPUInfo(sdbusplus::bus::bus& bus, const std::string& path) :
-        sdbusplus::server::object_t<asset>(bus, path.c_str())
+    CPUInfo(const size_t cpuId, const uint8_t peciAddress,
+            const uint8_t i2cBusNum, const uint8_t i2cSlaveAddress) :
+        id(cpuId),
+        peciAddr(peciAddress), i2cBus(i2cBusNum), i2cDevice(i2cSlaveAddress)
     {}
 
-  private:
+    uint8_t id;
+    uint8_t peciAddr;
+    uint8_t i2cBus;
+    uint8_t i2cDevice;
 };
 
 } // namespace cpu_info
