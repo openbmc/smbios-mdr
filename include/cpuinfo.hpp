@@ -27,7 +27,8 @@ static constexpr char const* cpuInfoObject = "xyz.openbmc_project.CPUInfo";
 static constexpr char const* cpuInfoPath = "/xyz/openbmc_project/CPUInfo";
 static constexpr char const* cpuInfoInterface = "xyz.openbmc_project.CPUInfo";
 
-static constexpr const int peciCheckInterval = 10;
+static constexpr const int configCheckInterval = 10;
+static constexpr const int peciCheckInterval = 60;
 
 /** \ todo add cpu interface to CPUInfo and consolidate with smbios service
  * using processor =
@@ -46,9 +47,18 @@ struct CPUInfo : sdbusplus::server::object_t<asset>
     CPUInfo& operator=(CPUInfo&&) = delete;
     ~CPUInfo() = default;
 
-    CPUInfo(sdbusplus::bus::bus& bus, const std::string& path) :
-        sdbusplus::server::object_t<asset>(bus, path.c_str())
+    CPUInfo(sdbusplus::bus::bus& bus, const std::string& path,
+            const size_t& cpuId, const uint8_t& peciAddress,
+            const uint8_t& i2cBusNum, const uint8_t& i2cSlaveAddress) :
+        sdbusplus::server::object_t<asset>(bus, path.c_str()),
+        id(cpuId), peciAddr(peciAddress), i2cBus(i2cBusNum),
+        i2cDevice(i2cSlaveAddress)
     {}
+
+    uint8_t id;
+    uint8_t peciAddr;
+    uint8_t i2cBus;
+    uint8_t i2cDevice;
 
   private:
 };
