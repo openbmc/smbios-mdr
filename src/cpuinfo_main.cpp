@@ -16,6 +16,7 @@
 
 #include "cpuinfo.hpp"
 #include "cpuinfo_utils.hpp"
+#include "speed_select.hpp"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -45,8 +46,6 @@ namespace phosphor
 namespace cpu_info
 {
 
-static constexpr const char* cpuPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 static constexpr const char* cpuInterfaceName =
     "xyz.openbmc_project.Inventory.Decorator.Asset";
 static constexpr const char* cpuProcessName =
@@ -401,6 +400,8 @@ int main(int argc, char* argv[])
         bus, "/xyz/openbmc_project/inventory");
 
     cpu_info::hostStateInit(io, conn);
+
+    cpu_info::sst::init(io, conn);
 
     // Start the PECI check loop
     boost::asio::steady_timer peciWaitTimer(
