@@ -26,6 +26,8 @@ namespace cpu_info
 static constexpr char const* cpuInfoObject = "xyz.openbmc_project.CPUInfo";
 static constexpr char const* cpuInfoPath = "/xyz/openbmc_project/CPUInfo";
 static constexpr char const* cpuInfoInterface = "xyz.openbmc_project.CPUInfo";
+static constexpr const char* cpuPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 
 static constexpr const int peciCheckInterval = 10;
 
