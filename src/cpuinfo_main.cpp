@@ -15,6 +15,7 @@
 */
 
 #include "cpuinfo.hpp"
+#include "speed_select.hpp"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -44,8 +45,6 @@ namespace phosphor
 namespace cpu_info
 {
 
-static constexpr const char* cpuPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 static constexpr const char* cpuInterfaceName =
     "xyz.openbmc_project.Inventory.Decorator.Asset";
 static constexpr const char* cpuProcessName =
@@ -357,6 +356,7 @@ static void
         // get the PECI client address list
         getPECIAddrMap(cpuMap);
         getProcessorInfo(conn, objServer, cpuMap);
+        getSSTConfigInfo(io, conn);
     }
     if (!peciAvailable || !cpuMap.size())
     {
