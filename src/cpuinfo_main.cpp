@@ -15,6 +15,7 @@
 */
 
 #include "cpuinfo.hpp"
+#include "speed_select.hpp"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -44,8 +45,6 @@ namespace phosphor
 namespace cpu_info
 {
 
-static constexpr const char* cpuPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 static constexpr const char* cpuInterfaceName =
     "xyz.openbmc_project.Inventory.Decorator.Asset";
 static constexpr const char* cpuProcessName =
@@ -398,6 +397,8 @@ int main(int argc, char* argv[])
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*conn);
     sdbusplus::server::manager::manager objManager(
         bus, "/xyz/openbmc_project/inventory");
+
+    cpu_info::sst::init(io, conn);
 
     // Start the PECI check loop
     boost::asio::steady_timer peciWaitTimer(
