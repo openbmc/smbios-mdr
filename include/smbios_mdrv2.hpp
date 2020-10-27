@@ -222,18 +222,22 @@ static inline std::string positionToString(uint8_t positionNum,
     uint16_t limit = mdrSMBIOSSize; // set a limit to avoid endless loop
 
     char* target = reinterpret_cast<char*>(dataIn + structLen);
+    if (target == nullptr)
+    {
+        return "";
+    }
     for (uint8_t index = 1; index < positionNum; index++)
     {
         for (; *target != '\0'; target++)
         {
             limit--;
-            if (limit < 1)
+            if (limit < 1 || target == nullptr)
             {
                 return "";
             }
         }
         target++;
-        if (*target == '\0')
+        if (target == nullptr || (target != nullptr && *target == '\0'))
         {
             return ""; // 0x00 0x00 means end of the entry.
         }
