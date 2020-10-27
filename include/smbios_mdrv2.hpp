@@ -238,6 +238,10 @@ static inline std::string positionToString(uint8_t positionNum,
             return ""; // 0x00 0x00 means end of the entry.
         }
     }
+    if (target == nullptr)
+    {
+        return "";
+    }
 
     std::string result = target;
     return result;
