@@ -15,6 +15,7 @@
 */
 
 #include "cpuinfo.hpp"
+#include "cpuinfo_utils.hpp"
 #include "speed_select.hpp"
 
 #include <errno.h>
@@ -517,6 +518,8 @@ int main(int argc, char* argv[])
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*conn);
     sdbusplus::server::manager::manager objManager(
         bus, "/xyz/openbmc_project/inventory");
+
+    cpu_info::hostStateInit(io, conn);
 
     cpu_info::sst::init(io, conn);
 
