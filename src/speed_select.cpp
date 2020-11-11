@@ -15,6 +15,7 @@
 #include "speed_select.hpp"
 
 #include "cpuinfo.hpp"
+#include "cpuinfo_utils.hpp"
 
 #include <peci.h>
 
@@ -24,74 +25,13 @@
 #include <xyz/openbmc_project/Inventory/Item/Cpu/OperatingConfig/server.hpp>
 
 #include <iostream>
+#include <memory>
+#include <string>
 
 namespace cpu_info
 {
 namespace sst
 {
-
-using BaseCurrentOperatingConfig =
-    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Control::
-                                    Processor::server::CurrentOperatingConfig>;
-
-using OperatingConfig =
-    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
-                                    Item::Cpu::server::OperatingConfig>;
-
-class CurrentOperatingConfig : public BaseCurrentOperatingConfig
-{
-  public:
-    using BaseCurrentOperatingConfig::appliedConfig;
-    using BaseCurrentOperatingConfig::BaseCurrentOperatingConfig;
-    using BaseCurrentOperatingConfig::baseSpeedPriorityEnabled;
-
-    // Override Getters
-
-    sdbusplus::message::object_path appliedConfig() const override
-    {
-        // TODO: Dynamic retrieval of current config via PECI.
-        return BaseCurrentOperatingConfig::appliedConfig();
-    }
-    bool baseSpeedPriorityEnabled() const override
-    {
-        // TODO: Dynamic retrieval of SST-BF enablement via PECI.
-        return BaseCurrentOperatingConfig::baseSpeedPriorityEnabled();
-    }
-
-    // Override Setters
-
-    sdbusplus::message::object_path
-        appliedConfig(sdbusplus::message::object_path value) override
-    {
-        // TODO: Replace exception with actual implementation to validate and
-        // set current config via PECI.
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
-        appliedConfig(value, false);
-        return value;
-    }
-    bool baseSpeedPriorityEnabled(bool value) override
-    {
-        // TODO: Replace exception with actual implementation to set SST-BF
-        // enablement via PECI.
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
-        baseSpeedPriorityEnabled(value, false);
-        return value;
-    }
-};
-
-/**
- * Local container for all SST-related D-Bus objects associated with one CPU.
- */
-struct CPUDBusState
-{
-    /**
-     * Object describing the currently applied SST config - modifiable by
-     * external applications.
-     */
-    std::unique_ptr<CurrentOperatingConfig> curConfig;
-    /** Objects describing all available SST configs - not modifiable. */
-    std::vector<std::unique_ptr<OperatingConfig>> availConfigs;
-};
 
 class PECIError : public std::runtime_error
 {
@@ -101,6 +41,21 @@ class PECIError : public std::runtime_error
 constexpr uint64_t bit(int index)
 {
     return (1ull << index);
+}
+
+constexpr int extendedModel(CPUModel model)
+{
+    return (model >> 16) & 0xF;
+}
+
+constexpr bool modelSupportsDiscovery(CPUModel model)
+{
+    return extendedModel(model) >= extendedModel(icx);
+}
+
+constexpr bool modelSupportsControl(CPUModel model)
+{
+    return extendedModel(model) > extendedModel(icx);
 }
 
 /**
@@ -151,8 +106,13 @@ struct PECIManager
 {
     int peciAddress;
     bool peciWoken;
-    PECIManager(int address) : peciAddress(address), peciWoken(false)
-    {}
+    CPUModel cpuModel;
+    int mbBus;
+
+    PECIManager(int address, CPUModel model) : peciAddress(address), peciWoken(false), cpuModel(model)
+    {
+        mbBus = (model == icx) ? 14 : 31;
+    }
 
     ~PECIManager()
     {
@@ -203,12 +163,18 @@ struct PECIManager
 
     // PCode OS Mailbox interface register locations
     static constexpr int mbSegment = 0;
-    static constexpr int mbBus = 14;
     static constexpr int mbDevice = 30;
     static constexpr int mbFunction = 1;
     static constexpr int mbDataReg = 0xA0;
     static constexpr int mbInterfaceReg = 0xA4;
     static constexpr int mbRegSize = sizeof(uint32_t);
+
+    enum MailboxStatus
+    {
+        NoError = 0x0,
+        InvalidCommand = 0x1,
+        IllegalData = 0x16
+    };
 
     /**
      * Send a single Write PCI Config Local command, targeting the PCU CR1
@@ -282,12 +248,16 @@ struct PECIManager
      * @param[in]   inputData   Data to put in mailbox. Is always written, but
      *                          will be ignored by PCode if command is a
      *                          "getter".
+     * @param[out]  responseCode    Optional parameter to receive the
+     *                              mailbox-level response status. If null, a
+     *                              PECIError will be thrown for error status.
      *
      * @return  Data returned in mailbox. Value is undefined if command is a
      *          "setter".
      */
     uint32_t sendPECIOSMailboxCmd(uint8_t command, uint8_t subCommand,
-                                  uint32_t inputData = 0)
+                                  uint32_t inputData = 0,
+                                  MailboxStatus* responseCode = nullptr)
     {
         // The simple mailbox algorithm just says to wait until the busy bit
         // is clear, but we'll give up after 10 tries. It's arbitrary but that's
@@ -326,9 +296,16 @@ struct PECIManager
         }
 
         // Read command return status or error code from interface register
-        // TODO: What is PCODE response codes??  NO_ERROR; ILLEGAL_DATA;
-        // INVALID_COMMAND ... these are not defined anywhere
-        // assert((interfaceReg & 0xFF) == ??);
+        auto status = static_cast<MailboxStatus>(interfaceReg & 0xFF);
+        if (responseCode != nullptr)
+        {
+            *responseCode = status;
+        }
+        else if (status != MailboxStatus::NoError)
+        {
+            throw PECIError(std::string("OS Mailbox returned with error: ") +
+                            std::to_string(status));
+        }
 
         // Read command return data from the data register
         return rdMailboxReg(mbDataReg);
@@ -344,6 +321,7 @@ template <uint8_t subcommand>
 struct OsMailboxCommand
 {
     uint32_t value;
+    PECIManager::MailboxStatus status;
     /**
      * Construct the command object with required PECI address and up to 4
      * optional 1-byte input data parameters.
@@ -353,7 +331,13 @@ struct OsMailboxCommand
     {
         uint32_t param =
             (param4 << 24) | (param3 << 16) | (param2 << 8) | param1;
-        value = pm.sendPECIOSMailboxCmd(0x7F, subcommand, param);
+        value = pm.sendPECIOSMailboxCmd(0x7F, subcommand, param, &status);
+    }
+
+    /** Return whether the mailbox status indicated success or not. */
+    bool success() const
+    {
+        return status == PECIManager::MailboxStatus::NoError;
     }
 };
 
@@ -390,6 +374,11 @@ struct GetConfigTdpControl : OsMailboxCommand<0x1>
     FIELD(bool, factSupport, 0, 0);
 };
 
+struct SetConfigTdpControl : OsMailboxCommand<0x2>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
 struct GetTdpInfo : OsMailboxCommand<0x3>
 {
     using OsMailboxCommand::OsMailboxCommand;
@@ -404,6 +393,11 @@ struct GetCoreMask : OsMailboxCommand<0x6>
 };
 
 struct GetTurboLimitRatios : OsMailboxCommand<0x7>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
+struct SetLevel : OsMailboxCommand<0x8>
 {
     using OsMailboxCommand::OsMailboxCommand;
 };
@@ -434,6 +428,202 @@ struct PbfGetP1HiP1LoInfo : OsMailboxCommand<0x21>
     using OsMailboxCommand::OsMailboxCommand;
     FIELD(int, p1Hi, 15, 8);
     FIELD(int, p1Lo, 7, 0);
+};
+
+using BaseCurrentOperatingConfig =
+    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Control::
+                                    Processor::server::CurrentOperatingConfig>;
+
+using BaseOperatingConfig =
+    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                    Item::Cpu::server::OperatingConfig>;
+
+class OperatingConfig : public BaseOperatingConfig
+{
+  public:
+    std::string path;
+    int level;
+
+  public:
+    using BaseOperatingConfig::BaseOperatingConfig;
+    OperatingConfig(sdbusplus::bus::bus& bus, int level_, std::string path_) :
+      BaseOperatingConfig(bus, path_.c_str(), action::defer_emit),
+      path(std::move(path_)), level(level_)
+    {}
+};
+
+class CPUConfig : public BaseCurrentOperatingConfig
+{
+  private:
+    /** Objects describing all available SST configs - not modifiable. */
+    std::vector<std::unique_ptr<OperatingConfig>> availConfigs;
+    sdbusplus::bus::bus& bus;
+    int peciAddress;
+    std::string path; ///< D-Bus object path
+    CPUModel cpuModel;
+    bool modificationAllowed;
+
+    // Keep mutable copies of the properties so we can cache values that we
+    // retrieve in the getters.
+    mutable int currentLevel;
+    mutable bool bfEnabled;
+    /**
+     * Cached SST-TF enablement status. This is not exposed on D-Bus, but it's
+     * needed because the command SetConfigTdpControl requires setting both
+     * bits at once.
+     */
+    mutable bool tfEnabled;
+
+  public:
+    CPUConfig(sdbusplus::bus::bus& bus_, int index, CPUModel model) :
+        BaseCurrentOperatingConfig(bus_, generatePath(index).c_str(), action::defer_emit),
+        bus(bus_), path(generatePath(index))
+    {
+        peciAddress = index + MIN_CLIENT_ADDR;
+        cpuModel = model;
+        modificationAllowed = modelSupportsControl(model);
+    }
+
+    //
+    // Overrides
+    //
+
+    sdbusplus::message::object_path appliedConfig() const override
+    {
+        // If CPU is powered off, return power-up default value of Level 0.
+        int level = 0;
+        if (hostState != HostState::Off)
+        {
+            // Otherwise, try to read current state
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                level = GetLevelsInfo(pm).currentConfigTdpLevel();
+                currentLevel = level;
+            }
+            catch(PECIError& error)
+            {
+                // If it failed (WOP contention?), return the last state we
+                // read.
+                level = currentLevel;
+                std::cerr << "Failed to get SST-PP level: " << error.what() << "\n";
+            }
+        }
+        return generateConfigPath(level);
+    }
+
+    bool baseSpeedPriorityEnabled() const override
+    {
+        if (hostState != HostState::Off)
+        {
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                GetConfigTdpControl tdpControl(pm, currentLevel);
+                bfEnabled = tdpControl.pbfEnabled();
+                tfEnabled = tdpControl.factEnabled();
+            }
+            catch (PECIError& error)
+            {
+                std::cerr << "Failed to get SST-BF status: " << error.what() << "\n";
+            }
+        }
+        return bfEnabled;
+    }
+
+    sdbusplus::message::object_path
+        appliedConfig(sdbusplus::message::object_path value) override
+    {
+        if (!modificationAllowed || hostState != HostState::Booted)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        }
+
+        const OperatingConfig* newConfig = nullptr;
+        for (const auto& config : availConfigs)
+        {
+            if (config->path == value.str)
+            {
+                newConfig = config.get();
+            }
+        }
+
+        if (newConfig == nullptr)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::InvalidArgument();
+        }
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            SetLevel(pm, newConfig->level);
+            currentLevel = newConfig->level;
+        }
+        catch (PECIError& error)
+        {
+            std::cerr << "Failed to set new SST-PP level: " << error.what() << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure();
+        }
+
+        // return value not used
+        return sdbusplus::message::object_path();
+    }
+
+    bool baseSpeedPriorityEnabled(bool value) override
+    {
+        if (!modificationAllowed || hostState != HostState::Booted)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        }
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            uint32_t param = (value ? bit(17) : 0) |
+                             (tfEnabled ? bit(16) : 0);
+            SetConfigTdpControl tdpControl(pm, param);
+        }
+        catch (PECIError& error)
+        {
+            std::cerr << "Failed to set SST-BF status: " << error.what() << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Error::InternalFailure();
+        }
+
+        // return value not used
+        return false;
+    }
+
+    //
+    // Additions
+    //
+
+    OperatingConfig& newConfig(int level)
+    {
+        availConfigs.emplace_back(std::make_unique<OperatingConfig>(bus, level, generateConfigPath(level)));
+        return *availConfigs.back();
+    }
+
+    std::string generateConfigPath(int level) const
+    {
+        return path + "/config" + std::to_string(level);
+    }
+
+        // Now that everything's in place, emit the interface added signals
+        // which were deferred. This is required for ObjectMapper to pick up the
+        // objects.
+    void finalize()
+    {
+        emit_added();
+        for (auto& config : availConfigs)
+        {
+            config->emit_added();
+        }
+    }
+
+    static std::string generatePath(int index)
+    {
+        return phosphor::cpu_info::cpuPath + std::to_string(index);
+    }
 };
 
 /**
@@ -525,25 +715,25 @@ static void getSingleConfig(PECIManager& peciManager, int level,
  * @param[in,out]   conn    D-Bus ASIO connection.
  *
  * @throw PECIError     A PECI command failed on a CPU which had previously
- *                      responded to a Ping.
+ *                      responded to a command.
  */
-static void discoverCPUsAndConfigs(std::vector<CPUDBusState>& cpuList,
+static void discoverCPUsAndConfigs(std::vector<std::unique_ptr<CPUConfig>>& cpuList,
                                    sdbusplus::asio::connection& conn)
 {
     for (int i = MIN_CLIENT_ADDR; i <= MAX_CLIENT_ADDR; ++i)
     {
         // We could possibly check D-Bus for CPU presence and model, but PECI is
-        // 10x faster and so much simpler. Currently only ICX is supported here.
+        // 10x faster and so much simpler.
         uint8_t cc, stepping;
         CPUModel cpuModel;
         auto status = peci_GetCPUID(i, &cpuModel, &stepping, &cc);
         if (status != PECI_CC_SUCCESS || cc != PECI_DEV_CC_SUCCESS ||
-            cpuModel != icx)
+            !modelSupportsDiscovery(cpuModel))
         {
             continue;
         }
 
-        PECIManager peciManager(i);
+        PECIManager peciManager(i, cpuModel);
 
         // Continue if processor does not support SST-PP
         GetLevelsInfo getLevelsInfo(peciManager);
@@ -554,8 +744,6 @@ static void discoverCPUsAndConfigs(std::vector<CPUDBusState>& cpuList,
 
         // Generate D-Bus object path for this processor.
         int cpuIndex = i - MIN_CLIENT_ADDR;
-        std::string cpuPath =
-            phosphor::cpu_info::cpuPath + std::to_string(cpuIndex);
 
         // Read the Turbo Ratio Limit Cores MSR which is used to generate the
         // Turbo Profile for each profile. This is a package scope MSR, so just
@@ -567,52 +755,52 @@ static void discoverCPUsAndConfigs(std::vector<CPUDBusState>& cpuList,
             throw PECIError("Failed to read TRL MSR");
         }
 
-        // Create container to keep D-Bus server objects
-        cpuList.emplace_back();
-        CPUDBusState& cpu = cpuList.back();
-
-        bool baseSpeedPriorityEnabled = false;
-        std::string currentConfig("/");
-
-        for (int level = 0; level <= getLevelsInfo.configTdpLevels(); ++level)
-        {
-            // levels 1 and 2 are legacy/deprecated in ice lake
-            // originally used for AVX license pre-granting
-            // but they may be reused for more levels in future generations.
-            // TODO: Check for OS Mailbox return code to determine if these
-            // levels are implemented.
-            if (level == 1 || level == 2)
-                continue;
-
-            // Create a separate object representing this config
-            auto configPath = cpuPath + "/config" + std::to_string(level);
-
-            cpu.availConfigs.emplace_back(
-                std::make_unique<OperatingConfig>(conn, configPath.c_str()));
-
-            getSingleConfig(peciManager, level, *cpu.availConfigs.back(),
-                            trlCores);
-
-            // Save BF enablement state of current profile
-            if (level == getLevelsInfo.currentConfigTdpLevel())
-            {
-                GetConfigTdpControl tdpControl(peciManager, level);
-                baseSpeedPriorityEnabled = tdpControl.pbfEnabled();
-                currentConfig = configPath;
-            }
-        }
-
-        // Create the per-CPU configuration object on the CPU object
+        // Create the per-CPU configuration object
         // The server::object_t wrapper does not have a constructor which passes
         // along property initializing values, so instead we need to tell it to
         // defer emitting InterfacesAdded. If we emit the object added signal
         // with an invalid object_path value, dbus-broker will kick us off the
         // bus and we'll crash.
-        cpu.curConfig = std::make_unique<CurrentOperatingConfig>(
-            conn, cpuPath.c_str(), CurrentOperatingConfig::action::defer_emit);
-        cpu.curConfig->appliedConfig(currentConfig, true);
-        cpu.curConfig->baseSpeedPriorityEnabled(baseSpeedPriorityEnabled, true);
-        cpu.curConfig->emit_added();
+        cpuList.emplace_back(std::make_unique<CPUConfig>(conn, cpuIndex, cpuModel));
+        CPUConfig& cpu = *cpuList.back();
+
+        bool foundCurrentLevel = false;
+
+        for (int level = 0; level <= getLevelsInfo.configTdpLevels(); ++level)
+        {
+            // levels 1 and 2 are legacy/deprecated, originally used for AVX
+            // license pre-granting. They may be reused for more levels in
+            // future generations.
+            // We can check if they are supported by running any command for
+            // this level and checking the mailbox return status.
+            GetConfigTdpControl tdpControl(peciManager, level);
+            if (!tdpControl.success())
+            {
+                continue;
+            }
+
+            getSingleConfig(peciManager, level, cpu.newConfig(level),
+                            trlCores);
+
+            if (level == getLevelsInfo.currentConfigTdpLevel())
+            {
+                foundCurrentLevel = true;
+            }
+        }
+
+        if (!foundCurrentLevel)
+        {
+            // In case we didn't encounter a PECI error, but also didn't find
+            // the config which is supposedly applied, we won't be able to
+            // populate the CurrentOperatingConfig so we have to remove this CPU
+            // from consideration.
+            std::cerr << "CPU " << cpuIndex
+                      << " claimed SST support but invalid configs\n";
+            cpuList.pop_back();
+            continue;
+        }
+
+        cpu.finalize();
     }
 }
 
@@ -620,21 +808,34 @@ void init(boost::asio::io_context& ioc,
           const std::shared_ptr<sdbusplus::asio::connection>& conn)
 {
     static boost::asio::steady_timer peciRetryTimer(ioc);
-    static std::vector<CPUDBusState> cpus;
+    static std::vector<std::unique_ptr<CPUConfig>> cpus;
+    static int peciErrorCount = 0;
 
     try
     {
         discoverCPUsAndConfigs(cpus, *conn);
+        peciErrorCount = 0;
     }
     catch (const PECIError& err)
     {
         std::cerr << "PECI Error: " << err.what() << '\n';
-        std::cerr << "Retrying SST discovery later\n";
         // Drop any created interfaces to avoid presenting incomplete info
         cpus.clear();
+
+        // In case of repeated failure to finish discovery, turn off this
+        // feature altogether. Possible cause is that the CPU model does not
+        // actually support the necessary mailbox commands.
+        if (++peciErrorCount >= 50)
+        {
+            std::cerr << "Aborting SST discovery\n";
+            return;
+        }
+
+        std::cerr << "Retrying SST discovery later\n";
     }
 
     // Retry later if no CPUs were available, or there was a PECI error.
+    // TODO: if there were cpus but none supported sst, stop trying.
     if (cpus.empty())
     {
         peciRetryTimer.expires_after(std::chrono::seconds(10));
