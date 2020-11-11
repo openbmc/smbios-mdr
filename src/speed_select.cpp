@@ -15,10 +15,12 @@
 #include "speed_select.hpp"
 
 #include "cpuinfo.hpp"
+#include "cpuinfo_utils.hpp"
 
 #include <peci.h>
 
 #include <boost/asio/steady_timer.hpp>
+#include <xyz/openbmc_project/Common/Device/error.hpp>
 #include <xyz/openbmc_project/Common/error.hpp>
 #include <xyz/openbmc_project/Control/Processor/CurrentOperatingConfig/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Cpu/OperatingConfig/server.hpp>
@@ -50,6 +52,11 @@ constexpr int extendedModel(CPUModel model)
 constexpr bool modelSupportsDiscovery(CPUModel model)
 {
     return extendedModel(model) >= extendedModel(icx);
+}
+
+constexpr bool modelSupportsControl(CPUModel model)
+{
+    return extendedModel(model) > extendedModel(icx);
 }
 
 /**
@@ -316,6 +323,12 @@ struct PECIManager
 template <uint8_t subcommand>
 struct OsMailboxCommand
 {
+    enum ErrorPolicy
+    {
+        Throw,
+        NoThrow
+    };
+
     uint32_t value;
     PECIManager::MailboxStatus status;
     /**
@@ -323,11 +336,19 @@ struct OsMailboxCommand
      * optional 1-byte input data parameters.
      */
     OsMailboxCommand(PECIManager& pm, uint8_t param1 = 0, uint8_t param2 = 0,
-                     uint8_t param3 = 0, uint8_t param4 = 0)
+                     uint8_t param3 = 0, uint8_t param4 = 0) :
+        OsMailboxCommand(pm, ErrorPolicy::Throw, param1, param2, param3, param4)
+    {}
+
+    OsMailboxCommand(PECIManager& pm, ErrorPolicy errorPolicy,
+                     uint8_t param1 = 0, uint8_t param2 = 0, uint8_t param3 = 0,
+                     uint8_t param4 = 0)
     {
+        PECIManager::MailboxStatus* callStatus =
+            errorPolicy == Throw ? nullptr : &status;
         uint32_t param =
             (param4 << 24) | (param3 << 16) | (param2 << 8) | param1;
-        value = pm.sendPECIOSMailboxCmd(0x7F, subcommand, param, &status);
+        value = pm.sendPECIOSMailboxCmd(0x7F, subcommand, param, callStatus);
     }
 
     /** Return whether the mailbox status indicated success or not. */
@@ -370,6 +391,11 @@ struct GetConfigTdpControl : OsMailboxCommand<0x1>
     FIELD(bool, factSupport, 0, 0);
 };
 
+struct SetConfigTdpControl : OsMailboxCommand<0x2>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
 struct GetTdpInfo : OsMailboxCommand<0x3>
 {
     using OsMailboxCommand::OsMailboxCommand;
@@ -384,6 +410,11 @@ struct GetCoreMask : OsMailboxCommand<0x6>
 };
 
 struct GetTurboLimitRatios : OsMailboxCommand<0x7>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
+struct SetLevel : OsMailboxCommand<0x8>
 {
     using OsMailboxCommand::OsMailboxCommand;
 };
@@ -447,8 +478,33 @@ class CPUConfig : public BaseCurrentOperatingConfig
     int peciAddress;
     std::string path; ///< D-Bus object path
     CPUModel cpuModel;
-    int currentLevel;
-    bool bfEnabled;
+    bool modificationAllowed;
+
+    // Keep mutable copies of the properties so we can cache values that we
+    // retrieve in the getters.
+    mutable int currentLevel;
+    mutable bool bfEnabled;
+    /**
+     * Cached SST-TF enablement status. This is not exposed on D-Bus, but it's
+     * needed because the command SetConfigTdpControl requires setting both
+     * bits at once.
+     */
+    mutable bool tfEnabled;
+
+    /**
+     * Enforce common pre-conditions for D-Bus set property handlers.
+     */
+    void setPropertyCheck()
+    {
+        if (!modificationAllowed)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        }
+        if (hostState != HostState::PostComplete)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::Unavailable();
+        }
+    }
 
   public:
     CPUConfig(sdbusplus::bus::bus& bus_, int index, CPUModel model) :
@@ -458,12 +514,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
     {
         peciAddress = index + MIN_CLIENT_ADDR;
         cpuModel = model;
-
-        // For now, read level and SST-BF status just once at start. Will be
-        // done dynamically in handlers in future commit.
-        PECIManager pm(peciAddress, cpuModel);
-        currentLevel = GetLevelsInfo(pm).currentConfigTdpLevel();
-        bfEnabled = GetConfigTdpControl(pm, currentLevel).pbfEnabled();
+        modificationAllowed = modelSupportsControl(model);
     }
 
     //
@@ -472,25 +523,105 @@ class CPUConfig : public BaseCurrentOperatingConfig
 
     sdbusplus::message::object_path appliedConfig() const override
     {
-        return generateConfigPath(currentLevel);
+        // If CPU is powered off, return power-up default value of Level 0.
+        int level = 0;
+        if (hostState != HostState::Off)
+        {
+            // Otherwise, try to read current state
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                level = GetLevelsInfo(pm).currentConfigTdpLevel();
+                currentLevel = level;
+            }
+            catch (const PECIError& error)
+            {
+                // If it failed (WOP contention?), return the last state we
+                // read.
+                level = currentLevel;
+                std::cerr << "Failed to get SST-PP level: " << error.what()
+                          << "\n";
+            }
+        }
+        return generateConfigPath(level);
     }
 
     bool baseSpeedPriorityEnabled() const override
     {
+        if (hostState != HostState::Off)
+        {
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                GetConfigTdpControl tdpControl(pm, currentLevel);
+                bfEnabled = tdpControl.pbfEnabled();
+                tfEnabled = tdpControl.factEnabled();
+            }
+            catch (const PECIError& error)
+            {
+                std::cerr << "Failed to get SST-BF status: " << error.what()
+                          << "\n";
+            }
+        }
         return bfEnabled;
     }
 
     sdbusplus::message::object_path
-        appliedConfig(sdbusplus::message::object_path /* value */) override
+        appliedConfig(sdbusplus::message::object_path value) override
     {
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        setPropertyCheck();
+
+        const OperatingConfig* newConfig = nullptr;
+        for (const auto& config : availConfigs)
+        {
+            if (config->path == value.str)
+            {
+                newConfig = config.get();
+            }
+        }
+
+        if (newConfig == nullptr)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::
+                InvalidArgument();
+        }
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            SetLevel(pm, newConfig->level);
+            currentLevel = newConfig->level;
+        }
+        catch (const PECIError& error)
+        {
+            std::cerr << "Failed to set new SST-PP level: " << error.what()
+                      << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Device::Error::
+                WriteFailure();
+        }
+
         // return value not used
         return sdbusplus::message::object_path();
     }
 
-    bool baseSpeedPriorityEnabled(bool /* value */) override
+    bool baseSpeedPriorityEnabled(bool value) override
     {
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        setPropertyCheck();
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            uint32_t param = (value ? bit(17) : 0) | (tfEnabled ? bit(16) : 0);
+            SetConfigTdpControl tdpControl(pm, param);
+        }
+        catch (const PECIError& error)
+        {
+            std::cerr << "Failed to set SST-BF status: " << error.what()
+                      << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Error::
+                InternalFailure();
+        }
+
         // return value not used
         return false;
     }
@@ -618,15 +749,24 @@ static void getSingleConfig(PECIManager& peciManager, int level,
  *                          system is powered off and no CPUs are accessible.
  * @param[in,out]   conn    D-Bus ASIO connection.
  *
+ * @return  Whether discovery was successfully finished.
+ *
  * @throw PECIError     A PECI command failed on a CPU which had previously
  *                      responded to a command.
  */
-static void
+static bool
     discoverCPUsAndConfigs(std::vector<std::unique_ptr<CPUConfig>>& cpuList,
-                           sdbusplus::asio::connection& conn)
+                           boost::asio::io_context& ioc,
+                           sdbusplus::asio::connection& conn
+                           )
 {
     for (int i = MIN_CLIENT_ADDR; i <= MAX_CLIENT_ADDR; ++i)
     {
+        if (hostState == HostState::Off)
+        {
+            return false;
+        }
+
         // We could possibly check D-Bus for CPU presence and model, but PECI is
         // 10x faster and so much simpler.
         uint8_t cc, stepping;
@@ -679,11 +819,17 @@ static void
             // future generations.
             // We can check if they are supported by running any command for
             // this level and checking the mailbox return status.
-            GetConfigTdpControl tdpControl(peciManager, level);
+            GetConfigTdpControl tdpControl(peciManager,
+                                           GetConfigTdpControl::NoThrow, level);
             if (!tdpControl.success())
             {
                 continue;
             }
+
+            // Let the event handler run any waiting tasks. If there is a lot of
+            // PECI contention, SST discovery could take a long time. This lets
+            // us get updates to hostState and handle any D-Bus requests.
+            ioc.poll();
 
             getSingleConfig(peciManager, level, cpu.newConfig(level), trlCores);
 
@@ -707,6 +853,8 @@ static void
 
         cpu.finalize();
     }
+
+    return true;
 }
 
 void init(boost::asio::io_context& ioc,
@@ -716,16 +864,14 @@ void init(boost::asio::io_context& ioc,
     static std::vector<std::unique_ptr<CPUConfig>> cpus;
     static int peciErrorCount = 0;
 
+    bool finished = false;
     try
     {
-        discoverCPUsAndConfigs(cpus, *conn);
-        peciErrorCount = 0;
+        finished = discoverCPUsAndConfigs(cpus, ioc, *conn);
     }
     catch (const PECIError& err)
     {
         std::cerr << "PECI Error: " << err.what() << '\n';
-        // Drop any created interfaces to avoid presenting incomplete info
-        cpus.clear();
 
         // In case of repeated failure to finish discovery, turn off this
         // feature altogether. Possible cause is that the CPU model does not
@@ -740,9 +886,10 @@ void init(boost::asio::io_context& ioc,
     }
 
     // Retry later if no CPUs were available, or there was a PECI error.
-    // TODO: if there were cpus but none supported sst, stop trying.
-    if (cpus.empty())
+    if (!finished)
     {
+        // Drop any created interfaces to avoid presenting incomplete info
+        cpus.clear();
         peciRetryTimer.expires_after(std::chrono::seconds(10));
         peciRetryTimer.async_wait([&ioc, conn](boost::system::error_code ec) {
             if (ec)
