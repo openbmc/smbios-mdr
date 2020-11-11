@@ -15,6 +15,7 @@
 #include "speed_select.hpp"
 
 #include "cpuinfo.hpp"
+#include "cpuinfo_utils.hpp"
 
 #include <peci.h>
 
@@ -50,6 +51,11 @@ constexpr int extendedModel(CPUModel model)
 constexpr bool modelSupportsDiscovery(CPUModel model)
 {
     return extendedModel(model) >= extendedModel(icx);
+}
+
+constexpr bool modelSupportsControl(CPUModel model)
+{
+    return extendedModel(model) > extendedModel(icx);
 }
 
 /**
@@ -369,6 +375,11 @@ struct GetConfigTdpControl : OsMailboxCommand<0x1>
     FIELD(bool, factSupport, 0, 0);
 };
 
+struct SetConfigTdpControl : OsMailboxCommand<0x2>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
 struct GetTdpInfo : OsMailboxCommand<0x3>
 {
     using OsMailboxCommand::OsMailboxCommand;
@@ -383,6 +394,11 @@ struct GetCoreMask : OsMailboxCommand<0x6>
 };
 
 struct GetTurboLimitRatios : OsMailboxCommand<0x7>
+{
+    using OsMailboxCommand::OsMailboxCommand;
+};
+
+struct SetLevel : OsMailboxCommand<0x8>
 {
     using OsMailboxCommand::OsMailboxCommand;
 };
@@ -446,8 +462,18 @@ class CPUConfig : public BaseCurrentOperatingConfig
     int peciAddress;
     std::string path; ///< D-Bus object path
     CPUModel cpuModel;
-    int currentLevel;
-    bool bfEnabled;
+    bool modificationAllowed;
+
+    // Keep mutable copies of the properties so we can cache values that we
+    // retrieve in the getters.
+    mutable int currentLevel;
+    mutable bool bfEnabled;
+    /**
+     * Cached SST-TF enablement status. This is not exposed on D-Bus, but it's
+     * needed because the command SetConfigTdpControl requires setting both
+     * bits at once.
+     */
+    mutable bool tfEnabled;
 
   public:
     CPUConfig(sdbusplus::bus::bus& bus_, int index, CPUModel model) :
@@ -457,12 +483,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
     {
         peciAddress = index + MIN_CLIENT_ADDR;
         cpuModel = model;
-
-        // For now, read level and SST-BF status just once at start. Will be
-        // done dynamically in handlers in future commit.
-        PECIManager pm(peciAddress, cpuModel);
-        currentLevel = GetLevelsInfo(pm).currentConfigTdpLevel();
-        bfEnabled = GetConfigTdpControl(pm, currentLevel).pbfEnabled();
+        modificationAllowed = modelSupportsControl(model);
     }
 
     //
@@ -471,25 +492,111 @@ class CPUConfig : public BaseCurrentOperatingConfig
 
     sdbusplus::message::object_path appliedConfig() const override
     {
-        return generateConfigPath(currentLevel);
+        // If CPU is powered off, return power-up default value of Level 0.
+        int level = 0;
+        if (hostState != HostState::Off)
+        {
+            // Otherwise, try to read current state
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                level = GetLevelsInfo(pm).currentConfigTdpLevel();
+                currentLevel = level;
+            }
+            catch (PECIError& error)
+            {
+                // If it failed (WOP contention?), return the last state we
+                // read.
+                level = currentLevel;
+                std::cerr << "Failed to get SST-PP level: " << error.what()
+                          << "\n";
+            }
+        }
+        return generateConfigPath(level);
     }
 
     bool baseSpeedPriorityEnabled() const override
     {
+        if (hostState != HostState::Off)
+        {
+            try
+            {
+                PECIManager pm(peciAddress, cpuModel);
+                GetConfigTdpControl tdpControl(pm, currentLevel);
+                bfEnabled = tdpControl.pbfEnabled();
+                tfEnabled = tdpControl.factEnabled();
+            }
+            catch (PECIError& error)
+            {
+                std::cerr << "Failed to get SST-BF status: " << error.what()
+                          << "\n";
+            }
+        }
         return bfEnabled;
     }
 
     sdbusplus::message::object_path
         appliedConfig(sdbusplus::message::object_path value) override
     {
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        if (!modificationAllowed || hostState != HostState::Booted)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        }
+
+        const OperatingConfig* newConfig = nullptr;
+        for (const auto& config : availConfigs)
+        {
+            if (config->path == value.str)
+            {
+                newConfig = config.get();
+            }
+        }
+
+        if (newConfig == nullptr)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::
+                InvalidArgument();
+        }
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            SetLevel(pm, newConfig->level);
+            currentLevel = newConfig->level;
+        }
+        catch (PECIError& error)
+        {
+            std::cerr << "Failed to set new SST-PP level: " << error.what()
+                      << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Error::
+                InternalFailure();
+        }
+
         // return value not used
         return sdbusplus::message::object_path();
     }
 
     bool baseSpeedPriorityEnabled(bool value) override
     {
-        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        if (!modificationAllowed || hostState != HostState::Booted)
+        {
+            throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
+        }
+
+        try
+        {
+            PECIManager pm(peciAddress, cpuModel);
+            uint32_t param = (value ? bit(17) : 0) | (tfEnabled ? bit(16) : 0);
+            SetConfigTdpControl tdpControl(pm, param);
+        }
+        catch (PECIError& error)
+        {
+            std::cerr << "Failed to set SST-BF status: " << error.what()
+                      << "\n";
+            throw sdbusplus::xyz::openbmc_project::Common::Error::
+                InternalFailure();
+        }
+
         // return value not used
         return false;
     }
