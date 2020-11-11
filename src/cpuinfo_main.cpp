@@ -15,6 +15,7 @@
 */
 
 #include "cpuinfo.hpp"
+#include "cpuinfo_utils.hpp"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -398,6 +399,8 @@ int main(int argc, char* argv[])
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*conn);
     sdbusplus::server::manager::manager objManager(
         bus, "/xyz/openbmc_project/inventory");
+
+    cpu_info::hostStateInit(io, conn);
 
     // Start the PECI check loop
     boost::asio::steady_timer peciWaitTimer(
