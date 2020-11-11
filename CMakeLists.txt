@@ -50,7 +50,8 @@ target_link_libraries (smbiosmdrv2app ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${SDBUSPLUSPLUS_LIBRARIES})
 target_link_libraries (smbiosmdrv2app phosphor_logging)
 
-add_executable (cpuinfoapp src/cpuinfo_main.cpp src/speed_select.cpp)
+add_executable (cpuinfoapp src/cpuinfo_main.cpp src/speed_select.cpp
+                src/cpuinfo_utils.cpp)
 target_link_libraries (cpuinfoapp ${SYSTEMD_LIBRARIES})
 target_link_libraries (cpuinfoapp ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (cpuinfoapp ${SDBUSPLUSPLUS_LIBRARIES})
