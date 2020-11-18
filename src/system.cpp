@@ -72,6 +72,25 @@ std::string System::version(std::string value)
         uint8_t biosVerByte = biosInfo->biosVersion;
         std::string tempS =
             positionToString(biosInfo->biosVersion, biosInfo->length, dataIn);
+        for (std::string::size_type i = 0; i < tempS.length(); ++i)
+        {
+            if (!std::isprint(tempS[i]))
+            {
+                std::ofstream smbiosFile(mdrType2File, std::ios_base::trunc);
+                if (!smbiosFile.good())
+                {
+                    phosphor::logging::log<phosphor::logging::level::ERR>(
+                        "Open MDRV2 table file failure");
+                    return "";
+                }
+                smbiosFile.clear();
+                smbiosFile.close();
+                phosphor::logging::log<phosphor::logging::level::ERR>(
+                    "Find non-print char, delete the broken MDRV2 table file!");
+                return sdbusplus::xyz::openbmc_project::Inventory::Decorator::
+                    server::Revision::version(result);
+            }
+        }
         result = tempS;
     }
 
