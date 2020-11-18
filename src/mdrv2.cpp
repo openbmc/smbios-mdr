@@ -35,9 +35,8 @@ std::vector<uint8_t> MDR_V2::getDirectoryInformation(uint8_t dirIndex)
     if (dirIndex > smbiosDir.dirEntries)
     {
         responseDir.push_back(0);
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "getDirectoryInformation: Invalid Parameter");
-        return responseDir;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
     }
     responseDir.push_back(mdr2Version);
     responseDir.push_back(smbiosDir.dirVersion);
@@ -118,6 +117,8 @@ std::vector<uint8_t> MDR_V2::getDataOffer()
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "smbios is not ready for update");
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            UpdateInProgress();
     }
     return offer;
 }
@@ -172,9 +173,8 @@ std::vector<uint8_t> MDR_V2::getDataInformation(uint8_t idIndex)
 
     if (idIndex >= maxDirEntries)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "getDataInformation: Invalid Parameter");
-        return responseInfo;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
     }
 
     for (uint8_t index = 0; index < sizeof(DataIdStruct); index++)
@@ -253,13 +253,15 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Send Dir info failed - input parameter invalid");
-        return teminate;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
     }
     if (dirEntry.size() < sizeof(Mdr2DirEntry))
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Directory size invalid");
-        return teminate;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
     }
     if (dirVersion == smbiosDir.dirVersion)
     {
@@ -305,9 +307,8 @@ bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t flag,
 {
     if (idIndex >= maxDirEntries)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "sendDataInformation:  Invalid Parameter");
-        return false;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
     }
     int entryChanged = 0;
     if (smbiosDir.dir[idIndex].common.dataSetSize != dataLen)
@@ -340,7 +341,8 @@ int MDR_V2::findIdIndex(std::vector<uint8_t> dataInfo)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Length of dataInfo invalid");
-        return -1;
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidId();
     }
     std::array<uint8_t, 16> arrayDataInfo;
 
@@ -362,9 +364,7 @@ int MDR_V2::findIdIndex(std::vector<uint8_t> dataInfo)
             return index;
         }
     }
-    phosphor::logging::log<phosphor::logging::level::ERR>(
-        "findIdIndex: Invalid ID");
-    return -1;
+    throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::InvalidId();
 }
 
 uint8_t MDR_V2::directoryEntries(uint8_t value)
@@ -546,9 +546,7 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
 
         if (dataIn == nullptr)
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Data not populated");
-            return ret;
+            throw std::runtime_error("Data not populated");
         }
 
         do
@@ -619,8 +617,7 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
         return ret;
     }
 
-    phosphor::logging::log<phosphor::logging::level::ERR>(
-        "Invalid record type");
+    throw std::invalid_argument("Invalid record type");
     return ret;
 }
 
