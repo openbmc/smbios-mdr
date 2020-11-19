@@ -6,8 +6,6 @@ set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set (DBUS_OBJECT_NAME "xyz/openbmc_project/Smbios/MDR_V2")
 set (DBUS_INTF_NAME "xyz.openbmc_project.Smbios.MDR_V2")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
-
 include_directories (
     ${CMAKE_CURRENT_SOURCE_DIR}/include/phosphor-dbus-interfaces
 )
