@@ -66,7 +66,7 @@ std::vector<uint8_t> MDR_V2::getDirectoryInformation(uint8_t dirIndex)
 bool MDR_V2::smbiosIsAvailForUpdate(uint8_t index)
 {
     bool ret = false;
-    if (index > maxDirEntries)
+    if (index >= maxDirEntries)
     {
         return ret;
     }
