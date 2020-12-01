@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94402b4_228d626f",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000276
+      },
+      "writtenOn": "2020-12-01T21:28:47Z",
+      "side": 1,
+      "message": "I believe that get_if can return a nullptr.",
+      "revId": "57d3091ed7226bb39e9ecb44f51337810901b924",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
