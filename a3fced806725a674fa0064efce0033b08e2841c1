@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32df646_2524b18e",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-01-25T06:38:00Z",
+      "side": 1,
+      "message": "I know you could set mutable to modify member value in const function.\nBut I don\u0027t know why you have to modify member value in the const property read function.\nYou could do such modification operation in the property set function if necessary like line 570.",
+      "range": {
+        "startLine": 535,
+        "startChar": 16,
+        "endLine": 535,
+        "endChar": 28
+      },
+      "revId": "a3fced806725a674fa0064efce0033b08e2841c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0269e326_4d43c50a",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-01-25T06:38:00Z",
+      "side": 1,
+      "message": "I know you could set mutable to modify member value in const function.\nBut I don\u0027t know why you have to modify member value in the const property read function.\nYou could do such modification operation in the property set function if necessary like line 607.",
+      "range": {
+        "startLine": 557,
+        "startChar": 0,
+        "endLine": 558,
+        "endChar": 52
+      },
+      "revId": "a3fced806725a674fa0064efce0033b08e2841c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
