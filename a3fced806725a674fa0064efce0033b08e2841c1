@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a27f25a_cc556e75",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-01-26T03:35:22Z",
+      "side": 1,
+      "message": "It\u0027s a good question. I added some comments to explain a bit more (and fix a bug), so hopefully it\u0027s more clear.\n\nThe key point is that the value may change even if the client never calls set-property, because the values can be changed by in-band software. Hence why the full PECI transaction is done on every get-property.",
+      "parentUuid": "b32df646_2524b18e",
+      "range": {
+        "startLine": 535,
+        "startChar": 16,
+        "endLine": 535,
+        "endChar": 28
+      },
+      "revId": "a3fced806725a674fa0064efce0033b08e2841c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0269e326_4d43c50a",
         "filename": "src/speed_select.cpp",
         "patchSetId": 7
