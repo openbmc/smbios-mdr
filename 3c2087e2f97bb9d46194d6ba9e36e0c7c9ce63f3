@@ -39,6 +39,24 @@
       "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1740f07_13f26203",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-10T18:45:43Z",
+      "side": 1,
+      "message": "There may or may not be. This functions runs for the first time before ioc.run() starts, but if it fails it will reschedule itself for later, after ioc.run() is going. The main point of this is to get updates to hostState, and I confirmed it does work for that (at least in the second case where ioc.run() is going).\nBut my testing also showed a somewhat unrelated bug, so I have another update coming.",
+      "parentUuid": "f23d7ca0_9b49394d",
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
