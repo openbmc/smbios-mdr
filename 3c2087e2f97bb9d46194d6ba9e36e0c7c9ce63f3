@@ -140,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "8594c47f_fd1c9793",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-12T19:02:21Z",
+      "side": 1,
+      "message": "This is not allowed for this property - return Common.Device.Error.WriteFailure",
+      "range": {
+        "startLine": 625,
+        "startChar": 12,
+        "endLine": 626,
+        "endChar": 34
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92dadc1d_995a81b4",
         "filename": "src/speed_select.cpp",
         "patchSetId": 8
