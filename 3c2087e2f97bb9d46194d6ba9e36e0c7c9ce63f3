@@ -25,6 +25,98 @@
     },
     {
       "key": {
+        "uuid": "5c5131e3_09f64fde",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-12T18:10:43Z",
+      "side": 1,
+      "message": "nit \u0026 not part of this patch: Any reason, these are not part of initialization list?",
+      "range": {
+        "startLine": 520,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 25
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2ed02f_61955218",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-12T18:10:43Z",
+      "side": 1,
+      "message": "Is this still correct after catch?",
+      "range": {
+        "startLine": 568,
+        "startChar": 12,
+        "endLine": 568,
+        "endChar": 32
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b26101_f63fc56b",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-12T18:10:43Z",
+      "side": 1,
+      "message": "May want a comment on this throw if failed to check since it is not obvious",
+      "range": {
+        "startLine": 576,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 27
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f11146b_df4318f0",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-12T18:10:43Z",
+      "side": 1,
+      "message": "nit: use constexpr?",
+      "range": {
+        "startLine": 618,
+        "startChar": 42,
+        "endLine": 618,
+        "endChar": 44
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "463d489d_41aef41c",
         "filename": "src/speed_select.cpp",
         "patchSetId": 8
@@ -41,6 +133,29 @@
         "startChar": 12,
         "endLine": 619,
         "endChar": 54
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dadc1d_995a81b4",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-12T18:10:43Z",
+      "side": 1,
+      "message": "should this be outside the loop?",
+      "range": {
+        "startLine": 768,
+        "startChar": 0,
+        "endLine": 771,
+        "endChar": 9
       },
       "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
