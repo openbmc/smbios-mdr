@@ -16,6 +16,24 @@
       "revId": "57d3091ed7226bb39e9ecb44f51337810901b924",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85978ff_89ccb8f8",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-13T03:32:46Z",
+      "side": 1,
+      "message": "True, and the if() is checking the value which was returned/assigned, so the handler is not called if it\u0027s null.",
+      "parentUuid": "d94402b4_228d626f",
+      "revId": "57d3091ed7226bb39e9ecb44f51337810901b924",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
