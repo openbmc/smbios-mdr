@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04504dca_7a2be19e",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74094e3d_873a7ee7",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "initialize",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62df35f7_a5bb57d7",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "static",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 4
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7afe4f_6142fe2a",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "Can you still read the reply if the service is down?",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096f58fb_861e5165",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "Does it have to be lambda? Can it be an old fashioned function pointer?",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 58
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ddbdef_06dea423",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "nit: function name a little misleading for me because it also setup the match in addition to initialize hostState",
+      "range": {
+        "startLine": 236,
+        "startChar": 5,
+        "endLine": 236,
+        "endChar": 18
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c82c88_2bb0d0b5",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-02-16T22:05:26Z",
+      "side": 1,
+      "message": "This function should only be called once per service, it might be better to just add the two subscribe calls in the main function.",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 68
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
