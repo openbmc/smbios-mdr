@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "c2c2d716_d4ca7733",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04504dca_7a2be19e",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "499512d2_b58e1df6",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74094e3d_873a7ee7",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62df35f7_a5bb57d7",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb13cda7_9ad0b10b",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62df35f7_a5bb57d7",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 4
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3b04686e_dc5ec46b",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "No, good catch. moved into try block",
+      "parentUuid": "fc7afe4f_6142fe2a",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "096f58fb_861e5165",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2021-02-16T22:05:26Z",
       "side": 1,
       "message": "Does it have to be lambda? Can it be an old fashioned function pointer?",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 58
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c89e9d_2fdfb954",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "In fact, I have never tested this code with lambdas, since for the current code I\u0027m only using pointers to free functions. But I still wrote this with arbitrary handlers in mind, just to practice with templates and lambdas a bit.",
+      "parentUuid": "096f58fb_861e5165",
       "range": {
         "startLine": 135,
         "startChar": 4,
@@ -137,6 +257,30 @@
       "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b1d9b8_f921c97b",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "Done - renamed to hostStateSetup",
+      "parentUuid": "a7ddbdef_06dea423",
+      "range": {
+        "startLine": 236,
+        "startChar": 5,
+        "endLine": 236,
+        "endChar": 18
+      },
+      "revId": "1326101298021d35b55a27439a3944a5bb1bc6e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {

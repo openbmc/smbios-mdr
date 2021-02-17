@@ -22,6 +22,30 @@
       "revId": "01e40896ca08a368d72c8825756894438f13f4c8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1dde76_728b1a19",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T00:13:18Z",
+      "side": 1,
+      "message": "The two are pretty close in meaning, but CoreBiosDone is (for some reason) considered more reliable and will be preferred over the GPIO going forward - see https://gerrit.openbmc-project.xyz/c/openbmc/x86-power-control/+/40108. Once that x86-power-control change is merged, this code could go back to using OperatingSystemState.",
+      "parentUuid": "45b0119c_b7f75b2f",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 78
+      },
+      "revId": "01e40896ca08a368d72c8825756894438f13f4c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
