@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07053ded_ab1fcc64",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2772f40f_444ad7e5",
+      "range": {
+        "startLine": 484,
+        "startChar": 49,
+        "endLine": 484,
+        "endChar": 52
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c5131e3_09f64fde",
         "filename": "src/speed_select.cpp",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cffa620_610a4614",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "No, I went ahead and made some things const and moved everything into the initialization list.",
+      "parentUuid": "5c5131e3_09f64fde",
+      "range": {
+        "startLine": 520,
+        "startChar": 0,
+        "endLine": 521,
+        "endChar": 25
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cc834f14_df6c9435",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "Yes, since it is the previously read (cached) value. Same with currentLevel in appliedConfig(). There was a small bug since bfEnabled/currentLevel were not initialized in the constructor, but I fixed that too.",
+      "parentUuid": "ca2ed02f_61955218",
+      "range": {
+        "startLine": 568,
+        "startChar": 12,
+        "endLine": 568,
+        "endChar": 32
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03b26101_f63fc56b",
         "filename": "src/speed_select.cpp",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "326354f1_71f9cb63",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "Agreed - renamed to setPropertyCheckOrThrow()",
+      "parentUuid": "03b26101_f63fc56b",
+      "range": {
+        "startLine": 576,
+        "startChar": 8,
+        "endLine": 576,
+        "endChar": 27
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f11146b_df4318f0",
         "filename": "src/speed_select.cpp",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4225200f_04452740",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "we can\u0027t - the value is not const",
+      "parentUuid": "3f11146b_df4318f0",
+      "range": {
+        "startLine": 618,
+        "startChar": 42,
+        "endLine": 618,
+        "endChar": 44
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -222,6 +342,30 @@
       "writtenOn": "2021-02-12T18:10:43Z",
       "side": 1,
       "message": "should this be outside the loop?",
+      "range": {
+        "startLine": 768,
+        "startChar": 0,
+        "endLine": 771,
+        "endChar": 9
+      },
+      "revId": "3c2087e2f97bb9d46194d6ba9e36e0c7c9ce63f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98dce882_e7820d97",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-02-17T01:16:16Z",
+      "side": 1,
+      "message": "No, see the comment in the newest patchset - I want to get updates to hostState and quit early if the power is turned off.",
+      "parentUuid": "92dadc1d_995a81b4",
       "range": {
         "startLine": 768,
         "startChar": 0,
