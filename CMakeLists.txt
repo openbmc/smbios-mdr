@@ -94,3 +94,67 @@ set (SERVICE_FILES
      ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
      ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service)
 install (FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
+
+option (IPMI_BLOB "Add IPMI Blobs" ON)
+
+if (IPMI_BLOB)
+    include_directories (${CMAKE_CURRENT_SOURCE_DIR}/src/smbios-ipmi-blobs)
+    add_library (smbiosstore SHARED src/smbios-ipmi-blobs/handler.cpp
+                 src/smbios-ipmi-blobs/main.cpp)
+    set_target_properties (smbiosstore PROPERTIES VERSION "0.0.0")
+    set_target_properties (smbiosstore PROPERTIES SOVERSION "0")
+    target_link_libraries (smbiosstore sdbusplus)
+    target_link_libraries (smbiosstore phosphor_logging)
+    install (TARGETS smbiosstore DESTINATION lib/ipmid-providers)
+
+    if (NOT YOCTO)
+        add_dependencies (smbiosstore phosphor-host-ipmid phosphor-ipmi-blobs)
+
+        file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/prefix)
+        externalproject_add (
+            phosphor-host-ipmid PREFIX ${CMAKE_BINARY_DIR}/phosphor-host-ipmid
+            GIT_REPOSITORY https://github.com/openbmc/phosphor-host-ipmid
+            SOURCE_DIR ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src
+            CONFIGURE_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src &&
+            ./bootstrap.sh && ./configure --prefix=${CMAKE_BINARY_DIR}/prefix
+            BUILD_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src && make
+            INSTALL_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src &&
+            make install LOG_DOWNLOAD ON)
+        include_directories (${CMAKE_BINARY_DIR}/prefix/include)
+        link_directories (${CMAKE_BINARY_DIR}/prefix/lib)
+
+        externalproject_add (
+            phosphor-ipmi-blobs PREFIX ${CMAKE_BINARY_DIR}/phosphor-ipmi-blobs
+            GIT_REPOSITORY https://github.com/openbmc/phosphor-ipmi-blobs
+            SOURCE_DIR ${CMAKE_BINARY_DIR}/phosphor-ipmi-blobs-src
+            CONFIGURE_COMMAND "" BUILD_COMMAND "" INSTALL_COMMAND "")
+        include_directories (${CMAKE_BINARY_DIR}/phosphor-ipmi-blobs-src)
+
+        # unit tests
+        set (BLOB_TEST_SRC src/smbios-ipmi-blobs/test)
+
+        find_package (GTest REQUIRED)
+
+        enable_testing ()
+
+        add_executable (runBlobBasic ${BLOB_TEST_SRC}/handler_unittest.cpp)
+        add_test (NAME test_blobbasic COMMAND runBlobBasic)
+        target_link_libraries (runBlobBasic smbiosstore ${GTEST_BOTH_LIBRARIES})
+
+        add_executable (runBlobOpen ${BLOB_TEST_SRC}/handler_open_unittest.cpp)
+        add_test (NAME test_blobopen COMMAND runBlobOpen)
+        target_link_libraries (runBlobOpen smbiosstore ${GTEST_BOTH_LIBRARIES})
+
+        add_executable (runBlobReadWrite
+                        ${BLOB_TEST_SRC}/handler_readwrite_unittest.cpp)
+        add_test (NAME test_blobreadwrite COMMAND runBlobReadWrite)
+        target_link_libraries (runBlobReadWrite
+            smbiosstore -lgmock -lgmock_main ${GTEST_BOTH_LIBRARIES})
+
+        add_executable (runBlobStatClose
+                        ${BLOB_TEST_SRC}/handler_statclose_unittest.cpp)
+        add_test (NAME test_blobStatClose COMMAND runBlobStatClose)
+        target_link_libraries (runBlobStatClose smbiosstore
+                               ${GTEST_BOTH_LIBRARIES})
+    endif ()
+endif ()
