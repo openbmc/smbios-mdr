@@ -94,3 +94,51 @@ set (SERVICE_FILES
      ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
      ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service)
 install (FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
+
+option (IPMI_BLOB "Add IPMI Blobs" ON)
+
+if (IPMI_BLOB)
+    include_directories (${CMAKE_CURRENT_SOURCE_DIR}/src/smbios-ipmi-blobs)
+
+    add_library (smbiosstore SHARED src/smbios-ipmi-blobs/handler.cpp
+		 src/smbios-ipmi-blobs/main.cpp)
+    set_target_properties (smbiosstore PROPERTIES VERSION "0.0.0")
+    set_target_properties (smbiosstore PROPERTIES SOVERSION "0")
+    target_link_libraries (smbiosstore sdbusplus)
+    target_link_libraries (smbiosstore phosphor_logging)
+    install (TARGETS smbiosstore DESTINATION lib/ipmid-providers)
+
+    if (NOT YOCTO)
+	set (BLOB_TEST_SRC src/smbios-ipmi-blobs/test)
+
+	find_package (GTest REQUIRED)
+
+    	enable_testing ()
+
+	add_executable (runBlobBasic ${BLOB_TEST_SRC}/handler_unittest.cpp)
+        add_test (NAME test_blobbasic COMMAND runBlobBasic)
+	target_link_libraries (runBlobBasic smbiosstore ${GTEST_BOTH_LIBRARIES})
+
+	add_executable (runBlobOpen ${BLOB_TEST_SRC}/handler_open_unittest.cpp)
+        add_test (NAME test_blobopen COMMAND runBlobOpen)
+	target_link_libraries (runBlobOpen smbiosstore ${GTEST_BOTH_LIBRARIES})
+
+	add_executable (runBlobReadWrite
+			${BLOB_TEST_SRC}/handler_readwrite_unittest.cpp)
+	add_test (NAME test_blobreadwrite COMMAND runBlobReadWrite)
+	target_link_libraries (runBlobReadWrite
+		smbiosstore -lgmock -lgmock_main ${GTEST_BOTH_LIBRARIES})
+
+	add_executable (runBlobCommit
+			${BLOB_TEST_SRC}/handler_commit_unittest.cpp)
+	add_test (NAME test_blobCommit COMMAND runBlobCommit)
+	target_link_libraries (runBlobCommit smbiosstore
+			       ${GTEST_BOTH_LIBRARIES})
+
+	add_executable (runBlobStatClose
+			${BLOB_TEST_SRC}/handler_statclose_unittest.cpp)
+	add_test (NAME test_blobStatClose COMMAND runBlobStatClose)
+	target_link_libraries (runBlobStatClose smbiosstore
+			       ${GTEST_BOTH_LIBRARIES})
+    endif ()
+endif ()
