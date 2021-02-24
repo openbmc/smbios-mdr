@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bbc8df7_51b4d6ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-02-24T09:59:30Z",
+      "side": 1,
+      "message": "\u003e 1. Whether test it on Intel platform? and see what\u0027s the impact?\n\u003e 2. Please share detail test method here.\n\n1. Yes. It is tested on Intel platform in google data center. It will create a dedicated IPMI blob handler for SMBIOS tables shown as a library artifact on BMC, as google BMC will not contain all the commands of [intel-ipmi-oem](https://github.com/openbmc/intel-ipmi-oem), especially the intel OEM MDR commands. Thus, we use [IPMI blob interface](https://github.com/openbmc/phosphor-ipmi-blobs) to update SMBIOS tables.\n\n2. Test requires to implement IPMI blob commands on BIOS/UEFI side. [link to the BIOS change](https://github.com/u-root/u-root/pull/1944). When booting, BIOS will issue IPMI commands to write and commit the blob. In the commit operation, smbios-mdr AgentSynchronizeData method will be called, such that SMBIOS tables can get updated.\n\nTypically, Intel BMC will not not need this library. Easy to set this off in compiling. But for non-Intel BMC that wanna absorb SMBIOS tables in BIOS time and parse the SMBIOS tables use smbios-mdr, it would be handy.",
+      "parentUuid": "3d42f126_64b89885",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141d828b_f45fc8f9",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ec59a426_5149b2c1",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-02-24T09:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "141d828b_f45fc8f9",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 3
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7e91f46_19c1204a",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0abc3f_c7547906",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-02-24T09:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e91f46_19c1204a",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 3
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
