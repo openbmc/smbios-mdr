@@ -226,6 +226,7 @@ static void
         return;
     }
 
+    auto cpuInfo = cpuInfoMap[cpu];
     uint8_t cpuAddr = cpuInfoMap[cpu]->peciAddr;
     uint8_t i2cBus = cpuInfoMap[cpu]->i2cBus;
     uint8_t i2cDevice = cpuInfoMap[cpu]->i2cDevice;
@@ -309,9 +310,7 @@ static void
                 std::stringstream stream;
                 stream << std::hex << cpuPPIN;
                 std::string serialNumber(stream.str());
-                // cpuInfo->serialNumber(serialNumber);
-                values.emplace_back(
-                    std::make_pair("SerialNumber", serialNumber));
+                cpuInfo->uniqueIdentifier(serialNumber);
             }
 
             std::optional<std::string> sspec =
@@ -410,7 +409,7 @@ static void
                     i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
                 }
                 cpuInfoMap.insert_or_assign(
-                    cpu, std::make_shared<CPUInfo>(cpu, peciAddress, i2cBus,
+                    cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress, i2cBus,
                                                    i2cDevice));
 
                 getProcessorInfo(io, conn, cpu);
