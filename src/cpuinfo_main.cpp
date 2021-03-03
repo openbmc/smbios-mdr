@@ -311,7 +311,7 @@ static void
                 std::string serialNumber(stream.str());
                 // cpuInfo->serialNumber(serialNumber);
                 values.emplace_back(
-                    std::make_pair("SerialNumber", serialNumber));
+                    std::make_pair("UniqueIdentifier", serialNumber));
             }
 
             std::optional<std::string> sspec =
