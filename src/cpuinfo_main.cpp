@@ -448,9 +448,7 @@ static void
                 std::stringstream stream;
                 stream << std::hex << cpuPPIN;
                 std::string serialNumber(stream.str());
-                // cpuInfo->serialNumber(serialNumber);
-                setCpuProperty(conn, cpu, assetInterfaceName, "SerialNumber",
-                               serialNumber);
+                cpuInfo->uniqueIdentifier(serialNumber);
             }
 
             tryReadSSpec(conn, cpuInfo);
@@ -538,7 +536,7 @@ static void
                     i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
                 }
                 cpuInfoMap.insert_or_assign(
-                    cpu, std::make_shared<CPUInfo>(cpu, peciAddress, i2cBus,
+                    cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress, i2cBus,
                                                    i2cDevice));
 
                 getProcessorInfo(io, conn, cpu);
