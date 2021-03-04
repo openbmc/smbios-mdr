@@ -46,6 +46,30 @@
       "revId": "01e40896ca08a368d72c8825756894438f13f4c8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d13d5a_4fe5fe36",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-04T02:28:05Z",
+      "side": 1,
+      "message": "I see now that x86-power-control will not use CoreBiosDone. Still, there is little practical difference for this code, so I\u0027ll probably leave it as is unless I have to make another code update.",
+      "parentUuid": "ef1dde76_728b1a19",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 78
+      },
+      "revId": "01e40896ca08a368d72c8825756894438f13f4c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }

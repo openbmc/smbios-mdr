@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "509027ba_e5766d91",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-04T02:28:05Z",
+      "side": 1,
+      "message": "This comment is wrong, now that I understand lambdas and forward a little better. If the caller passes handler by lvalue\u0026, then we will make a copy of it. If we make one copy, then we could make two and copy into both match callbacks, so the comment is misleading. But the code still works fine as it is, so I\u0027ll only fix this comment if I make another change.",
+      "range": {
+        "startLine": 132,
+        "startChar": 72,
+        "endLine": 134,
+        "endChar": 66
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
