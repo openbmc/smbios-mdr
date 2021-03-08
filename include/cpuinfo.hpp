@@ -48,6 +48,7 @@ struct CPUInfo
     uint8_t peciAddr;
     uint8_t i2cBus;
     uint8_t i2cDevice;
+    std::string sSpec;
 };
 
 } // namespace cpu_info
