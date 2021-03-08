@@ -26,6 +26,7 @@
 #include <boost/asio/steady_timer.hpp>
 
 #include <iostream>
+#include <list>
 #include <optional>
 #include <sstream>
 #include <string>
@@ -46,7 +47,7 @@ namespace phosphor
 namespace cpu_info
 {
 static constexpr bool debug = false;
-static constexpr const char* cpuInterfaceName =
+static constexpr const char* assetInterfaceName =
     "xyz.openbmc_project.Inventory.Decorator.Asset";
 static constexpr const char* cpuProcessName =
     "xyz.openbmc_project.Smbios.MDR_V2";
@@ -62,9 +63,39 @@ using CPUInfoMap = boost::container::flat_map<size_t, std::shared_ptr<CPUInfo>>;
 
 static CPUInfoMap cpuInfoMap = {};
 
-static boost::container::flat_map<size_t,
-                                  std::unique_ptr<sdbusplus::bus::match_t>>
-    cpuUpdatedMatch = {};
+/**
+ * Simple aggregate to define an external D-Bus property which needs to be set
+ * by this application.
+ */
+struct CpuProperty
+{
+    std::string object;
+    std::string interface;
+    std::string name;
+    std::string value;
+};
+
+/**
+ * List of properties we want to set on other D-Bus objects. This list is kept
+ * around so that if any target objects are removed+readded, then we can set the
+ * values again.
+ */
+static std::list<CpuProperty> propertiesToSet;
+
+static std::ostream& logStream(int cpu)
+{
+    return std::cerr << "[CPU " << cpu << "] ";
+}
+
+static void
+    setCpuProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                   size_t cpu, const std::string& interface,
+                   const std::string& propName, const std::string& propVal);
+static void
+    setDbusProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                    size_t cpu, const CpuProperty& newProp);
+static void createCpuUpdatedMatch(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu);
 
 static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
                                             uint8_t regAddr, size_t count)
@@ -144,37 +175,142 @@ static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
         sspec.push_back(static_cast<unsigned char>(value));
     }
     ::close(fd);
+
+    if (sspec.size() < 4)
+    {
+        return std::nullopt;
+    }
+
     return sspec;
 }
 
-static void setAssetProperty(
-    const std::shared_ptr<sdbusplus::asio::connection>& conn, const int& cpu,
-    const std::vector<std::pair<std::string, std::string>>& propValues)
+/**
+ * Higher level SSpec logic.
+ * This handles retrying the PIROM reads until two subsequent reads are
+ * successful and return matching data. When we have confidence that the data
+ * read is correct, then set the property on D-Bus.
+ *
+ * @param[in,out]   conn        D-Bus connection.
+ * @param[in]       cpuInfo     CPU to read from.
+ */
+static void
+    tryReadSSpec(const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                 const std::shared_ptr<CPUInfo>& cpuInfo)
+{
+    static int failedReads = 0;
+
+    std::optional<std::string> newSSpec =
+        readSSpec(cpuInfo->i2cBus, cpuInfo->i2cDevice, sspecRegAddr, sspecSize);
+    logStream(cpuInfo->id) << "SSpec read status: "
+                           << static_cast<bool>(newSSpec) << "\n";
+    if (newSSpec && newSSpec == cpuInfo->sSpec)
+    {
+        setCpuProperty(conn, cpuInfo->id, assetInterfaceName, "Model",
+                       *newSSpec);
+        return;
+    }
+
+    // If this read failed, back off for a little longer so that hopefully the
+    // transient condition affecting PIROM reads will pass, but give up after
+    // several consecutive failures. But if this read looked OK, try again
+    // sooner to confirm it.
+    int retrySeconds;
+    if (newSSpec)
+    {
+        retrySeconds = 1;
+        failedReads = 0;
+        cpuInfo->sSpec = *newSSpec;
+    }
+    else
+    {
+        retrySeconds = 5;
+        if (++failedReads > 10)
+        {
+            logStream(cpuInfo->id) << "PIROM Read failed too many times\n";
+            return;
+        }
+    }
+
+    auto sspecTimer = std::make_shared<boost::asio::steady_timer>(
+        conn->get_io_context(), std::chrono::seconds(retrySeconds));
+    sspecTimer->async_wait(
+        [sspecTimer, conn, cpuInfo](boost::system::error_code ec) {
+            if (ec)
+            {
+                return;
+            }
+            tryReadSSpec(conn, cpuInfo);
+        });
+}
+
+/**
+ * Add a D-Bus property to the global list, and attempt to set it by calling
+ * `setDbusProperty`.
+ *
+ * @param[in,out]   conn        D-Bus connection.
+ * @param[in]       cpu         1-based CPU index.
+ * @param[in]       interface   Interface to set.
+ * @param[in]       propName    Property to set.
+ * @param[in]       propVal     Value to set.
+ */
+static void
+    setCpuProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                   size_t cpu, const std::string& interface,
+                   const std::string& propName, const std::string& propVal)
 {
     // cpuId from configuration is one based as
     // dbus object path used by smbios is 0 based
     const std::string objectPath = cpuPath + std::to_string(cpu - 1);
-    for (const auto& prop : propValues)
-    {
-        conn->async_method_call(
-            [](const boost::system::error_code ec) {
-                if (ec)
-                {
-                    phosphor::logging::log<phosphor::logging::level::ERR>(
-                        "Cannot get CPU property!");
-                    return;
-                }
-            },
-            cpuProcessName, objectPath.c_str(),
-            "org.freedesktop.DBus.Properties", "Set", cpuInterfaceName,
-            prop.first.c_str(), std::variant<std::string>{prop.second});
-    }
+
+    // Can switch to emplace_back if you define a CpuProperty constructor.
+    propertiesToSet.push_back(
+        CpuProperty{objectPath, interface, propName, propVal});
+
+    setDbusProperty(conn, cpu, propertiesToSet.back());
 }
 
-static void createCpuUpdatedMatch(
-    const std::shared_ptr<sdbusplus::asio::connection>& conn, const int cpu,
-    const std::vector<std::pair<std::string, std::string>>& propValues)
+/**
+ * Set a D-Bus property which is already contained in the global list, and also
+ * setup a D-Bus match to make sure the target property stays correct.
+ *
+ * @param[in,out]   conn    D-Bus connection.
+ * @param[in]       cpu     1-baesd CPU index.
+ * @param[in]       newProp Property to set.
+ */
+static void
+    setDbusProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                    size_t cpu, const CpuProperty& newProp)
 {
+    createCpuUpdatedMatch(conn, cpu);
+    conn->async_method_call(
+        [](const boost::system::error_code ec) {
+            if (ec)
+            {
+                phosphor::logging::log<phosphor::logging::level::ERR>(
+                    "Cannot set CPU property!");
+                return;
+            }
+        },
+        cpuProcessName, newProp.object.c_str(),
+        "org.freedesktop.DBus.Properties", "Set", newProp.interface,
+        newProp.name, std::variant<std::string>{newProp.value});
+}
+
+/**
+ * Set up a D-Bus match (if one does not already exist) to watch for any new
+ * interfaces on the cpu object. When new interfaces are added, re-send all
+ * properties targeting that object/interface.
+ *
+ * @param[in,out]   conn    D-Bus connection.
+ * @param[in]       cpu     1-based CPU index.
+ */
+static void createCpuUpdatedMatch(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu)
+{
+    static boost::container::flat_map<size_t,
+                                      std::unique_ptr<sdbusplus::bus::match_t>>
+        cpuUpdatedMatch;
+
     if (cpuUpdatedMatch[cpu])
     {
         return;
@@ -188,7 +324,7 @@ static void createCpuUpdatedMatch(
             static_cast<sdbusplus::bus::bus&>(*conn),
             sdbusplus::bus::match::rules::interfacesAdded() +
                 sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
-            [conn, cpu, propValues](sdbusplus::message::message& msg) {
+            [conn, cpu](sdbusplus::message::message& msg) {
                 sdbusplus::message::object_path objectName;
                 boost::container::flat_map<
                     std::string,
@@ -198,12 +334,15 @@ static void createCpuUpdatedMatch(
 
                 msg.read(objectName, msgData);
 
-                // Check for xyz.openbmc_project.Inventory.Item.Cpu
-                // interface match
-                const auto& intfFound = msgData.find(cpuInterfaceName);
-                if (msgData.end() != intfFound)
+                // Go through all the property changes, and retry all of them
+                // targeting this object/interface which was just added.
+                for (const CpuProperty& prop : propertiesToSet)
                 {
-                    setAssetProperty(conn, cpu, propValues);
+                    if (prop.object == objectName &&
+                        msgData.contains(prop.interface))
+                    {
+                        setDbusProperty(conn, cpu, prop);
+                    }
                 }
             }));
 }
@@ -219,16 +358,16 @@ static void
         return;
     }
 
-    if (cpuInfoMap[cpu]->id != cpu)
+    std::shared_ptr<CPUInfo> cpuInfo = cpuInfoMap[cpu];
+
+    if (cpuInfo->id != cpu)
     {
-        std::cerr << "Incorrect CPU id " << (unsigned)cpuInfoMap[cpu]->id
-                  << " expect " << cpu << "\n";
+        std::cerr << "Incorrect CPU id " << (unsigned)cpuInfo->id << " expect "
+                  << cpu << "\n";
         return;
     }
 
-    uint8_t cpuAddr = cpuInfoMap[cpu]->peciAddr;
-    uint8_t i2cBus = cpuInfoMap[cpu]->i2cBus;
-    uint8_t i2cDevice = cpuInfoMap[cpu]->i2cDevice;
+    uint8_t cpuAddr = cpuInfo->peciAddr;
 
     uint8_t cc = 0;
     CPUModel model{};
@@ -301,8 +440,6 @@ static void
 
             cpuPPIN |= static_cast<uint64_t>(u32PkgValue) << 32;
 
-            std::vector<std::pair<std::string, std::string>> values;
-
             // set SerialNumber if cpuPPIN is valid
             if (0 != cpuPPIN)
             {
@@ -310,22 +447,11 @@ static void
                 stream << std::hex << cpuPPIN;
                 std::string serialNumber(stream.str());
                 // cpuInfo->serialNumber(serialNumber);
-                values.emplace_back(
-                    std::make_pair("SerialNumber", serialNumber));
+                setCpuProperty(conn, cpu, assetInterfaceName, "SerialNumber",
+                               serialNumber);
             }
 
-            std::optional<std::string> sspec =
-                readSSpec(i2cBus, i2cDevice, sspecRegAddr, sspecSize);
-
-            // cpuInfo->model(sspec.value_or(""));
-            values.emplace_back(std::make_pair("Model", sspec.value_or("")));
-
-            /// \todo in followup patch
-            // CPUInfo is created by this service
-            // update the below logic, which is needed because smbios
-            // service creates the cpu object
-            createCpuUpdatedMatch(conn, cpu, values);
-            setAssetProperty(conn, cpu, values);
+            tryReadSSpec(conn, cpuInfo);
             break;
         }
         default:
