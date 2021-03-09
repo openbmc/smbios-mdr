@@ -42,8 +42,6 @@ extern "C"
 #include <phosphor-logging/log.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
-namespace phosphor
-{
 namespace cpu_info
 {
 static constexpr bool debug = false;
@@ -235,12 +233,15 @@ static void
     CPUModel model{};
     uint8_t stepping = 0;
 
-    if (peci_GetCPUID(cpuAddr, &model, &stepping, &cc) != PECI_CC_SUCCESS)
+    // Wait for POST to complete to ensure that BIOS has time to enable the
+    // PPIN. Before BIOS enables it, we would get a 0x90 CC on PECI.
+    if (hostState != HostState::postComplete ||
+        peci_GetCPUID(cpuAddr, &model, &stepping, &cc) != PECI_CC_SUCCESS)
     {
         // Start the PECI check loop
         auto waitTimer = std::make_shared<boost::asio::steady_timer>(io);
         waitTimer->expires_after(
-            std::chrono::seconds(phosphor::cpu_info::peciCheckInterval));
+            std::chrono::seconds(cpu_info::peciCheckInterval));
 
         waitTimer->async_wait(
             [waitTimer, &io, conn, cpu](const boost::system::error_code& ec) {
@@ -502,7 +503,6 @@ static void getCpuConfiguration(
 }
 
 } // namespace cpu_info
-} // namespace phosphor
 
 int main(int argc, char* argv[])
 {
@@ -512,7 +512,7 @@ int main(int argc, char* argv[])
         std::make_shared<sdbusplus::asio::connection>(io);
 
     // CPUInfo Object
-    conn->request_name(phosphor::cpu_info::cpuInfoObject);
+    conn->request_name(cpu_info::cpuInfoObject);
     sdbusplus::asio::object_server server =
         sdbusplus::asio::object_server(conn);
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*conn);
@@ -525,7 +525,7 @@ int main(int argc, char* argv[])
 
     // shared_ptr conn is global for the service
     // const reference of conn is passed to async calls
-    phosphor::cpu_info::getCpuConfiguration(io, conn, server);
+    cpu_info::getCpuConfiguration(io, conn, server);
 
     io.run();
 
