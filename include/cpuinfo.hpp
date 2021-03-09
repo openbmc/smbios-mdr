@@ -19,8 +19,6 @@
 #include <sdbusplus/asio/object_server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 
-namespace phosphor
-{
 namespace cpu_info
 {
 static constexpr char const* cpuInfoObject = "xyz.openbmc_project.CPUInfo";
@@ -53,4 +51,3 @@ struct CPUInfo
 };
 
 } // namespace cpu_info
-} // namespace phosphor
