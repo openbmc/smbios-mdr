@@ -663,7 +663,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
 
     static std::string generatePath(int index)
     {
-        return phosphor::cpu_info::cpuPath + std::to_string(index);
+        return cpuPath + std::to_string(index);
     }
 };
 
