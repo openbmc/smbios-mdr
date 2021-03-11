@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39afc132_8adf78ff",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-11T02:30:01Z",
+      "side": 1,
+      "message": "d\u0027oh! thanks for catching that, will fix.",
+      "parentUuid": "f37b889e_5e05ffab",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af3935c0_2583c896",
         "filename": "src/cpuinfo_main.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2021-03-11T01:35:53Z",
       "side": 1,
       "message": "Move to line 223, otherwise this can move failed newSSpec to lastSSpec",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 36
+      },
+      "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56790e1e_f459efd2",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-11T02:30:01Z",
+      "side": 1,
+      "message": "OK. I was thinking that any failure/nullopt should \"reset\" us, and require two more *consecutive* successful reads, but it\u0027s probably just as good if two non-consecutive reads are successful and matching.",
+      "parentUuid": "af3935c0_2583c896",
       "range": {
         "startLine": 234,
         "startChar": 4,
