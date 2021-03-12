@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "55544bdb_f313e9d5",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T02:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ade0ef5_290bf638",
+      "range": {
+        "startLine": 116,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509027ba_e5766d91",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 11
@@ -69,6 +93,30 @@
       "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8b7462_50a3e5a1",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T02:04:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509027ba_e5766d91",
+      "range": {
+        "startLine": 132,
+        "startChar": 72,
+        "endLine": 134,
+        "endChar": 66
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Here is what I think the normal sequence\n1. powerState \u003d off, biosDone \u003d false \u003d\u003e Host Off\n2. powerState !\u003d off, biosDone no change \u003d\u003e BiosInProgress\n3. powerState no change, biosDone \u003d true \u003d\u003e BiosComplete\n4. powerState \u003d off, biosDone  no change \u003d\u003e Host Off\n5. powerState no change, biosDone \u003d false \u003d\u003e Host Off\n6. powerState !\u003d off, biosDone no change \u003d\u003e BiosInProgress\n7. powerState no change, biosDone \u003d true \u003d\u003e BiosComplete\n\nQuestion is: will #5 always happen and can the order of 5 and 6 can be guaranteed?",
       "parentUuid": "66bbe91f_257dbf40",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 1
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55fecacf_4d79f4bf",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T02:04:19Z",
+      "side": 1,
+      "message": "OK, I see your point - will think about it. My guess is that the \"normal\" sequence is guaranteed.",
+      "parentUuid": "10401603_6cc1a971",
       "range": {
         "startLine": 220,
         "startChar": 0,
