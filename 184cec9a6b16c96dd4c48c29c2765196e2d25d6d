@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "bf89f6ec_72a06307",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T18:08:14Z",
+      "side": 1,
+      "message": "Added the sspec to the CPUInfo object. Please double-check that\u0027s OK.",
+      "parentUuid": "39afc132_8adf78ff",
+      "range": {
+        "startLine": 199,
+        "startChar": 4,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af3935c0_2583c896",
         "filename": "src/cpuinfo_main.cpp",
         "patchSetId": 4
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "fe791b0b_681aef81",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T18:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56790e1e_f459efd2",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 234,
+        "endChar": 36
+      },
+      "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b199d94e_f67363c7",
         "filename": "src/cpuinfo_main.cpp",
         "patchSetId": 4
@@ -116,6 +164,30 @@
       "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b72f15a_0e04bfa3",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T18:08:14Z",
+      "side": 1,
+      "message": "I changed this code because it turns out we need to keep the property list around forever and reprocess it whenever the interfaces are re-added. It happens every time SMBIOS tables are sent. It was working before because the D-Bus match was always added - I didn\u0027t realize that was necessary but it is.",
+      "parentUuid": "b199d94e_f67363c7",
+      "range": {
+        "startLine": 306,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 76
+      },
+      "revId": "184cec9a6b16c96dd4c48c29c2765196e2d25d6d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
