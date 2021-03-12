@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ade0ef5_290bf638",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T00:41:46Z",
+      "side": 1,
+      "message": "Yes, good catch! I had assumed std::variant would be valueless by default, but rather the default constructor creates a variant holding the value-initialized value of the first alternative. The first alternative happens to be PropertyType here, so if the D-Bus call fails, this code will still call the handler().",
+      "parentUuid": "2e05b541_61a4acc8",
+      "range": {
+        "startLine": 116,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "509027ba_e5766d91",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 11
@@ -59,6 +83,30 @@
       "writtenOn": "2021-03-11T21:17:07Z",
       "side": 1,
       "message": "Possible race condition - new State received, biosDone has not updated, result in skipping biosInProgress state",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 1
+      },
+      "revId": "584f6d0a1f25a39061e6e0f830124a4aec75f87e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bbe91f_257dbf40",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-12T00:41:46Z",
+      "side": 1,
+      "message": "biosDone is initialized to false (and powerState to Off), so the hostState should never get \"farther\" (later boot state) than it really is, unless there\u0027s something wrong with the D-Bus services. Can you write out the exact sequence of events you\u0027re thinking of?",
+      "parentUuid": "73f671e9_d29e8d03",
       "range": {
         "startLine": 220,
         "startChar": 0,
