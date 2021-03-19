@@ -171,13 +171,30 @@ void Dimm::dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
+    bool val = true;
+    if (result == "NO DIMM")
+    {
+        val = false;
+
+        // No dimm presence so making manufacturer value as "" (instead of
+        // NO DIMM - as there won't be any manufacturer for DIMM which is not
+        // present).
+        result = "";
+    }
     manufacturer(result);
+    present(val);
 }
 
 std::string Dimm::manufacturer(std::string value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
         Asset::manufacturer(value);
+}
+
+bool Dimm::present(bool value)
+{
+    return sdbusplus::xyz::openbmc_project::Inventory::server::Item::present(
+        value);
 }
 
 void Dimm::dimmSerialNum(const uint8_t positionNum, const uint8_t structLen,
