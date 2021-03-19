@@ -66,6 +66,7 @@ class Dimm :
     std::string memoryTypeDetail(std::string value) override;
     uint16_t maxMemorySpeedInMhz(uint16_t value) override;
     std::string manufacturer(std::string value) override;
+    bool present(bool value) override;
     std::string serialNumber(std::string value) override;
     std::string partNumber(std::string value) override;
     uint8_t memoryAttributes(uint8_t value) override;
