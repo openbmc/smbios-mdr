@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bbf94f_90f33d4f",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T03:20:33Z",
+      "side": 1,
+      "message": "This check can be moved up or even near to caller of discoverCPUsAndConfigs() instead of keeping it inside this for loop. This is nothing to do with client addr.",
+      "range": {
+        "startLine": 773,
+        "startChar": 0,
+        "endLine": 776,
+        "endChar": 9
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a017c6_4ea16c8d",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T03:20:33Z",
+      "side": 1,
+      "message": "In this case, we need to limit the number of retries. So throw here increments \"peciErrorCount\" counter value",
+      "range": {
+        "startLine": 785,
+        "startChar": 12,
+        "endLine": 786,
+        "endChar": 44
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b7320d_ff0797bc",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T03:20:33Z",
+      "side": 1,
+      "message": "This condition doesn\u0027t holds correct in all times. Example: If PECI command is failed at Line: 789/801, Then we will see cpus empty but returning true here ends up in stopping retry and empty data.",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 16
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ba3b57_fd2d8fb4",
+        "filename": "tools/sst-info.sh",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T03:20:33Z",
+      "side": 1,
+      "message": "Add help as well.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 31
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
