@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5369e651_81f70468",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-22T20:50:32Z",
+      "side": 1,
+      "message": "Zhikui had the same comment, so I\u0027m open to changing it. But the point of this check is to cover the narrow window where power goes off and that doesn\u0027t also trigger an underlying PECIError. E.g. say after the last discovery MB command on CPU0, the power goes off while we\u0027re publishing the D-Bus interfaces for cpu0. I want to detect that power loss before starting on CPU1, because otherwise it will just look like CPU1 isn\u0027t populated, and it will be silently ignored.\n\nI admit it\u0027s a small window where the power loss wouldn\u0027t just cause a PECIError to be thrown, but I think it\u0027s worth keeping here. This loop can take minutes to finish in the worst case, so I don\u0027t think it\u0027s unreasonable to check for power state changes inside it.",
+      "parentUuid": "e0bbf94f_90f33d4f",
+      "range": {
+        "startLine": 773,
+        "startChar": 0,
+        "endLine": 776,
+        "endChar": 9
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96a017c6_4ea16c8d",
         "filename": "src/speed_select.cpp",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "255dbd41_bae3c6f9",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-22T20:50:32Z",
+      "side": 1,
+      "message": "I agree, will change.",
+      "parentUuid": "96a017c6_4ea16c8d",
+      "range": {
+        "startLine": 785,
+        "startChar": 12,
+        "endLine": 786,
+        "endChar": 44
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5b7320d_ff0797bc",
         "filename": "src/speed_select.cpp",
         "patchSetId": 16
@@ -59,6 +107,30 @@
       "writtenOn": "2021-03-22T03:20:33Z",
       "side": 1,
       "message": "This condition doesn\u0027t holds correct in all times. Example: If PECI command is failed at Line: 789/801, Then we will see cpus empty but returning true here ends up in stopping retry and empty data.",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 16
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9148ac_4fdd8784",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-22T20:50:32Z",
+      "side": 1,
+      "message": "No, that\u0027s the intention of this \"return true\". If the processors don\u0027t exist (ping/CPUID fails), or they don\u0027t support SST, that\u0027s not an error condition - they are intentionally excluded and we can still successfully finish. We only return false if we detect an error condition suggesting discovery couldn\u0027t be completed.",
+      "parentUuid": "f5b7320d_ff0797bc",
       "range": {
         "startLine": 860,
         "startChar": 0,
