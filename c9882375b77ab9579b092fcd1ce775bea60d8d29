@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05ec6f27_69f1371a",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-03-22T01:28:41Z",
+      "side": 1,
+      "message": "Do you need update time to 2020-2021?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 28
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dcc908c_e3b68548",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-03-22T01:28:41Z",
+      "side": 1,
+      "message": "Do you need update time to 2020-2021",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
