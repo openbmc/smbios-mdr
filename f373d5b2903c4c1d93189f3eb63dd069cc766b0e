@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a526b4_2029b0a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:42Z",
+      "side": 1,
+      "message": "nit: Any specific reason for this change?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "f373d5b2903c4c1d93189f3eb63dd069cc766b0e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbccbd4a_cf1c243a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:42Z",
+      "side": 1,
+      "message": "Now with PostComplete match registration, i think we don\u0027t need to run wait timer any more. See my other comment.",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "f373d5b2903c4c1d93189f3eb63dd069cc766b0e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826266f1_5657fe27",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:42Z",
+      "side": 1,
+      "message": "We can completely get rid if timer here. As now we added monitor for postComplete(We can used coreBiosDone, see my other comments), we can directly check PECI commands and get the CPU PPIN.",
+      "range": {
+        "startLine": 238,
+        "startChar": 8,
+        "endLine": 238,
+        "endChar": 44
+      },
+      "revId": "f373d5b2903c4c1d93189f3eb63dd069cc766b0e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
