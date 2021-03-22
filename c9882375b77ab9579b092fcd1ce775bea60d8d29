@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "d6883a4c_58c7d681",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca63ee0_883a2675",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "nit: This is marked as utility code can be used generic(though its not case here now but future it may), so these commants makes it specific to PECI here. We can get rid of this as long as we are building utility code for hostState here.",
+      "range": {
+        "startLine": 30,
+        "startChar": 33,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c66bf8_c879130b",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "lowerCamelCase",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dcc908c_e3b68548",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 15
@@ -41,6 +110,144 @@
         "startChar": 5,
         "endLine": 1,
         "endChar": 22
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0f9353_57c2fa4b",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "2021",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2c558f_fc9389a9",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "Better use coreBiosDone instead of OSState which is what we need here.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10160b21_b7a1dc5a",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "Use Async method calls",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46b08ca_0b170fc5",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "Better add these logs to journalctl for run time debug purpose instead of masking under compile time flag.",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 24
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d147001a_c50292a5",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "If the propertyName matches, we can enter for loop and get value using std::get_if. That ways\u003c\n - we can break for loop as we already got propertyName match\n - We can also log error for wrong property type - better debugging.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 62
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c33c988_36776b6e",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-22T02:50:27Z",
+      "side": 1,
+      "message": "nit: Any specific reason for split and perform two read() calls instead of making it in single call?\nreply.read(intf, changedProps);",
+      "range": {
+        "startLine": 190,
+        "startChar": 12,
+        "endLine": 190,
+        "endChar": 37
       },
       "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
