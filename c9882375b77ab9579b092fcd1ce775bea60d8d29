@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "bce4a6b1_a5990de3",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-23T02:45:16Z",
+      "side": 1,
+      "message": "We have different stages of BIOS. Power off(S5), Power On(S0 - using PS_PEROK assert), Core bios done(After BIOS complete the DXE phase) and POST complete(After BIOS complete).  Now, Coming to this specific case9CPU info via PECI), which is available after core BIOS done(Dxe exist), no need to wait till end of BIOS.",
+      "parentUuid": "4c2a2eac_efd42f55",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10160b21_b7a1dc5a",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 15
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "Ok, I switched to async since it was less code to write, but I think it makes for slightly worse behavior. Before, hostState was guaranteed to be initialized after hostStateInit returns whereas now we have to make sure the event loops runs before hostState gets updated. Not a big deal, but I hope we continue to use synchronous d-bus calls where it makes sense.",
       "parentUuid": "10160b21_b7a1dc5a",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "780d2a8d_a374ac20",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-03-23T02:45:16Z",
+      "side": 1,
+      "message": "I am in favor of using sync blocking calls, where the next operation is completely blocked. But in this case, I don\u0027t see hard blocking, PECI Loop can wait till power state initialized properly.",
+      "parentUuid": "3dd466de_d1841306",
       "range": {
         "startLine": 129,
         "startChar": 4,
