@@ -22,6 +22,30 @@
       "revId": "acfad909e388e4f83bf6e9325cf9ea3331b30118",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0338da_6ba30da9",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T15:22:11Z",
+      "side": 1,
+      "message": "You are correct about what *should* be done, but x86-power-control doesn\u0027t do that. It sets the property to just the last fragment of the enum string (\"Inactive\" or \"Standby\"), hence this workaround.",
+      "parentUuid": "5e6cf4f5_ec1d368e",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 39
+      },
+      "revId": "acfad909e388e4f83bf6e9325cf9ea3331b30118",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
