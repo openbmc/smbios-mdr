@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "7de33ae3_0f2f71e7",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6883a4c_58c7d681",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a06d9b61_458fe4d4",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ec6f27_69f1371a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 28
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca63ee0_883a2675",
         "filename": "include/cpuinfo_utils.hpp",
         "patchSetId": 15
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a73f7e9_6a2b5897",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca63ee0_883a2675",
+      "range": {
+        "startLine": 30,
+        "startChar": 33,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1c66bf8_c879130b",
         "filename": "include/cpuinfo_utils.hpp",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7315b2ed_0dc6990b",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1c66bf8_c879130b",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 18
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,54 @@
     },
     {
       "key": {
+        "uuid": "a6ca7c27_d4d237b5",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dcc908c_e3b68548",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe4ee3a9_b86b4f00",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0f9353_57c2fa4b",
+      "range": {
+        "startLine": 1,
+        "startChar": 17,
+        "endLine": 1,
+        "endChar": 21
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2c558f_fc9389a9",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 15
@@ -151,6 +295,30 @@
       "writtenOn": "2021-03-22T02:50:27Z",
       "side": 1,
       "message": "Better use coreBiosDone instead of OSState which is what we need here.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2a2eac_efd42f55",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Haha, I\u0027ve already gone back and forth twice! Can you explain why CoreBiosDone is better? I went back to OSStatus because it is a more \"generic\" interface, and at least with x86-power-control, is controlled by POST_COMPLETE signal. Whereas CoreBiosDone is asserted before POST complete.",
+      "parentUuid": "ca2c558f_fc9389a9",
       "range": {
         "startLine": 82,
         "startChar": 4,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "3dd466de_d1841306",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Ok, I switched to async since it was less code to write, but I think it makes for slightly worse behavior. Before, hostState was guaranteed to be initialized after hostStateInit returns whereas now we have to make sure the event loops runs before hostState gets updated. Not a big deal, but I hope we continue to use synchronous d-bus calls where it makes sense.",
+      "parentUuid": "10160b21_b7a1dc5a",
+      "range": {
+        "startLine": 129,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 67
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b46b08ca_0b170fc5",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 15
@@ -206,6 +398,30 @@
       "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596e0f91_75a3a94e",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46b08ca_0b170fc5",
+      "range": {
+        "startLine": 147,
+        "startChar": 12,
+        "endLine": 147,
+        "endChar": 24
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "a2e6fcbd_0ca01b35",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d147001a_c50292a5",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 62
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c33c988_36776b6e",
         "filename": "src/cpuinfo_utils.cpp",
         "patchSetId": 15
@@ -252,6 +492,30 @@
       "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fed09dc_cf1899dd",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T01:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c33c988_36776b6e",
+      "range": {
+        "startLine": 190,
+        "startChar": 12,
+        "endLine": 190,
+        "endChar": 37
+      },
+      "revId": "c9882375b77ab9579b092fcd1ce775bea60d8d29",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
