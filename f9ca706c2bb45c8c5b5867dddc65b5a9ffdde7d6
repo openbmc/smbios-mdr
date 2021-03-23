@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "f22e38ff_23deae12",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-03-23T15:29:49Z",
+      "side": 1,
+      "message": "Yes, finishing with an empty cpu list is valid if there are no CPUs that support SST - we check the processor family and several mailbox commands to make sure the expected SST support is there. If not supported, then there is no reason to retry discovery again so we return true.",
+      "parentUuid": "ac5bca57_dc9284e3",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 16
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2ba3b57_fd2d8fb4",
         "filename": "tools/sst-info.sh",
         "patchSetId": 16
