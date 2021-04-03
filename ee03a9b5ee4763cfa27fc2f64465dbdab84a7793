@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b9c0897_5380f110",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-04-03T02:59:29Z",
+      "side": 1,
+      "message": "nit: can you rename it to coreBiosDone, instead of biosDone which may mislead.",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 21
+      },
+      "revId": "ee03a9b5ee4763cfa27fc2f64465dbdab84a7793",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314d5f5a_3a38f425",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-04-03T02:59:29Z",
+      "side": 1,
+      "message": "You need to change this enum name to dxePhaseComplete ( Now post complete is not correct).",
+      "range": {
+        "startLine": 56,
+        "startChar": 31,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "ee03a9b5ee4763cfa27fc2f64465dbdab84a7793",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}

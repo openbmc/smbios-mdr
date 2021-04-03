@@ -70,6 +70,30 @@
       "revId": "acfad909e388e4f83bf6e9325cf9ea3331b30118",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4dba7c5_bb57417a",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-04-03T02:59:29Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "beb11106_3de250dd",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 39
+      },
+      "revId": "acfad909e388e4f83bf6e9325cf9ea3331b30118",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
