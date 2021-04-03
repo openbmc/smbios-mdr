@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "fa6da7d5_b3facb40",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-04-03T03:13:53Z",
+      "side": 1,
+      "message": "Now we are calling this retry after coreBiosDone, So even if PECI returns device not ready is NOT treated as error. Is that valid statement? I slightly disagree but left it to you for re thought. I am not blocking this for that corner case though.",
+      "parentUuid": "f22e38ff_23deae12",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 16
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ba3b57_fd2d8fb4",
         "filename": "tools/sst-info.sh",
         "patchSetId": 16
