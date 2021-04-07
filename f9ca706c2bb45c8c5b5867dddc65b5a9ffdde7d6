@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "7aa64841_3c60b9e3",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 861,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-04-07T03:20:30Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand your statement. This function is not tied to coreBiosDone - discovery can happen as long as the CPU is powered on. Any PECI errors throw an exception which will cause discovery to retry again later, up to a limit.",
+      "parentUuid": "fa6da7d5_b3facb40",
+      "range": {
+        "startLine": 860,
+        "startChar": 0,
+        "endLine": 861,
+        "endChar": 16
+      },
+      "revId": "f9ca706c2bb45c8c5b5867dddc65b5a9ffdde7d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ba3b57_fd2d8fb4",
         "filename": "tools/sst-info.sh",
         "patchSetId": 16
