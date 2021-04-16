@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626e23ec_53eb564c",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-04-16T21:17:37Z",
+      "side": 1,
+      "message": "I think manufacture should be initialized as empty string right?\nHow about this:\nif (result \u003d\u003d \"NO DIMM\")\n{ present(false);}\nelse\n{ present(true); manufacturer(result);}",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "78d6c6e3f03d054e18e1f6e94a02d714556f41d5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
