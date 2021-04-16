@@ -22,6 +22,30 @@
       "revId": "0e9f24427ea2395128d834aaace68e865af3b1c1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086e36fc_bc812878",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-04-16T04:31:09Z",
+      "side": 1,
+      "message": "Well \"NO DIMM\" data exist in smbios table where is taken directly, so anyway good to populate gives better clarity only.\nDo you suggest otherwise?",
+      "parentUuid": "4349fe58_89c04501",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 25
+      },
+      "revId": "0e9f24427ea2395128d834aaace68e865af3b1c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
