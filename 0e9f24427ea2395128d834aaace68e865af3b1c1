@@ -46,6 +46,29 @@
       "revId": "0e9f24427ea2395128d834aaace68e865af3b1c1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b68eba0_f6090e0a",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000168
+      },
+      "writtenOn": "2021-04-16T14:42:57Z",
+      "side": 1,
+      "message": "In this case, we will see Manufacturer as \"NO DIMM\" and Present as False, but better to leave manufacturer value as \"\" (instead of NO DIMM - as there won\u0027t be any manufacturer for DIMM which is not present).\n\ncorrect me if misunderstood.",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 25
+      },
+      "revId": "0e9f24427ea2395128d834aaace68e865af3b1c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
