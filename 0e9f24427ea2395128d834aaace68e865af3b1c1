@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4349fe58_89c04501",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-04-16T03:29:15Z",
+      "side": 1,
+      "message": "Should this still be populated now that present is added and properly set?",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 25
+      },
+      "revId": "0e9f24427ea2395128d834aaace68e865af3b1c1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
