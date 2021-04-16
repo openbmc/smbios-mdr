@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6294ef15_ab5712ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "Intel platforms can leave this disabled and continue using their OEM commands, so it shouldn\u0027t have an effect there.",
+      "parentUuid": "2bbc8df7_51b4d6ed",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "141d828b_f45fc8f9",
         "filename": "CMakeLists.txt",
         "patchSetId": 9
@@ -140,6 +164,201 @@
       "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1a18e4b_cea5be92",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "are these defined in a header file in the rest of the repo that you can include?",
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381370ad_2a9531e0",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "I think you can just do `return std::vector\u003cstd::string\u003e(blobId)`",
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303d9b55_fbec5865",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "need to call smbiosFile.exceptions() to enable exception throwing",
+      "range": {
+        "startLine": 242,
+        "startChar": 26,
+        "endLine": 242,
+        "endChar": 33
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5391c232_23378efb",
+        "filename": "src/smbios-ipmi-blobs/handler.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "This might make more sense inside of the SmbiosBlobHandler class, since it\u0027s only used there. That would also mean you don\u0027t need to pass in the maxBufferSize",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b762c1_80e51a75",
+        "filename": "src/smbios-ipmi-blobs/handler.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "do we support reading back the SMBIOS tables from the BMC on the host?",
+      "range": {
+        "startLine": 22,
+        "startChar": 38,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33fc506_24322efe",
+        "filename": "src/smbios-ipmi-blobs/handler.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "Probably not important for SMBIOS tables since they don\u0027t contain sensitive data",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359e5d9a_ae4e8924",
+        "filename": "src/smbios-ipmi-blobs/handler.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "since the session limit is 1, you don\u0027t really need to have a map of open sessions. you can just keep the single open session ID and buffer here directly",
+      "range": {
+        "startLine": 95,
+        "startChar": 45,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b586576_209ea402",
+        "filename": "src/smbios-ipmi-blobs/test/handler_open_unittest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "I suggest against using this parameter in the unit test since it wouldn\u0027t catch an unexpected change to maxSessions()\n\nYou can actually just remove this test since the next one is identical",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0753db3a_5a3f818c",
+        "filename": "src/smbios-ipmi-blobs/test/handler_unittest.hpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000233
+      },
+      "writtenOn": "2021-04-16T17:13:32Z",
+      "side": 1,
+      "message": "why\u0027s it called \"legacyBlob\"?",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "166c26b4c1d722dc1a381326a77eaa487043b48d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
