@@ -22,6 +22,30 @@
       "revId": "78d6c6e3f03d054e18e1f6e94a02d714556f41d5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d7b25a_8799aefc",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-04-18T16:22:45Z",
+      "side": 1,
+      "message": "result is the actual value we get from smbios table at line 172. \"NO DIMM\" is also coming from there as manufacturer result. In that case we have to overwrite it with \"\".\nCorrect me if I have misunderstood this.",
+      "parentUuid": "626e23ec_53eb564c",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "78d6c6e3f03d054e18e1f6e94a02d714556f41d5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
