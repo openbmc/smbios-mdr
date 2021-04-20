@@ -1,0 +1,9 @@
+Code-Review+2: Kuiying Wang <kuiying.wang@intel.com>
+Code-Review+1: Zhikui Ren <zhikui.ren@intel.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Ok-To-Test+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Mansi Joshi <mansi.joshi@linux.intel.com>
+Submitted-at: Tue, 20 Apr 2021 04:49:05 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/smbios-mdr/+/41444
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
