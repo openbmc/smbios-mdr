@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31e9e8f2_b38eb140",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-04-20T23:10:30Z",
+      "side": 1,
+      "message": "The upper level code ensures that meta should never be NULL. https://github.com/openbmc/phosphor-ipmi-blobs/blob/a533a3756f084ab6c5a80375074178440ba7c905/manager.cpp#L109",
+      "parentUuid": "228b4dbf_eca21842",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 10
+      },
+      "revId": "97c1c6a2f3184c07559c2fdc884f6e3e11e95f40",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77fc402b_9ddb55a8",
         "filename": "src/smbios-ipmi-blobs/handler.cpp",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dbb9524f_50d2633b",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-04-20T23:10:30Z",
+      "side": 1,
+      "message": "acess() only returns 0 and -1.",
+      "parentUuid": "77fc402b_9ddb55a8",
+      "range": {
+        "startLine": 198,
+        "startChar": 3,
+        "endLine": 198,
+        "endChar": 36
+      },
+      "revId": "97c1c6a2f3184c07559c2fdc884f6e3e11e95f40",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ee724c_df4e20fb",
         "filename": "src/smbios-ipmi-blobs/handler.cpp",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "97c1c6a2f3184c07559c2fdc884f6e3e11e95f40",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eaa48ce_011cf77c",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-04-20T23:10:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ee724c_df4e20fb",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 21
+      },
+      "revId": "97c1c6a2f3184c07559c2fdc884f6e3e11e95f40",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
