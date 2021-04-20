@@ -24,6 +24,7 @@
 #include <xyz/openbmc_project/Common/error.hpp>
 #include <xyz/openbmc_project/Control/Processor/CurrentOperatingConfig/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Cpu/OperatingConfig/server.hpp>
+#include <xyz/openbmc_project/Association/Definitions/server.hpp>
 
 #include <iostream>
 #include <memory>
@@ -449,7 +450,8 @@ struct PbfGetP1HiP1LoInfo : OsMailboxCommand<0x21>
 
 using BaseCurrentOperatingConfig =
     sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Control::
-                                    Processor::server::CurrentOperatingConfig>;
+                                    Processor::server::CurrentOperatingConfig,
+                                    sdbusplus::xyz::openbmc_project::Association::server::Definitions>;
 
 using BaseOperatingConfig =
     sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
@@ -655,11 +657,15 @@ class CPUConfig : public BaseCurrentOperatingConfig
      */
     void finalize()
     {
-        emit_added();
+        std::vector<std::tuple<std::string,std::string,std::string>> links;
         for (auto& config : availConfigs)
         {
+            links.emplace_back("operating_configs", "cpu", config->path);
             config->emit_added();
         }
+        associations(links);
+        sdbusplus::xyz::openbmc_project::Control::Processor::server::CurrentOperatingConfig::emit_added();
+        sdbusplus::xyz::openbmc_project::Association::server::Definitions::emit_added();
     }
 
     static std::string generatePath(int index)
