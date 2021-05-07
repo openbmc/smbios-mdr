@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.2 FATAL_ERROR)
 include (ExternalProject)
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake ${CMAKE_MODULE_PATH})
 set (DBUS_OBJECT_NAME "xyz/openbmc_project/Smbios/MDR_V2")
