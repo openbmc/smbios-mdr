@@ -27,7 +27,7 @@ namespace phosphor
 namespace smbios
 {
 
-std::string System::uUID(std::string value)
+std::string System::UUID_PROP_NAME(std::string value)
 {
     uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, systemType);
@@ -54,12 +54,12 @@ std::string System::uUID(std::string value)
         stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[4]);
         stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[5]);
 
-        return sdbusplus::xyz::openbmc_project::Common::server::UUID::uUID(
-            stream.str());
+        return sdbusplus::xyz::openbmc_project::Common::server::UUID::
+            UUID_PROP_NAME(stream.str());
     }
 
-    return sdbusplus::xyz::openbmc_project::Common::server::UUID::uUID(
-        "00000000-0000-0000-0000-000000000000");
+    return sdbusplus::xyz::openbmc_project::Common::server::UUID::
+        UUID_PROP_NAME("00000000-0000-0000-0000-000000000000");
 }
 
 std::string System::version(std::string value)
