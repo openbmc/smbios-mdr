@@ -101,7 +101,7 @@ void Dimm::dimmSizeExt(uint32_t size)
     memorySizeInKB(size);
 }
 
-uint32_t Dimm::memorySizeInKB(uint32_t value)
+size_t Dimm::memorySizeInKB(size_t value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::
         memorySizeInKB(value);
