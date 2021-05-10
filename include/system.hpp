@@ -20,6 +20,10 @@
 #include <xyz/openbmc_project/Common/UUID/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
 
+#if !SDBUSPP_NEW_CAMELCASE
+#define uuid uUID
+#endif
+
 namespace phosphor
 {
 
@@ -51,11 +55,11 @@ class System :
         path(objPath), storage(smbiosTableStorage)
     {
         std::string input = "0";
-        uUID(input);
+        uuid(input);
         version("0.00");
     }
 
-    std::string uUID(std::string value) override;
+    std::string uuid(std::string value) override;
 
     std::string version(std::string value) override;
 
