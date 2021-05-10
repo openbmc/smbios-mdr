@@ -27,7 +27,7 @@ namespace phosphor
 namespace smbios
 {
 
-std::string System::uUID(std::string value)
+std::string System::UUID_PROP_NAME(std::string value)
 {
     uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, systemType);

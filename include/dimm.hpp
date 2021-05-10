@@ -66,7 +66,7 @@ class Dimm :
     void memoryInfoUpdate(void);
 
     uint16_t memoryDataWidth(uint16_t value) override;
-    uint32_t memorySizeInKB(uint32_t value) override;
+    size_t memorySizeInKB(size_t value) override;
     std::string memoryDeviceLocator(std::string value) override;
     DeviceType memoryType(DeviceType value) override;
     std::string memoryTypeDetail(std::string value) override;
