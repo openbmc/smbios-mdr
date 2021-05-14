@@ -51,11 +51,11 @@ class System :
         path(objPath), storage(smbiosTableStorage)
     {
         std::string input = "0";
-        uUID(input);
+        uuid(input);
         version("0.00");
     }
 
-    std::string uUID(std::string value) override;
+    std::string uuid(std::string value) override;
 
     std::string version(std::string value) override;
 
@@ -102,7 +102,7 @@ class System :
         uint8_t productName;
         uint8_t version;
         uint8_t serialNum;
-        struct UUID uUID;
+        struct UUID uuid;
         uint8_t wakeupType;
         uint8_t skuNum;
         uint8_t family;

@@ -27,7 +27,7 @@ namespace phosphor
 namespace smbios
 {
 
-std::string System::uUID(std::string value)
+std::string System::uuid(std::string value)
 {
     uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, systemType);
@@ -36,29 +36,29 @@ std::string System::uUID(std::string value)
         auto systemInfo = reinterpret_cast<struct SystemInfo*>(dataIn);
         std::stringstream stream;
         stream << std::setfill('0') << std::hex;
-        stream << std::setw(8) << systemInfo->uUID.timeLow;
+        stream << std::setw(8) << systemInfo->uuid.timeLow;
         stream << "-";
-        stream << std::setw(4) << systemInfo->uUID.timeMid;
+        stream << std::setw(4) << systemInfo->uuid.timeMid;
         stream << "-";
-        stream << std::setw(4) << systemInfo->uUID.timeHiAndVer;
+        stream << std::setw(4) << systemInfo->uuid.timeHiAndVer;
         stream << "-";
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.clockSeqHi);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.clockSeqHi);
         stream << std::setw(2)
-               << static_cast<int>(systemInfo->uUID.clockSeqLow);
+               << static_cast<int>(systemInfo->uuid.clockSeqLow);
         stream << "-";
-        static_assert(sizeof(systemInfo->uUID.node) == 6);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[0]);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[1]);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[2]);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[3]);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[4]);
-        stream << std::setw(2) << static_cast<int>(systemInfo->uUID.node[5]);
+        static_assert(sizeof(systemInfo->uuid.node) == 6);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[0]);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[1]);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[2]);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[3]);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[4]);
+        stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[5]);
 
-        return sdbusplus::xyz::openbmc_project::Common::server::UUID::uUID(
+        return sdbusplus::xyz::openbmc_project::Common::server::UUID::uuid(
             stream.str());
     }
 
-    return sdbusplus::xyz::openbmc_project::Common::server::UUID::uUID(
+    return sdbusplus::xyz::openbmc_project::Common::server::UUID::uuid(
         "00000000-0000-0000-0000-000000000000");
 }
 
