@@ -87,7 +87,7 @@ static constexpr uint16_t baseNewVersionDimmSize = 0x8000;
 static constexpr uint16_t dimmSizeUnit = 1024;
 void Dimm::dimmSize(const uint16_t size)
 {
-    uint32_t result = size & maxOldDimmSize;
+    size_t result = size & maxOldDimmSize;
     if (0 == (size & baseNewVersionDimmSize))
     {
         result = result * dimmSizeUnit;
@@ -95,13 +95,13 @@ void Dimm::dimmSize(const uint16_t size)
     memorySizeInKB(result);
 }
 
-void Dimm::dimmSizeExt(uint32_t size)
+void Dimm::dimmSizeExt(size_t size)
 {
     size = size * dimmSizeUnit;
     memorySizeInKB(size);
 }
 
-uint32_t Dimm::memorySizeInKB(uint32_t value)
+size_t Dimm::memorySizeInKB(size_t value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::
         memorySizeInKB(value);
