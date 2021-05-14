@@ -1,0 +1,11 @@
+Code-Review+2: Kuiying Wang <kuiying.wang@intel.com>
+Code-Review+1: Benjamin Fair <benjaminfair@google.com>
+Code-Review+1: Zhikui Ren <zhikui.ren@intel.com>
+Code-Review+1: Mohaimen Alsamarai <mohaimen.alsamarai@fii-na.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Ok-To-Test+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Benjamin Fair <benjaminfair@google.com>
+Submitted-at: Fri, 14 May 2021 01:03:02 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/smbios-mdr/+/40733
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
