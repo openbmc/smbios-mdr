@@ -66,7 +66,7 @@ class Dimm :
     void memoryInfoUpdate(void);
 
     uint16_t memoryDataWidth(uint16_t value) override;
-    uint32_t memorySizeInKB(uint32_t value) override;
+    size_t memorySizeInKB(size_t value) override;
     std::string memoryDeviceLocator(std::string value) override;
     DeviceType memoryType(DeviceType value) override;
     std::string memoryTypeDetail(std::string value) override;
@@ -84,7 +84,7 @@ class Dimm :
     uint8_t* storage;
 
     void dimmSize(const uint16_t size);
-    void dimmSizeExt(const uint32_t size);
+    void dimmSizeExt(const size_t size);
     void dimmDeviceLocator(const uint8_t positionNum, const uint8_t structLen,
                            uint8_t* dataIn);
     void dimmType(const uint8_t type);
@@ -119,7 +119,7 @@ struct MemoryInfo
     uint8_t assetTag;
     uint8_t partNum;
     uint8_t attributes;
-    uint32_t extendedSize;
+    size_t extendedSize;
     uint16_t confClockSpeed;
     uint16_t minimumVoltage;
     uint16_t maximumVoltage;
