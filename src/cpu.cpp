@@ -110,8 +110,15 @@ void Cpu::infoUpdate(void)
 
     auto cpuInfo = reinterpret_cast<struct ProcessorInfo*>(dataIn);
 
-    socket(cpuInfo->socketDesignation, cpuInfo->length,
-           dataIn); // offset 4h
+    socket(cpuInfo->socketDesignation, cpuInfo->length, dataIn); // offset 4h
+
+    if ((cpuInfo->status & (1 << 6)) == 0)
+    {
+        present(false);
+        return;
+    }
+    present(true);
+
     // this class is for type CPU  //offset 5h
     family(cpuInfo->family); // offset 6h
     manufacturer(cpuInfo->manufacturer, cpuInfo->length,
