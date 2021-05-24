@@ -20,6 +20,7 @@
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Cpu/server.hpp>
+#include <xyz/openbmc_project/Inventory/Item/server.hpp>
 
 namespace phosphor
 {
@@ -32,6 +33,7 @@ using rev =
 using asset =
     sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset;
 using processor = sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
+using Item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
 
 // Definition follow smbios spec DSP0134 3.0.0
 static const std::map<uint8_t, const char*> familyTable = {
@@ -88,7 +90,7 @@ static const std::array<std::optional<processor::Capability>, 16>
                          std::nullopt,
                          std::nullopt};
 
-class Cpu : sdbusplus::server::object_t<processor, asset, rev>
+class Cpu : sdbusplus::server::object_t<processor, asset, rev, Item>
 {
   public:
     Cpu() = delete;
@@ -100,8 +102,8 @@ class Cpu : sdbusplus::server::object_t<processor, asset, rev>
 
     Cpu(sdbusplus::bus::bus& bus, const std::string& objPath,
         const uint8_t& cpuId, uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object_t<processor, asset, rev>(bus,
-                                                           objPath.c_str()),
+        sdbusplus::server::object_t<processor, asset, rev, Item>(
+            bus, objPath.c_str()),
         cpuNum(cpuId), storage(smbiosTableStorage)
     {
         infoUpdate();
