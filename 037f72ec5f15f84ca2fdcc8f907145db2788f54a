@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "442b54c4_c1e704e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-05-27T16:58:29Z",
+      "side": 1,
+      "message": "I wonder what is the reason to publish objects for non-populated sockets? Poking at this to see if not publishing the object is a valid alternative. I guess there maybe value to show an empty socket. +1 this patch",
+      "parentUuid": "d5d46e14_a339c929",
+      "range": {
+        "startLine": 10,
+        "startChar": 50,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "037f72ec5f15f84ca2fdcc8f907145db2788f54a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ff963aa_864b5a26",
         "filename": "src/cpu.cpp",
         "patchSetId": 1
