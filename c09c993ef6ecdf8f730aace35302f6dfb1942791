@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20d13be8_c02ffbc2",
+        "filename": "include/system.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-05-31T02:35:31Z",
+      "side": 1,
+      "message": "I think could change it directly.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 6
+      },
+      "revId": "c09c993ef6ecdf8f730aace35302f6dfb1942791",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
