@@ -109,7 +109,7 @@ static void subscribeToProperty(
     using PropertyType = std::remove_const_t<std::remove_reference_t<
         std::tuple_element_t<0, boost::callable_traits::args_t<Handler>>>>;
     // Base data types which we can handle by default
-    using InterfaceVariant = typename sdbusplus::utility::dedup_variant<
+    using InterfaceVariant = typename sdbusplus::utility::dedup_variant_t<
         PropertyType, CustomVariantTypes..., bool, uint8_t, uint16_t, int16_t,
         uint32_t, int32_t, uint64_t, int64_t, size_t, ssize_t, double,
         std::string, sdbusplus::message::object_path>;
