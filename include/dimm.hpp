@@ -152,7 +152,8 @@ const std::map<uint8_t, DeviceType> dimmTypeTable = {
     {0x1a, DeviceType::DDR4},         {0x1b, DeviceType::LPDDR_SDRAM},
     {0x1c, DeviceType::LPDDR2_SDRAM}, {0x1d, DeviceType::LPDDR3_SDRAM},
     {0x1e, DeviceType::LPDDR4_SDRAM}, {0x1f, DeviceType::Logical},
-    {0x20, DeviceType::HBM},          {0x21, DeviceType::HBM2}};
+    {0x20, DeviceType::HBM},          {0x21, DeviceType::HBM2},
+    {0x22, DeviceType::DDR5},         {0x23, DeviceType::LPDDR5_SDRAM}};
 
 const std::array<std::string, 16> detailTable{
     "Reserved",      "Other",         "Unknown",     "Fast-paged",
