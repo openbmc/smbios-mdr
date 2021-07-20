@@ -74,6 +74,17 @@ void Dimm::memoryInfoUpdate(void)
     memoryAttributes(memoryInfo->attributes);
     memoryConfiguredSpeedInMhz(memoryInfo->confClockSpeed);
 
+    // Example of IPMI SDR elist output
+    // dimm0            | 72h | ok  | 32.25 | Presence Detected
+    // dimm1            | 73h | ok  | 32.26 | Presence Detected
+    // dimm2            | 74h | ok  | 32.27 | Presence Detected
+
+    // According ipmi sdr elist output "Presence Detected"
+    // for all dimm slots that's means dimm is present and functional
+    // so making present and function value as "true"
+    present(true);
+    functional(true);
+
     return;
 }
 
@@ -171,18 +182,14 @@ void Dimm::dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    bool val = true;
     if (result == "NO DIMM")
     {
-        val = false;
-
         // No dimm presence so making manufacturer value as "" (instead of
         // NO DIMM - as there won't be any manufacturer for DIMM which is not
         // present).
         result = "";
     }
     manufacturer(result);
-    present(val);
 }
 
 std::string Dimm::manufacturer(std::string value)
@@ -235,6 +242,12 @@ uint16_t Dimm::memoryConfiguredSpeedInMhz(uint16_t value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::
         memoryConfiguredSpeedInMhz(value);
+}
+
+bool Dimm::functional(bool value)
+{
+    return sdbusplus::xyz::openbmc_project::State::Decorator::server::OperationalStatus::functional(
+        value);
 }
 
 } // namespace smbios
