@@ -23,6 +23,7 @@
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Dimm/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/server.hpp>
+#include <xyz/openbmc_project/State/Decorator/OperationalStatus/server.hpp>
 
 namespace phosphor
 {
@@ -46,8 +47,9 @@ class Dimm :
     sdbusplus::server::object::object<
         sdbusplus::xyz::openbmc_project::Inventory::server::Item>,
     sdbusplus::server::object::object<
-        sdbusplus::xyz::openbmc_project::Association::server::Definitions>
-
+        sdbusplus::xyz::openbmc_project::Association::server::Definitions>,
+    sdbusplus::server::object::object<sdbusplus::xyz::openbmc_project::State::
+                                          Decorator::server::OperationalStatus>
 {
   public:
     Dimm() = delete;
@@ -79,6 +81,9 @@ class Dimm :
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Association::server::Definitions>(
             bus, objPath.c_str()),
+        sdbusplus::server::object::object<
+            sdbusplus::xyz::openbmc_project::State::Decorator::server::
+                OperationalStatus>(bus, objPath.c_str()),
         dimmNum(dimmId), storage(smbiosTableStorage),
         motherboardPath(motherboard)
     {
@@ -100,6 +105,7 @@ class Dimm :
     std::string locationCode(std::string value) override;
     uint8_t memoryAttributes(uint8_t value) override;
     uint16_t memoryConfiguredSpeedInMhz(uint16_t value) override;
+    bool functional(bool value) override;
 
   private:
     uint8_t dimmNum;

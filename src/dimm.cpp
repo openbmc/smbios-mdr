@@ -192,6 +192,7 @@ void Dimm::dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,
     }
     manufacturer(result);
     present(val);
+    functional(val);
 }
 
 std::string Dimm::manufacturer(std::string value)
@@ -250,6 +251,12 @@ uint16_t Dimm::memoryConfiguredSpeedInMhz(uint16_t value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::
         memoryConfiguredSpeedInMhz(value);
+}
+
+bool Dimm::functional(bool value)
+{
+    return sdbusplus::xyz::openbmc_project::State::Decorator::server::
+        OperationalStatus::functional(value);
 }
 
 } // namespace smbios
