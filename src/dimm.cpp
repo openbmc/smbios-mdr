@@ -113,6 +113,8 @@ void Dimm::dimmDeviceLocator(const uint8_t positionNum, const uint8_t structLen,
     std::string result = positionToString(positionNum, structLen, dataIn);
 
     memoryDeviceLocator(result);
+
+    locationCode(result);
 }
 
 std::string Dimm::memoryDeviceLocator(std::string value)
@@ -223,6 +225,12 @@ std::string Dimm::partNumber(std::string value)
 {
     return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
         Asset::partNumber(value);
+}
+
+std::string Dimm::locationCode(std::string value)
+{
+    return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
+        LocationCode::locationCode(value);
 }
 
 uint8_t Dimm::memoryAttributes(uint8_t value)

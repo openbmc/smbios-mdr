@@ -30,6 +30,8 @@ void Cpu::socket(const uint8_t positionNum, const uint8_t structLen,
     std::string result = positionToString(positionNum, structLen, dataIn);
 
     processor::socket(result);
+
+    location::locationCode(result);
 }
 
 void Cpu::family(const uint8_t value)
