@@ -50,51 +50,56 @@ target_link_libraries (smbiosmdrv2app ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${SDBUSPLUSPLUS_LIBRARIES})
 target_link_libraries (smbiosmdrv2app phosphor_logging)
 
-add_executable (cpuinfoapp src/cpuinfo_main.cpp src/speed_select.cpp
-                src/cpuinfo_utils.cpp)
-target_link_libraries (cpuinfoapp ${SYSTEMD_LIBRARIES})
-target_link_libraries (cpuinfoapp ${DBUSINTERFACE_LIBRARIES})
-target_link_libraries (cpuinfoapp ${SDBUSPLUSPLUS_LIBRARIES})
-target_link_libraries (cpuinfoapp phosphor_logging)
-target_link_libraries (cpuinfoapp i2c)
-target_link_libraries (cpuinfoapp peci)
-
 option (DIMM_DBUS "Expose DIMM D-Bus Interface" ON)
 
 if (DIMM_DBUS)
     target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_DBUS)
 endif ()
 
-option (YOCTO "Enable Building in Yocto" OFF)
-
-if (NOT YOCTO)
-    add_dependencies (cpuinfoapp libpeci)
-    externalproject_add (libpeci PREFIX ${CMAKE_BINARY_DIR}/libpeci
-                         GIT_REPOSITORY https://github.com/openbmc/libpeci.git
-                         GIT_TAG a2ceec2aa139277cebb62e1eda449ef60fa4c962
-                         INSTALL_COMMAND "")
-
-    externalproject_get_property (libpeci SOURCE_DIR)
-    include_directories (${SOURCE_DIR})
-
-    externalproject_get_property (libpeci BINARY_DIR)
-    add_library (peci SHARED IMPORTED)
-    set_target_properties (peci
-                           PROPERTIES IMPORTED_LOCATION
-                                      ${BINARY_DIR}/libpeci.so)
-endif ()
-
 install (TARGETS smbiosmdrv2app DESTINATION bin)
 
-install (TARGETS cpuinfoapp
-         RUNTIME DESTINATION bin
-         LIBRARY DESTINATION lib
-         ARCHIVE DESTINATION lib/static)
+install (FILES  ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service
+    DESTINATION /lib/systemd/system/)
 
-set (SERVICE_FILES
-     ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
-     ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service)
-install (FILES ${SERVICE_FILES} DESTINATION /lib/systemd/system/)
+option (CPU_INFO "Add Cpuinfo Service" ON)
+
+option (YOCTO "Enable Building in Yocto" OFF)
+
+if (CPU_INFO)
+    add_executable (cpuinfoapp src/cpuinfo_main.cpp src/speed_select.cpp
+        src/cpuinfo_utils.cpp)
+    target_link_libraries (cpuinfoapp ${SYSTEMD_LIBRARIES})
+    target_link_libraries (cpuinfoapp ${DBUSINTERFACE_LIBRARIES})
+    target_link_libraries (cpuinfoapp ${SDBUSPLUSPLUS_LIBRARIES})
+    target_link_libraries (cpuinfoapp phosphor_logging)
+    target_link_libraries (cpuinfoapp i2c)
+    target_link_libraries (cpuinfoapp peci)
+
+    if (NOT YOCTO)
+        add_dependencies (cpuinfoapp libpeci)
+        externalproject_add (libpeci PREFIX ${CMAKE_BINARY_DIR}/libpeci
+            GIT_REPOSITORY https://github.com/openbmc/libpeci.git
+            GIT_TAG a2ceec2aa139277cebb62e1eda449ef60fa4c962
+            INSTALL_COMMAND "")
+
+        externalproject_get_property (libpeci SOURCE_DIR)
+        include_directories (${SOURCE_DIR})
+
+        externalproject_get_property (libpeci BINARY_DIR)
+        add_library (peci SHARED IMPORTED)
+        set_target_properties (peci
+            PROPERTIES IMPORTED_LOCATION ${BINARY_DIR}/libpeci.so)
+    endif ()
+
+    install (TARGETS cpuinfoapp
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib/static)
+
+    install (FILES
+        ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
+        DESTINATION /lib/systemd/system/)
+endif()
 
 option (IPMI_BLOB "Add IPMI Blobs" ON)
 
@@ -106,7 +111,7 @@ if (IPMI_BLOB)
     set_target_properties (smbiosstore PROPERTIES SOVERSION "0")
     target_link_libraries (smbiosstore sdbusplus)
     target_link_libraries (smbiosstore phosphor_logging)
-    install (TARGETS smbiosstore DESTINATION lib/ipmid-providers)
+    install (TARGETS smbiosstore DESTINATION /usr/lib/ipmid-providers)
 
     if (NOT YOCTO)
         add_dependencies (smbiosstore phosphor-host-ipmid phosphor-ipmi-blobs)
