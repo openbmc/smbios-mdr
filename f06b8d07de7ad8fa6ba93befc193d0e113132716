@@ -16,6 +16,24 @@
       "revId": "f06b8d07de7ad8fa6ba93befc193d0e113132716",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82c11c0_47f55c8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-07-27T06:56:14Z",
+      "side": 1,
+      "message": "updated. PTAL",
+      "parentUuid": "8e3eb9d9_146825c6",
+      "revId": "f06b8d07de7ad8fa6ba93befc193d0e113132716",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
