@@ -22,6 +22,30 @@
       "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007e3fb0_1a52f549",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2021-07-28T02:56:04Z",
+      "side": 1,
+      "message": "Yes. I just follow the pattern \"present\" and without this definition that will got failed when compiling.",
+      "parentUuid": "af90cfbe_e97cb459",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 1
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
