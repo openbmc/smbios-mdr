@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec9c13c1_ba6a7da9",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-07-29T09:26:01Z",
+      "side": 1,
+      "message": "My bad, my question was more like: this will show present\u003dtrue in case of \"NO DIMM\" as well, right? Is that correct?",
+      "parentUuid": "04fc1d46_93a7c476",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af90cfbe_e97cb459",
         "filename": "src/dimm.cpp",
         "patchSetId": 2
