@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "18ab3f07_f03192a4",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2021-08-03T04:00:23Z",
+      "side": 1,
+      "message": "Mansi, thanks your explanation.\n\nWhen Sensor Type is \"Memory\" and Sensor Type Code is \"0Ch\".\nAccording Sensor-specified Offset \"06h\" as below:\n\n\"Presence Detected. Indicates presence of entity associated with the sensor. Typically the entity will be a \"memory module\" or other entity representing a physically replaceable unit of memory.\"\n\nHowever, the definition of memory module means \"board holding memory devices\".\nThus, even \"NO DIMM\" on memory module, but memory module still present on motherboard.\nThat\u0027s why we set present\u003dtrue for all memory modules on motherboard when \"Presence Detected\".",
+      "parentUuid": "ec9c13c1_ba6a7da9",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af90cfbe_e97cb459",
         "filename": "src/dimm.cpp",
         "patchSetId": 2
