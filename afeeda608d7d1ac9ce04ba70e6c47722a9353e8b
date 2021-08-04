@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "30eb3b3c_0f5bacdc",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2021-08-04T03:21:08Z",
+      "side": 1,
+      "message": "According \"Verify SDR\" keyword in auto test robot test_ipmi_sdr.robot.\n${presence_rest} is getting from ${HOST_INVENTORY_URI}system/chassis/motherboard/${component_name}\nthat is not get from redfish url.\n\nVerify SDR\n    [Documentation]  Verify IPMI sensor data record for given component\n    ...  with Redfish.\n    [Arguments]  ${component_name}\n\n    # Description of argument(s):\n    # component_name    Component name (e.g. \"cpu0/core0\", \"dimm0\", etc.).\n\n    ${presence_rest}\u003d  Read Attribute\n    ...  ${HOST_INVENTORY_URI}system/chassis/motherboard/${component_name}\n    ...  Present",
+      "parentUuid": "7c976458_226e4201",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af90cfbe_e97cb459",
         "filename": "src/dimm.cpp",
         "patchSetId": 2
