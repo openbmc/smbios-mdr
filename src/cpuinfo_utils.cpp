@@ -18,6 +18,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <sdbusplus/asio/property.hpp>
 #include <xyz/openbmc_project/State/Host/server.hpp>
+#include <xyz/openbmc_project/State/OperatingSystem/Status/server.hpp>
 
 #include <iostream>
 #include <type_traits>
@@ -29,9 +30,11 @@ namespace cpu_info
 
 using namespace sdbusplus::xyz::openbmc_project;
 using PowerState = State::server::Host::HostState;
+using OsState = State::OperatingSystem::server::Status::OSStatus;
 
 HostState hostState = HostState::off;
 static PowerState powerState = PowerState::Off;
+static OsState osState = OsState::Inactive;
 static bool biosDone = false;
 
 static std::shared_ptr<sdbusplus::asio::connection> dbusConn;
@@ -46,8 +49,16 @@ static void updateHostState()
         // since the two signals come from different services and there is no
         // tight guarantee about their relationship.
         biosDone = false;
+        // Setting osState to inactive for the same reason as above.
+        osState = OsState::Inactive;
     }
-    else if (!biosDone)
+    // Both biosDone and OsState tell us about the POST done status. At least
+    // one of them should indicate that the POST is done.
+    // According to openbmc_project/State/OperatingSystem/Status.interface.yaml
+    // Only "Inactive" indicates that the POST is not done. All the other
+    // statuses (CBoot, PXEBoot, DiagBoot, CDROMBoot, ROMBoot, BootComplete,
+    // Standby) indicate that the POST is done.
+    else if ((!biosDone) && (osState == OsState::Inactive))
     {
         hostState = HostState::postInProgress;
     }
@@ -67,6 +78,37 @@ void updatePowerState(const std::string& newState)
 void updateBiosDone(bool newState)
 {
     biosDone = newState;
+    updateHostState();
+}
+
+void updateOsState(const std::string& newState)
+{
+    // newState might not contain the full path. It might just contain the enum
+    // string (By the time I am writing this, its not returning the full path).
+    // Full string:
+    // "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Standby". Just
+    // the string for enum: "Standby". If the newState doesn't contain the full
+    // string, convertOSStatusFromString will fail. Prepend the full path if
+    // needed.
+    std::string full_path = newState;
+    if (newState.find("xyz.") == std::string::npos)
+    {
+        full_path =
+            "xyz.openbmc_project.State.OperatingSystem.Status.OSStatus." +
+            newState;
+    }
+
+    try
+    {
+        osState =
+            State::OperatingSystem::server::Status::convertOSStatusFromString(
+                full_path);
+    }
+    catch (const sdbusplus::exception::InvalidEnumString& ex)
+    {
+        std::cerr << "Invalid OperatingSystem Status: " << full_path << "\n";
+        osState = OsState::Inactive;
+    }
     updateHostState();
 }
 
@@ -233,6 +275,15 @@ void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn)
                         "/xyz/openbmc_project/misc/platform_state",
                         "xyz.openbmc_project.State.Host.Misc", "CoreBiosDone",
                         updateBiosDone);
+    // xyz.openbmc_project.Host.Misc.Manager has Intel specific dependencies.
+    // If it is not available, then we can use the OperatingSystemState in
+    // xyz.openbmc_project.State.OperatingSystem. According to x86-power-control
+    // repo, OperatingSystemState should return "standby" once the POST is
+    // asserted.
+    subscribeToProperty("xyz.openbmc_project.State.OperatingSystem",
+                        "/xyz/openbmc_project/state/os",
+                        "xyz.openbmc_project.State.OperatingSystem.Status",
+                        "OperatingSystemState", updateOsState);
 
     initialized = true;
 }
