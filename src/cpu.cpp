@@ -73,7 +73,7 @@ void Cpu::characteristics(uint16_t value)
     {
         if (charBits.test(index))
         {
-            if (cap = characteristicsTable[index])
+            if ((cap = characteristicsTable[index]))
             {
                 result.emplace_back(*cap);
             }
