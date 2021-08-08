@@ -215,8 +215,14 @@ bool MDR_V2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
     smbiosFile.clear();
     smbiosFile.seekg(0, std::ios_base::end);
     int fileLength = smbiosFile.tellg();
+    if (fileLength < 0)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "MDR V2 file operation failed");
+        return false;
+    }
     smbiosFile.seekg(0, std::ios_base::beg);
-    if (fileLength < sizeof(MDRSMBIOSHeader))
+    if (static_cast<size_t>(fileLength) < sizeof(MDRSMBIOSHeader))
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "MDR V2 file size is smaller than mdr header");
@@ -231,7 +237,7 @@ bool MDR_V2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
         return false;
     }
     fileLength -= sizeof(MDRSMBIOSHeader);
-    if (fileLength < mdrHdr->dataSize)
+    if (static_cast<uint32_t>(fileLength) < mdrHdr->dataSize)
     {
         smbiosFile.read(reinterpret_cast<char*>(data), fileLength);
     }
@@ -301,9 +307,8 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
     return teminate;
 }
 
-bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t flag,
-                                 uint32_t dataLen, uint32_t dataVer,
-                                 uint32_t timeStamp)
+bool MDR_V2::sendDataInformation(uint8_t idIndex, uint8_t, uint32_t dataLen,
+                                 uint32_t dataVer, uint32_t timeStamp)
 {
     if (idIndex >= maxDirEntries)
     {
@@ -350,7 +355,7 @@ int MDR_V2::findIdIndex(std::vector<uint8_t> dataInfo)
 
     for (int index = 0; index < smbiosDir.dirEntries; index++)
     {
-        int info = 0;
+        uint32_t info = 0;
         for (; info < arrayDataInfo.size(); info++)
         {
             if (arrayDataInfo[info] !=
