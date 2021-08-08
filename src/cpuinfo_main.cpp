@@ -565,7 +565,7 @@ static void getCpuConfiguration(
             "type='signal',interface='org.freedesktop.DBus.Properties',member='"
             "PropertiesChanged',arg0='xyz.openbmc_project."
             "Configuration.XeonCPU'",
-            [&io, conn, &objServer](sdbusplus::message::message& msg) {
+            [&io, conn, &objServer](sdbusplus::message::message&) {
                 std::cerr << "get cpu configuration match\n";
                 static boost::asio::steady_timer filterTimer(io);
                 filterTimer.expires_after(
@@ -631,7 +631,7 @@ static void getCpuConfiguration(
 
 } // namespace cpu_info
 
-int main(int argc, char* argv[])
+int main()
 {
     // setup connection to dbus
     boost::asio::io_service io;

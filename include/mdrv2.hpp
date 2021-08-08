@@ -116,9 +116,9 @@ class MDR_V2 :
         getRecordType(size_t type);
 
   private:
-    boost::asio::steady_timer timer;
-
     sdbusplus::bus::bus& bus;
+
+    boost::asio::steady_timer timer;
 
     Mdr2DirStruct smbiosDir;
 
