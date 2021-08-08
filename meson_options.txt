@@ -1,0 +1,4 @@
+option('tests', type: 'feature', description: 'Build tests')
+option('dimm-dbus', type: 'boolean', description: 'Expose DIMM D-Bus Interface')
+option('cpuinfo', type: 'boolean', description: 'Build CPUInfo service')
+option('smbios-ipmi-blob', type: 'boolean', description: 'Build IPMI blob library for SMBIOS transfer')
