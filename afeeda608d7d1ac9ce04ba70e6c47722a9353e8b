@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "4e8de011_70d3b5cf",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-08-10T09:29:57Z",
+      "side": 1,
+      "message": "Hey yes, but Zhikui\u0027s question is valid.\nFrom bmcweb, present property is read from here. Please refer below patch.\nhttps://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/41415\n\nSo you assigning \"true\" meaning redfish will always show \"enabled\" even though dimm is not present.\n\nBelow is the description of this property from redfish side:\n                \"State\": {\n                    \"anyOf\": [\n                        {\n                            \"$ref\": \"#/definitions/State\"\n                        },\n                        {\n                            \"type\": \"null\"\n                        }\n                    ],\n                    \"description\": \"The known state of the resource, such as, enabled.\",\n                    \"longDescription\": \"This property shall indicate whether and why this component is available.  Enabled indicates the resource is available.  Disabled indicates the resource has been intentionally made unavailable but it can be enabled.  Offline indicates the resource is unavailable intentionally and requires action to make it available.  InTest indicates that the component is undergoing testing.  Starting indicates that the resource is becoming available.  Absent indicates the resource is physically unavailable.\",\n                    \"readonly\": true\n                }",
+      "parentUuid": "30eb3b3c_0f5bacdc",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af90cfbe_e97cb459",
         "filename": "src/dimm.cpp",
         "patchSetId": 2
