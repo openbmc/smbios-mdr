@@ -256,7 +256,8 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
         throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
             InvalidParameter();
     }
-    if (dirEntry.size() < sizeof(Mdr2DirEntry))
+    if ((static_cast<size_t>(returnedEntries) * sizeof(DataIdStruct)) !=
+        dirEntry.size())
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Directory size invalid");
