@@ -256,7 +256,8 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
         throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
             InvalidParameter();
     }
-    if (dirEntry.size() < sizeof(Mdr2DirEntry))
+    if ((static_cast<size_t>(returnedEntries) * sizeof(DataIdStruct)) !=
+        dirEntry.size())
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Directory size invalid");
@@ -279,6 +280,7 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
             smbiosDir.dirVersion = dirVersion;
         }
         uint8_t idIndex = dirIndex;
+        smbiosDir.dirEntries = returnedEntries;
 
         uint8_t* pData = dirEntry.data();
         if (pData == nullptr)
@@ -287,15 +289,10 @@ bool MDR_V2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
         }
         for (uint8_t index = 0; index < returnedEntries; index++)
         {
-            auto data = reinterpret_cast<const Mdr2DirEntry*>(pData);
-            smbiosDir.dir[idIndex + index].common.dataVersion =
-                data->dataVersion;
-            std::copy(data->id.dataInfo,
-                      data->id.dataInfo + sizeof(DataIdStruct),
+            auto data = reinterpret_cast<const DataIdStruct*>(pData);
+            std::copy(data->dataInfo, data->dataInfo + sizeof(DataIdStruct),
                       smbiosDir.dir[idIndex + index].common.id.dataInfo);
-            smbiosDir.dir[idIndex + index].common.dataSetSize = data->size;
-            smbiosDir.dir[idIndex + index].common.timestamp = data->timestamp;
-            pData += sizeof(returnedEntries);
+            pData += sizeof(DataIdStruct);
         }
     }
     return teminate;
