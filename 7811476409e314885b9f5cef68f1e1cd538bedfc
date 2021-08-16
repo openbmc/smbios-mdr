@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f84ea798_bf74796e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-08-16T19:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596d96dc_9c8a6b25",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "7811476409e314885b9f5cef68f1e1cd538bedfc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "694cbc30_2feaaf31",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2021-08-16T17:46:47Z",
       "side": 1,
       "message": "Did the command fail before? For completeness, test should be run to confirm both success and fail cases. Having said that, I am not sure it is feasible to inject the error.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "7811476409e314885b9f5cef68f1e1cd538bedfc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82d6a10_c09bd1f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-08-16T19:36:55Z",
+      "side": 1,
+      "message": "Yes it failed before. Added both success and failure cases. Thanks for pointing it out.",
+      "parentUuid": "694cbc30_2feaaf31",
       "range": {
         "startLine": 13,
         "startChar": 0,
@@ -154,6 +202,30 @@
       "writtenOn": "2021-08-16T18:29:03Z",
       "side": 1,
       "message": "I read through this function, it seems strange to do the casting at line 290 where dirEntry is a different struct than Mdr2DirEntry. Line 298 is just the next byte in dirEntry? Seems like it lacks boundary check also.",
+      "parentUuid": "88fe0f77_763f09e2",
+      "range": {
+        "startLine": 259,
+        "startChar": 23,
+        "endLine": 259,
+        "endChar": 25
+      },
+      "revId": "7811476409e314885b9f5cef68f1e1cd538bedfc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bc2585_b3c7729d",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000415
+      },
+      "writtenOn": "2021-08-16T19:36:55Z",
+      "side": 1,
+      "message": "Updated the condition.\n\nYes @Zhikui, I feel the same. From line number 290 to 298, the code seems incorrect and also didn\u0027t not follow as per command 38h.",
       "parentUuid": "88fe0f77_763f09e2",
       "range": {
         "startLine": 259,
