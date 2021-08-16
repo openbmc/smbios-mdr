@@ -193,6 +193,30 @@
     },
     {
       "key": {
+        "uuid": "f2cb4815_70166c09",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-08-16T23:05:40Z",
+      "side": 1,
+      "message": "I guess my question is what makes sdr elist to output Presence Detected?\nI don\u0027t see them in my system.",
+      "parentUuid": "4e8de011_70d3b5cf",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 16
+      },
+      "revId": "afeeda608d7d1ac9ce04ba70e6c47722a9353e8b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af90cfbe_e97cb459",
         "filename": "src/dimm.cpp",
         "patchSetId": 2
