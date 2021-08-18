@@ -22,6 +22,30 @@
       "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "036a7250_4ee0022a",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2021-08-18T20:15:44Z",
+      "side": 1,
+      "message": "According to the OSStatus enum descriptions here: https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/State/OperatingSystem/Status.interface.yaml\n\nother statuses (except \"Inactive\" and \"Standby\") indicate boot is completed. Which means POST should be done. So only \"Inactive\" indicate that POST is not done.",
+      "parentUuid": "2bba7c6f_f8793f8f",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 57
+      },
+      "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
