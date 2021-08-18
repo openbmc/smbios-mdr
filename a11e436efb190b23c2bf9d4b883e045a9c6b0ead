@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf867061_df90121b",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-08-18T21:08:44Z",
+      "side": 1,
+      "message": "I don\u0027t know what is specification this function is supporting. \nI am reviewing from security coding perspective.\nFrom this check, looks like dirEntry is an array of DataIdStruct and size of array is expected to be returnedEntries.  But the loop line 289-300 suggest different. \nMy previous comments did not get addressed with this change.\n\nCommit message says command was successful. But were the correct data sent for different sizes?",
+      "range": {
+        "startLine": 259,
+        "startChar": 3,
+        "endLine": 260,
+        "endChar": 24
+      },
+      "revId": "a11e436efb190b23c2bf9d4b883e045a9c6b0ead",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}

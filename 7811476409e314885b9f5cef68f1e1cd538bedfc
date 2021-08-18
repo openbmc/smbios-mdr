@@ -236,6 +236,30 @@
       "revId": "7811476409e314885b9f5cef68f1e1cd538bedfc",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7ef56d_85889e6d",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-08-18T21:08:44Z",
+      "side": 1,
+      "message": "This need to be understood before I can do a proper review for the size checking.",
+      "parentUuid": "b7bc2585_b3c7729d",
+      "range": {
+        "startLine": 259,
+        "startChar": 23,
+        "endLine": 259,
+        "endChar": 25
+      },
+      "revId": "7811476409e314885b9f5cef68f1e1cd538bedfc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
