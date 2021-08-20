@@ -48,6 +48,13 @@ void Pcie::pcieInfoUpdate()
 
     /* Pcie slot is embedded on the board. Always be true */
     Item::present(true);
+
+    if (!motherboardPath.empty())
+    {
+        std::vector<std::tuple<std::string, std::string, std::string>> assocs;
+        assocs.emplace_back("chassis", "pcie_slots", motherboardPath);
+        association::associations(assocs);
+    }
 }
 
 void Pcie::pcieGeneration(const uint8_t type)

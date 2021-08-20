@@ -375,8 +375,24 @@ uint8_t MDR_V2::directoryEntries(uint8_t value)
 
 void MDR_V2::systemInfoUpdate()
 {
-    cpus.clear();
+    std::string motherboardPath;
+    sdbusplus::message::message method =
+        bus.new_method_call("xyz.openbmc_project.EntityManager",
+                            "/xyz/openbmc_project/EntityManager",
+                            "xyz.openbmc_project.EntityManager", "ReScan");
+    try
+    {
+        sdbusplus::message::message reply = bus.call(method);
+        reply.read(motherboardPath);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Failed to query system motherboard",
+            phosphor::logging::entry("ERROR=%s", e.what()));
+    }
 
+    cpus.clear();
     int num = getTotalCpuSlot();
     if (num == -1)
     {
@@ -389,7 +405,8 @@ void MDR_V2::systemInfoUpdate()
     {
         std::string path = cpuPath + std::to_string(index);
         cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+            motherboardPath));
     }
 
 #ifdef DIMM_DBUS
@@ -408,7 +425,8 @@ void MDR_V2::systemInfoUpdate()
     {
         std::string path = dimmPath + std::to_string(index);
         dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+            motherboardPath));
     }
 
 #endif
@@ -426,7 +444,8 @@ void MDR_V2::systemInfoUpdate()
     {
         std::string path = pciePath + std::to_string(index);
         pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+            motherboardPath));
     }
 
     system.reset();

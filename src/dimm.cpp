@@ -74,6 +74,13 @@ void Dimm::memoryInfoUpdate(void)
     memoryAttributes(memoryInfo->attributes);
     memoryConfiguredSpeedInMhz(memoryInfo->confClockSpeed);
 
+    if (!motherboardPath.empty())
+    {
+        std::vector<std::tuple<std::string, std::string, std::string>> assocs;
+        assocs.emplace_back("chassis", "memories", motherboardPath);
+        association::associations(assocs);
+    }
+
     return;
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <xyz/openbmc_project/Association/Definitions/server.hpp>
 #include <xyz/openbmc_project/Inventory/Connector/Embedded/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/PCIeSlot/server.hpp>
@@ -27,8 +28,11 @@ using embedded =
 using location =
     sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::LocationCode;
 using item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
+using association =
+    sdbusplus::xyz::openbmc_project::Association::server::Definitions;
 
-class Pcie : sdbusplus::server::object_t<PCIeSlot, location, embedded, item>
+class Pcie :
+    sdbusplus::server::object_t<PCIeSlot, location, embedded, item, association>
 {
   public:
     Pcie() = delete;
@@ -39,10 +43,12 @@ class Pcie : sdbusplus::server::object_t<PCIeSlot, location, embedded, item>
     ~Pcie() = default;
 
     Pcie(sdbusplus::bus::bus& bus, const std::string& objPath,
-         const uint8_t& pcieId, uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object_t<PCIeSlot, location, embedded, item>(
-            bus, objPath.c_str()),
-        pcieNum(pcieId), storage(smbiosTableStorage)
+         const uint8_t& pcieId, uint8_t* smbiosTableStorage,
+         const std::string& motherboard) :
+        sdbusplus::server::object_t<PCIeSlot, location, embedded, item,
+                                    association>(bus, objPath.c_str()),
+        pcieNum(pcieId), storage(smbiosTableStorage),
+        motherboardPath(motherboard)
     {
         pcieInfoUpdate();
     }
@@ -52,6 +58,7 @@ class Pcie : sdbusplus::server::object_t<PCIeSlot, location, embedded, item>
   private:
     uint8_t pcieNum;
     uint8_t* storage;
+    std::string motherboardPath;
 
     struct SystemSlotInfo
     {

@@ -169,6 +169,13 @@ void Cpu::infoUpdate(void)
     }
 
     characteristics(cpuInfo->characteristics); // offset 26h
+
+    if (!motherboardPath.empty())
+    {
+        std::vector<std::tuple<std::string, std::string, std::string>> assocs;
+        assocs.emplace_back("chassis", "processors", motherboardPath);
+        association::associations(assocs);
+    }
 }
 
 } // namespace smbios
