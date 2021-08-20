@@ -17,6 +17,7 @@
 #include "mdrv2.hpp"
 
 #include <boost/asio/io_context.hpp>
+#include <iostream>
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
 #include <sdbusplus/asio/connection.hpp>
@@ -33,6 +34,26 @@ sdbusplus::asio::object_server& getObjectServer(void)
 
 int main(void)
 {
+
+    connection->async_method_call(
+        [](boost::system::error_code ec, const std::string& motherboard) {
+            if (ec)
+            {
+                std::cerr << "error with aync_method_call\n";
+                return;
+            }
+            if (motherboard.empty())
+            {
+                return;
+            }
+            cpuPath = motherboard + "/cpu";
+            dimmPath = motherboard + "/dimm";
+            systemPath = motherboard + "/bios";
+        },
+        "xyz.openbmc_project.EntityManager",
+        "/xyz/openbmc_project/EntityManager",
+        "xyz.openbmc_project.EntityManager", "ReScan");
+
     sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*connection);
     sdbusplus::server::manager::manager objManager(
         bus, "/xyz/openbmc_project/inventory");

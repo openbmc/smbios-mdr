@@ -119,13 +119,13 @@ struct MDRSMBIOSHeader
     uint32_t dataSize;
 } __attribute__((packed));
 
-static constexpr const char* cpuPath =
+static std::string cpuPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 
-static constexpr const char* dimmPath =
+static std::string  dimmPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
 
-static constexpr const char* systemPath =
+static std::string  systemPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
 
 typedef enum
