@@ -1,5 +1,6 @@
 [Unit]
 Description=Intel BMC SMBIOS MDR V2
+After=xyz.openbmc_project.EntityManager.service
 
 [Service]
 Restart=always

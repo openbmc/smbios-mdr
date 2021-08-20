@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <xyz/openbmc_project/Association/Definitions/server.hpp>
 #include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
@@ -43,7 +44,10 @@ class Dimm :
     sdbusplus::server::object::object<
         sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot>,
     sdbusplus::server::object::object<
-        sdbusplus::xyz::openbmc_project::Inventory::server::Item>
+        sdbusplus::xyz::openbmc_project::Inventory::server::Item>,
+    sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Association::server::Definitions>
+
 {
   public:
     Dimm() = delete;
@@ -54,7 +58,8 @@ class Dimm :
     Dimm& operator=(Dimm&&) = default;
 
     Dimm(sdbusplus::bus::bus& bus, const std::string& objPath,
-         const uint8_t& dimmId, uint8_t* smbiosTableStorage) :
+         const uint8_t& dimmId, uint8_t* smbiosTableStorage,
+         const std::string& motherboard) :
 
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm>(
@@ -71,7 +76,11 @@ class Dimm :
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Inventory::server::Item>(
             bus, objPath.c_str()),
-        dimmNum(dimmId), storage(smbiosTableStorage)
+        sdbusplus::server::object::object<
+            sdbusplus::xyz::openbmc_project::Association::server::Definitions>(
+            bus, objPath.c_str()),
+        dimmNum(dimmId), storage(smbiosTableStorage),
+        motherboardPath(motherboard)
     {
         memoryInfoUpdate();
     }
@@ -96,6 +105,8 @@ class Dimm :
     uint8_t dimmNum;
 
     uint8_t* storage;
+
+    std::string motherboardPath;
 
     void dimmSize(const uint16_t size);
     void dimmSizeExt(const size_t size);

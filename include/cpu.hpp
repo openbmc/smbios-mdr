@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <xyz/openbmc_project/Association/Definitions/server.hpp>
 #include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
@@ -40,6 +41,8 @@ using connector =
     sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot;
 using processor = sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
 using Item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
+using association =
+    sdbusplus::xyz::openbmc_project::Association::server::Definitions;
 
 // Definition follow smbios spec DSP0134 3.0.0
 static const std::map<uint8_t, const char*> familyTable = {
@@ -98,7 +101,7 @@ static const std::array<std::optional<processor::Capability>, 16>
 
 class Cpu :
     sdbusplus::server::object_t<processor, asset, location, connector, rev,
-                                Item>
+                                Item, association>
 {
   public:
     Cpu() = delete;
@@ -109,10 +112,11 @@ class Cpu :
     ~Cpu() = default;
 
     Cpu(sdbusplus::bus::bus& bus, const std::string& objPath,
-        const uint8_t& cpuId, uint8_t* smbiosTableStorage) :
+        const uint8_t& cpuId, uint8_t* smbiosTableStorage,
+        const std::string& motherboard) :
         sdbusplus::server::object_t<processor, asset, location, connector, rev,
-                                    Item>(bus, objPath.c_str()),
-        cpuNum(cpuId), storage(smbiosTableStorage)
+                                    Item, association>(bus, objPath.c_str()),
+        cpuNum(cpuId), storage(smbiosTableStorage), motherboardPath(motherboard)
     {
         infoUpdate();
     }
@@ -123,6 +127,8 @@ class Cpu :
     uint8_t cpuNum;
 
     uint8_t* storage;
+
+    std::string motherboardPath;
 
     struct ProcessorInfo
     {
