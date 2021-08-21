@@ -46,6 +46,30 @@
       "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d129f668_f09c87ca",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-08-21T00:06:24Z",
+      "side": 1,
+      "message": "Please update commit message and comments here to clarify. I am still bit concerned if this logic will stay correct in the future, i.e. only Inactive means postInProgress. I would still prefer to be explicit on what OsState means postComplete.",
+      "parentUuid": "036a7250_4ee0022a",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 57
+      },
+      "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
