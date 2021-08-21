@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4fef0fc8_409d4269",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-08-21T02:00:50Z",
+      "side": 1,
+      "message": "https://github.com/openbmc/bmcweb/blob/e8204933be90353ef672e62dc628448173279e1c/redfish-core/lib/processor.hpp#L621\n\nsocket is also a printed label on the board. We reuse it as the physical location.",
+      "parentUuid": "cbb90bfa_61a3b61c",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "b4bc07b76d02ea18e5978b901b167fd1504a92f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b1a86a4_abf9d723",
         "filename": "src/dimm.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b4bc07b76d02ea18e5978b901b167fd1504a92f3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2ed85a_f28f25e9",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-08-21T02:00:50Z",
+      "side": 1,
+      "message": "The memoryDeviceLocator is also a printed label on the board. Re-use it as the physical location.",
+      "parentUuid": "4b1a86a4_abf9d723",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "b4bc07b76d02ea18e5978b901b167fd1504a92f3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
