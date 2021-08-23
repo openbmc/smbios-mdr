@@ -17,6 +17,7 @@
 #pragma once
 #include "cpu.hpp"
 #include "dimm.hpp"
+#include "pcieslot.hpp"
 #include "smbios_mdrv2.hpp"
 #include "system.hpp"
 
@@ -135,8 +136,10 @@ class MDR_V2 :
 
     int getTotalCpuSlot(void);
     int getTotalDimmSlot(void);
+    int getTotalPcieSlot(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
+    std::vector<std::unique_ptr<Pcie>> pcies;
     std::unique_ptr<System> system;
     std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
 };
