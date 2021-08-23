@@ -125,6 +125,9 @@ static constexpr const char* cpuPath =
 static constexpr const char* dimmPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
 
+static constexpr const char* pciePath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot";
+
 static constexpr const char* systemPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
 
