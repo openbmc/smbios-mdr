@@ -40,7 +40,7 @@ add_definitions (-DBOOST_NO_TYPEID)
 add_definitions (-DBOOST_ASIO_DISABLE_THREADS)
 
 set (SRC_FILES src/mdrv2.cpp src/mdrv2_main.cpp src/cpu.cpp src/dimm.cpp
-     src/system.cpp)
+     src/system.cpp src/pcieslot.cpp)
 
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 

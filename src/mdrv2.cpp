@@ -16,6 +16,8 @@
 
 #include "mdrv2.hpp"
 
+#include "pcieslot.hpp"
+
 #include <sys/mman.h>
 
 #include <phosphor-logging/elog-errors.hpp>
@@ -414,6 +416,22 @@ void MDR_V2::systemInfoUpdate()
 
 #endif
 
+    pcies.clear();
+    num = getTotalPcieSlot();
+    if (num == -1)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "get pcie total slot failed");
+        return;
+    }
+
+    for (int index = 0; index < num; index++)
+    {
+        std::string path = pciePath + std::to_string(index);
+        pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
+            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+    }
+
     system.reset();
     system = std::make_unique<System>(
         bus, systemPath, smbiosDir.dir[smbiosDirIndex].dataStorage);
@@ -473,6 +491,47 @@ int MDR_V2::getTotalDimmSlot()
             break;
         }
         num++;
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
+int MDR_V2::getTotalPcieSlot()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    int num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Fail to get total system slot - no storage data");
+        return -1;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, systemSlots);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+
+        /* System slot type offset. Check if the slot is a PCIE slots. All
+         * PCIE slot type are hardcoded in a table.
+         */
+        if (pcieSmbiosType.find(*(dataIn + 5)) != pcieSmbiosType.end())
+        {
+            num++;
+        }
         dataIn = smbiosNextPtr(dataIn);
         if (dataIn == nullptr)
         {
