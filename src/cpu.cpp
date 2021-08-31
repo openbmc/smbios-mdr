@@ -32,16 +32,34 @@ void Cpu::socket(const uint8_t positionNum, const uint8_t structLen,
     processor::socket(result);
 }
 
-void Cpu::family(const uint8_t value)
+static constexpr uint8_t processorFamily2Indicator = 0xfe;
+void Cpu::family(const uint8_t family, const uint16_t family2)
 {
-    std::map<uint8_t, const char*>::const_iterator it = familyTable.find(value);
-    if (it == familyTable.end())
+    std::map<uint8_t, const char*>::const_iterator it =
+        familyTable.find(family);
+    if (it->first == processorFamily2Indicator)
     {
-        processor::family("Unknown Processor Family");
+        std::map<uint16_t, const char*>::const_iterator it2 =
+            family2Table.find(family2);
+        if (it2 == family2Table.end())
+        {
+            processor::family("Unknown Processor Family");
+        }
+        else
+        {
+            processor::family(it2->second);
+        }
     }
     else
     {
-        processor::family(it->second);
+        if (it == familyTable.end())
+        {
+            processor::family("Unknown Processor Family");
+        }
+        else
+        {
+            processor::family(it->second);
+        }
     }
 }
 
@@ -122,7 +140,7 @@ void Cpu::infoUpdate(void)
     present(true);
 
     // this class is for type CPU  //offset 5h
-    family(cpuInfo->family); // offset 6h
+    family(cpuInfo->family, cpuInfo->family2); // offset 6h and 28h
     manufacturer(cpuInfo->manufacturer, cpuInfo->length,
                  dataIn);                               // offset 7h
     id(cpuInfo->id);                                    // offset 8h
