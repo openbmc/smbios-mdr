@@ -67,7 +67,14 @@ static const std::map<uint8_t, const char*> familyTable = {
     {0xdd, "Dual-Core Intel Xeon processor 7xxx Series"},
     {0xde, "Quad-Core Intel Xeon processor 7xxx Series"},
     {0xdf, "Multi-Core Intel Xeon processor 7xxx Series"},
-    {0xe0, "Multi-Core Intel Xeon processor 3400 Series"}
+    {0xe0, "Multi-Core Intel Xeon processor 3400 Series"},
+    {0xfe, "Processor Family 2 Indicator"}
+
+};
+
+// Definition follow smbios spec DSP0134 3.1.1
+static const std::map<uint16_t, const char*> family2Table = {
+    {0x100, "ARMv7"}, {0x101, "ARMv8"}, {0x118, "ARM"}, {0x119, "StrongARM"}
 
 };
 
@@ -151,7 +158,7 @@ class Cpu : sdbusplus::server::object_t<processor, asset, rev, Item>
 
     void socket(const uint8_t positionNum, const uint8_t structLen,
                 uint8_t* dataIn);
-    void family(const uint8_t value);
+    void family(const uint8_t family, const uint16_t family2);
     void manufacturer(const uint8_t positionNum, const uint8_t structLen,
                       uint8_t* dataIn);
     void version(const uint8_t positionNum, const uint8_t structLen,
