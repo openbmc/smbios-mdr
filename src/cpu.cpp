@@ -53,6 +53,22 @@ void Cpu::manufacturer(const uint8_t positionNum, const uint8_t structLen,
     asset::manufacturer(result);
 }
 
+void Cpu::partNumber(const uint8_t positionNum, const uint8_t structLen,
+                       uint8_t* dataIn)
+{
+    std::string result = positionToString(positionNum, structLen, dataIn);
+
+    asset::partNumber(result);
+}
+
+void Cpu::serialNumber(const uint8_t positionNum, const uint8_t structLen,
+                       uint8_t* dataIn)
+{
+    std::string result = positionToString(positionNum, structLen, dataIn);
+
+    asset::serialNumber(result);
+}
+
 void Cpu::version(const uint8_t positionNum, const uint8_t structLen,
                   uint8_t* dataIn)
 {
@@ -128,6 +144,10 @@ void Cpu::infoUpdate(void)
     id(cpuInfo->id);                                    // offset 8h
     version(cpuInfo->version, cpuInfo->length, dataIn); // offset 10h
     maxSpeedInMhz(cpuInfo->maxSpeed);                   // offset 14h
+    serialNumber(cpuInfo->serialNum, cpuInfo->length,
+                 dataIn);                               // offset 20h
+    partNumber(cpuInfo->partNum, cpuInfo->length,
+                 dataIn);                               // offset 22h
     if (cpuInfo->coreCount < maxOldVersionCount)        // offset 23h or 2Ah
     {
         coreCount(cpuInfo->coreCount);

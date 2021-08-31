@@ -154,6 +154,10 @@ class Cpu : sdbusplus::server::object_t<processor, asset, rev, Item>
     void family(const uint8_t value);
     void manufacturer(const uint8_t positionNum, const uint8_t structLen,
                       uint8_t* dataIn);
+    void serialNumber(const uint8_t positionNum, const uint8_t structLen,
+                      uint8_t* dataIn);
+    void partNumber(const uint8_t positionNum, const uint8_t structLen,
+                      uint8_t* dataIn);
     void version(const uint8_t positionNum, const uint8_t structLen,
                  uint8_t* dataIn);
     void characteristics(const uint16_t value);
