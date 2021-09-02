@@ -94,6 +94,30 @@
       "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba151f13_19df7026",
+        "filename": "src/cpuinfo_utils.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-09-02T22:18:54Z",
+      "side": 1,
+      "message": "That helps. Thanks",
+      "parentUuid": "a859abcc_c5a06d96",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 57
+      },
+      "revId": "9dbbc89c2431d24481b65d3c48c6fd2888123ea6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
