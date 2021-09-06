@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29661a88_49e64e14",
+        "filename": "include/cpu.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000376
+      },
+      "writtenOn": "2021-09-06T00:36:58Z",
+      "side": 1,
+      "message": "how to keep the input parameters consistent with before if there is no familay2 for some CPUs?",
+      "range": {
+        "startLine": 160,
+        "startChar": 37,
+        "endLine": 160,
+        "endChar": 60
+      },
+      "revId": "3ecb4d9dc9f62e0123f6dad4556c5a15cb413def",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40928eab_8373c86d",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000376
+      },
+      "writtenOn": "2021-09-06T00:36:58Z",
+      "side": 1,
+      "message": "this code should be kept as before since it\u0027s exception for all,  regarding \"if (it-\u003efirst \u003d\u003d processorFamily2Indicator)\", it\u0027s one of normal case.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "3ecb4d9dc9f62e0123f6dad4556c5a15cb413def",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
