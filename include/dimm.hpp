@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Dimm/server.hpp>
@@ -40,6 +41,8 @@ class Dimm :
         sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
             LocationCode>,
     sdbusplus::server::object::object<
+        sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot>,
+    sdbusplus::server::object::object<
         sdbusplus::xyz::openbmc_project::Inventory::server::Item>
 {
   public:
@@ -62,6 +65,9 @@ class Dimm :
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
                 LocationCode>(bus, objPath.c_str()),
+        sdbusplus::server::object::object<
+            sdbusplus::xyz::openbmc_project::Inventory::Connector::server::
+                Slot>(bus, objPath.c_str()),
         sdbusplus::server::object::object<
             sdbusplus::xyz::openbmc_project::Inventory::server::Item>(
             bus, objPath.c_str()),

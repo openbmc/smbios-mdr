@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
@@ -35,6 +36,8 @@ using asset =
     sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset;
 using location =
     sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::LocationCode;
+using connector =
+    sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot;
 using processor = sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
 using Item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
 
@@ -93,7 +96,9 @@ static const std::array<std::optional<processor::Capability>, 16>
                          std::nullopt,
                          std::nullopt};
 
-class Cpu : sdbusplus::server::object_t<processor, asset, location, rev, Item>
+class Cpu :
+    sdbusplus::server::object_t<processor, asset, location, connector, rev,
+                                Item>
 {
   public:
     Cpu() = delete;
@@ -105,8 +110,8 @@ class Cpu : sdbusplus::server::object_t<processor, asset, location, rev, Item>
 
     Cpu(sdbusplus::bus::bus& bus, const std::string& objPath,
         const uint8_t& cpuId, uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object_t<processor, asset, location, rev, Item>(
-            bus, objPath.c_str()),
+        sdbusplus::server::object_t<processor, asset, location, connector, rev,
+                                    Item>(bus, objPath.c_str()),
         cpuNum(cpuId), storage(smbiosTableStorage)
     {
         infoUpdate();
