@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f98e71eb_1ed623bc",
+        "filename": "include/cpu.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000908
+      },
+      "writtenOn": "2021-09-09T15:45:33Z",
+      "side": 1,
+      "message": "The implementation should be compatible with CPUs that do not store its family in Processor Family 2 field of SMBIOS. From my understanding, the SMBIOS table will still have the Processor Family 2 field, even if it is not used. The implementation will only check Processor Family 2 if Processor Family indicates the information resides in Processor Family 2. Then if there is an error in the values of the SMBIOS table, smbios-mdr will continue to function and just report \"Unknown Processor Family\".",
+      "parentUuid": "29661a88_49e64e14",
+      "range": {
+        "startLine": 160,
+        "startChar": 37,
+        "endLine": 160,
+        "endChar": 60
+      },
+      "revId": "3ecb4d9dc9f62e0123f6dad4556c5a15cb413def",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40928eab_8373c86d",
         "filename": "src/cpu.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3ecb4d9dc9f62e0123f6dad4556c5a15cb413def",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d70c92_2ec141a7",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000908
+      },
+      "writtenOn": "2021-09-09T15:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40928eab_8373c86d",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 9
+      },
+      "revId": "3ecb4d9dc9f62e0123f6dad4556c5a15cb413def",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
