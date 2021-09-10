@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a85a3ad_30f97c03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-09-10T23:24:41Z",
+      "side": 1,
+      "message": "I don\u0027t understand - do you mean the presence of the slot interface will imply it is replaceable?\nWhat application will use this?",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "7481986cd7abcf80541aa31a59724f3615646602",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
