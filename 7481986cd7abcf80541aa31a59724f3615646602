@@ -22,6 +22,30 @@
       "revId": "7481986cd7abcf80541aa31a59724f3615646602",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392eefc9_9f04b76b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-09-10T23:37:43Z",
+      "side": 1,
+      "message": "https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/44079 There is a change in bmcweb that use this interface to imply the redfish resource Location.PartLocation.LocationType. The LocationType can be either \"Slot\" or \"Embedde\".",
+      "parentUuid": "1a85a3ad_30f97c03",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 54
+      },
+      "revId": "7481986cd7abcf80541aa31a59724f3615646602",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
