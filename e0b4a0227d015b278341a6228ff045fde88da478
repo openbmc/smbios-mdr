@@ -22,6 +22,30 @@
       "revId": "e0b4a0227d015b278341a6228ff045fde88da478",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bdc92f_98764005",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2021-09-14T10:09:34Z",
+      "side": 1,
+      "message": "The \"Present\" property is set according smbios file for physically not present\ndimms details are filled as \"NO DIMM\".\n\nThus, we leverage \"Present\" property according below commit:\n\"Get Present property for Dimms\"\nhttps://github.com/openbmc/smbios-mdr/commit/33c948a473bd273fea0cff82d4c99b70b7784be6\n\nBTW, we also found that test item \"Verify DIMM Functional State\"\nin test_inventory.robot. The \"Present\" DIMM property should be true\nif \"Functional\" DIMM property is set.\nAccording this test item design, these properties are related.\nThus, We update \"Functional\" property with \"Present\" property.\n\nVerify DIMM Functional State\n    [Documentation]  Verify that \"Present\" DIMM property is set if \"Functional\"\n    ...              DIMM property is set.\n    [Tags]  Verify_DIMM_Functional_State\n\n    ${dimm_list}\u003d  Get Endpoint Paths  ${HOST_INVENTORY_URI}system  dimm\n    FOR  ${dimm_uri}  IN  @{dimm_list}\n      ${status}\u003d  Run Keyword And Return Status\n      ...  Check URL Property Is Functional  ${dimm_uri}\n      Continue For Loop If  \u0027${status}\u0027 \u003d\u003d \u0027${False}\u0027\n      ${present}\u003d  Read Attribute  ${dimm_uri}  Present\n      Should Be True  ${present}\n      ...  msg\u003d${dimm_uri} is functional but not present.\n    END",
+      "parentUuid": "26827ce7_ca1e8f67",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 18
+      },
+      "revId": "e0b4a0227d015b278341a6228ff045fde88da478",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
