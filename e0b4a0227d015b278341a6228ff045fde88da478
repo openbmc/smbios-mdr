@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26827ce7_ca1e8f67",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2021-09-14T08:11:57Z",
+      "side": 1,
+      "message": "This is dimm presence flag not functional.\n\nWhat is method to determine the DIMM functional or not? Do you have any code to correctly update this functional property instead of using present flag?",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 18
+      },
+      "revId": "e0b4a0227d015b278341a6228ff045fde88da478",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
