@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee0aaf3_9c4e7773",
+        "filename": "include/pcieslot.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-09-14T16:20:19Z",
+      "side": 1,
+      "message": "change to item to follow naming convention -https://github.com/openbmc/docs/blob/master/cpp-style-and-conventions.md#types",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae35b93_d506ceb4",
+        "filename": "src/pcieslot.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-09-14T16:20:19Z",
+      "side": 1,
+      "message": "nit: can be combined",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ceb741_c7b6bd4a",
+        "filename": "src/pcieslot.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-09-14T16:20:19Z",
+      "side": 1,
+      "message": "These two loops are very similar, looks like the while loop is not needed.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
