@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73fa1b59_0c818ccb",
+        "filename": "include/pcieslot.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-09-16T23:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee0aaf3_9c4e7773",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae35b93_d506ceb4",
         "filename": "src/pcieslot.cpp",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d4df2813_c408c7fe",
+        "filename": "src/pcieslot.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-09-16T23:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bae35b93_d506ceb4",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 51
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9ceb741_c7b6bd4a",
         "filename": "src/pcieslot.cpp",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391737fd_07573784",
+        "filename": "src/pcieslot.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000632
+      },
+      "writtenOn": "2021-09-16T23:36:05Z",
+      "side": 1,
+      "message": "Good catch. Fixed.",
+      "parentUuid": "f9ceb741_c7b6bd4a",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "905c1838cf20d4786a88ccd5216f3deace5e510a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
