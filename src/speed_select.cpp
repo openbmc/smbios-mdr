@@ -778,6 +778,8 @@ static bool
             return false;
         }
 
+        DEBUG_PRINT << "Checking SST on CPU " << std::hex << i << '\n';
+
         // We could possibly check D-Bus for CPU presence and model, but PECI is
         // 10x faster and so much simpler.
         uint8_t cc, stepping;
@@ -792,6 +794,9 @@ static bool
         if (status != PECI_CC_SUCCESS || cc != PECI_DEV_CC_SUCCESS ||
             !modelSupportsDiscovery(cpuModel))
         {
+            DEBUG_PRINT << "Ignoring: status=" << std::hex << status
+                        << ", cc=" << static_cast<int>(cc)
+                        << ", cpuModel=" << cpuModel << '\n';
             continue;
         }
 
@@ -801,6 +806,7 @@ static bool
         GetLevelsInfo getLevelsInfo(peciManager);
         if (!getLevelsInfo.enabled())
         {
+            DEBUG_PRINT << "Ignoring: SST not supported\n";
             continue;
         }
 
