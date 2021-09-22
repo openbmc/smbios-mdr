@@ -85,6 +85,7 @@ std::string System::version(std::string value)
             }
             smbiosFile.clear();
             smbiosFile.close();
+            std::cout << "VERSION INFO - BIOS - " << result << std::endl;
             phosphor::logging::log<phosphor::logging::level::ERR>(
                 "Find non-print char, delete the broken MDRV2 table file!");
             return sdbusplus::xyz::openbmc_project::Inventory::Decorator::
@@ -92,7 +93,7 @@ std::string System::version(std::string value)
         }
         result = tempS;
     }
-
+    std::cout << "VERSION INFO - BIOS - " << result << std::endl;
     return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
         Revision::version(result);
 }
