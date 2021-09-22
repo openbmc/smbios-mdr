@@ -92,7 +92,8 @@ std::string System::version(std::string value)
         }
         result = tempS;
     }
-
+    std::string biosVer = "VERSION INFO - BIOS - " + result + "\n";
+    phosphor::logging::log<phosphor::logging::level::INFO>(biosVer.c_str());
     return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
         Revision::version(result);
 }
