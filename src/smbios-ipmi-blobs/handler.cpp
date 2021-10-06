@@ -43,7 +43,7 @@ bool syncSmbiosData()
         sdbusplus::message::message reply = bus.call(method);
         reply.read(status);
     }
-    catch (sdbusplus::exception_t& e)
+    catch (const sdbusplus::exception_t& e)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Error Sync data with service",
@@ -226,7 +226,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
                          mdrHdr.dataSize);
         blobPtr->state |= blobs::StateFlags::committing;
     }
-    catch (std::ofstream::failure& e)
+    catch (const std::ofstream::failure& e)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Write data from flash error - write data error",
