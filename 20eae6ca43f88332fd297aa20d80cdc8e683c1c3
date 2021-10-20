@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31582e31_26a9857c",
+        "filename": "src/system.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-10-20T00:49:35Z",
+      "side": 1,
+      "message": "This would print \"NO BIOS Version\", not sure we want that.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "20eae6ca43f88332fd297aa20d80cdc8e683c1c3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
