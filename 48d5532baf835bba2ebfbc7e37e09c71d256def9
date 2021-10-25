@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7fda5d8_02e085b8",
+        "filename": "OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-10-25T16:42:31Z",
+      "side": 1,
+      "message": "white space",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 14
+      },
+      "revId": "48d5532baf835bba2ebfbc7e37e09c71d256def9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
