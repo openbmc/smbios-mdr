@@ -46,6 +46,30 @@
       "revId": "44533c83fe67952b8afe3c53db17fec39cf3b458",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669446b5_29a81537",
+        "filename": "OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-10-25T18:56:00Z",
+      "side": 1,
+      "message": "That is fair. It can be fixed  later",
+      "parentUuid": "81b9165e_f96536e5",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "44533c83fe67952b8afe3c53db17fec39cf3b458",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
