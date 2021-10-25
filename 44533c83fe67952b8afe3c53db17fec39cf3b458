@@ -22,6 +22,30 @@
       "revId": "44533c83fe67952b8afe3c53db17fec39cf3b458",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b9165e_f96536e5",
+        "filename": "OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-10-25T18:39:40Z",
+      "side": 1,
+      "message": "Let\u0027s not burden Manoj with making updates that should have been done previously in the original maintainers file.",
+      "parentUuid": "d5c7a9da_9be0ac9b",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 24
+      },
+      "revId": "44533c83fe67952b8afe3c53db17fec39cf3b458",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
