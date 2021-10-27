@@ -1,0 +1,11 @@
+Code-Review+2: Chen, Yugang <yugang.chen@linux.intel.com>
+Code-Review+1: Zhikui Ren <zhikui.ren@intel.com>
+Code-Review+1: Thang Q. Nguyen <thang@os.amperecomputing.com>
+Code-Review+1: Hieu Huynh <hieuh@os.amperecomputing.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Ok-To-Test+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Charles Boyer <Charles.Boyer@fii-usa.com>
+Submitted-at: Wed, 27 Oct 2021 21:27:23 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/smbios-mdr/+/46396
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
