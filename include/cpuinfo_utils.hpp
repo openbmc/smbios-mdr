@@ -47,4 +47,43 @@ extern HostState hostState;
  */
 void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn);
 
+constexpr uint64_t bit(uint8_t index)
+{
+    return (1ull << index);
+}
+
+/**
+ * Extract a bitfield from an input data by shifting and masking.
+ *
+ * @tparam Dest Destination type - mostly useful to avoid an extra static_cast
+ *              at the call site. Defaults to the Src type if unspecified.
+ * @tparam Src  Automatically deduced from the first positional parameter.
+ *
+ * @param data  Input data.
+ * @param loBit 0-based index of the least significant bit to return.
+ * @param hiBit 0-based index of the most significant bit to return.
+ */
+template <typename Dest = std::monostate, typename Src>
+auto mask(Src data, unsigned int loBit, unsigned int hiBit)
+{
+    assert(hiBit >= loBit);
+    uint64_t d = data;
+    d >>= loBit;
+    d &= (1ull << (hiBit - loBit + 1)) - 1;
+    if constexpr (std::is_same_v<Dest, std::monostate>)
+    {
+        return static_cast<Src>(d);
+    }
+    else
+    {
+        return static_cast<Dest>(d);
+    }
+}
+
+namespace dbus
+{
+boost::asio::io_context& getIOContext();
+std::shared_ptr<sdbusplus::asio::connection> getConnection();
+} // namespace dbus
+
 } // namespace cpu_info
