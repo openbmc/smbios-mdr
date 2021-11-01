@@ -636,9 +636,9 @@ static void getCpuConfiguration(
 int main(int argc, char* argv[])
 {
     // setup connection to dbus
-    boost::asio::io_service io;
+    boost::asio::io_service& io = cpu_info::dbus::getIOContext();
     std::shared_ptr<sdbusplus::asio::connection> conn =
-        std::make_shared<sdbusplus::asio::connection>(io);
+        cpu_info::dbus::getConnection();
 
     // CPUInfo Object
     conn->request_name(cpu_info::cpuInfoObject);
