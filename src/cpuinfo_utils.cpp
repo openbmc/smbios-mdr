@@ -288,4 +288,18 @@ void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn)
     initialized = true;
 }
 
+namespace dbus
+{
+boost::asio::io_context& getIOContext()
+{
+    static boost::asio::io_context ioc;
+    return ioc;
+}
+std::shared_ptr<sdbusplus::asio::connection> getConnection()
+{
+    static auto conn =
+        std::make_shared<sdbusplus::asio::connection>(getIOContext());
+    return conn;
+}
+} // namespace dbus
 } // namespace cpu_info
