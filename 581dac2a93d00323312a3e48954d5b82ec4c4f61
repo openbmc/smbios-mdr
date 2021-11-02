@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "b17b1484_042c1d02",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T23:58:19Z",
+      "side": 1,
+      "message": "This macro no longer exists. It was replaced by BOOST_SYSTEM_ENABLE_DEPRECATED which has the opposite meaning. We can remove this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99820fc_4c6cbf74",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T23:58:19Z",
+      "side": 1,
+      "message": "This macro no longer exists. Boost.System is header-only since boost 1.69. We can remove this.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76a4010e_0573eb52",
         "filename": "meson.build",
         "patchSetId": 6
