@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37dac568_9da9a66b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "not sure what this prefix is supposed to mean. Just \"Add meson build support\" is a good subject.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd8e8d3_4cd5413a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "Would prefer to split any code edits into a separate review.",
+      "range": {
+        "startLine": 9,
+        "startChar": 20,
+        "endLine": 9,
+        "endChar": 44
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a4010e_0573eb52",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "Is the subproject necessary? Usually boost is already available everywhere.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 5
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a03ef9e_578a4979",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "deprecated - replace with get_variable",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ae86af_e977085e",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "typo, remove the s",
+      "range": {
+        "startLine": 42,
+        "startChar": 54,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28af32f1_31be231e",
+        "filename": "src/meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "Is this necessary? I don\u0027t see the code using systemd directly anywhere.",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c196ce44_a6c67e71",
+        "filename": "src/meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "isn\u0027t this already the default behavior?",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09cec82_aba9bc6d",
+        "filename": "src/smbios-ipmi-blobs/meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "Is it possible to do a subproject wrap for this? so it can be built outside yocto",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 49
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456f0e5a_c5721dcc",
+        "filename": "subprojects/boost.wrap",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-02T21:28:58Z",
+      "side": 1,
+      "message": "not sure this is necessary",
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
