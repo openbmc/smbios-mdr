@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "9ed204c0_0213ab33",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-03T01:55:53Z",
+      "side": 1,
+      "message": "Add \u0027cpp_rtti\u003dfalse\u0027",
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b17b1484_042c1d02",
         "filename": "meson.build",
         "patchSetId": 6
@@ -140,6 +157,29 @@
     },
     {
       "key": {
+        "uuid": "150eca55_de187c90",
+        "filename": "meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-03T01:55:53Z",
+      "side": 1,
+      "message": "looks like this actually needs to be \u0027rootprefix\u0027? systemd_system_unit_dir does not use ${prefix}",
+      "range": {
+        "startLine": 34,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14ae86af_e977085e",
         "filename": "meson.build",
         "patchSetId": 6
@@ -156,6 +196,29 @@
         "startChar": 54,
         "endLine": 42,
         "endChar": 55
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9878f3cb_33e34ca6",
+        "filename": "service_files/meson.build",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2021-11-03T01:55:53Z",
+      "side": 1,
+      "message": "This can be replaced with a simpler call to\n\n  install_data(u[0], install_dir : systemd_system_unitdir)",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 18
       },
       "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
