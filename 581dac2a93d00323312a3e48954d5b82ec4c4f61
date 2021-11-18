@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "69952789_41b57ac6",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-11-18T08:57:19Z",
+      "side": 1,
+      "message": "Meaningless change?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ed204c0_0213ab33",
         "filename": "meson.build",
         "patchSetId": 6
@@ -226,6 +249,29 @@
     },
     {
       "key": {
+        "uuid": "689aedab_d6a5783f",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-11-18T08:57:19Z",
+      "side": 1,
+      "message": "This change is necessary?",
+      "range": {
+        "startLine": 76,
+        "startChar": 51,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28af32f1_31be231e",
         "filename": "src/meson.build",
         "patchSetId": 6
@@ -272,6 +318,23 @@
     },
     {
       "key": {
+        "uuid": "7a2dc9f6_503aa8b7",
+        "filename": "src/smbios-ipmi-blobs/handler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-11-18T08:57:19Z",
+      "side": 1,
+      "message": "Seems all are to fix warning.\nPlease split it to a special patch to fix warning message.",
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e09cec82_aba9bc6d",
         "filename": "src/smbios-ipmi-blobs/meson.build",
         "patchSetId": 6
@@ -289,6 +352,23 @@
         "endLine": 1,
         "endChar": 49
       },
+      "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2c3d71_19615f19",
+        "filename": "src/system.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2021-11-18T08:57:19Z",
+      "side": 1,
+      "message": "Seems all are to fix warning.\nPlease split it to a special patch to fix warning message.",
       "revId": "581dac2a93d00323312a3e48954d5b82ec4c4f61",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
