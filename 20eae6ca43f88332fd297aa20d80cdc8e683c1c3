@@ -22,6 +22,30 @@
       "revId": "20eae6ca43f88332fd297aa20d80cdc8e683c1c3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690244d9_abc32387",
+        "filename": "src/system.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001220
+      },
+      "writtenOn": "2021-12-10T19:33:09Z",
+      "side": 1,
+      "message": "Done - I do not believe that would be a useful logging message either. I was not paying close enough attention to the fact that this was a failure mode in which the BIOS version was not read.",
+      "parentUuid": "31582e31_26a9857c",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 33
+      },
+      "revId": "20eae6ca43f88332fd297aa20d80cdc8e683c1c3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
