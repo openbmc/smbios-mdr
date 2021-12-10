@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67474ae0_c260b583",
+        "filename": "src/system.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2021-12-10T23:35:56Z",
+      "side": 1,
+      "message": "Please use lg2. This repo is already using c++20",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 76
+      },
+      "revId": "65f212a188fd7d946c0529fc6cf0fef3d833338e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
