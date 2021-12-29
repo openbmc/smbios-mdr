@@ -34,6 +34,15 @@ namespace smbios
 std::vector<uint8_t> MDR_V2::getDirectoryInformation(uint8_t dirIndex)
 {
     std::vector<uint8_t> responseDir;
+
+    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    if (!smbiosFile.good())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Open MDRV2 table file failure");
+        throw sdbusplus::xyz::openbmc_project::Smbios::MDR_V2::Error::
+            InvalidParameter();
+    }
     if (dirIndex > smbiosDir.dirEntries)
     {
         responseDir.push_back(0);
@@ -368,7 +377,17 @@ int MDR_V2::findIdIndex(std::vector<uint8_t> dataInfo)
 
 uint8_t MDR_V2::directoryEntries(uint8_t value)
 {
-    value = smbiosDir.dirEntries;
+    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    if (!smbiosFile.good())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Read data from flash error - Open MDRV2 table file failure");
+        value = 0;
+    }
+    else
+    {
+        value = smbiosDir.dirEntries;
+    }
     return sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2::
         directoryEntries(value);
 }
