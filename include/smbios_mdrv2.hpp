@@ -119,6 +119,29 @@ struct MDRSMBIOSHeader
     uint32_t dataSize;
 } __attribute__((packed));
 
+typedef struct
+{
+    uint8_t majorVersion;
+    uint8_t minorVersion;
+} SMBIOSVersion;
+
+struct EntryPointStructure
+{
+    uint32_t anchorString;
+    uint8_t epChecksum;
+    uint8_t epLength;
+    SMBIOSVersion smbiosVersion;
+    uint16_t maxStructSize;
+    uint8_t epRevision;
+    uint8_t formattedArea[5];
+    uint8_t intermediateAnchorString[5];
+    uint8_t intermediateChecksum;
+    uint16_t structTableLength;
+    uint32_t structTableAddress;
+    uint16_t noOfSmbiosStruct;
+    uint8_t smbiosBDCRevision;
+} __attribute__((packed));
+
 static constexpr const char* cpuPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
 
@@ -130,6 +153,9 @@ static constexpr const char* pciePath =
 
 static constexpr const char* systemPath =
     "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
+
+constexpr std::array<SMBIOSVersion, 3> supportedSMBIOSVersions{
+    SMBIOSVersion{3, 2}, SMBIOSVersion{3, 3}};
 
 typedef enum
 {
