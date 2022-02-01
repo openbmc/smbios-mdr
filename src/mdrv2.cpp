@@ -562,6 +562,50 @@ int MDR_V2::getTotalPcieSlot()
     return num;
 }
 
+bool MDR_V2::checkSMBIOSVersion(uint8_t* dataIn)
+{
+    const std::string anchorString = "_SM_";
+    std::string buffer(dataIn, dataIn + smbiosTableStorageSize);
+
+    auto it = std::search(std::begin(buffer), std::end(buffer),
+                          std::begin(anchorString), std::end(anchorString));
+    if (it == std::end(buffer))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Anchor String not found");
+        return false;
+    }
+
+    auto pos = std::distance(std::begin(buffer), it);
+    auto length = smbiosTableStorageSize - pos;
+    if (length < sizeof(EntryPointStructure))
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Invalid entry point structure");
+        return false;
+    }
+
+    auto epStructure =
+        reinterpret_cast<const EntryPointStructure*>(&dataIn[pos]);
+    lg2::info("SMBIOS VERSION - {MAJOR}.{MINOR}", "MAJOR",
+              epStructure->smbiosVersion.majorVersion, "MINOR",
+              epStructure->smbiosVersion.minorVersion);
+
+    auto itr = std::find_if(
+        std::begin(supportedSMBIOSVersions), std::end(supportedSMBIOSVersions),
+        [&](SMBIOSVersion versionItr) {
+            return versionItr.majorVersion ==
+                       epStructure->smbiosVersion.majorVersion &&
+                   versionItr.minorVersion ==
+                       epStructure->smbiosVersion.minorVersion;
+        });
+    if (itr == std::end(supportedSMBIOSVersions))
+    {
+        return false;
+    }
+    return true;
+}
+
 bool MDR_V2::agentSynchronizeData()
 {
     struct MDRSMBIOSHeader mdr2SMBIOS;
@@ -573,15 +617,21 @@ bool MDR_V2::agentSynchronizeData()
             "agent data sync failed - read data from flash failed");
         return false;
     }
-    else
+
+    if (!checkSMBIOSVersion(smbiosDir.dir[smbiosDirIndex].dataStorage))
     {
-        systemInfoUpdate();
-        smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
-        smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
-        smbiosDir.dir[smbiosDirIndex].common.size = mdr2SMBIOS.dataSize;
-        smbiosDir.dir[smbiosDirIndex].stage = MDR2SMBIOSStatusEnum::mdr2Loaded;
-        smbiosDir.dir[smbiosDirIndex].lock = MDR2DirLockEnum::mdr2DirUnlock;
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Unsupported SMBIOS table version");
+        return false;
     }
+
+    systemInfoUpdate();
+    smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
+    smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
+    smbiosDir.dir[smbiosDirIndex].common.size = mdr2SMBIOS.dataSize;
+    smbiosDir.dir[smbiosDirIndex].stage = MDR2SMBIOSStatusEnum::mdr2Loaded;
+    smbiosDir.dir[smbiosDirIndex].lock = MDR2DirLockEnum::mdr2DirUnlock;
+
     return true;
 }
 
