@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "3466ad3d_0ba34fdd",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-02-02T18:55:19Z",
+      "side": 1,
+      "message": "example: https://github.com/openbmc/smbios-mdr/blob/master/src/system.cpp#L95",
+      "parentUuid": "489b9b31_75f2ec83",
+      "range": {
+        "startLine": 609,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 31
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb4cf78a_e1e7e6a8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Nope. It gives error. \u0027\u003d\u003d\u0027 operator is not defined for SMBIOSVersion struct.",
       "parentUuid": "fb4cf78a_e1e7e6a8",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 622,
+        "endChar": 63
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a886d1b4_f4eb0910",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-02-02T18:55:19Z",
+      "side": 1,
+      "message": "ACK",
+      "parentUuid": "5325d790_ba5a4328",
       "range": {
         "startLine": 619,
         "startChar": 19,
