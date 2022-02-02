@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "960d189a_e3b3a379",
+        "filename": "include/smbios_mdrv2.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000479
+      },
+      "writtenOn": "2022-02-02T08:18:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a3d9151_7fadd169",
+      "range": {
+        "startLine": 157,
+        "startChar": 36,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4682a5e5_41325bbf",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "489b9b31_75f2ec83",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000479
+      },
+      "writtenOn": "2022-02-02T08:18:20Z",
+      "side": 1,
+      "message": "What do you mean by log2?",
+      "parentUuid": "4682a5e5_41325bbf",
+      "range": {
+        "startLine": 609,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 31
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb4cf78a_e1e7e6a8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-01T15:48:07Z",
       "side": 1,
       "message": "nit: I would expect *versionItr \u003d\u003d epStructure-\u003esmbiosVersion would work the same.",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 622,
+        "endChar": 63
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5325d790_ba5a4328",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1000479
+      },
+      "writtenOn": "2022-02-02T08:18:20Z",
+      "side": 1,
+      "message": "Nope. It gives error. \u0027\u003d\u003d\u0027 operator is not defined for SMBIOSVersion struct.",
+      "parentUuid": "fb4cf78a_e1e7e6a8",
       "range": {
         "startLine": 619,
         "startChar": 19,
