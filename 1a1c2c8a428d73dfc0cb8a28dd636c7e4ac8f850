@@ -119,6 +119,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9d63f77_78c381b4",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000479
+      },
+      "writtenOn": "2022-02-03T09:48:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3466ad3d_0ba34fdd",
+      "range": {
+        "startLine": 609,
+        "startChar": 0,
+        "endLine": 614,
+        "endChar": 31
+      },
+      "revId": "1a1c2c8a428d73dfc0cb8a28dd636c7e4ac8f850",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fb4cf78a_e1e7e6a8",
