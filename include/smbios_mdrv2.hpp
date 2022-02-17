@@ -244,7 +244,7 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
 static inline std::string positionToString(uint8_t positionNum,
                                            uint8_t structLen, uint8_t* dataIn)
 {
-    if (dataIn == nullptr)
+    if (dataIn == nullptr || positionNum == 0)
     {
         return "";
     }
