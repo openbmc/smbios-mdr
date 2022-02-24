@@ -583,40 +583,68 @@ int MDR_V2::getTotalPcieSlot()
 
 bool MDR_V2::checkSMBIOSVersion(uint8_t* dataIn)
 {
-    const std::string anchorString = "_SM_";
+    const std::string anchorString21 = "_SM_";
+    const std::string anchorString30 = "_SM3_";
     std::string buffer(dataIn, dataIn + smbiosTableStorageSize);
 
     auto it = std::search(std::begin(buffer), std::end(buffer),
-                          std::begin(anchorString), std::end(anchorString));
-    if (it == std::end(buffer))
+                          std::begin(anchorString21), std::end(anchorString21));
+    bool smbios21Found = it != std::end(buffer);
+    if (!smbios21Found)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Anchor String not found");
-        return false;
+        phosphor::logging::log<phosphor::logging::level::INFO>(
+            "SMBIOS 2.1 Anchor String not found. Looking for SMBIOS 3.0");
+        it = std::search(std::begin(buffer), std::end(buffer),
+                         std::begin(anchorString30), std::end(anchorString30));
+        if (it == std::end(buffer))
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "SMBIOS 2.1 and 3.0 Anchor Strings not found");
+            return false;
+        }
     }
 
     auto pos = std::distance(std::begin(buffer), it);
     auto length = smbiosTableStorageSize - pos;
-    if (length < sizeof(EntryPointStructure))
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Invalid entry point structure");
-        return false;
-    }
+    uint8_t foundMajorVersion;
+    uint8_t foundMinorVersion;
 
-    auto epStructure =
-        reinterpret_cast<const EntryPointStructure*>(&dataIn[pos]);
-    lg2::info("SMBIOS VERSION - {MAJOR}.{MINOR}", "MAJOR",
-              epStructure->smbiosVersion.majorVersion, "MINOR",
-              epStructure->smbiosVersion.minorVersion);
+    if (smbios21Found)
+    {
+        if (length < sizeof(EntryPointStructure21))
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Invalid entry point structure for SMBIOS 2.1");
+            return false;
+        }
+
+        auto epStructure =
+            reinterpret_cast<const EntryPointStructure21*>(&dataIn[pos]);
+        foundMajorVersion = epStructure->smbiosVersion.majorVersion;
+        foundMinorVersion = epStructure->smbiosVersion.minorVersion;
+    }
+    else
+    {
+        if (length < sizeof(EntryPointStructure30))
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Invalid entry point structure for SMBIOS 3.0");
+            return false;
+        }
+
+        auto epStructure =
+            reinterpret_cast<const EntryPointStructure30*>(&dataIn[pos]);
+        foundMajorVersion = epStructure->smbiosVersion.majorVersion;
+        foundMinorVersion = epStructure->smbiosVersion.minorVersion;
+    }
+    lg2::info("SMBIOS VERSION - {MAJOR}.{MINOR}", "MAJOR", foundMajorVersion,
+              "MINOR", foundMinorVersion);
 
     auto itr = std::find_if(
         std::begin(supportedSMBIOSVersions), std::end(supportedSMBIOSVersions),
         [&](SMBIOSVersion versionItr) {
-            return versionItr.majorVersion ==
-                       epStructure->smbiosVersion.majorVersion &&
-                   versionItr.minorVersion ==
-                       epStructure->smbiosVersion.minorVersion;
+            return versionItr.majorVersion == foundMajorVersion &&
+                   versionItr.minorVersion == foundMinorVersion;
         });
     if (itr == std::end(supportedSMBIOSVersions))
     {
