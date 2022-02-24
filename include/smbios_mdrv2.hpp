@@ -125,7 +125,7 @@ typedef struct
     uint8_t minorVersion;
 } SMBIOSVersion;
 
-struct EntryPointStructure
+struct EntryPointStructure21
 {
     uint32_t anchorString;
     uint8_t epChecksum;
@@ -140,6 +140,19 @@ struct EntryPointStructure
     uint32_t structTableAddress;
     uint16_t noOfSmbiosStruct;
     uint8_t smbiosBDCRevision;
+} __attribute__((packed));
+
+struct EntryPointStructure30
+{
+    uint8_t anchorString[5];
+    uint8_t epChecksum;
+    uint8_t epLength;
+    SMBIOSVersion smbiosVersion;
+    uint8_t smbiosDocRev;
+    uint8_t epRevision;
+    uint8_t reserved;
+    uint32_t structTableMaxSize;
+    uint64_t structTableAddr;
 } __attribute__((packed));
 
 static constexpr const char* cpuPath =
