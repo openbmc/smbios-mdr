@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e3d6bb2f_4d57f7d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-03-03T22:12:50Z",
+      "side": 1,
+      "message": "Apologies, didn\u0027t see that you already posted a comment here.\n\nI wanted to get this change out for review ASAP to raise up the issue we started seeing, but this CL wasn\u0027t able to fix the issue. I can move it to WIP while I figure out why this is still failing.",
+      "parentUuid": "efeb732f_8bb678e5",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d85167f7_ca17bea8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-02-25T16:45:01Z",
       "side": 1,
       "message": "These lines are quite similar to lines above them. Please create a function to avoid code duplication.",
+      "range": {
+        "startLine": 624,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 17
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "088389f1_aa452a1e",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-03-03T22:12:50Z",
+      "side": 1,
+      "message": "Yup, I\u0027ll mark this as WIP for now. I was going to clean this up after verifying this logic works (since I didn\u0027t want to add to the complexity while debugging the issue).",
+      "parentUuid": "d85167f7_ca17bea8",
       "range": {
         "startLine": 624,
         "startChar": 0,
