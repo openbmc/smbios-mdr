@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "312cf119_d4a64954",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-03-03T23:50:35Z",
+      "side": 1,
+      "message": "Finally had time to go through the codeflow for why we are missing this.\n\nWe seem to only transfer the core content of the table (\"DMI\" file) as seen in our smbios_transfer code https://github.com/u-root/u-root/commit/a84f341bf5256abf15dd83a8a7edd2ea76f924cd#diff-1e893e106a003d1bd56b01536dcd6953036736f1fcca100d054d13aebb9d27edR79\n\nand we have a separate file that contains the entry point structure, which is not transferred.\n\nQuick question - What is the expected structure of the SMBIOS content on the BMC? Should it be the `MDRSMBIOSHeader` then the `Entry Point Structure` then the rest of the SMBIOS?",
+      "parentUuid": "e3d6bb2f_4d57f7d4",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d85167f7_ca17bea8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
