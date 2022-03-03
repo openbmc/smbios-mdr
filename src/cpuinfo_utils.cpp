@@ -281,7 +281,7 @@ void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn)
     // repo, OperatingSystemState should return "standby" once the POST is
     // asserted.
     subscribeToProperty("xyz.openbmc_project.State.OperatingSystem",
-                        "/xyz/openbmc_project/state/os",
+                        "/xyz/openbmc_project/state/host0",
                         "xyz.openbmc_project.State.OperatingSystem.Status",
                         "OperatingSystemState", updateOsState);
 
