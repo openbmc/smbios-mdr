@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "815b54cc_5d7fd9d9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2022-03-03T01:59:44Z",
+      "side": 1,
+      "message": "Hello Kasun Athukorala,\nCould you please help us to check this commit? Thanks.\n\nSincerely,\nTim",
+      "revId": "c5dd90836c833a1f00a1d992e2bc891ea7ca0158",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
