@@ -170,6 +170,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d04c244b_a5d211e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-03-10T21:40:23Z",
+      "side": 1,
+      "message": "Thank you very much for confirming.\n\nI don\u0027t believe this is an industry standard, yet this daemon expects it. As such, we should probably document this requirement somewhere in the repo (perhaps in the README).\n\nI will look for an appropriate place and update.",
+      "parentUuid": "7c4c6050_2f2ef9fb",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d85167f7_ca17bea8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
