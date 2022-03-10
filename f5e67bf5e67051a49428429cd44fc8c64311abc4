@@ -122,6 +122,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e14c8378_60e91849",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2022-03-10T18:47:59Z",
+      "side": 1,
+      "message": "The concat happened outside of this change - we had to change the payload that was transferred to the BMC.\n\nSince we use the ipmi-blob instead from u-root, we\u0027d have to make the change in u-root as shown in the above link in the comments.\n\nWould it be possible to check for whether this is the case for Intel as well? If you use hexer / hexdump and look for the anchor string, it\u0027d be pretty easy to pinpoint where your entry point struct is concatenated.",
+      "parentUuid": "9d358afa_db317817",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d85167f7_ca17bea8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
