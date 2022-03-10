@@ -146,6 +146,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c4c6050_2f2ef9fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-03-10T19:59:25Z",
+      "side": 1,
+      "message": "Yes, I just checked and we have the entry point struct in the end.",
+      "parentUuid": "e14c8378_60e91849",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "f5e67bf5e67051a49428429cd44fc8c64311abc4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "d85167f7_ca17bea8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 1
