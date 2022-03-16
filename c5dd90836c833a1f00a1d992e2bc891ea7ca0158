@@ -74,6 +74,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "896ed12d_118d47ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2022-03-16T07:12:38Z",
+      "side": 1,
+      "message": "Hi ZhiKui,\nThank your review and suggestion. I will modify automation test case to match current openbmc design for this case. Thank you.\n\nSincerely,\nTim",
+      "parentUuid": "058aed78_652ee5c3",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "c5dd90836c833a1f00a1d992e2bc891ea7ca0158",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "815b54cc_5d7fd9d9",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -119,6 +143,23 @@
       "writtenOn": "2022-03-15T23:45:50Z",
       "side": 1,
       "message": "Sorry - just notice this was not sent",
+      "revId": "c5dd90836c833a1f00a1d992e2bc891ea7ca0158",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb06ae4b_9f848ba4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000294
+      },
+      "writtenOn": "2022-03-16T07:12:38Z",
+      "side": 1,
+      "message": "According Zhikui\u0027s suggestion, we need to modify automation test case to match current design.",
       "revId": "c5dd90836c833a1f00a1d992e2bc891ea7ca0158",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
