@@ -52,7 +52,9 @@ def get_linux_output():
 
 def compare(redfish_val, linux_val, description):
     err = ""
-    if redfish_val != linux_val:
+    if None in (redfish_val, linux_val):
+        err = "MISSING VALUE"
+    elif redfish_val != linux_val:
         err = "!! MISMATCH !!"
         global success
         success = False
@@ -105,8 +107,9 @@ def compare_config(redfish_config, linux_config):
     compare(redfish_config["MaxJunctionTemperatureCelsius"],
             int(linux_config["tjunction-max(C)"]),
             "Junction Temperature")
+    # There is no equivalent value in linux for the per-level P0_1 freq.
     compare(redfish_config["MaxSpeedMHz"],
-            int(linux_config["turbo-ratio-limits-sse"]["bucket-0"]["max-turbo-frequency(MHz)"]),
+            None,
             "SSE Max Turbo Speed")
     compare(redfish_config["TDPWatts"],
             int(linux_config["thermal-design-power(W)"]),
