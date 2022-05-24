@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "762ee66d_7f23e1fd",
+        "filename": "include/cpuinfo_utils.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a4a462a_2aaec496",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0a77657b_68d12f4f",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-05-23T21:26:18Z",
       "side": 1,
       "message": "interface can be nullptr here, will that print to 0?",
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8e68d41_f2c1af50",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Yes, it prints \"returned 0\"",
+      "parentUuid": "0a77657b_68d12f4f",
       "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -58,6 +100,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "64218332_051f7606",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Added address to line 71",
+      "parentUuid": "e44f1766_f3529e2c",
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d92fb8e_285cbbcb",
@@ -71,6 +131,30 @@
       "writtenOn": "2022-05-23T21:26:18Z",
       "side": 1,
       "message": "nit: please be consistent between \"unsigned\" and \"unsigned int\"",
+      "range": {
+        "startLine": 101,
+        "startChar": 46,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "65bef7a9_9f78afde",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d92fb8e_285cbbcb",
       "range": {
         "startLine": 101,
         "startChar": 46,
@@ -104,6 +188,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a570c64_4e051821",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "986fe6df_3e25ccaa",
+      "range": {
+        "startLine": 187,
+        "startChar": 21,
+        "endLine": 187,
+        "endChar": 24
+      },
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9aece5db_6ab5886f",
@@ -123,6 +231,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "44e81557_2ae4040f",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "No, it\u0027s actually intentional, see comment on line 118. We have to return something, so I figured we\u0027d return the last cached value even in PECI has some problem.",
+      "parentUuid": "9aece5db_6ab5886f",
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "00a3ac20_57b9ab99",
         "filename": "src/sst_mailbox.cpp",
         "patchSetId": 1
@@ -134,6 +260,24 @@
       "writtenOn": "2022-05-23T21:26:18Z",
       "side": 1,
       "message": "constexpr for 14 and 31?",
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ba0ed0b_aed7e9d0",
+        "filename": "src/sst_mailbox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00a3ac20_57b9ab99",
       "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -178,6 +322,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc7c209_8e52f26b",
+        "filename": "src/sst_mailbox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dedba025_733ad143",
+      "range": {
+        "startLine": 563,
+        "startChar": 51,
+        "endLine": 563,
+        "endChar": 54
+      },
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "154ec989_cb7d0d5a",
@@ -191,6 +359,24 @@
       "writtenOn": "2022-05-23T21:26:18Z",
       "side": 1,
       "message": "nit: log a message for NON supported model?",
+      "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3115e7e2_4f710c88",
+        "filename": "src/sst_mailbox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2022-05-24T06:19:09Z",
+      "side": 1,
+      "message": "getInstance will already print the return value so I don\u0027t really see the value.",
+      "parentUuid": "154ec989_cb7d0d5a",
       "revId": "e346aa27d7de2aa546a22d72ef12520201a6379d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
