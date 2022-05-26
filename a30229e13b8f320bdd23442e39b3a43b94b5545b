@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Kuiying Wang <wangkuiying.wky@alibaba-inc.com>
+Code-Review+1: Chen, Yugang <yugang.chen@linux.intel.com>
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-by: Jonathan Doman <jonathan.doman@intel.com>
+Submitted-at: Thu, 26 May 2022 16:17:46 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/53731
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
