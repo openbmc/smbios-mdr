@@ -650,7 +650,7 @@ int main(int argc, char* argv[])
 
     cpu_info::hostStateSetup(conn);
 
-    cpu_info::sst::init(io, conn);
+    cpu_info::sst::init();
 
     // shared_ptr conn is global for the service
     // const reference of conn is passed to async calls
