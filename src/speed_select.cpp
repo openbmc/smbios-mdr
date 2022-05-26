@@ -19,6 +19,7 @@
 
 #include <peci.h>
 
+#include <boost/asio/error.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <xyz/openbmc_project/Common/Device/error.hpp>
 #include <xyz/openbmc_project/Common/error.hpp>
@@ -53,6 +54,19 @@ bool checkPECIStatus(EPECIStatus libStatus, uint8_t completionCode)
         return false;
     }
     return true;
+}
+
+std::vector<uint32_t> convertMaskToList(std::bitset<64> mask)
+{
+    std::vector<uint32_t> bitList;
+    for (size_t i = 0; i < mask.size(); ++i)
+    {
+        if (mask.test(i))
+        {
+            bitList.push_back(i);
+        }
+    }
+    return bitList;
 }
 
 static std::vector<BackendProvider>& getProviders()
@@ -369,10 +383,6 @@ static void getSingleConfig(SSTInterface& sst, unsigned int level,
  * Retrieve all SST configuration info for all discoverable CPUs, and publish
  * the info on new D-Bus objects on the given bus connection.
  *
- * @param[out]  cpuList     List to append info about discovered CPUs,
- *                          including pointers to D-Bus objects to keep them
- *                          alive. No items may be added to list in case host
- *                          system is powered off and no CPUs are accessible.
  * @param[in,out]   ioc     ASIO context.
  * @param[in,out]   conn    D-Bus ASIO connection.
  *
@@ -381,11 +391,18 @@ static void getSingleConfig(SSTInterface& sst, unsigned int level,
  * @throw PECIError     A PECI command failed on a CPU which had previously
  *                      responded to a command.
  */
-static bool
-    discoverCPUsAndConfigs(std::vector<std::unique_ptr<CPUConfig>>& cpuList,
-                           boost::asio::io_context& ioc,
-                           sdbusplus::asio::connection& conn)
+static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
+                                   sdbusplus::asio::connection& conn)
 {
+    // Persistent list - only populated after complete/successful discovery
+    static std::vector<std::unique_ptr<CPUConfig>> cpus;
+    cpus.clear();
+
+    // Temporary staging list. In case there is any failure, these temporary
+    // objects will get dropped to avoid presenting incomplete info until the
+    // next discovery attempt.
+    std::vector<std::unique_ptr<CPUConfig>> cpuList;
+
     for (uint8_t i = MIN_CLIENT_ADDR; i <= MAX_CLIENT_ADDR; ++i)
     {
         // Let the event handler run any waiting tasks. If there is a lot of
@@ -481,25 +498,31 @@ static bool
             cpuList.pop_back();
             continue;
         }
-
-        cpu.finalize();
     }
 
+    cpuList.swap(cpus);
+    std::for_each(cpus.begin(), cpus.end(), [](auto& cpu) { cpu->finalize(); });
     return true;
 }
 
-void init(boost::asio::io_context& ioc,
-          const std::shared_ptr<sdbusplus::asio::connection>& conn)
+/**
+ * Attempt discovery process, and if it fails, wait for 10 seconds to try again.
+ */
+static void discoverOrWait()
 {
-    static boost::asio::steady_timer peciRetryTimer(ioc);
-    static std::vector<std::unique_ptr<CPUConfig>> cpus;
+    static boost::asio::steady_timer peciRetryTimer(dbus::getIOContext());
     static int peciErrorCount = 0;
-
     bool finished = false;
+
+    // This function may be called from hostStateHandler or by retrying itself.
+    // In case those overlap, cancel any outstanding retry timer.
+    peciRetryTimer.cancel();
+
     try
     {
         DEBUG_PRINT << "Starting discovery\n";
-        finished = discoverCPUsAndConfigs(cpus, ioc, *conn);
+        finished = discoverCPUsAndConfigs(dbus::getIOContext(),
+                                          *dbus::getConnection());
     }
     catch (const PECIError& err)
     {
@@ -522,18 +545,34 @@ void init(boost::asio::io_context& ioc,
     // Retry later if no CPUs were available, or there was a PECI error.
     if (!finished)
     {
-        // Drop any created interfaces to avoid presenting incomplete info
-        cpus.clear();
         peciRetryTimer.expires_after(std::chrono::seconds(10));
-        peciRetryTimer.async_wait([&ioc, conn](boost::system::error_code ec) {
+        peciRetryTimer.async_wait([](boost::system::error_code ec) {
             if (ec)
             {
-                std::cerr << "SST PECI Retry Timer failed: " << ec << '\n';
+                if (ec != boost::asio::error::operation_aborted)
+                {
+                    std::cerr << "SST PECI Retry Timer failed: " << ec << '\n';
+                }
                 return;
             }
-            init(ioc, conn);
+            discoverOrWait();
         });
     }
+}
+
+static void hostStateHandler(HostState prevState, HostState)
+{
+    if (prevState == HostState::off)
+    {
+        // Start or re-start discovery any time the host moves out of the
+        // powered off state.
+        discoverOrWait();
+    }
+}
+
+void init()
+{
+    addHostStateCallback(hostStateHandler);
 }
 
 } // namespace sst
