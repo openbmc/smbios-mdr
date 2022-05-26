@@ -36,11 +36,18 @@ HostState hostState = HostState::off;
 static PowerState powerState = PowerState::Off;
 static OsState osState = OsState::Inactive;
 static bool biosDone = false;
+static std::vector<HostStateHandler> hostStateCallbacks;
 
 static std::shared_ptr<sdbusplus::asio::connection> dbusConn;
 
+void addHostStateCallback(HostStateHandler cb)
+{
+    hostStateCallbacks.push_back(cb);
+}
+
 static void updateHostState()
 {
+    HostState prevState = hostState;
     if (powerState == PowerState::Off)
     {
         hostState = HostState::off;
@@ -67,6 +74,14 @@ static void updateHostState()
         hostState = HostState::postComplete;
     }
     DEBUG_PRINT << "new host state: " << static_cast<int>(hostState) << "\n";
+
+    if (prevState != hostState)
+    {
+        for (const auto& cb : hostStateCallbacks)
+        {
+            cb(prevState, hostState);
+        }
+    }
 }
 
 void updatePowerState(const std::string& newState)

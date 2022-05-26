@@ -47,6 +47,9 @@ extern HostState hostState;
  */
 void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn);
 
+using HostStateHandler = std::function<void(HostState, HostState)>;
+void addHostStateCallback(HostStateHandler cb);
+
 constexpr uint64_t bit(uint8_t index)
 {
     return (1ull << index);
