@@ -27,19 +27,13 @@ namespace sst
 {
 
 /**
- * Retrieve all SST configuration info for all discoverable CPUs, and publish
+ * Initialize SST subsystem.
+ *
+ * This will schedule work to be done when the host is ready, in order to
+ * retrieve all SST configuration info for all discoverable CPUs, and publish
  * the info on new D-Bus objects on the given bus connection.
- *
- * This function may block until all discovery is completed (many seconds), or
- * it may schedule the work to be done at a later time (on the given ASIO
- * context) if CPUs are not currently available, and may also schedule periodic
- * work to be done after initial discovery is completed.
- *
- * @param[in,out]   ioc     ASIO IO context/service
- * @param[in,out]   conn    D-Bus ASIO connection.
  */
-void init(boost::asio::io_context& ioc,
-          const std::shared_ptr<sdbusplus::asio::connection>& conn);
+void init();
 
 class PECIError : public std::runtime_error
 {
@@ -61,18 +55,7 @@ constexpr int extendedModel(CPUModel model)
  *
  * @return  List of bit indexes.
  */
-static std::vector<uint32_t> convertMaskToList(std::bitset<64> mask)
-{
-    std::vector<uint32_t> bitList;
-    for (size_t i = 0; i < mask.size(); ++i)
-    {
-        if (mask.test(i))
-        {
-            bitList.push_back(i);
-        }
-    }
-    return bitList;
-}
+std::vector<uint32_t> convertMaskToList(std::bitset<64> mask);
 
 using TurboEntry = std::tuple<uint32_t, size_t>;
 
