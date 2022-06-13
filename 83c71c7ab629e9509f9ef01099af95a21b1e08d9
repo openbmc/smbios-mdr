@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80d91a5a_1bacc337",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001252
+      },
+      "writtenOn": "2022-06-13T13:22:34Z",
+      "side": 1,
+      "message": "CI fails due to phosphor-host-ipmid has switched to meson",
+      "revId": "83c71c7ab629e9509f9ef01099af95a21b1e08d9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
