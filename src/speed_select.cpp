@@ -262,28 +262,10 @@ class CPUConfig : public BaseCurrentOperatingConfig
         return sdbusplus::message::object_path();
     }
 
-    bool baseSpeedPriorityEnabled(bool value) override
+    bool baseSpeedPriorityEnabled(bool /* value */) override
     {
-        DEBUG_PRINT << "Writing BaseSpeedPriorityEnabled\n";
-        auto sst = getInstance(peciAddress, cpuModel);
-        if (!sst)
-        {
-            std::cerr << __func__ << ": Failed to get SST provider instance\n";
-            return false;
-        }
-        setPropertyCheckOrThrow(*sst);
-        try
-        {
-            sst->setBfEnabled(value);
-        }
-        catch (const PECIError& error)
-        {
-            std::cerr << "Failed to set SST-BF status: " << error.what()
-                      << "\n";
-            throw sdbusplus::xyz::openbmc_project::Common::Device::Error::
-                WriteFailure();
-        }
-
+        DEBUG_PRINT << "Writing BaseSpeedPriorityEnabled not allowed\n";
+        throw sdbusplus::xyz::openbmc_project::Common::Error::NotAllowed();
         // return value not used
         return false;
     }
