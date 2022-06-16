@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "19e234a2_4c69788e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-06-16T23:13:09Z",
+      "side": 1,
+      "message": "Couple minor questions. But I am OK with the way it is now also.",
+      "revId": "ccae6edf0ce958507ee0341c0c1cc4b16cb81773",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c52a654c_29c53d8d",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-06-16T23:13:09Z",
+      "side": 1,
+      "message": "Should it only be cleared after new discovery finished successfully?\nI will leave it up to you to decide whether it is better to keep the old data around longer",
+      "revId": "ccae6edf0ce958507ee0341c0c1cc4b16cb81773",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de36cd8_c93b4c23",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-06-16T23:13:09Z",
+      "side": 1,
+      "message": "nit: this part is not necessary since this is only called when the two states diff.\nOn the other hand, it is safer to test for newState specifically here. It might be slightly better to do a positive logic. \nBut I am OK with the way it is.",
+      "range": {
+        "startLine": 565,
+        "startChar": 36,
+        "endLine": 565,
+        "endChar": 65
+      },
+      "revId": "ccae6edf0ce958507ee0341c0c1cc4b16cb81773",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
