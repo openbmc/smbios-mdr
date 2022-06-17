@@ -119,14 +119,17 @@ if (IPMI_BLOB)
 
         file (MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/prefix)
         externalproject_add (
-            phosphor-host-ipmid PREFIX ${CMAKE_BINARY_DIR}/phosphor-host-ipmid
+            phosphor-host-ipmid
+            PREFIX ${CMAKE_BINARY_DIR}/phosphor-host-ipmid
             GIT_REPOSITORY https://github.com/openbmc/phosphor-host-ipmid
             SOURCE_DIR ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src
-            CONFIGURE_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src &&
-            ./bootstrap.sh && ./configure --prefix=${CMAKE_BINARY_DIR}/prefix
-            BUILD_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src && make
-            INSTALL_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src &&
-            make install LOG_DOWNLOAD ON)
+            CONFIGURE_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src
+                && meson --prefix=${CMAKE_BINARY_DIR}/prefix build-ext
+            BUILD_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src
+                && ninja -C build-ext
+            INSTALL_COMMAND cd ${CMAKE_BINARY_DIR}/phosphor-host-ipmid-src
+                && ninja -C build-ext install
+            LOG_DOWNLOAD ON)
         include_directories (${CMAKE_BINARY_DIR}/prefix/include)
         link_directories (${CMAKE_BINARY_DIR}/prefix/lib)
 
