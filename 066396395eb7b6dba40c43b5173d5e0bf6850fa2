@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Code-Review+1: <matthew.simmering@intel.com>
+Code-Review+1: Nirav Shah <nirav.j2.shah@intel.com>
+Submitted-by: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-at: Mon, 11 Jul 2022 18:05:04 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/54549
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
