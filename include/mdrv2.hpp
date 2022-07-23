@@ -52,7 +52,7 @@ static constexpr const char* smbiosInterfaceName =
 constexpr const int limitEntryLen = 0xff;
 
 class MDR_V2 :
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>
 {
   public:
@@ -63,9 +63,9 @@ class MDR_V2 :
     MDR_V2& operator=(MDR_V2&&) = delete;
     ~MDR_V2() = default;
 
-    MDR_V2(sdbusplus::bus::bus& bus, const char* path,
+    MDR_V2(sdbusplus::bus_t& bus, const char* path,
            boost::asio::io_context& io) :
-        sdbusplus::server::object::object<
+        sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>(bus, path),
         bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
                                  smbiosPath, smbiosInterfaceName))
@@ -120,7 +120,7 @@ class MDR_V2 :
   private:
     boost::asio::steady_timer timer;
 
-    sdbusplus::bus::bus& bus;
+    sdbusplus::bus_t& bus;
 
     Mdr2DirStruct smbiosDir;
 

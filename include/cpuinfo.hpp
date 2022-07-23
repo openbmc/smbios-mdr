@@ -43,7 +43,7 @@ using UniqueIdentifierBase =
 
 struct CPUInfo : public UniqueIdentifierBase
 {
-    CPUInfo(sdbusplus::bus::bus& bus, const size_t cpuId,
+    CPUInfo(sdbusplus::bus_t& bus, const size_t cpuId,
             const uint8_t peciAddress, const uint8_t i2cBusNum,
             const uint8_t i2cSlaveAddress) :
         // use defer_emit for UniqueIdentifier iface so that ObjectMapper

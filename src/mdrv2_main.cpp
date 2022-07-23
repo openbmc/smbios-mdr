@@ -33,9 +33,9 @@ sdbusplus::asio::object_server& getObjectServer(void)
 
 int main(void)
 {
-    sdbusplus::bus::bus& bus = static_cast<sdbusplus::bus::bus&>(*connection);
-    sdbusplus::server::manager::manager objManager(
-        bus, "/xyz/openbmc_project/inventory");
+    sdbusplus::bus_t& bus = static_cast<sdbusplus::bus_t&>(*connection);
+    sdbusplus::server::manager_t objManager(bus,
+                                            "/xyz/openbmc_project/inventory");
 
     bus.request_name("xyz.openbmc_project.Smbios.MDR_V2");
 

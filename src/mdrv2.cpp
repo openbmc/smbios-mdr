@@ -395,13 +395,13 @@ uint8_t MDR_V2::directoryEntries(uint8_t value)
 void MDR_V2::systemInfoUpdate()
 {
     std::string motherboardPath;
-    sdbusplus::message::message method =
+    sdbusplus::message_t method =
         bus.new_method_call("xyz.openbmc_project.EntityManager",
                             "/xyz/openbmc_project/EntityManager",
                             "xyz.openbmc_project.EntityManager", "ReScan");
     try
     {
-        sdbusplus::message::message reply = bus.call(method);
+        sdbusplus::message_t reply = bus.call(method);
         reply.read(motherboardPath);
     }
     catch (const sdbusplus::exception_t& e)

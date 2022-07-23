@@ -218,7 +218,7 @@ static void subscribeToProperty(
         *dbusConn,
         sdbusplus::bus::match::rules::sender(service) +
             sdbusplus::bus::match::rules::propertiesChanged(object, interface),
-        [commonPropHandler](sdbusplus::message::message& reply) {
+        [commonPropHandler](sdbusplus::message_t& reply) {
             ChangedPropertiesType changedProps;
             // ignore first param (interface name), it has to be correct
             reply.read(std::string(), changedProps);
@@ -236,7 +236,7 @@ static void subscribeToProperty(
         sdbusplus::bus::match::rules::sender(service) +
             sdbusplus::bus::match::rules::interfacesAdded(),
         [object = std::string(object), interface = std::string(interface),
-         commonPropHandler](sdbusplus::message::message& reply) {
+         commonPropHandler](sdbusplus::message_t& reply) {
             sdbusplus::message::object_path changedObject;
             reply.read(changedObject);
             if (changedObject != object)

@@ -42,7 +42,7 @@ class Pcie :
     Pcie& operator=(Pcie&&) = delete;
     ~Pcie() = default;
 
-    Pcie(sdbusplus::bus::bus& bus, const std::string& objPath,
+    Pcie(sdbusplus::bus_t& bus, const std::string& objPath,
          const uint8_t& pcieId, uint8_t* smbiosTableStorage,
          const std::string& motherboard) :
         sdbusplus::server::object_t<PCIeSlot, location, embedded, item,

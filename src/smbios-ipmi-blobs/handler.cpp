@@ -32,15 +32,14 @@ constexpr const char* mdrV2Interface = "xyz.openbmc_project.Smbios.MDR_V2";
 bool syncSmbiosData()
 {
     bool status = false;
-    sdbusplus::bus::bus bus =
-        sdbusplus::bus::bus(ipmid_get_sd_bus_connection());
-    sdbusplus::message::message method =
+    sdbusplus::bus_t bus = sdbusplus::bus_t(ipmid_get_sd_bus_connection());
+    sdbusplus::message_t method =
         bus.new_method_call(mdrV2Service, phosphor::smbios::mdrV2Path,
                             mdrV2Interface, "AgentSynchronizeData");
 
     try
     {
-        sdbusplus::message::message reply = bus.call(method);
+        sdbusplus::message_t reply = bus.call(method);
         reply.read(status);
     }
     catch (const sdbusplus::exception_t& e)

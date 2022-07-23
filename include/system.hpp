@@ -27,9 +27,9 @@ namespace smbios
 {
 
 class System :
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Common::server::UUID>,
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Revision>
 {
   public:
@@ -40,14 +40,14 @@ class System :
     System(System&&) = default;
     System& operator=(System&&) = default;
 
-    System(sdbusplus::bus::bus& bus, const std::string& objPath,
+    System(sdbusplus::bus_t& bus, const std::string& objPath,
            uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object::object<
+        sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Common::server::UUID>(
             bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-                Revision>(bus, objPath.c_str()),
+        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                        Decorator::server::Revision>(
+            bus, objPath.c_str()),
         path(objPath), storage(smbiosTableStorage)
     {
         std::string input = "0";

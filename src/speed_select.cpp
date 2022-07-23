@@ -118,7 +118,7 @@ class OperatingConfig : public BaseOperatingConfig
 
   public:
     using BaseOperatingConfig::BaseOperatingConfig;
-    OperatingConfig(sdbusplus::bus::bus& bus, unsigned int level_,
+    OperatingConfig(sdbusplus::bus_t& bus, unsigned int level_,
                     std::string path_) :
         BaseOperatingConfig(bus, path_.c_str(), action::defer_emit),
         path(std::move(path_)), level(level_)
@@ -130,7 +130,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
   private:
     /** Objects describing all available SST configs - not modifiable. */
     std::vector<std::unique_ptr<OperatingConfig>> availConfigs;
-    sdbusplus::bus::bus& bus;
+    sdbusplus::bus_t& bus;
     const uint8_t peciAddress;
     const std::string path; ///< D-Bus path of CPU object
     const CPUModel cpuModel;
@@ -161,7 +161,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
     }
 
   public:
-    CPUConfig(sdbusplus::bus::bus& bus_, uint8_t index, CPUModel model) :
+    CPUConfig(sdbusplus::bus_t& bus_, uint8_t index, CPUModel model) :
         BaseCurrentOperatingConfig(bus_, generatePath(index).c_str(),
                                    action::defer_emit),
         bus(bus_), peciAddress(index + MIN_CLIENT_ADDR),

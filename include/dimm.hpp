@@ -35,21 +35,20 @@ using DeviceType =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::DeviceType;
 
 class Dimm :
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm>,
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset>,
-    sdbusplus::server::object::object<
-        sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-            LocationCode>,
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                    Decorator::server::LocationCode>,
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot>,
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Inventory::server::Item>,
-    sdbusplus::server::object::object<
+    sdbusplus::server::object_t<
         sdbusplus::xyz::openbmc_project::Association::server::Definitions>,
-    sdbusplus::server::object::object<sdbusplus::xyz::openbmc_project::State::
-                                          Decorator::server::OperationalStatus>
+    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::State::
+                                    Decorator::server::OperationalStatus>
 {
   public:
     Dimm() = delete;
@@ -59,31 +58,31 @@ class Dimm :
     Dimm(Dimm&&) = default;
     Dimm& operator=(Dimm&&) = default;
 
-    Dimm(sdbusplus::bus::bus& bus, const std::string& objPath,
+    Dimm(sdbusplus::bus_t& bus, const std::string& objPath,
          const uint8_t& dimmId, uint8_t* smbiosTableStorage,
          const std::string& motherboard) :
 
-        sdbusplus::server::object::object<
+        sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm>(
             bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-                Asset>(bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
-                LocationCode>(bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::Inventory::Connector::server::
-                Slot>(bus, objPath.c_str()),
-        sdbusplus::server::object::object<
+        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                        Decorator::server::Asset>(
+            bus, objPath.c_str()),
+        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                        Decorator::server::LocationCode>(
+            bus, objPath.c_str()),
+        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
+                                        Connector::server::Slot>(
+            bus, objPath.c_str()),
+        sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Inventory::server::Item>(
             bus, objPath.c_str()),
-        sdbusplus::server::object::object<
+        sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Association::server::Definitions>(
             bus, objPath.c_str()),
-        sdbusplus::server::object::object<
-            sdbusplus::xyz::openbmc_project::State::Decorator::server::
-                OperationalStatus>(bus, objPath.c_str()),
+        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::State::
+                                        Decorator::server::OperationalStatus>(
+            bus, objPath.c_str()),
         dimmNum(dimmId), storage(smbiosTableStorage),
         motherboardPath(motherboard)
     {
