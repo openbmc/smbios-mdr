@@ -18,6 +18,8 @@
 
 #include "mdrv2.hpp"
 
+#include <boost/algorithm/string.hpp>
+
 namespace phosphor
 {
 namespace smbios
@@ -226,6 +228,9 @@ void Dimm::dimmPartNum(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
+    // Part number could contain spaces at the end. Eg: "abcd123  ". Since its
+    // unnecessary, we should remove them.
+    boost::algorithm::trim_right(result);
     partNumber(result);
 }
 
