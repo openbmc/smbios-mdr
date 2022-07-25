@@ -18,6 +18,9 @@
 
 #include "mdrv2.hpp"
 
+#include <algorithm>
+#include <string>
+
 namespace phosphor
 {
 namespace smbios
@@ -25,6 +28,27 @@ namespace smbios
 
 using DeviceType =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::DeviceType;
+
+namespace
+{
+
+/**
+ * @brief Remove trailing spaces in the given string.
+ *
+ * @param[in] str   Original string.
+ *
+ * @return   String after removing all the trailing spaces from the original
+ * string. If the original string has no trailing spaces, original string will
+ * be returned.
+ */
+std::string removeTrailingSpaces(std::string str)
+{
+    std::string whitespaces(" \t");
+    std::size_t found = str.find_last_not_of(whitespaces);
+    return (found == std::string::npos) ? "" : str.erase(found + 1);
+}
+
+} // namespace
 
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
 void Dimm::memoryInfoUpdate(void)
@@ -226,7 +250,9 @@ void Dimm::dimmPartNum(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    partNumber(result);
+    // Part number could contain spaces at the end. Eg: "abcd123  ". Since its
+    // unnecessary, we should remove them.
+    partNumber(removeTrailingSpaces(result));
 }
 
 std::string Dimm::partNumber(std::string value)
