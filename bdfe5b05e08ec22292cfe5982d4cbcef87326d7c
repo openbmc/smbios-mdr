@@ -47,6 +47,54 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "952e4c33_c6ac9627",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-07-26T19:44:33Z",
+      "side": 1,
+      "message": "Oh I did not know that. I will use that one. Thanks",
+      "parentUuid": "94531136_f5a8ebea",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 68
+      },
+      "revId": "bdfe5b05e08ec22292cfe5982d4cbcef87326d7c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcbfd295_5dc6b938",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-07-26T19:44:33Z",
+      "side": 1,
+      "message": "Yes. \"\" will return if str has just whitespaces. Original string is returned only if there are no trailing whitespaces.",
+      "parentUuid": "3cd1a4af_fe7d6bcb",
+      "range": {
+        "startLine": 48,
+        "startChar": 42,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "bdfe5b05e08ec22292cfe5982d4cbcef87326d7c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bc4c4e0e_9f1063b9",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-07-26T19:07:14Z",
       "side": 1,
       "message": "Will it ever have leading spaces?",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 42
+      },
+      "revId": "bdfe5b05e08ec22292cfe5982d4cbcef87326d7c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40a60549_a0b45042",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-07-26T19:44:33Z",
+      "side": 1,
+      "message": "I am not sure. I have not observed a situation where it has leading whitespaces.",
+      "parentUuid": "bc4c4e0e_9f1063b9",
       "range": {
         "startLine": 253,
         "startChar": 4,
