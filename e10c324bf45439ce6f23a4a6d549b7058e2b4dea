@@ -16,6 +16,23 @@
       "message": "LGTM, leave it up for couple days",
       "revId": "e10c324bf45439ce6f23a4a6d549b7058e2b4dea",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feedeffd_1a7860c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-08-04T00:55:17Z",
+      "side": 1,
+      "message": "Friendly ping 😊",
+      "revId": "e10c324bf45439ce6f23a4a6d549b7058e2b4dea",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
