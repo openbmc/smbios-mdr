@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ee8336b_705b1cdf",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-08-18T23:37:49Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "5fa4ebec_852ecf72",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 8
+      },
+      "revId": "44085a7b478b79ade66ec5bf4f4b9ab9b82af8cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "689304b7_8b310e7f",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-08-18T21:20:34Z",
       "side": 1,
       "message": "I guess this repo doesn\u0027t have unit test?",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 51
+      },
+      "revId": "44085a7b478b79ade66ec5bf4f4b9ab9b82af8cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4803cbf_56429978",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001138
+      },
+      "writtenOn": "2022-08-18T23:37:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "689304b7_8b310e7f",
       "range": {
         "startLine": 94,
         "startChar": 0,
