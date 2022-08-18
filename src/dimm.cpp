@@ -18,6 +18,8 @@
 
 #include "mdrv2.hpp"
 
+#include <phosphor-logging/elog-errors.hpp>
+
 namespace phosphor
 {
 namespace smbios
@@ -25,6 +27,9 @@ namespace smbios
 
 using DeviceType =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::DeviceType;
+
+using EccType =
+    sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::Ecc;
 
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
 void Dimm::memoryInfoUpdate(void)
@@ -74,6 +79,8 @@ void Dimm::memoryInfoUpdate(void)
     memoryAttributes(memoryInfo->attributes);
     memoryConfiguredSpeedInMhz(memoryInfo->confClockSpeed);
 
+    updateEccType(memoryInfo->phyArrayHandle);
+
     if (!motherboardPath.empty())
     {
         std::vector<std::tuple<std::string, std::string, std::string>> assocs;
@@ -82,6 +89,49 @@ void Dimm::memoryInfoUpdate(void)
     }
 
     return;
+}
+
+void Dimm::updateEccType(uint16_t exPhyArrayHandle)
+{
+    uint8_t* dataIn = storage;
+
+    while (dataIn != nullptr)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, physicalMemoryArrayType);
+        if (dataIn == nullptr)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Failed to get SMBIOS table type-16 data.");
+            return;
+        }
+
+        auto info = reinterpret_cast<struct PhysicalMemoryArrayInfo*>(dataIn);
+        if (info->handle == exPhyArrayHandle)
+        {
+            std::map<uint8_t, EccType>::const_iterator it =
+                dimmEccTypeMap.find(info->memoryErrorCorrection);
+            if (it == dimmEccTypeMap.end())
+            {
+                ecc(EccType::NoECC);
+            }
+            else
+            {
+                ecc(it->second);
+            }
+            return;
+        }
+
+        dataIn = smbiosNextPtr(dataIn);
+    }
+    phosphor::logging::log<phosphor::logging::level::ERR>(
+        "Failed find the corresponding SMBIOS table type-16 data for dimm:",
+        phosphor::logging::entry("DIMM:%d", dimmNum));
+}
+
+EccType Dimm::ecc(EccType value)
+{
+    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::ecc(
+        value);
 }
 
 uint16_t Dimm::memoryDataWidth(uint16_t value)
