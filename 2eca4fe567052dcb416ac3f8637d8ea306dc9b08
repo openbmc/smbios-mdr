@@ -1,0 +1,8 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Brandon Kim <brandonkim@google.com>
+Code-Review+2: Chen, Yugang <yugang.chen@linux.intel.com>
+Submitted-by: Kasun Athukorala <kasunath@google.com>
+Submitted-at: Mon, 22 Aug 2022 22:33:14 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/56603
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
