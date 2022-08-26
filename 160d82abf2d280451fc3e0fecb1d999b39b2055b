@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aaf6785_a3a1168d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-08-26T17:54:57Z",
+      "side": 1,
+      "message": "Does 3.5 require any change in parsing the data? I don\u0027t see any change is the parsing code.",
+      "range": {
+        "startLine": 11,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 41
+      },
+      "revId": "160d82abf2d280451fc3e0fecb1d999b39b2055b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
