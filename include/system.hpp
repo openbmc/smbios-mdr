@@ -45,6 +45,7 @@ class System :
         sdbusplus::server::object_t<
             sdbusplus::xyz::openbmc_project::Common::server::UUID>(
             bus, objPath.c_str()),
+        bus(bus),
         sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
                                         Decorator::server::Revision>(
             bus, objPath.c_str()),
@@ -58,6 +59,7 @@ class System :
     std::string uuid(std::string value) override;
 
     std::string version(std::string value) override;
+    sdbusplus::bus::bus& bus;
 
   private:
     /** @brief Path of the group instance */
