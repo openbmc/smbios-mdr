@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf4b2602_c83114d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-19T20:14:31Z",
+      "side": 1,
+      "message": "What does \"Set BIOS ID\" command suppose to do? It is suppose to Set BIOS ID, not GET, right?  Is BIOS version on dbus normally set by this command?",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab555205_fb0e8439",
+        "filename": "include/system.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-19T20:14:31Z",
+      "side": 1,
+      "message": "sdbusplus::bus_t\u0026",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc9b75fd_fde5f185",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-19T20:14:31Z",
+      "side": 1,
+      "message": "please use lg2 calls like line189",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 69
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2236c2a_6bcf119a",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-19T20:14:31Z",
+      "side": 1,
+      "message": "Where is the NA come from? Should it also include empty string case, which could be returned by line134 also.",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60704694_1fbb7e62",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-19T20:14:31Z",
+      "side": 1,
+      "message": "Should it also test and make sure it  is a valid version, not \"No BIOS Version\" from line 161",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
