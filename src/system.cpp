@@ -22,6 +22,13 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+
+static constexpr const char* biosActiveObjPath =
+    "/xyz/openbmc_project/software/bios_active";
+static constexpr const char* biosVersionIntf =
+    "xyz.openbmc_project.Software.Version";
+static constexpr const char* biosVersionProp = "Version";
+
 namespace phosphor
 {
 namespace smbios
@@ -62,6 +69,57 @@ std::string System::uuid(std::string value)
         "00000000-0000-0000-0000-000000000000");
 }
 
+static std::string getService(sdbusplus::bus::bus& bus,
+                              const std::string& objectPath,
+                              const std::string& interface)
+{
+    auto method =
+        bus.new_method_call("xyz.openbmc_project.ObjectMapper",
+                            "/xyz/openbmc_project/object_mapper",
+                            "xyz.openbmc_project.ObjectMapper", "GetObject");
+
+    method.append(objectPath);
+    method.append(std::vector<std::string>({interface}));
+
+    std::vector<std::pair<std::string, std::vector<std::string>>> response;
+
+    try
+    {
+        auto reply = bus.call(method);
+        reply.read(response);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        lg2::error("Error in mapper method call - {ERROR}, SERVICE - "
+                   "{SERVICE}, PATH - {PATH}",
+                   "ERROR", e.what(), "SERVICE", objectPath.c_str(), "PATH",
+                   interface.c_str());
+
+        return std::string{};
+    }
+
+    return response[0].first;
+}
+
+static void setProperty(sdbusplus::bus::bus& bus, const std::string& objectPath,
+                        const std::string& interface,
+                        const std::string& propertyName,
+                        const std::string& value)
+{
+    auto service = getService(bus, objectPath, interface);
+    if (service.empty())
+    {
+        return;
+    }
+
+    auto method = bus.new_method_call(service.c_str(), objectPath.c_str(),
+                                      "org.freedesktop.DBus.Properties", "Set");
+    method.append(interface.c_str(), propertyName.c_str(),
+                  std::variant<std::string>{value});
+
+    bus.call_noreply(method);
+}
+
 std::string System::version(std::string value)
 {
     std::string result = "No BIOS Version";
@@ -93,6 +151,10 @@ std::string System::version(std::string value)
         result = tempS;
     }
     lg2::info("VERSION INFO - BIOS - {VER}", "VER", result);
+
+    setProperty(bus, biosActiveObjPath, biosVersionIntf, biosVersionProp,
+                result);
+
     return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
         Revision::version(result);
 }
