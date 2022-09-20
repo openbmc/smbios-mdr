@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "292c0cdf_0b0908c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-20T15:06:07Z",
+      "side": 1,
+      "message": "Yes. Updated Thanks.",
+      "parentUuid": "bf4b2602_c83114d6",
+      "range": {
+        "startLine": 9,
+        "startChar": 51,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab555205_fb0e8439",
         "filename": "include/system.hpp",
         "patchSetId": 1
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-19T20:14:31Z",
       "side": 1,
       "message": "sdbusplus::bus_t\u0026",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "260d8e72_a5829b53",
+        "filename": "include/system.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-20T15:06:07Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "ab555205_fb0e8439",
       "range": {
         "startLine": 62,
         "startChar": 4,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c1e01a87_8b54cba5",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-20T15:06:07Z",
+      "side": 1,
+      "message": "Fixed. Thanks",
+      "parentUuid": "fc9b75fd_fde5f185",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 69
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b2236c2a_6bcf119a",
         "filename": "src/system.cpp",
         "patchSetId": 1
@@ -95,6 +167,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "43159ddf_a7d89019",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-20T15:06:07Z",
+      "side": 1,
+      "message": "In settings recipe, by default BIOS_ACTIVE version is set to \"NA\".  Line#134 does, if the \"xyz.openbmc_project.Settings\" service does not exist. If this service \"xyz.openbmc_project.Settings\" not exist, bios_active version also cont be set. So not added check for empty string. Please suggest.",
+      "parentUuid": "b2236c2a_6bcf119a",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60704694_1fbb7e62",
         "filename": "src/system.cpp",
         "patchSetId": 1
@@ -106,6 +202,30 @@
       "writtenOn": "2022-09-19T20:14:31Z",
       "side": 1,
       "message": "Should it also test and make sure it  is a valid version, not \"No BIOS Version\" from line 161",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "097147dd_e7bbfd21",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-20T15:06:07Z",
+      "side": 1,
+      "message": "If smbios table does not exist, then only \"result\" will show \"No BIOS Version\". But same we are not setting as bios_active version as it is already set to \"NA\".\n\nI hope this is fine?",
+      "parentUuid": "60704694_1fbb7e62",
       "range": {
         "startLine": 195,
         "startChar": 20,
