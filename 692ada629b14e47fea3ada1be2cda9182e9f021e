@@ -191,6 +191,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "aa857087_79556a89",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-20T17:53:21Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to depend on a specific value that is used in another application. \nReal question here is who should \"own\" the active version?\nI see two sources mentioned in this batch:\n1. Set BIOS VER command\n2. SMBIOS table\n\nThings to consider:\n1. Who initiate Set BIOS VER command? I assume it is BIOS, do we understand why the command can fail? IMO- that needs to be fixed first.\n2. Why not always set the version from SMBIOS? We may need to cover the SMBIOS missing/corrupted or stale cases. Maybe we should log an error if the version from smbios table is different from Set BIOS version command.\n\nThe design consideration and decision should be captured in the commit message.",
+      "parentUuid": "43159ddf_a7d89019",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60704694_1fbb7e62",
         "filename": "src/system.cpp",
         "patchSetId": 1
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "If smbios table does not exist, then only \"result\" will show \"No BIOS Version\". But same we are not setting as bios_active version as it is already set to \"NA\".\n\nI hope this is fine?",
       "parentUuid": "60704694_1fbb7e62",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94df75a7_283ec3a0",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-09-20T17:53:21Z",
+      "side": 1,
+      "message": "The code as it is written can set the version to \"No BIOS Version\". My suggestion is to make sure result is a valid version string before using it to set the active version",
+      "parentUuid": "097147dd_e7bbfd21",
       "range": {
         "startLine": 195,
         "startChar": 20,
