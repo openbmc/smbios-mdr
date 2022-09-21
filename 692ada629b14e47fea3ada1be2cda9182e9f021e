@@ -215,6 +215,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b6912959_5c215d1a",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-21T13:09:35Z",
+      "side": 1,
+      "message": "Yes Zhikui. \n1. BIOS sends the data  Set BIOS VER command. As it is legacy command, BMC may not relay on this. So as data is present in SMBIOS table, set bios_active version using that.\n2. And Set BIOS VER command may deprecated going forward from BMC.",
+      "parentUuid": "aa857087_79556a89",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 12
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "60704694_1fbb7e62",
         "filename": "src/system.cpp",
         "patchSetId": 1
@@ -274,6 +298,30 @@
       "side": 1,
       "message": "The code as it is written can set the version to \"No BIOS Version\". My suggestion is to make sure result is a valid version string before using it to set the active version",
       "parentUuid": "097147dd_e7bbfd21",
+      "range": {
+        "startLine": 195,
+        "startChar": 20,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "692ada629b14e47fea3ada1be2cda9182e9f021e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00c12361_627408a5",
+        "filename": "src/system.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2022-09-21T13:09:35Z",
+      "side": 1,
+      "message": "Updated the code now. Please confirm on this change.",
+      "parentUuid": "94df75a7_283ec3a0",
       "range": {
         "startLine": 195,
         "startChar": 20,
