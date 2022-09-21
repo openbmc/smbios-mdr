@@ -25,6 +25,7 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/steady_timer.hpp>
+#include <boost/container/flat_map.hpp>
 
 #include <iostream>
 #include <list>
