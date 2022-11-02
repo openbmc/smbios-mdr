@@ -119,8 +119,9 @@ class Dimm :
 
     void dimmSize(const uint16_t size);
     void dimmSizeExt(const size_t size);
-    void dimmDeviceLocator(const uint8_t positionNum, const uint8_t structLen,
-                           uint8_t* dataIn);
+    void dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
+                           const uint8_t deviceLocatorPositionNum,
+                           const uint8_t structLen, uint8_t* dataIn);
     void dimmType(const uint8_t type);
     void dimmTypeDetail(const uint16_t detail);
     void dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,

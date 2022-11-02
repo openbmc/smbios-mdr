@@ -70,7 +70,8 @@ void Dimm::memoryInfoUpdate(void)
         dimmSize(memoryInfo->size);
     }
 
-    dimmDeviceLocator(memoryInfo->deviceLocator, memoryInfo->length, dataIn);
+    dimmDeviceLocator(memoryInfo->bankLocator, memoryInfo->deviceLocator,
+                      memoryInfo->length, dataIn);
     dimmType(memoryInfo->memoryType);
     dimmTypeDetail(memoryInfo->typeDetail);
     maxMemorySpeedInMhz(memoryInfo->speed);
@@ -165,10 +166,24 @@ size_t Dimm::memorySizeInKB(size_t value)
         memorySizeInKB(value);
 }
 
-void Dimm::dimmDeviceLocator(const uint8_t positionNum, const uint8_t structLen,
-                             uint8_t* dataIn)
+void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
+                             const uint8_t deviceLocatorPositionNum,
+                             const uint8_t structLen, uint8_t* dataIn)
 {
-    std::string result = positionToString(positionNum, structLen, dataIn);
+    std::string deviceLocator =
+        positionToString(deviceLocatorPositionNum, structLen, dataIn);
+    std::string bankLocator =
+        positionToString(bankLocatorPositionNum, structLen, dataIn);
+
+    std::string result;
+    if (!bankLocator.empty())
+    {
+        result = bankLocator + " " + deviceLocator;
+    }
+    else
+    {
+        result = deviceLocator;
+    }
 
     memoryDeviceLocator(result);
 
