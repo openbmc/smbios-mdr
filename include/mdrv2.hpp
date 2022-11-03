@@ -49,6 +49,12 @@ static constexpr const char* mdrV2Path = "/xyz/openbmc_project/Smbios/MDR_V2";
 static constexpr const char* smbiosPath = "/xyz/openbmc_project/Smbios";
 static constexpr const char* smbiosInterfaceName =
     "xyz.openbmc_project.Smbios.GetRecordType";
+static constexpr auto mapperBusName = "xyz.openbmc_project.ObjectMapper";
+static constexpr auto mapperPath = "/xyz/openbmc_project/object_mapper";
+static constexpr auto mapperInterface = "xyz.openbmc_project.ObjectMapper";
+static constexpr auto systemPath = "/xyz/openbmc_project/inventory/system";
+static constexpr auto systemInterface =
+    "xyz.openbmc_project.Inventory.Item.System";
 constexpr const int limitEntryLen = 0xff;
 
 class MDR_V2 :
