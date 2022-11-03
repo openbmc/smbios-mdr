@@ -395,14 +395,25 @@ uint8_t MDR_V2::directoryEntries(uint8_t value)
 void MDR_V2::systemInfoUpdate()
 {
     std::string motherboardPath;
-    sdbusplus::message_t method =
-        bus.new_method_call("xyz.openbmc_project.EntityManager",
-                            "/xyz/openbmc_project/EntityManager",
-                            "xyz.openbmc_project.EntityManager", "ReScan");
+    auto method = bus.new_method_call(mapperBusName, mapperPath,
+                                      mapperInterface, "GetSubTreePaths");
+    method.append(systemInterfacePath);
+    method.append(0);
+    method.append(std::vector<std::string>({systemInterface}));
     try
     {
+        std::vector<std::string> paths;
         sdbusplus::message_t reply = bus.call(method);
-        reply.read(motherboardPath);
+        reply.read(paths);
+        if (paths.size() < 1)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Failed to get system motherboard dbus path.");
+        }
+        else
+        {
+            motherboardPath = std::move(paths[0]);
+        }
     }
     catch (const sdbusplus::exception_t& e)
     {
