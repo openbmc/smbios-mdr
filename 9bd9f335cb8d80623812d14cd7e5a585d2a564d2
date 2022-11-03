@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e85d108d_67207298",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1000998
+      },
+      "writtenOn": "2022-11-03T23:09:02Z",
+      "side": 1,
+      "message": "The current behavior seems to be to continue with an empty motherboardPath. I\u0027m not sure if that is the right thing to do, but this behavior is different, so we should do the same thing in both this error case and the existing one above.",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 15
+      },
+      "revId": "9bd9f335cb8d80623812d14cd7e5a585d2a564d2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
