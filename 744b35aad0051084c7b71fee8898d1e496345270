@@ -46,6 +46,30 @@
       },
       "revId": "744b35aad0051084c7b71fee8898d1e496345270",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "43b7af0c_a6cad1d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000926
+      },
+      "writtenOn": "2022-11-08T08:09:35Z",
+      "side": 1,
+      "message": "Also according to the \u0027phosphor-dbus-interfaces\u0027 documentation example the \u0027MemoryDeviceLocator\u0027 property should contain all the locator information (Socket/Bank/DIMM):\n\nhttps://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml#L12\n```\n    - name: MemoryDeviceLocator\n      type: string\n      description: \u003e\n          Socket on base board where Memory located, for example CPU1_DIMM_B1.\n```",
+      "parentUuid": "ec52e567_1cd0739f",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "744b35aad0051084c7b71fee8898d1e496345270",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
