@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf8a001d_29872e42",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2022-11-08T20:07:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68f22bcf_2d350d0f",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8a03ac57_e9afa934",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-11-08T00:34:00Z",
       "side": 1,
       "message": "This is the old code, but, in reviewing this patch, I am question whether it should continue after catch.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 5
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5587a045_1fbbdc95",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2022-11-08T20:07:14Z",
+      "side": 1,
+      "message": "If `systemInfoUpdate` function `exit` because of `motherboardPath` isn\u0027t valid or failed to get one, then following code wouldn\u0027t create object paths for `cpuX`, `bios`, `dimmX` and `pcieslotX`. \nI\u0027m assuming that\u0027s the reason we aren\u0027t bailing out. In case, if `motherboardPath` is empty, it was handled gracefully here https://github.com/openbmc/smbios-mdr/blob/master/src/cpu.cpp#L190-L195",
+      "parentUuid": "8a03ac57_e9afa934",
       "range": {
         "startLine": 409,
         "startChar": 0,
@@ -70,6 +118,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c759e293_1bd4fa96",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2022-11-08T20:07:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aeb72407_7490a479",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 421,
+        "endChar": 7
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64571ca2_61df9410",
@@ -83,6 +155,30 @@
       "writtenOn": "2022-11-08T00:34:00Z",
       "side": 1,
       "message": "move this in try clause.",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fedcbfae_c437714f",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2022-11-08T20:07:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64571ca2_61df9410",
       "range": {
         "startLine": 416,
         "startChar": 0,
