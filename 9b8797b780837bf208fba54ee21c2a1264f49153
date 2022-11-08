@@ -97,6 +97,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "532d9216_e63a5313",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000998
+      },
+      "writtenOn": "2022-11-08T20:48:26Z",
+      "side": 1,
+      "message": "I think in the original implementation, this could happen if a system intentionally did not define the root chassis, but you have already dealt with that case above, so exceptions are always just failures, and it is okay to skip the rest of the function.",
+      "parentUuid": "5587a045_1fbbdc95",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 5
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "aeb72407_7490a479",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 7
