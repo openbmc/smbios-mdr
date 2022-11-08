@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68f22bcf_2d350d0f",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-11-08T00:34:00Z",
+      "side": 1,
+      "message": "const char* for all auto here",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 21
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8a03ac57_e9afa934",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-11-08T00:34:00Z",
+      "side": 1,
+      "message": "This is the old code, but, in reviewing this patch, I am question whether it should continue after catch.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 414,
+        "endChar": 5
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aeb72407_7490a479",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-11-08T00:34:00Z",
+      "side": 1,
+      "message": "else {\nmotherboardPath \u003d paths[0];\n}",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 421,
+        "endChar": 7
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64571ca2_61df9410",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-11-08T00:34:00Z",
+      "side": 1,
+      "message": "move this in try clause.",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "9b8797b780837bf208fba54ee21c2a1264f49153",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
