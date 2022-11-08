@@ -22,6 +22,30 @@
       },
       "revId": "744b35aad0051084c7b71fee8898d1e496345270",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec52e567_1cd0739f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000926
+      },
+      "writtenOn": "2022-11-08T08:01:20Z",
+      "side": 1,
+      "message": "The bank Locator provides additional information. Just a Device Locator string is not enough to display the DIMM locator.\n\nHere is an example of SMBIOS table from the AMD EthanolX CRB (Insyde H2O BIOS). It is 2 socket EPYC board with 1 DIMM per memory channel:\n\nBank Locator | Device Locator\nP0 CHANNEL A | DIMM 0\nP0 CHANNEL B | DIMM 0\nP0 CHANNEL C | DIMM 0\nP0 CHANNEL D | DIMM 0\nP0 CHANNEL E | DIMM 0\nP0 CHANNEL F | DIMM 0\nP1 CHANNEL A | DIMM 0\nP1 CHANNEL B | DIMM 0\nP1 CHANNEL C | DIMM 0\nP1 CHANNEL D | DIMM 0\nP1 CHANNEL E | DIMM 0\nP1 CHANNEL F | DIMM 0\n\nWithout this patch all the DIMMs get the locator value \"DIMM 0\". It is simply not enough to identify the DIMM.\n\nAnother example is the AMD DaytonaX CRB (Insyde H2O BIOS). It is also a 2 socket EPYC board, but in this case it has 2 DIMMs per memory channel:\n\nBank Locator | Device Locator\nP0 CHANNEL A | DIMM 0\nP0 CHANNEL A | DIMM 1\nP0 CHANNEL B | DIMM 0\nP0 CHANNEL B | DIMM 1\nP0 CHANNEL C | DIMM 0\nP0 CHANNEL C | DIMM 1\nP0 CHANNEL D | DIMM 0\nP0 CHANNEL D | DIMM 1\nP0 CHANNEL E | DIMM 0\nP0 CHANNEL E | DIMM 1\nP0 CHANNEL F | DIMM 0\nP0 CHANNEL F | DIMM 1\nP1 CHANNEL A | DIMM 0\nP1 CHANNEL A | DIMM 1\nP1 CHANNEL B | DIMM 0\nP1 CHANNEL B | DIMM 1\nP1 CHANNEL C | DIMM 0\nP1 CHANNEL C | DIMM 1\nP1 CHANNEL D | DIMM 0\nP1 CHANNEL D | DIMM 1\nP1 CHANNEL E | DIMM 0\nP1 CHANNEL E | DIMM 1\nP1 CHANNEL F | DIMM 0\nP1 CHANNEL F | DIMM 1\n\nOnce again it is necessary to combine \"Bank Locator\" and \"Device Locator\" strings for the full DIMM locator.",
+      "parentUuid": "70fb0e8b_3b2dfcb1",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "744b35aad0051084c7b71fee8898d1e496345270",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
