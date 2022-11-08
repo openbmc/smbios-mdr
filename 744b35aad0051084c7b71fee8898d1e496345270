@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70fb0e8b_3b2dfcb1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2022-11-08T01:18:15Z",
+      "side": 1,
+      "message": "Please explain why this is needed. Is device locator not enough to identify the location for a Dimm? From the example, it is not clear that bank Locator provides redundant info or additional info.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "744b35aad0051084c7b71fee8898d1e496345270",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
