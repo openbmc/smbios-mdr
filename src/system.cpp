@@ -69,7 +69,7 @@ std::string System::uuid(std::string value)
         "00000000-0000-0000-0000-000000000000");
 }
 
-static std::string getService(sdbusplus::bus::bus& bus,
+static std::string getService(sdbusplus::bus_t& bus,
                               const std::string& objectPath,
                               const std::string& interface)
 {
@@ -101,7 +101,7 @@ static std::string getService(sdbusplus::bus::bus& bus,
     return response[0].first;
 }
 
-static void setProperty(sdbusplus::bus::bus& bus, const std::string& objectPath,
+static void setProperty(sdbusplus::bus_t& bus, const std::string& objectPath,
                         const std::string& interface,
                         const std::string& propertyName,
                         const std::string& value)
