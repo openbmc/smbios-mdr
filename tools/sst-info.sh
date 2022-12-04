@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Utility to print all SST data present on D-Bus.
 # Simply searches for all objects implementing known interfaces and prints out
@@ -12,61 +12,62 @@ OBJECT_MAPPER="$XYZ.ObjectMapper /xyz/openbmc_project/object_mapper $XYZ.ObjectM
 CPU_INTF="$XYZ.Control.Processor.CurrentOperatingConfig"
 CONFIG_INTF="$XYZ.Inventory.Item.Cpu.OperatingConfig"
 
-trim_quotes() {
+function trim_quotes() {
     trim_obj=${1%\"}
     trim_obj=${trim_obj#\"}
-    echo $trim_obj
+    echo "$trim_obj"
 }
 
-get_sub_tree_paths() {
-    resp=$($BUSCTL call $OBJECT_MAPPER GetSubTreePaths sias "$1" 0 "$2" "$3" \
-           | cut -d' ' -f3-)
+function get_sub_tree_paths() {
+    resp=$($BUSCTL call "$OBJECT_MAPPER" GetSubTreePaths sias "$1" 0 "$2" "$3" \
+        | cut -d' ' -f3-)
     for obj in $resp
     do
-        trim_quotes $obj
+        trim_quotes "$obj"
     done
 }
 
-get_service_from_object() {
-    trim_quotes $($BUSCTL call $OBJECT_MAPPER GetObject sas "$1" "$2" "$3" \
-                  | cut -d' ' -f3)
+function get_service_from_object() {
+    trim_quotes "$($BUSCTL call "$OBJECT_MAPPER" GetObject sas "$1" "$2" "$3" \
+        | cut -d' ' -f3)"
 }
 
-get_property_names() {
+function get_property_names() {
     service=$1
     object=$2
     intf=$3
-    $BUSCTL introspect $service $object $intf \
+    $BUSCTL introspect "$service" "$object" "$intf" \
         | awk '/property/ {print substr($1, 2)}'
 }
 
-get_property() {
+function get_property() {
     service=$1
     object=$2
     intf=$3
     prop=$4
-    $BUSCTL get-property $service $object $intf $prop
+    $BUSCTL get-property "$service" "$object" "$intf" "$prop"
 }
 
-set_property() {
+function set_property() {
     service=$1
     object=$2
     intf=$3
     prop=$4
     signature=$5
     value=$6
-    $BUSCTL set-property $service $object $intf $prop $signature $value
+    $BUSCTL set-property "$service" "$object" "$intf" "$prop" \
+        "$signature" "$value"
 }
 
-show() {
+function show() {
     cpu_paths=$(get_sub_tree_paths "/" 1 "$CPU_INTF")
     for cpu_path in $cpu_paths
     do
-        service=$(get_service_from_object $cpu_path 1 $CPU_INTF)
+        service=$(get_service_from_object "$cpu_path" 1 "$CPU_INTF")
         echo "Found SST on $cpu_path on $service"
-        for prop in $(get_property_names $service $cpu_path $CPU_INTF)
+        for prop in $(get_property_names "$service" "$cpu_path" "$CPU_INTF")
         do
-            echo "  $prop: $(get_property $service $cpu_path $CPU_INTF $prop)"
+            echo "  $prop: $(get_property "$service" "$cpu_path" "$CPU_INTF" "$prop")"
         done
 
 
@@ -75,15 +76,15 @@ show() {
         do
             echo
             echo "  Found Profile $profile"
-            for prop in $(get_property_names $service $profile $CONFIG_INTF)
+            for prop in $(get_property_names "$service" "$profile" "$CONFIG_INTF")
             do
-                echo "    $prop: $(get_property $service $profile $CONFIG_INTF $prop)"
+                echo "    $prop: $(get_property "$service" "$profile" "$CONFIG_INTF" "$prop")"
             done
         done
     done
 }
 
-set_cpu_prop() {
+function set_cpu_prop() {
     cpu_basename=$1
     prop=$2
     signature=$3
@@ -103,8 +104,8 @@ set_cpu_prop() {
             value=$cpu_path/$value
         fi
 
-        service=$(get_service_from_object $cpu_path 1 $CPU_INTF)
-        set_property $service $cpu_path $CPU_INTF $prop $signature $value
+        service=$(get_service_from_object "$cpu_path" 1 "$CPU_INTF")
+        set_property "$service" "$cpu_path" "$CPU_INTF" "$prop" "$signature" "$value"
         return 0
     done
 
@@ -121,8 +122,8 @@ action=${1:-show}
 
 case "$action" in
     show) show ;;
-    set-config) set_cpu_prop $2 AppliedConfig o $3 ;;
-    set-bf) set_cpu_prop $2 BaseSpeedPriorityEnabled b $3 ;;
+    set-config) set_cpu_prop "$2" AppliedConfig o "$3" ;;
+    set-bf) set_cpu_prop "$2" BaseSpeedPriorityEnabled b "$3" ;;
     *)
         echo "Usage:"
         echo "$0 (show|set-config|set-bf) [ARGS...]"
