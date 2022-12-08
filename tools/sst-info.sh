@@ -20,7 +20,7 @@ trim_quotes() {
 
 get_sub_tree_paths() {
     resp=$($BUSCTL call $OBJECT_MAPPER GetSubTreePaths sias "$1" 0 "$2" "$3" \
-           | cut -d' ' -f3-)
+        | cut -d' ' -f3-)
     for obj in $resp
     do
         trim_quotes $obj
@@ -29,7 +29,7 @@ get_sub_tree_paths() {
 
 get_service_from_object() {
     trim_quotes $($BUSCTL call $OBJECT_MAPPER GetObject sas "$1" "$2" "$3" \
-                  | cut -d' ' -f3)
+        | cut -d' ' -f3)
 }
 
 get_property_names() {
