@@ -13,13 +13,13 @@
 # * intel-speed-select tool from the kernel source tree
 #   (tools/power/x86/intel-speed-select), and available in the PATH.
 
-import redfish
-
 import argparse
 import json
 import re
 import subprocess
 import sys
+
+import redfish
 
 linux_cpu_map = dict()
 success = True
