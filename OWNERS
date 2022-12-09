@@ -33,7 +33,7 @@
 
 owners:
 - yugang.chen@linux.intel.com
-- kuiying.wang@intel.com
+- wangkuiying.wky@alibaba-inc.com
 - zhikui.ren@intel.com
 
 reviewers:
@@ -48,8 +48,8 @@ openbmc:
   email: yugang.chen@linux.intel.com
   discord: NA
 - name: Kuiying Wang
-  email: kuiying.wang@intel.com
-  discord: kuiyingw
+  email: wangkuiying.wky@alibaba-inc.com
+  discord: Kwin
 - name: Zhikui Ren
   email: zhikui.ren@intel.com
   discord: Zhikui
