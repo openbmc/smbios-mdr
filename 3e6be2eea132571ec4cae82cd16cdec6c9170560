@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "316c8a18_7355b402",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-12T15:09:59Z",
+      "side": 1,
+      "message": "The CI failure is unrelated to the change I made.  It seems this repository doesn\u0027t build successfully as is.",
+      "revId": "3e6be2eea132571ec4cae82cd16cdec6c9170560",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
