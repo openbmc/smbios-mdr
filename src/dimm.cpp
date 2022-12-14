@@ -176,13 +176,13 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
         positionToString(bankLocatorPositionNum, structLen, dataIn);
 
     std::string result;
-    if (!bankLocator.empty())
+    if (bankLocator.empty() || DIMM_ONLY_LOCATOR)
     {
-        result = bankLocator + " " + deviceLocator;
+        result = deviceLocator;
     }
     else
     {
-        result = deviceLocator;
+        result = bankLocator + " " + deviceLocator;
     }
 
     memoryDeviceLocator(result);
