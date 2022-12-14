@@ -61,6 +61,13 @@ install (TARGETS smbiosmdrv2app DESTINATION bin)
 install (FILES  ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service
     DESTINATION /lib/systemd/system/)
 
+option (DIMM_ONLY_LOCATOR "Only use the DIMM number, and not the bank" OFF)
+
+if (DIMM_ONLY_LOCATOR)
+    target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_ONLY_LOCATOR)
+endif ()
+
+
 option (CPU_INFO "Add Cpuinfo Service" ON)
 
 option (YOCTO "Enable Building in Yocto" OFF)
