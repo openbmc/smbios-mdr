@@ -26,6 +26,12 @@ namespace phosphor
 namespace smbios
 {
 
+#ifdef DIMM_ONLY_LOCATOR
+bool onlyDimmLocationCode = true;
+#else
+bool onlyDimmLocationCode = false;
+#endif
+
 using DeviceType =
     sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::DeviceType;
 
@@ -176,13 +182,13 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
         positionToString(bankLocatorPositionNum, structLen, dataIn);
 
     std::string result;
-    if (!bankLocator.empty())
+    if (bankLocator.empty() || onlyDimmLocationCode)
     {
-        result = bankLocator + " " + deviceLocator;
+        result = deviceLocator;
     }
     else
     {
-        result = deviceLocator;
+        result = bankLocator + " " + deviceLocator;
     }
 
     memoryDeviceLocator(result);
