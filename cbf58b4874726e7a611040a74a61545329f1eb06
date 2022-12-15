@@ -16,6 +16,29 @@
       "message": "LGTM, please fix the verification issue.",
       "revId": "cbf58b4874726e7a611040a74a61545329f1eb06",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "386c0b0f_db3db0cc",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000930
+      },
+      "writtenOn": "2022-12-15T08:28:10Z",
+      "side": 1,
+      "message": "Build error at this line.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 28
+      },
+      "revId": "cbf58b4874726e7a611040a74a61545329f1eb06",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
