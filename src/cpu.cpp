@@ -119,6 +119,14 @@ void Cpu::characteristics(uint16_t value)
 }
 
 static constexpr uint8_t maxOldVersionCount = 0xff;
+void Cpu::functionalState(const uint8_t coreCount)
+{
+    if (coreCount < maxOldVersionCount)
+    {
+        opstatus::functional(true);
+    }
+}
+
 void Cpu::infoUpdate(void)
 {
     uint8_t* dataIn = storage;
@@ -186,6 +194,9 @@ void Cpu::infoUpdate(void)
     }
 
     characteristics(cpuInfo->characteristics); // offset 26h
+
+    // Update CPU functional state
+    functionalState(cpuInfo->coreCount);
 
     if (!motherboardPath.empty())
     {
