@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57794fa6_7ccae713",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-01-20T23:49:39Z",
+      "side": 1,
+      "message": "1. Why does this condition makes it to be functional?\n2. What is the default value for functional, is it false?",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 5
+      },
+      "revId": "fab3ad93154e9cfe4eb8a6715ab7fc026d1faba7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
