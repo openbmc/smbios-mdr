@@ -418,7 +418,7 @@ class SSTMailbox : public SSTInterface
     {
         return GetLevelsInfo(pm).currentConfigTdpLevel();
     }
-    unsigned int numLevels() override
+    unsigned int maxLevel() override
     {
         return GetLevelsInfo(pm).configTdpLevels();
     }

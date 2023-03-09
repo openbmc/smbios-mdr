@@ -83,7 +83,7 @@ void registerBackend(BackendProvider providerFn)
 std::unique_ptr<SSTInterface> getInstance(uint8_t address, CPUModel model)
 {
     DEBUG_PRINT << "Searching for provider for " << address << ", model "
-                << std::hex << model << '\n';
+                << std::hex << model << std::dec << '\n';
     for (const auto& provider : getProviders())
     {
         try
@@ -176,13 +176,11 @@ class CPUConfig : public BaseCurrentOperatingConfig
     sdbusplus::message::object_path appliedConfig() const override
     {
         DEBUG_PRINT << "Reading AppliedConfig\n";
-        // If CPU is powered off, return power-up default value of Level 0.
-        unsigned int level = 0;
         if (hostState != HostState::off)
         {
             // Otherwise, try to read current state
             auto sst = getInstance(peciAddress, cpuModel);
-            if (!sst)
+            if (!sst || !sst->ready())
             {
                 std::cerr << __func__
                           << ": Failed to get SST provider instance\n";
@@ -199,19 +197,17 @@ class CPUConfig : public BaseCurrentOperatingConfig
                               << "\n";
                 }
             }
-            level = currentLevel;
         }
-        return generateConfigPath(level);
+        return generateConfigPath(currentLevel);
     }
 
     bool baseSpeedPriorityEnabled() const override
     {
         DEBUG_PRINT << "Reading BaseSpeedPriorityEnabled\n";
-        bool enabled = false;
         if (hostState != HostState::off)
         {
             auto sst = getInstance(peciAddress, cpuModel);
-            if (!sst)
+            if (!sst || !sst->ready())
             {
                 std::cerr << __func__
                           << ": Failed to get SST provider instance\n";
@@ -228,9 +224,8 @@ class CPUConfig : public BaseCurrentOperatingConfig
                               << "\n";
                 }
             }
-            enabled = bfEnabled;
         }
-        return enabled;
+        return bfEnabled;
     }
 
     sdbusplus::message::object_path
@@ -332,14 +327,19 @@ static void getSingleConfig(SSTInterface& sst, unsigned int level,
                             OperatingConfig& config)
 {
     config.powerLimit(sst.tdp(level));
+    DEBUG_PRINT << " TDP = " << config.powerLimit() << '\n';
 
     config.availableCoreCount(sst.coreCount(level));
+    DEBUG_PRINT << " coreCount = " << config.availableCoreCount() << '\n';
 
     config.baseSpeed(sst.p1Freq(level));
+    DEBUG_PRINT << " baseSpeed = " << config.baseSpeed() << '\n';
 
     config.maxSpeed(sst.p0Freq(level));
+    DEBUG_PRINT << " maxSpeed = " << config.maxSpeed() << '\n';
 
     config.maxJunctionTemperature(sst.prochotTemp(level));
+    DEBUG_PRINT << " procHot = " << config.maxJunctionTemperature() << '\n';
 
     // Construct BaseSpeedPrioritySettings
     std::vector<std::tuple<uint32_t, std::vector<uint32_t>>> baseSpeeds;
@@ -451,15 +451,19 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
 
         bool foundCurrentLevel = false;
 
-        for (unsigned int level = 0; level <= sst->numLevels(); ++level)
+        for (unsigned int level = 0; level <= sst->maxLevel(); ++level)
         {
+            DEBUG_PRINT << "checking level " << level << ": ";
             // levels 1 and 2 were legacy/deprecated, originally used for AVX
             // license pre-granting. They may be reused for more levels in
             // future generations. So we need to check for discontinuities.
             if (!sst->levelSupported(level))
             {
+                DEBUG_PRINT << "not supported\n";
                 continue;
             }
+
+            DEBUG_PRINT << "supported\n";
 
             getSingleConfig(*sst, level, cpu.newConfig(level));
 
@@ -468,6 +472,8 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
                 foundCurrentLevel = true;
             }
         }
+
+        DEBUG_PRINT << "current level is " << sst->currentLevel() << '\n';
 
         if (!foundCurrentLevel)
         {

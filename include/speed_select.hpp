@@ -84,7 +84,7 @@ class SSTInterface
     /** Return the current SST-PP configuration level */
     virtual unsigned int currentLevel() = 0;
     /** Return the maximum valid SST-PP configuration level */
-    virtual unsigned int numLevels() = 0;
+    virtual unsigned int maxLevel() = 0;
 
     /**
      * Whether the given level is supported. The level indices may be
