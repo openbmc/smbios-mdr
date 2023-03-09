@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Utility to print all SST data present on D-Bus.
 # Simply searches for all objects implementing known interfaces and prints out
@@ -8,18 +8,22 @@ set -e
 
 BUSCTL='busctl'
 XYZ='xyz.openbmc_project'
-OBJECT_MAPPER="$XYZ.ObjectMapper /xyz/openbmc_project/object_mapper $XYZ.ObjectMapper"
 CPU_INTF="$XYZ.Control.Processor.CurrentOperatingConfig"
 CONFIG_INTF="$XYZ.Inventory.Item.Cpu.OperatingConfig"
 
-function trim_quotes() {
+trim_quotes() {
     trim_obj=${1%\"}
     trim_obj=${trim_obj#\"}
     echo "$trim_obj"
 }
 
-function get_sub_tree_paths() {
-    resp=$($BUSCTL call "$OBJECT_MAPPER" GetSubTreePaths sias "$1" 0 "$2" "$3" \
+object_mapper_call() {
+    $BUSCTL call $XYZ.ObjectMapper /xyz/openbmc_project/object_mapper \
+        $XYZ.ObjectMapper "$@"
+}
+
+get_sub_tree_paths() {
+    resp=$(object_mapper_call GetSubTreePaths sias "$1" 0 "$2" "$3" \
         | cut -d' ' -f3-)
     for obj in $resp
     do
@@ -27,12 +31,12 @@ function get_sub_tree_paths() {
     done
 }
 
-function get_service_from_object() {
-    trim_quotes "$($BUSCTL call "$OBJECT_MAPPER" GetObject sas "$1" "$2" "$3" \
+get_service_from_object() {
+    trim_quotes "$(object_mapper_call GetObject sas "$1" "$2" "$3" \
         | cut -d' ' -f3)"
 }
 
-function get_property_names() {
+get_property_names() {
     service=$1
     object=$2
     intf=$3
@@ -40,7 +44,7 @@ function get_property_names() {
         | awk '/property/ {print substr($1, 2)}'
 }
 
-function get_property() {
+get_property() {
     service=$1
     object=$2
     intf=$3
@@ -48,7 +52,7 @@ function get_property() {
     $BUSCTL get-property "$service" "$object" "$intf" "$prop"
 }
 
-function set_property() {
+set_property() {
     service=$1
     object=$2
     intf=$3
@@ -59,7 +63,7 @@ function set_property() {
         "$signature" "$value"
 }
 
-function show() {
+show() {
     cpu_paths=$(get_sub_tree_paths "/" 1 "$CPU_INTF")
     for cpu_path in $cpu_paths
     do
@@ -69,7 +73,6 @@ function show() {
         do
             echo "  $prop: $(get_property "$service" "$cpu_path" "$CPU_INTF" "$prop")"
         done
-
 
         profiles=$(get_sub_tree_paths "$cpu_path" 1 "$CONFIG_INTF")
         for profile in $profiles
@@ -84,22 +87,21 @@ function show() {
     done
 }
 
-function set_cpu_prop() {
+set_cpu_prop() {
     cpu_basename=$1
     prop=$2
     signature=$3
     value=$4
 
-
     cpu_paths=$(get_sub_tree_paths "/" 1 "$CPU_INTF")
     for cpu_path in $cpu_paths
     do
-        if [[ $cpu_path != *$cpu_basename ]]
-        then
-            continue
-        fi
+        case $cpu_path in
+            */$cpu_basename) ;;
+            *) continue;;
+        esac
 
-        if [[ "$prop" == "AppliedConfig" ]]
+        if [ "$prop" = "AppliedConfig" ]
         then
             value=$cpu_path/$value
         fi
@@ -113,7 +115,7 @@ function set_cpu_prop() {
     return 1
 }
 
-if [[ ${DEBUG:=0} -eq 1 ]]
+if [ "${DEBUG:=0}" -eq 1 ]
 then
     set -x
 fi
