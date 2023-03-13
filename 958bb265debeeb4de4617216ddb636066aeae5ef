@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fb73d32d_8ac5d660",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-03-13T23:58:55Z",
+      "side": 1,
+      "message": "Depends on https://gerrit.openbmc.org/c/openbmc/libpeci/+/61618",
+      "revId": "958bb265debeeb4de4617216ddb636066aeae5ef",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
