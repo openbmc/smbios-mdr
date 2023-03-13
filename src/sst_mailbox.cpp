@@ -566,7 +566,7 @@ static std::unique_ptr<SSTInterface> createMailbox(uint8_t address,
                                                    CPUModel model)
 {
     DEBUG_PRINT << "createMailbox\n";
-    if (model == icx || model == icxd || model == spr)
+    if (model == icx || model == icxd || model == spr || model == emr)
     {
         return std::make_unique<SSTMailbox>(address, model);
     }
