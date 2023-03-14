@@ -75,6 +75,10 @@ void Dimm::memoryInfoUpdate(void)
     {
         dimmSize(memoryInfo->size);
     }
+    // If the size is 0, no memory device is installed in the socket.
+    const auto isDimmPresent = static_cast<bool>(memoryInfo->size);
+    present(isDimmPresent);
+    functional(isDimmPresent);
 
     dimmDeviceLocator(memoryInfo->bankLocator, memoryInfo->deviceLocator,
                       memoryInfo->length, dataIn);
@@ -252,19 +256,14 @@ void Dimm::dimmManufacturer(const uint8_t positionNum, const uint8_t structLen,
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
 
-    bool val = true;
     if (result == "NO DIMM")
     {
-        val = false;
-
         // No dimm presence so making manufacturer value as "" (instead of
         // NO DIMM - as there won't be any manufacturer for DIMM which is not
         // present).
         result = "";
     }
     manufacturer(result);
-    present(val);
-    functional(val);
 }
 
 std::string Dimm::manufacturer(std::string value)
