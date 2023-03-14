@@ -400,6 +400,7 @@ void MDR_V2::systemInfoUpdate()
     method.append(systemInterfacePath);
     method.append(0);
     method.append(std::vector<std::string>({systemInterface}));
+
     try
     {
         std::vector<std::string> paths;
@@ -408,7 +409,31 @@ void MDR_V2::systemInfoUpdate()
         if (paths.size() < 1)
         {
             phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Failed to get system motherboard dbus path.");
+                "Failed to get system motherboard dbus path. Setting up a "
+                "match rule");
+            // Add match rule if motherboard dbus path is not yet created
+            static std::unique_ptr<sdbusplus::bus::match::match>
+                motherboardConfigMatch =
+                    std::make_unique<sdbusplus::bus::match::match>(
+                        bus,
+                        "type='signal',"
+                        "member='InterfacesAdded',arg0path='/xyz/"
+                        "openbmc_project/inventory/system/board/'",
+                        [this,
+                         systemInterface](sdbusplus::message::message& msg) {
+                            sdbusplus::message::object_path objectName;
+                            boost::container::flat_map<
+                                std::string,
+                                boost::container::flat_map<
+                                    std::string,
+                                    std::variant<std::string, uint64_t>>>
+                                msgData;
+                            msg.read(objectName, msgData);
+                            if (msgData.contains(systemInterface))
+                            {
+                                this->systemInfoUpdate();
+                            }
+                        });
         }
         else
         {
