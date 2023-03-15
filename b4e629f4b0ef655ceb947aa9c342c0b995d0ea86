@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4f22787_906bd6a0",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2023-03-15T03:01:53Z",
+      "side": 1,
+      "message": "I think you mentioned in our offline discussion - but you\u0027ve tried adding the key \"interface\" and use \"systemInterface\" in the matcher itself?\n\nhttps://dbus.freedesktop.org/doc/dbus-specification.html (in section \"Match Rules\")",
+      "range": {
+        "startLine": 421,
+        "startChar": 65,
+        "endLine": 421,
+        "endChar": 66
+      },
+      "revId": "b4e629f4b0ef655ceb947aa9c342c0b995d0ea86",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
