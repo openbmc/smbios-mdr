@@ -420,8 +420,7 @@ void MDR_V2::systemInfoUpdate()
                             sdbusplus::bus::match::rules::argNpath(
                                 0,
                                 "/xyz/openbmc_project/inventory/system/board/"),
-                        [this,
-                         systemInterface](sdbusplus::message::message& msg) {
+                        [this, systemInterface](sdbusplus::message_t& msg) {
                             sdbusplus::message::object_path objectName;
                             boost::container::flat_map<
                                 std::string,
