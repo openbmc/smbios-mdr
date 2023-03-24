@@ -159,8 +159,40 @@ void Cpu::infoUpdate(void)
     // this class is for type CPU  //offset 5h
     family(cpuInfo->family, cpuInfo->family2); // offset 6h and 28h
     manufacturer(cpuInfo->manufacturer, cpuInfo->length,
-                 dataIn);                               // offset 7h
-    id(cpuInfo->id);                                    // offset 8h
+                 dataIn); // offset 7h
+    id(cpuInfo->id);      // offset 8h
+    // Processor ID field
+    // SteppinID:   4;
+    // Model:       4;
+    // Family:      4;
+    // Type:        2;
+    // Reserved1:   2;
+    // XModel:      4;
+    // XFamily:     8;
+    // Reserved2:   4;
+    uint16_t cpuStep = cpuInfo->id & 0xf;
+    uint16_t cpuModel = (cpuInfo->id & 0xf0) >> 4;
+    uint16_t cpuFamily = (cpuInfo->id & 0xf00) >> 8;
+    uint16_t cpuXModel = (cpuInfo->id & 0xf0000) >> 16;
+    uint16_t cpuXFamily = (cpuInfo->id & 0xff00000) >> 20;
+    step(cpuStep);
+    if (cpuFamily == 0xf)
+    {
+        effectiveFamily(cpuXFamily + cpuFamily);
+    }
+    else
+    {
+        effectiveFamily(cpuFamily);
+    }
+    if (cpuFamily == 0x6 || cpuFamily == 0xf)
+    {
+        effectiveModel((cpuXModel << 4) | cpuModel);
+    }
+    else
+    {
+        effectiveModel(cpuModel);
+    }
+
     version(cpuInfo->version, cpuInfo->length, dataIn); // offset 10h
     maxSpeedInMhz(cpuInfo->maxSpeed);                   // offset 14h
     serialNumber(cpuInfo->serialNum, cpuInfo->length,
