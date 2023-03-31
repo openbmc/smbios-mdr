@@ -118,7 +118,7 @@ class Dimm :
     std::string motherboardPath;
 
     void dimmSize(const uint16_t size);
-    void dimmSizeExt(const size_t size);
+    void dimmSizeExt(const uint32_t size);
     void dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
                            const uint8_t deviceLocatorPositionNum,
                            const uint8_t structLen, uint8_t* dataIn);
@@ -155,7 +155,7 @@ struct MemoryInfo
     uint8_t assetTag;
     uint8_t partNum;
     uint8_t attributes;
-    size_t extendedSize;
+    uint32_t extendedSize;
     uint16_t confClockSpeed;
     uint16_t minimumVoltage;
     uint16_t maximumVoltage;

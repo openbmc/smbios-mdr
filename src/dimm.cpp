@@ -156,7 +156,7 @@ static constexpr uint16_t baseNewVersionDimmSize = 0x8000;
 static constexpr uint16_t dimmSizeUnit = 1024;
 void Dimm::dimmSize(const uint16_t size)
 {
-    size_t result = size & maxOldDimmSize;
+    uint32_t result = size & maxOldDimmSize;
     if (0 == (size & baseNewVersionDimmSize))
     {
         result = result * dimmSizeUnit;
@@ -164,7 +164,7 @@ void Dimm::dimmSize(const uint16_t size)
     memorySizeInKB(result);
 }
 
-void Dimm::dimmSizeExt(size_t size)
+void Dimm::dimmSizeExt(uint32_t size)
 {
     size = size * dimmSizeUnit;
     memorySizeInKB(size);
