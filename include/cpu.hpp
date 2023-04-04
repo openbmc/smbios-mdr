@@ -45,39 +45,13 @@ using association =
     sdbusplus::xyz::openbmc_project::Association::server::Definitions;
 
 // Definition follow smbios spec DSP0134 3.0.0
-static const std::map<uint8_t, const char*> familyTable = {
-    {0x1, "Other"},
-    {0x2, "Unknown"},
-    {0x10, "Pentium II Xeon processor"},
-    {0xa1, "Quad-Core Intel Xeon processor 3200 Series"},
-    {0xa2, "Dual-Core Intel Xeon processor 3000 Series"},
-    {0xa3, "Quad-Core Intel Xeon processor 5300 Series"},
-    {0xa4, "Dual-Core Intel Xeon processor 5100 Series"},
-    {0xa5, "Dual-Core Intel Xeon processor 5000 Series"},
-    {0xa6, "Dual-Core Intel Xeon processor LV"},
-    {0xa7, "Dual-Core Intel Xeon processor ULV"},
-    {0xa8, "Dual-Core Intel Xeon processor 7100 Series"},
-    {0xa9, "Quad-Core Intel Xeon processor 5400 Series"},
-    {0xaa, "Quad-Core Intel Xeon processor"},
-    {0xab, "Dual-Core Intel Xeon processor 5200 Series"},
-    {0xac, "Dual-Core Intel Xeon processor 7200 Series"},
-    {0xad, "Quad-Core Intel Xeon processor 7300 Series"},
-    {0xae, "Quad-Core Intel Xeon processor 7400 Series"},
-    {0xaf, "Multi-Core Intel Xeon processor 7400 Series"},
-    {0xb0, "Pentium III Xeon processor"},
-    {0xb3, "Intel Xeon processor"},
-    {0xb5, "Intel Xeon processor MP"},
-    {0xd6, "Multi-Core Intel Xeon processor"},
-    {0xd7, "Dual-Core Intel Xeon processor 3xxx Series"},
-    {0xd8, "Quad-Core Intel Xeon processor 3xxx Series"},
-    {0xd9, "VIA Nano Processor Family"},
-    {0xda, "Dual-Core Intel Xeon processor 5xxx Series"},
-    {0xdb, "Quad-Core Intel Xeon processor 5xxx Series"},
-    {0xdd, "Dual-Core Intel Xeon processor 7xxx Series"},
-    {0xde, "Quad-Core Intel Xeon processor 7xxx Series"},
-    {0xdf, "Multi-Core Intel Xeon processor 7xxx Series"},
-    {0xe0, "Multi-Core Intel Xeon processor 3400 Series"},
-    {0xfe, "Processor Family 2 Indicator"}
+static const std::map<uint8_t, const char*> familyTable =
+    {
+        {0x1, "Other"}, {0x2, "Unknown"}, {0x10, "Pentium II Xeon processor"}, {0x2b, "Intel Atom processor"},
+    {0x2c, "Intel Core M processor"},
+    {0x2d, "Intel Core m3 processor"},
+    {0x2e, "Intel Core m5 processor"},
+    {0x2f, "Intel Core m7 processor"}, {0xa1, "Quad-Core Intel Xeon processor 3200 Series"}, {0xa2, "Dual-Core Intel Xeon processor 3000 Series"}, {0xa3, "Quad-Core Intel Xeon processor 5300 Series"}, {0xa4, "Dual-Core Intel Xeon processor 5100 Series"}, {0xa5, "Dual-Core Intel Xeon processor 5000 Series"}, {0xa6, "Dual-Core Intel Xeon processor LV"}, {0xa7, "Dual-Core Intel Xeon processor ULV"}, {0xa8, "Dual-Core Intel Xeon processor 7100 Series"}, {0xa9, "Quad-Core Intel Xeon processor 5400 Series"}, {0xaa, "Quad-Core Intel Xeon processor"}, {0xab, "Dual-Core Intel Xeon processor 5200 Series"}, {0xac, "Dual-Core Intel Xeon processor 7200 Series"}, {0xad, "Quad-Core Intel Xeon processor 7300 Series"}, {0xae, "Quad-Core Intel Xeon processor 7400 Series"}, {0xaf, "Multi-Core Intel Xeon processor 7400 Series"}, {0xb0, "Pentium III Xeon processor"}, {0xb3, "Intel Xeon processor"}, {0xb5, "Intel Xeon processor MP"}, {0xd6, "Multi-Core Intel Xeon processor"}, {0xd7, "Dual-Core Intel Xeon processor 3xxx Series"}, {0xd8, "Quad-Core Intel Xeon processor 3xxx Series"}, {0xd9, "VIA Nano Processor Family"}, {0xda, "Dual-Core Intel Xeon processor 5xxx Series"}, {0xdb, "Quad-Core Intel Xeon processor 5xxx Series"}, {0xdd, "Dual-Core Intel Xeon processor 7xxx Series"}, {0xde, "Quad-Core Intel Xeon processor 7xxx Series"}, {0xdf, "Multi-Core Intel Xeon processor 7xxx Series"}, {0xe0, "Multi-Core Intel Xeon processor 3400 Series"}, {0xfe, "Processor Family 2 Indicator"}
 
 };
 
