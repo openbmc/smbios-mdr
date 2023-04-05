@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0716f3fa_80cd51b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2023-04-05T18:02:59Z",
+      "side": 1,
+      "message": "Updated commit message. Thanks",
+      "parentUuid": "e6c25ff8_85b8cdff",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "6d7497ac_5373c7c6",
@@ -119,6 +137,24 @@
       "writtenOn": "2023-04-05T15:41:23Z",
       "side": 1,
       "message": "As per CPU ID wiki:\nhttps://en.wikipedia.org/wiki/CPUID#EAX\u003d1:_Processor_Info_and_Feature_Bits\n\n\u003e\u003e\nIf the Family ID field is equal to 15, the family is equal to the sum of the Extended Family ID and the Family ID fields. \n\u003c\u003c\nSo, it should be :\n effectiveFamily(cpuXFamily + cpuFamily);",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78efa18f_720fc5dd",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2023-04-05T18:02:59Z",
+      "side": 1,
+      "message": "Fixed. Thanks",
+      "parentUuid": "97a277e9_31ec58b9",
       "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
