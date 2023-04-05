@@ -3,6 +3,40 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e6c25ff8_85b8cdff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-04-05T15:41:23Z",
+      "side": 1,
+      "message": "Please add this line also in commit message:\n\"\nReference: \nhttps://en.wikipedia.org/wiki/CPUID#EAX\u003d1:_Processor_Info_and_Feature_Bits\n\"",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6d7497ac_5373c7c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-04-05T15:41:23Z",
+      "side": 1,
+      "message": "LGTM. Minor comments.",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9fdd012e_2ec0d77e",
         "filename": "src/cpu.cpp",
         "patchSetId": 5
@@ -68,6 +102,23 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "15ad6089_93e3497d",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97a277e9_31ec58b9",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-04-05T15:41:23Z",
+      "side": 1,
+      "message": "As per CPU ID wiki:\nhttps://en.wikipedia.org/wiki/CPUID#EAX\u003d1:_Processor_Info_and_Feature_Bits\n\n\u003e\u003e\nIf the Family ID field is equal to 15, the family is equal to the sum of the Extended Family ID and the Family ID fields. \n\u003c\u003c\nSo, it should be :\n effectiveFamily(cpuXFamily + cpuFamily);",
       "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
