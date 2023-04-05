@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9fdd012e_2ec0d77e",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001317
+      },
+      "writtenOn": "2023-04-05T08:59:31Z",
+      "side": 1,
+      "message": "Use of ternary operators help readability. Can we please use that ? \neffectiveFamily \u003d (cpuFamily \u003d\u003d 0x0f) ?  effectiveFamily(cpuXFamily | cpuFamily) : effectiveFamily(cpuFamily);",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9e7796f3_3559700e",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001317
+      },
+      "writtenOn": "2023-04-05T08:59:31Z",
+      "side": 1,
+      "message": "same as above can we use ternary operator here ?",
+      "revId": "e1b4babc95ddda2dc80ea59fb1e441539feea456",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
