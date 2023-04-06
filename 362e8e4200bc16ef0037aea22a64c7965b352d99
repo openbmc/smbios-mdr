@@ -63,6 +63,30 @@
       },
       "revId": "362e8e4200bc16ef0037aea22a64c7965b352d99",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4fbd6a1_df0e5e76",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2023-04-06T05:07:56Z",
+      "side": 1,
+      "message": "Thanks Zhikui. Addressed and fixed all the comments.",
+      "parentUuid": "3ab085e7_0fa01390",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 22
+      },
+      "revId": "362e8e4200bc16ef0037aea22a64c7965b352d99",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
