@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a051204d_58dceca5",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001317
+      },
+      "writtenOn": "2023-04-06T04:51:00Z",
+      "side": 1,
+      "message": "Do we need to do this ? \nfamily(cpuInfo-\u003efamily, cpuInfo-\u003efamily2); \ndoes this value not have family ?",
+      "revId": "5ae006a2f91b2dbbaa1fa4a171bc491aa1484fa2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
