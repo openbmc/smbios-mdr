@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6fc5ce8_61daec25",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-04-06T04:58:42Z",
+      "side": 1,
+      "message": "LGTM",
+      "revId": "5ae006a2f91b2dbbaa1fa4a171bc491aa1484fa2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a051204d_58dceca5",
@@ -31,6 +48,24 @@
       "writtenOn": "2023-04-06T04:57:50Z",
       "side": 1,
       "message": "Done",
+      "parentUuid": "a051204d_58dceca5",
+      "revId": "5ae006a2f91b2dbbaa1fa4a171bc491aa1484fa2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "77d0941c_b93fd868",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-04-06T04:58:42Z",
+      "side": 1,
+      "message": "We checked that option also, \nIt is saved under sdbusplus structure:\nusing processor \u003d sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;\n\nTo simplify, family value is directly read from table.",
       "parentUuid": "a051204d_58dceca5",
       "revId": "5ae006a2f91b2dbbaa1fa4a171bc491aa1484fa2",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
