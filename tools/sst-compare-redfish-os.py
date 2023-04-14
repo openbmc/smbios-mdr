@@ -25,6 +25,15 @@ linux_cpu_map = dict()
 success = True
 
 
+def filter_powerdomains(sst_data):
+    # For TPMI-based CPUs, we only care about powerdomain-0
+    cpus = list(sst_data.keys())
+    for proc in cpus:
+        match = re.search("powerdomain-(\\d+)", proc)
+        if not match or match.group(1) == "0":
+            continue
+        del sst_data[proc]
+
 def get_linux_output():
     cmd = [
         "/usr/bin/env",
@@ -37,6 +46,7 @@ def get_linux_output():
     process = subprocess.run(cmd, capture_output=True, text=True)
     process.check_returncode()
     result = json.loads(process.stderr)
+    filter_powerdomains(result)
 
     global linux_cpu_map
     linux_cpu_map = dict()
@@ -57,6 +67,7 @@ def get_linux_output():
     ]
     process = subprocess.run(cmd, capture_output=True, text=True)
     current_level = json.loads(process.stderr)
+    filter_powerdomains(current_level)
 
     for proc, data in current_level.items():
         result[proc].update(data)
@@ -149,7 +160,7 @@ def compare_config(redfish_config, linux_config):
         (x["ActiveCoreCount"], x["MaxSpeedMHz"])
         for x in redfish_config["TurboProfile"]
     ]
-    linux_turbo = linux_config["turbo-ratio-limits-sse"]
+    linux_turbo = linux_config.get("turbo-ratio-limits-sse") or linux_config["turbo-ratio-limits-level-0"]
     exp_turbo = []
     for bucket_key in sorted(linux_turbo.keys()):
         bucket = linux_turbo[bucket_key]
