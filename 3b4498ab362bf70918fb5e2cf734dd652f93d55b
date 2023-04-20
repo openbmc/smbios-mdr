@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "948201f5_69d53ad3",
+        "filename": "tools/sst-compare-redfish-os.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-04-20T16:15:08Z",
+      "side": 1,
+      "message": "Comment at line 29 says filter is for TPMI based CPU.\nHow is this call limited to only TPMI based CPU",
+      "revId": "3b4498ab362bf70918fb5e2cf734dd652f93d55b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db164db3_91d724b8",
+        "filename": "tools/sst-compare-redfish-os.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-04-20T16:15:08Z",
+      "side": 1,
+      "message": "What is the reason what this change?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 5
+      },
+      "revId": "3b4498ab362bf70918fb5e2cf734dd652f93d55b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
