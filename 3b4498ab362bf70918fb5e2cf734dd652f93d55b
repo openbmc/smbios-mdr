@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1139062e_3c2b9a40",
+        "filename": "tools/sst-compare-redfish-os.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-04-20T16:45:54Z",
+      "side": 1,
+      "message": "It\u0027s not but it doesn\u0027t need to be. The certain string it\u0027s looking for (\"powerdomain\") only shows up in the TPMI based CPU. Otherwise the function will be a no-op.",
+      "parentUuid": "948201f5_69d53ad3",
+      "revId": "3b4498ab362bf70918fb5e2cf734dd652f93d55b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "db164db3_91d724b8",
         "filename": "tools/sst-compare-redfish-os.py",
         "patchSetId": 2
@@ -31,6 +49,30 @@
       "writtenOn": "2023-04-20T16:15:08Z",
       "side": 1,
       "message": "What is the reason what this change?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 5
+      },
+      "revId": "3b4498ab362bf70918fb5e2cf734dd652f93d55b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1dc99627_c49aeb4f",
+        "filename": "tools/sst-compare-redfish-os.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-04-20T16:45:54Z",
+      "side": 1,
+      "message": "It\u0027s also a result of different output on TPMI-based CPU. The key will be \"..sse\" on old CPU and \"..level-0\" on TPMI CPU. The value behind either key is the same.",
+      "parentUuid": "db164db3_91d724b8",
       "range": {
         "startLine": 164,
         "startChar": 0,
