@@ -1,0 +1,8 @@
+Code-Review+1: Saravanan Palanisamy <saravanan.palanisamy@linux.intel.com>
+Code-Review+2: Kuiying Wang <wangkuiying.wky@alibaba-inc.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Jonathan Doman <jonathan.doman@intel.com>
+Submitted-at: Fri, 21 Apr 2023 17:45:11 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/62730
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
