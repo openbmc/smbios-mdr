@@ -59,22 +59,22 @@ static constexpr const char* systemInterface =
     "xyz.openbmc_project.Inventory.Item.System";
 constexpr const int limitEntryLen = 0xff;
 
-class MDR_V2 :
+class MDRV2 :
     sdbusplus::server::object_t<
-        sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>
+        sdbusplus::xyz::openbmc_project::Smbios::server::MDRV2>
 {
   public:
-    MDR_V2() = delete;
-    MDR_V2(const MDR_V2&) = delete;
-    MDR_V2& operator=(const MDR_V2&) = delete;
-    MDR_V2(MDR_V2&&) = delete;
-    MDR_V2& operator=(MDR_V2&&) = delete;
-    ~MDR_V2() = default;
+    MDRV2() = delete;
+    MDRV2(const MDRV2&) = delete;
+    MDRV2& operator=(const MDRV2&) = delete;
+    MDRV2(MDRV2&&) = delete;
+    MDRV2& operator=(MDRV2&&) = delete;
+    ~MDRV2() = default;
 
-    MDR_V2(sdbusplus::bus_t& bus, const char* path,
-           boost::asio::io_context& io) :
+    MDRV2(sdbusplus::bus_t& bus, const char* path,
+          boost::asio::io_context& io) :
         sdbusplus::server::object_t<
-            sdbusplus::xyz::openbmc_project::Smbios::server::MDR_V2>(bus, path),
+            sdbusplus::xyz::openbmc_project::Smbios::server::MDRV2>(bus, path),
         bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
                                  smbiosPath, smbiosInterfaceName))
     {

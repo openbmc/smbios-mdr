@@ -39,7 +39,7 @@ int main(void)
 
     bus.request_name("xyz.openbmc_project.Smbios.MDR_V2");
 
-    phosphor::smbios::MDR_V2 mdrV2(bus, phosphor::smbios::mdrV2Path, io);
+    phosphor::smbios::MDRV2 mdrV2(bus, phosphor::smbios::mdrV2Path, io);
 
     io.run();
 
