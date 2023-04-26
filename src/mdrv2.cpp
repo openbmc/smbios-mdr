@@ -387,7 +387,7 @@ uint8_t MDRV2::directoryEntries(uint8_t value)
     {
         value = smbiosDir.dirEntries;
     }
-    return sdbusplus::xyz::openbmc_project::Smbios::server::MDRV2::
+    return sdbusplus::server::xyz::openbmc_project::smbios::MDRV2::
         directoryEntries(value);
 }
 

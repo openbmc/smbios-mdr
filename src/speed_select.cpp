@@ -103,12 +103,12 @@ std::unique_ptr<SSTInterface> getInstance(uint8_t address, CPUModel model)
 }
 
 using BaseCurrentOperatingConfig =
-    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Control::
-                                    Processor::server::CurrentOperatingConfig>;
+    sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
+                                    control::processor::CurrentOperatingConfig>;
 
 using BaseOperatingConfig =
-    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
-                                    Item::Cpu::server::OperatingConfig>;
+    sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
+                                    inventory::item::cpu::OperatingConfig>;
 
 class OperatingConfig : public BaseOperatingConfig
 {

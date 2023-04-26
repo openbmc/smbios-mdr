@@ -61,11 +61,11 @@ std::string System::uuid(std::string value)
         stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[4]);
         stream << std::setw(2) << static_cast<int>(systemInfo->uuid.node[5]);
 
-        return sdbusplus::xyz::openbmc_project::Common::server::UUID::uuid(
+        return sdbusplus::server::xyz::openbmc_project::common::UUID::uuid(
             stream.str());
     }
 
-    return sdbusplus::xyz::openbmc_project::Common::server::UUID::uuid(
+    return sdbusplus::server::xyz::openbmc_project::common::UUID::uuid(
         "00000000-0000-0000-0000-000000000000");
 }
 
@@ -145,8 +145,8 @@ std::string System::version(std::string value)
             smbiosFile.close();
             phosphor::logging::log<phosphor::logging::level::ERR>(
                 "Find non-print char, delete the broken MDRV2 table file!");
-            return sdbusplus::xyz::openbmc_project::Inventory::Decorator::
-                server::Revision::version(result);
+            return sdbusplus::server::xyz::openbmc_project::inventory::
+                decorator::Revision::version(result);
         }
         result = tempS;
 
@@ -155,7 +155,7 @@ std::string System::version(std::string value)
     }
     lg2::info("VERSION INFO - BIOS - {VER}", "VER", result);
 
-    return sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::
+    return sdbusplus::server::xyz::openbmc_project::inventory::decorator::
         Revision::version(result);
 }
 

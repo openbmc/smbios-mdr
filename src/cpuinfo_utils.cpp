@@ -28,9 +28,9 @@
 namespace cpu_info
 {
 
-using namespace sdbusplus::xyz::openbmc_project;
-using PowerState = State::server::Host::HostState;
-using OsState = State::OperatingSystem::server::Status::OSStatus;
+using namespace sdbusplus::server::xyz::openbmc_project;
+using PowerState = state::Host::HostState;
+using OsState = state::operating_system::Status::OSStatus;
 
 HostState hostState = HostState::off;
 static PowerState powerState = PowerState::Off;
@@ -86,7 +86,7 @@ static void updateHostState()
 
 void updatePowerState(const std::string& newState)
 {
-    powerState = State::server::Host::convertHostStateFromString(newState);
+    powerState = state::Host::convertHostStateFromString(newState);
     updateHostState();
 }
 
@@ -115,9 +115,8 @@ void updateOsState(const std::string& newState)
 
     try
     {
-        osState =
-            State::OperatingSystem::server::Status::convertOSStatusFromString(
-                full_path);
+        osState = state::operating_system::Status::convertOSStatusFromString(
+            full_path);
     }
     catch (const sdbusplus::exception::InvalidEnumString& ex)
     {
@@ -285,7 +284,7 @@ void hostStateSetup(const std::shared_ptr<sdbusplus::asio::connection>& conn)
     // Leak the returned match objects. We want them to run forever.
     subscribeToProperty(
         "xyz.openbmc_project.State.Host", "/xyz/openbmc_project/state/host0",
-        State::server::Host::interface, "CurrentHostState", updatePowerState);
+        state::Host::interface, "CurrentHostState", updatePowerState);
     subscribeToProperty("xyz.openbmc_project.Host.Misc.Manager",
                         "/xyz/openbmc_project/misc/platform_state",
                         "xyz.openbmc_project.State.Host.Misc", "CoreBiosDone",

@@ -61,7 +61,7 @@ constexpr const int limitEntryLen = 0xff;
 
 class MDRV2 :
     sdbusplus::server::object_t<
-        sdbusplus::xyz::openbmc_project::Smbios::server::MDRV2>
+        sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>
 {
   public:
     MDRV2() = delete;
@@ -74,7 +74,7 @@ class MDRV2 :
     MDRV2(sdbusplus::bus_t& bus, const char* path,
           boost::asio::io_context& io) :
         sdbusplus::server::object_t<
-            sdbusplus::xyz::openbmc_project::Smbios::server::MDRV2>(bus, path),
+            sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>(bus, path),
         bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
                                  smbiosPath, smbiosInterfaceName))
     {

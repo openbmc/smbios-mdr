@@ -18,18 +18,18 @@ namespace smbios
 {
 
 using PCIeSlot =
-    sdbusplus::xyz::openbmc_project::Inventory::Item::server::PCIeSlot;
-using PCIeGeneration = sdbusplus::xyz::openbmc_project::Inventory::Item::
-    server::PCIeSlot::Generations;
-using PCIeType = sdbusplus::xyz::openbmc_project::Inventory::Item::server::
+    sdbusplus::server::xyz::openbmc_project::inventory::item::PCIeSlot;
+using PCIeGeneration = sdbusplus::server::xyz::openbmc_project::inventory::
+    item::PCIeSlot::Generations;
+using PCIeType = sdbusplus::server::xyz::openbmc_project::inventory::item::
     PCIeSlot::SlotTypes;
 using embedded =
-    sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Embedded;
+    sdbusplus::server::xyz::openbmc_project::inventory::connector::Embedded;
 using location =
-    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::LocationCode;
-using item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
+    sdbusplus::server::xyz::openbmc_project::inventory::decorator::LocationCode;
+using item = sdbusplus::server::xyz::openbmc_project::inventory::Item;
 using association =
-    sdbusplus::xyz::openbmc_project::Association::server::Definitions;
+    sdbusplus::server::xyz::openbmc_project::association::Definitions;
 
 class Pcie :
     sdbusplus::server::object_t<PCIeSlot, location, embedded, item, association>

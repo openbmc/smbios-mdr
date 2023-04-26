@@ -28,9 +28,9 @@ namespace smbios
 
 class System :
     sdbusplus::server::object_t<
-        sdbusplus::xyz::openbmc_project::Common::server::UUID>,
+        sdbusplus::server::xyz::openbmc_project::common::UUID>,
     sdbusplus::server::object_t<
-        sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Revision>
+        sdbusplus::server::xyz::openbmc_project::inventory::decorator::Revision>
 {
   public:
     System() = delete;
@@ -43,11 +43,11 @@ class System :
     System(sdbusplus::bus_t& bus, const std::string& objPath,
            uint8_t* smbiosTableStorage) :
         sdbusplus::server::object_t<
-            sdbusplus::xyz::openbmc_project::Common::server::UUID>(
+            sdbusplus::server::xyz::openbmc_project::common::UUID>(
             bus, objPath.c_str()),
         bus(bus),
-        sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
-                                        Decorator::server::Revision>(
+        sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
+                                        inventory::decorator::Revision>(
             bus, objPath.c_str()),
         path(objPath), storage(smbiosTableStorage)
     {

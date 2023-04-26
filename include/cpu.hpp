@@ -32,17 +32,17 @@ namespace smbios
 {
 
 using rev =
-    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Revision;
+    sdbusplus::server::xyz::openbmc_project::inventory::decorator::Revision;
 using asset =
-    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::Asset;
+    sdbusplus::server::xyz::openbmc_project::inventory::decorator::Asset;
 using location =
-    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::LocationCode;
+    sdbusplus::server::xyz::openbmc_project::inventory::decorator::LocationCode;
 using connector =
-    sdbusplus::xyz::openbmc_project::Inventory::Connector::server::Slot;
-using processor = sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
-using Item = sdbusplus::xyz::openbmc_project::Inventory::server::Item;
+    sdbusplus::server::xyz::openbmc_project::inventory::connector::Slot;
+using processor = sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu;
+using Item = sdbusplus::server::xyz::openbmc_project::inventory::Item;
 using association =
-    sdbusplus::xyz::openbmc_project::Association::server::Definitions;
+    sdbusplus::server::xyz::openbmc_project::association::Definitions;
 
 // Definition follow smbios spec DSP0134 3.0.0
 static const std::map<uint8_t, const char*> familyTable = {

@@ -34,12 +34,12 @@ static constexpr const int peciCheckInterval = 60;
 
 /** \ todo add cpu interface to CPUInfo and consolidate with smbios service
  * using processor =
-    sdbusplus::xyz::openbmc_project::Inventory::Item::server::Cpu;
+    sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu;
 */
 
 using UniqueIdentifierBase =
-    sdbusplus::server::object_t<sdbusplus::xyz::openbmc_project::Inventory::
-                                    Decorator::server::UniqueIdentifier>;
+    sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
+                                    inventory::decorator::UniqueIdentifier>;
 
 struct CPUInfo : public UniqueIdentifierBase
 {
