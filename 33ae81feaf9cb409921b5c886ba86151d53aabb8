@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f8dd7fbc_c74ab398",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-04-26T16:24:25Z",
+      "side": 1,
+      "message": "Thanks for being on the ball yet.  I haven\u0027t sent out an email explaining this transition yet (and I\u0027m not going to pull out support for the old namespaces for a while) but it looks like you\u0027ve got it right.",
+      "revId": "33ae81feaf9cb409921b5c886ba86151d53aabb8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
