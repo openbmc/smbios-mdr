@@ -22,6 +22,30 @@
       },
       "revId": "8e706b235702538deda07ab9c1f365518fdb0885",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5725e38b_2de5eb8a",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000388
+      },
+      "writtenOn": "2023-05-04T22:05:05Z",
+      "side": 1,
+      "message": "That is what we\u0027re doing actually, the erase at above is to trim any overflow entries.\n\nThe flow is - if the array is empty and the first smbios says we have 2 \"X\", then we emplace back 2 \"X\". Let\u0027s say the next time we get a new smbios that says we have 1 \"X\" for some reason, line 457 will trim the 2nd \"X\", and then replace the 1st \"X\" with X[index]-\u003einfoUpdate()",
+      "parentUuid": "2a068dca_50abe584",
+      "range": {
+        "startLine": 467,
+        "startChar": 12,
+        "endLine": 469,
+        "endChar": 34
+      },
+      "revId": "8e706b235702538deda07ab9c1f365518fdb0885",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
