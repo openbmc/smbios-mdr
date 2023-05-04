@@ -119,8 +119,12 @@ void Cpu::characteristics(uint16_t value)
 }
 
 static constexpr uint8_t maxOldVersionCount = 0xff;
-void Cpu::infoUpdate(void)
+void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
+                     const std::string& motherboard)
 {
+    storage = smbiosTableStorage;
+    motherboardPath = motherboard;
+
     uint8_t* dataIn = storage;
 
     dataIn = getSMBIOSTypePtr(dataIn, processorsType);

@@ -8,8 +8,12 @@ namespace phosphor
 namespace smbios
 {
 
-void Pcie::pcieInfoUpdate()
+void Pcie::pcieInfoUpdate(uint8_t* smbiosTableStorage,
+                          const std::string& motherboard)
 {
+    storage = smbiosTableStorage;
+    motherboardPath = motherboard;
+
     uint8_t* dataIn = getSMBIOSTypePtr(storage, systemSlots);
 
     if (dataIn == nullptr)
