@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2a068dca_50abe584",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-05-04T21:39:35Z",
+      "side": 1,
+      "message": "just replace `cpus[index]` instead of erasing and repopulating?\n\nSame with the dimm and pcie",
+      "range": {
+        "startLine": 467,
+        "startChar": 12,
+        "endLine": 469,
+        "endChar": 34
+      },
+      "revId": "8e706b235702538deda07ab9c1f365518fdb0885",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
