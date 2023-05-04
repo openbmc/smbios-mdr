@@ -86,13 +86,13 @@ class Dimm :
         sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
                                         state::decorator::OperationalStatus>(
             bus, objPath.c_str()),
-        dimmNum(dimmId), storage(smbiosTableStorage),
-        motherboardPath(motherboard)
+        dimmNum(dimmId)
     {
-        memoryInfoUpdate();
+        memoryInfoUpdate(smbiosTableStorage, motherboard);
     }
 
-    void memoryInfoUpdate(void);
+    void memoryInfoUpdate(uint8_t* smbiosTableStorage,
+                          const std::string& motherboard);
 
     uint16_t memoryDataWidth(uint16_t value) override;
     size_t memorySizeInKB(size_t value) override;

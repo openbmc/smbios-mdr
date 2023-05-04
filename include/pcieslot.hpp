@@ -47,13 +47,13 @@ class Pcie :
          const std::string& motherboard) :
         sdbusplus::server::object_t<PCIeSlot, location, embedded, item,
                                     association>(bus, objPath.c_str()),
-        pcieNum(pcieId), storage(smbiosTableStorage),
-        motherboardPath(motherboard)
+        pcieNum(pcieId)
     {
-        pcieInfoUpdate();
+        pcieInfoUpdate(smbiosTableStorage, motherboard);
     }
 
-    void pcieInfoUpdate();
+    void pcieInfoUpdate(uint8_t* smbiosTableStorage,
+                        const std::string& motherboard);
 
   private:
     uint8_t pcieNum;

@@ -445,7 +445,6 @@ void MDRV2::systemInfoUpdate()
             phosphor::logging::entry("ERROR=%s", e.what()));
     }
 
-    cpus.clear();
     int num = getTotalCpuSlot();
     if (num == -1)
     {
@@ -454,17 +453,29 @@ void MDRV2::systemInfoUpdate()
         return;
     }
 
+    // In case the new size is smaller than old, trim the vector
+    if (num < cpus.size())
+    {
+        cpus.erase(cpus.begin() + num, cpus.end());
+    }
+
     for (int index = 0; index < num; index++)
     {
         std::string path = cpuPath + std::to_string(index);
-        cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
-            motherboardPath));
+        if (index + 1 > cpus.size())
+        {
+            cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
+                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                motherboardPath));
+        }
+        else
+        {
+            cpus[index]->infoUpdate(smbiosDir.dir[smbiosDirIndex].dataStorage,
+                                    motherboardPath);
+        }
     }
 
 #ifdef DIMM_DBUS
-
-    dimms.clear();
 
     num = getTotalDimmSlot();
     if (num == -1)
@@ -474,17 +485,30 @@ void MDRV2::systemInfoUpdate()
         return;
     }
 
+    // In case the new size is smaller than old, trim the vector
+    if (num < dimms.size())
+    {
+        dimms.erase(dimms.begin() + num, dimms.end());
+    }
+
     for (int index = 0; index < num; index++)
     {
         std::string path = dimmPath + std::to_string(index);
-        dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
-            motherboardPath));
+        if (index + 1 > dimms.size())
+        {
+            dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
+                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                motherboardPath));
+        }
+        else
+        {
+            dimms[index]->memoryInfoUpdate(
+                smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
+        }
     }
 
 #endif
 
-    pcies.clear();
     num = getTotalPcieSlot();
     if (num == -1)
     {
@@ -493,12 +517,26 @@ void MDRV2::systemInfoUpdate()
         return;
     }
 
+    // In case the new size is smaller than old, trim the vector
+    if (num < pcies.size())
+    {
+        pcies.erase(pcies.begin() + num, pcies.end());
+    }
+
     for (int index = 0; index < num; index++)
     {
         std::string path = pciePath + std::to_string(index);
-        pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
-            bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
-            motherboardPath));
+        if (index + 1 > pcies.size())
+        {
+            pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
+                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                motherboardPath));
+        }
+        else
+        {
+            pcies[index]->pcieInfoUpdate(
+                smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
+        }
     }
 
     system.reset();

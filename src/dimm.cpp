@@ -39,8 +39,12 @@ using EccType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::Ecc;
 
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
-void Dimm::memoryInfoUpdate(void)
+void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
+                            const std::string& motherboard)
 {
+    storage = smbiosTableStorage;
+    motherboardPath = motherboard;
+
     uint8_t* dataIn = storage;
 
     dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);

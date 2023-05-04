@@ -129,10 +129,11 @@ class Cpu :
                                     Item, association>(bus, objPath.c_str()),
         cpuNum(cpuId), storage(smbiosTableStorage), motherboardPath(motherboard)
     {
-        infoUpdate();
+        infoUpdate(smbiosTableStorage, motherboard);
     }
 
-    void infoUpdate(void);
+    void infoUpdate(uint8_t* smbiosTableStorage,
+                    const std::string& motherboard);
 
   private:
     uint8_t cpuNum;
