@@ -408,6 +408,8 @@ static void
         case icxd:
         case spr:
         case emr:
+        case gnr:
+        case srf:
         {
             // PPIN can be read through PCS 19
             static constexpr uint8_t u8Size = 4; // default to a DWORD
