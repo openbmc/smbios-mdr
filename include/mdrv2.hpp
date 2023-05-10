@@ -78,7 +78,6 @@ class MDRV2 :
         bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
                                  smbiosPath, smbiosInterfaceName))
     {
-
         smbiosDir.agentVersion = smbiosAgentVersion;
         smbiosDir.dirVersion = 1;
         smbiosDir.dirEntries = 1;

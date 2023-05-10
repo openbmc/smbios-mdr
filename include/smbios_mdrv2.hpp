@@ -229,7 +229,6 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
         uint32_t len = *(smbiosData + 1);
         if (*smbiosData != typeId)
         {
-
             smbiosData += len;
             while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
             {

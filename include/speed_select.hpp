@@ -66,8 +66,7 @@ using TurboEntry = std::tuple<uint32_t, size_t>;
 class SSTInterface
 {
   public:
-    virtual ~SSTInterface()
-    {}
+    virtual ~SSTInterface() {}
 
     /**
      * Whether the interface is ready to be used, or we need to wait longer. The

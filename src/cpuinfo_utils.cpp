@@ -174,13 +174,13 @@ static void subscribeToProperty(
         *dbusConn, service, object, interface, propertyName,
         [handler, propertyName = std::string(propertyName)](
             boost::system::error_code ec, const PropertyType& newValue) {
-            if (ec)
-            {
-                std::cerr << "Failed to read property " << propertyName << ": "
-                          << ec << "\n";
-                return;
-            }
-            handler(newValue);
+        if (ec)
+        {
+            std::cerr << "Failed to read property " << propertyName << ": "
+                      << ec << "\n";
+            return;
+        }
+        handler(newValue);
         });
 
     using ChangedPropertiesType =
@@ -218,12 +218,12 @@ static void subscribeToProperty(
         sdbusplus::bus::match::rules::sender(service) +
             sdbusplus::bus::match::rules::propertiesChanged(object, interface),
         [commonPropHandler](sdbusplus::message_t& reply) {
-            ChangedPropertiesType changedProps;
-            // ignore first param (interface name), it has to be correct
-            reply.read(std::string(), changedProps);
+        ChangedPropertiesType changedProps;
+        // ignore first param (interface name), it has to be correct
+        reply.read(std::string(), changedProps);
 
-            DEBUG_PRINT << "PropertiesChanged handled\n";
-            commonPropHandler(changedProps);
+        DEBUG_PRINT << "PropertiesChanged handled\n";
+        commonPropHandler(changedProps);
         });
 
     // Set up a match for the InterfacesAdded signal from the service's
@@ -236,28 +236,27 @@ static void subscribeToProperty(
             sdbusplus::bus::match::rules::interfacesAdded(),
         [object = std::string(object), interface = std::string(interface),
          commonPropHandler](sdbusplus::message_t& reply) {
-            sdbusplus::message::object_path changedObject;
-            reply.read(changedObject);
-            if (changedObject != object)
+        sdbusplus::message::object_path changedObject;
+        reply.read(changedObject);
+        if (changedObject != object)
+        {
+            return;
+        }
+
+        std::vector<std::pair<std::string, ChangedPropertiesType>>
+            changedInterfaces;
+        reply.read(changedInterfaces);
+
+        for (const auto& [changedInterface, changedProps] : changedInterfaces)
+        {
+            if (changedInterface != interface)
             {
-                return;
+                continue;
             }
 
-            std::vector<std::pair<std::string, ChangedPropertiesType>>
-                changedInterfaces;
-            reply.read(changedInterfaces);
-
-            for (const auto& [changedInterface, changedProps] :
-                 changedInterfaces)
-            {
-                if (changedInterface != interface)
-                {
-                    continue;
-                }
-
-                DEBUG_PRINT << "InterfacesAdded handled\n";
-                commonPropHandler(changedProps);
-            }
+            DEBUG_PRINT << "InterfacesAdded handled\n";
+            commonPropHandler(changedProps);
+        }
         });
 
     if (propertiesChangedMatch != nullptr)

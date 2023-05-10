@@ -159,8 +159,8 @@ void Cpu::infoUpdate(void)
     // this class is for type CPU  //offset 5h
     family(cpuInfo->family, cpuInfo->family2); // offset 6h and 28h
     manufacturer(cpuInfo->manufacturer, cpuInfo->length,
-                 dataIn); // offset 7h
-    id(cpuInfo->id);      // offset 8h
+                 dataIn);                      // offset 7h
+    id(cpuInfo->id);                           // offset 8h
 
     // Step, EffectiveFamily, EffectiveModel computation for Intel processors.
     std::map<uint8_t, const char*>::const_iterator it =
@@ -208,10 +208,10 @@ void Cpu::infoUpdate(void)
     version(cpuInfo->version, cpuInfo->length, dataIn); // offset 10h
     maxSpeedInMhz(cpuInfo->maxSpeed);                   // offset 14h
     serialNumber(cpuInfo->serialNum, cpuInfo->length,
-                 dataIn); // offset 20h
+                 dataIn);                               // offset 20h
     partNumber(cpuInfo->partNum, cpuInfo->length,
-               dataIn);                          // offset 22h
-    if (cpuInfo->coreCount < maxOldVersionCount) // offset 23h or 2Ah
+               dataIn);                                 // offset 22h
+    if (cpuInfo->coreCount < maxOldVersionCount)        // offset 23h or 2Ah
     {
         coreCount(cpuInfo->coreCount);
     }

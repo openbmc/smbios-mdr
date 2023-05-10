@@ -420,18 +420,17 @@ void MDRV2::systemInfoUpdate()
                                 0,
                                 "/xyz/openbmc_project/inventory/system/board/"),
                         [this, systemInterface](sdbusplus::message_t& msg) {
-                            sdbusplus::message::object_path objectName;
-                            boost::container::flat_map<
-                                std::string,
-                                boost::container::flat_map<
-                                    std::string,
-                                    std::variant<std::string, uint64_t>>>
-                                msgData;
-                            msg.read(objectName, msgData);
-                            if (msgData.contains(systemInterface))
-                            {
-                                this->systemInfoUpdate();
-                            }
+                sdbusplus::message::object_path objectName;
+                boost::container::flat_map<
+                    std::string,
+                    boost::container::flat_map<
+                        std::string, std::variant<std::string, uint64_t>>>
+                    msgData;
+                msg.read(objectName, msgData);
+                if (msgData.contains(systemInterface))
+                {
+                    this->systemInfoUpdate();
+                }
                         });
         }
         else
@@ -675,12 +674,12 @@ bool MDRV2::checkSMBIOSVersion(uint8_t* dataIn)
     lg2::info("SMBIOS VERSION - {MAJOR}.{MINOR}", "MAJOR", foundMajorVersion,
               "MINOR", foundMinorVersion);
 
-    auto itr = std::find_if(
-        std::begin(supportedSMBIOSVersions), std::end(supportedSMBIOSVersions),
-        [&](SMBIOSVersion versionItr) {
-            return versionItr.majorVersion == foundMajorVersion &&
-                   versionItr.minorVersion == foundMinorVersion;
-        });
+    auto itr = std::find_if(std::begin(supportedSMBIOSVersions),
+                            std::end(supportedSMBIOSVersions),
+                            [&](SMBIOSVersion versionItr) {
+        return versionItr.majorVersion == foundMajorVersion &&
+               versionItr.minorVersion == foundMinorVersion;
+    });
     if (itr == std::end(supportedSMBIOSVersions))
     {
         return false;
@@ -744,11 +743,9 @@ std::vector<uint32_t> MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex,
 std::vector<boost::container::flat_map<std::string, RecordVariant>>
     MDRV2::getRecordType(size_t type)
 {
-
     std::vector<boost::container::flat_map<std::string, RecordVariant>> ret;
     if (type == memoryDeviceType)
     {
-
         uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
 
         if (dataIn == nullptr)
@@ -758,8 +755,8 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
 
         do
         {
-            dataIn =
-                getSMBIOSTypePtr(dataIn, memoryDeviceType, sizeof(MemoryInfo));
+            dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType,
+                                      sizeof(MemoryInfo));
             if (dataIn == nullptr)
             {
                 break;

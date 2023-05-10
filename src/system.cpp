@@ -73,10 +73,10 @@ static std::string getService(sdbusplus::bus_t& bus,
                               const std::string& objectPath,
                               const std::string& interface)
 {
-    auto method =
-        bus.new_method_call("xyz.openbmc_project.ObjectMapper",
-                            "/xyz/openbmc_project/object_mapper",
-                            "xyz.openbmc_project.ObjectMapper", "GetObject");
+    auto method = bus.new_method_call("xyz.openbmc_project.ObjectMapper",
+                                      "/xyz/openbmc_project/object_mapper",
+                                      "xyz.openbmc_project.ObjectMapper",
+                                      "GetObject");
 
     method.append(objectPath);
     method.append(std::vector<std::string>({interface}));
@@ -129,8 +129,8 @@ std::string System::version(std::string value)
     {
         auto biosInfo = reinterpret_cast<struct BIOSInfo*>(dataIn);
         uint8_t biosVerByte = biosInfo->biosVersion;
-        std::string tempS =
-            positionToString(biosInfo->biosVersion, biosInfo->length, dataIn);
+        std::string tempS = positionToString(biosInfo->biosVersion,
+                                             biosInfo->length, dataIn);
         if (std::find_if(tempS.begin(), tempS.end(),
                          [](char ch) { return !isprint(ch); }) != tempS.end())
         {

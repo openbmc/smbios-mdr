@@ -235,12 +235,12 @@ static void
         conn->get_io_context(), std::chrono::seconds(retrySeconds));
     sspecTimer->async_wait(
         [sspecTimer, conn, cpuInfo](boost::system::error_code ec) {
-            if (ec)
-            {
-                return;
-            }
-            tryReadSSpec(conn, cpuInfo);
-        });
+        if (ec)
+        {
+            return;
+        }
+        tryReadSSpec(conn, cpuInfo);
+    });
 }
 
 /**
@@ -284,12 +284,12 @@ static void
     createCpuUpdatedMatch(conn, cpu);
     conn->async_method_call(
         [](const boost::system::error_code ec) {
-            if (ec)
-            {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "Cannot set CPU property!");
-                return;
-            }
+        if (ec)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "Cannot set CPU property!");
+            return;
+        }
         },
         cpuProcessName, newProp.object.c_str(),
         "org.freedesktop.DBus.Properties", "Set", newProp.interface,
@@ -325,25 +325,23 @@ static void createCpuUpdatedMatch(
             sdbusplus::bus::match::rules::interfacesAdded() +
                 sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
             [conn, cpu](sdbusplus::message_t& msg) {
-                sdbusplus::message::object_path objectName;
-                boost::container::flat_map<
-                    std::string,
-                    boost::container::flat_map<
-                        std::string, std::variant<std::string, uint64_t>>>
-                    msgData;
+        sdbusplus::message::object_path objectName;
+        boost::container::flat_map<
+            std::string, boost::container::flat_map<
+                             std::string, std::variant<std::string, uint64_t>>>
+            msgData;
 
-                msg.read(objectName, msgData);
+        msg.read(objectName, msgData);
 
-                // Go through all the property changes, and retry all of them
-                // targeting this object/interface which was just added.
-                for (const CpuProperty& prop : propertiesToSet)
-                {
-                    if (prop.object == objectName &&
-                        msgData.contains(prop.interface))
-                    {
-                        setDbusProperty(conn, cpu, prop);
-                    }
-                }
+        // Go through all the property changes, and retry all of them
+        // targeting this object/interface which was just added.
+        for (const CpuProperty& prop : propertiesToSet)
+        {
+            if (prop.object == objectName && msgData.contains(prop.interface))
+            {
+                setDbusProperty(conn, cpu, prop);
+            }
+        }
             }));
 }
 
@@ -385,20 +383,20 @@ static void
 
         waitTimer->async_wait(
             [waitTimer, &io, conn, cpu](const boost::system::error_code& ec) {
-                if (ec)
+            if (ec)
+            {
+                // operation_aborted is expected if timer is canceled
+                // before completion.
+                if (ec != boost::asio::error::operation_aborted)
                 {
-                    // operation_aborted is expected if timer is canceled
-                    // before completion.
-                    if (ec != boost::asio::error::operation_aborted)
-                    {
-                        phosphor::logging::log<phosphor::logging::level::ERR>(
-                            "info update timer async_wait failed ",
-                            phosphor::logging::entry("EC=0x%x", ec.value()));
-                    }
-                    return;
+                    phosphor::logging::log<phosphor::logging::level::ERR>(
+                        "info update timer async_wait failed ",
+                        phosphor::logging::entry("EC=0x%x", ec.value()));
                 }
-                getProcessorInfo(io, conn, cpu);
-            });
+                return;
+            }
+            getProcessorInfo(io, conn, cpu);
+        });
         return;
     }
 
@@ -419,9 +417,9 @@ static void
             uint64_t cpuPPIN = 0;
             uint32_t u32PkgValue = 0;
 
-            int ret =
-                peci_RdPkgConfig(cpuAddr, u8PPINPkgIndex, u16PPINPkgParamLow,
-                                 u8Size, (uint8_t*)&u32PkgValue, &cc);
+            int ret = peci_RdPkgConfig(cpuAddr, u8PPINPkgIndex,
+                                       u16PPINPkgParamLow, u8Size,
+                                       (uint8_t*)&u32PkgValue, &cc);
             if (0 != ret)
             {
                 phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -485,71 +483,71 @@ static void
                         std::string,
                         std::variant<std::string, uint64_t, uint32_t, uint16_t,
                                      std::vector<std::string>>>& properties) {
-            const uint64_t* value = nullptr;
-            uint8_t peciAddress = 0;
-            uint8_t i2cBus = defaultI2cBus;
-            uint8_t i2cDevice;
-            bool i2cDeviceFound = false;
-            size_t cpu = 0;
+        const uint64_t* value = nullptr;
+        uint8_t peciAddress = 0;
+        uint8_t i2cBus = defaultI2cBus;
+        uint8_t i2cDevice;
+        bool i2cDeviceFound = false;
+        size_t cpu = 0;
 
-            if (ec)
-            {
-                std::cerr << "DBUS response error " << ec.value() << ": "
-                          << ec.message() << "\n";
-                return;
-            }
+        if (ec)
+        {
+            std::cerr << "DBUS response error " << ec.value() << ": "
+                      << ec.message() << "\n";
+            return;
+        }
 
-            for (const auto& property : properties)
+        for (const auto& property : properties)
+        {
+            std::cerr << "property " << property.first << "\n";
+            if (property.first == "Address")
             {
-                std::cerr << "property " << property.first << "\n";
-                if (property.first == "Address")
+                value = std::get_if<uint64_t>(&property.second);
+                if (value != nullptr)
                 {
-                    value = std::get_if<uint64_t>(&property.second);
-                    if (value != nullptr)
-                    {
-                        peciAddress = static_cast<uint8_t>(*value);
-                    }
-                }
-                if (property.first == "CpuID")
-                {
-                    value = std::get_if<uint64_t>(&property.second);
-                    if (value != nullptr)
-                    {
-                        cpu = static_cast<size_t>(*value);
-                    }
-                }
-                if (property.first == "PiromI2cAddress")
-                {
-                    value = std::get_if<uint64_t>(&property.second);
-                    if (value != nullptr)
-                    {
-                        i2cDevice = static_cast<uint8_t>(*value);
-                        i2cDeviceFound = true;
-                    }
-                }
-                if (property.first == "PiromI2cBus")
-                {
-                    value = std::get_if<uint64_t>(&property.second);
-                    if (value != nullptr)
-                    {
-                        i2cBus = static_cast<uint8_t>(*value);
-                    }
+                    peciAddress = static_cast<uint8_t>(*value);
                 }
             }
-
-            ///\todo replace this with present + power state
-            if (cpu != 0 && peciAddress != 0)
+            if (property.first == "CpuID")
             {
-                if (!i2cDeviceFound)
+                value = std::get_if<uint64_t>(&property.second);
+                if (value != nullptr)
                 {
-                    i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
+                    cpu = static_cast<size_t>(*value);
                 }
-                cpuInfoMap.insert_or_assign(
-                    cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress,
-                                                   i2cBus, i2cDevice));
-
-                getProcessorInfo(io, conn, cpu);
             }
+            if (property.first == "PiromI2cAddress")
+            {
+                value = std::get_if<uint64_t>(&property.second);
+                if (value != nullptr)
+                {
+                    i2cDevice = static_cast<uint8_t>(*value);
+                    i2cDeviceFound = true;
+                }
+            }
+            if (property.first == "PiromI2cBus")
+            {
+                value = std::get_if<uint64_t>(&property.second);
+                if (value != nullptr)
+                {
+                    i2cBus = static_cast<uint8_t>(*value);
+                }
+            }
+        }
+
+        ///\todo replace this with present + power state
+        if (cpu != 0 && peciAddress != 0)
+        {
+            if (!i2cDeviceFound)
+            {
+                i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
+            }
+            cpuInfoMap.insert_or_assign(
+                cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress, i2cBus,
+                                               i2cDevice));
+
+            getProcessorInfo(io, conn, cpu);
+        }
         },
         service, object, "org.freedesktop.DBus.Properties", "GetAll",
         interface);
@@ -572,25 +570,23 @@ static void getCpuConfiguration(
             "PropertiesChanged',arg0='xyz.openbmc_project."
             "Configuration.XeonCPU'",
             [&io, conn, &objServer](sdbusplus::message_t& msg) {
-                std::cerr << "get cpu configuration match\n";
-                static boost::asio::steady_timer filterTimer(io);
-                filterTimer.expires_after(
-                    std::chrono::seconds(configCheckInterval));
+        std::cerr << "get cpu configuration match\n";
+        static boost::asio::steady_timer filterTimer(io);
+        filterTimer.expires_after(std::chrono::seconds(configCheckInterval));
 
-                filterTimer.async_wait(
-                    [&io, conn,
-                     &objServer](const boost::system::error_code& ec) {
-                        if (ec == boost::asio::error::operation_aborted)
-                        {
-                            return; // we're being canceled
-                        }
-                        else if (ec)
-                        {
-                            std::cerr << "Error: " << ec.message() << "\n";
-                            return;
-                        }
-                        getCpuConfiguration(io, conn, objServer);
-                    });
+        filterTimer.async_wait(
+            [&io, conn, &objServer](const boost::system::error_code& ec) {
+            if (ec == boost::asio::error::operation_aborted)
+            {
+                return; // we're being canceled
+            }
+            else if (ec)
+            {
+                std::cerr << "Error: " << ec.message() << "\n";
+                return;
+            }
+            getCpuConfiguration(io, conn, objServer);
+        });
             });
 
     conn->async_method_call(
@@ -600,32 +596,32 @@ static void getCpuConfiguration(
                 std::string,
                 std::vector<std::pair<std::string, std::vector<std::string>>>>>&
                 subtree) {
-            if constexpr (debug)
-                std::cerr << "async_method_call callback\n";
+        if constexpr (debug)
+            std::cerr << "async_method_call callback\n";
 
-            if (ec)
-            {
-                std::cerr << "error with async_method_call\n";
-                return;
-            }
-            if (subtree.empty())
-            {
-                // No config data yet, so wait for the match
-                return;
-            }
-
-            for (const auto& object : subtree)
-            {
-                for (const auto& service : object.second)
-                {
-                    getCpuAddress(io, conn, service.first, object.first,
-                                  "xyz.openbmc_project.Configuration.XeonCPU");
-                }
-            }
-            if constexpr (debug)
-                std::cerr << "getCpuConfiguration callback complete\n";
-
+        if (ec)
+        {
+            std::cerr << "error with async_method_call\n";
             return;
+        }
+        if (subtree.empty())
+        {
+            // No config data yet, so wait for the match
+            return;
+        }
+
+        for (const auto& object : subtree)
+        {
+            for (const auto& service : object.second)
+            {
+                getCpuAddress(io, conn, service.first, object.first,
+                              "xyz.openbmc_project.Configuration.XeonCPU");
+            }
+        }
+        if constexpr (debug)
+            std::cerr << "getCpuConfiguration callback complete\n";
+
+        return;
         },
         "xyz.openbmc_project.ObjectMapper",
         "/xyz/openbmc_project/object_mapper",
