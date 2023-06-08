@@ -59,7 +59,7 @@ endif ()
 install (TARGETS smbiosmdrv2app DESTINATION bin)
 
 install (FILES  ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service
-    DESTINATION /lib/systemd/system/)
+    DESTINATION /usr/lib/systemd/system/)
 
 option (DIMM_ONLY_LOCATOR "Only use the DIMM number, and not the bank" OFF)
 
@@ -106,7 +106,7 @@ if (CPU_INFO)
 
     install (FILES
         ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
-        DESTINATION /lib/systemd/system/)
+        DESTINATION /usr/lib/systemd/system/)
 endif()
 
 option (IPMI_BLOB "Add IPMI Blobs" ON)
