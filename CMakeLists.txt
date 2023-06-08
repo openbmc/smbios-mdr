@@ -56,10 +56,14 @@ if (DIMM_DBUS)
     target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_DBUS)
 endif ()
 
+if (NOT DEFINED SYSTEMD_SYSTEM_UNIT_DIR)
+    pkg_get_variable(SYSTEMD_SYSTEM_UNIT_DIR systemd systemdsystemunitdir)
+endif()
+
 install (TARGETS smbiosmdrv2app DESTINATION bin)
 
 install (FILES  ${PROJECT_SOURCE_DIR}/service_files/smbios-mdrv2.service
-    DESTINATION /lib/systemd/system/)
+    DESTINATION "${SYSTEMD_SYSTEM_UNIT_DIR}")
 
 option (DIMM_ONLY_LOCATOR "Only use the DIMM number, and not the bank" OFF)
 
@@ -106,7 +110,7 @@ if (CPU_INFO)
 
     install (FILES
         ${PROJECT_SOURCE_DIR}/service_files/xyz.openbmc_project.cpuinfo.service
-        DESTINATION /lib/systemd/system/)
+        DESTINATION "${SYSTEMD_SYSTEM_UNIT_DIR}")
 endif()
 
 option (IPMI_BLOB "Add IPMI Blobs" ON)
