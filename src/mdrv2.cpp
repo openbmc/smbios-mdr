@@ -831,7 +831,7 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
                                                    memoryInfo->length, dataIn);
             record["Part Number"] = positionToString(
                 memoryInfo->partNum, memoryInfo->length, dataIn);
-            record["Attributes"] = memoryInfo->attributes;
+            record["Attributes"] = uint32_t(memoryInfo->attributes);
             record["Extended Size"] = uint32_t(memoryInfo->extendedSize);
             record["Configured Memory Speed"] =
                 uint32_t(memoryInfo->confClockSpeed);
