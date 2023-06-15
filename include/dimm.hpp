@@ -105,7 +105,7 @@ class Dimm :
     std::string serialNumber(std::string value) override;
     std::string partNumber(std::string value) override;
     std::string locationCode(std::string value) override;
-    uint8_t memoryAttributes(uint8_t value) override;
+    size_t memoryAttributes(size_t value) override;
     uint16_t memoryConfiguredSpeedInMhz(uint16_t value) override;
     bool functional(bool value) override;
     EccType ecc(EccType value) override;
@@ -154,7 +154,7 @@ struct MemoryInfo
     uint8_t serialNum;
     uint8_t assetTag;
     uint8_t partNum;
-    uint8_t attributes;
+    uint32_t attributes;
     uint32_t extendedSize;
     uint16_t confClockSpeed;
     uint16_t minimumVoltage;

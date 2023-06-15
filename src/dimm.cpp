@@ -319,7 +319,7 @@ std::string Dimm::locationCode(std::string value)
         LocationCode::locationCode(value);
 }
 
-uint8_t Dimm::memoryAttributes(uint8_t value)
+size_t Dimm::memoryAttributes(size_t value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
         memoryAttributes(value);
