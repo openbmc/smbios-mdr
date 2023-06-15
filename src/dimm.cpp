@@ -38,6 +38,9 @@ using DeviceType =
 using EccType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::Ecc;
 
+using MemoryTechType =
+    sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::MemoryTech;
+
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
 void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
                             const std::string& motherboard)
@@ -93,6 +96,7 @@ void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
     dimmSerialNum(memoryInfo->serialNum, memoryInfo->length, dataIn);
     dimmPartNum(memoryInfo->partNum, memoryInfo->length, dataIn);
     memoryAttributes(memoryInfo->attributes);
+    dimmMedia(memoryInfo->memoryTechnology);
     memoryConfiguredSpeedInMhz(memoryInfo->confClockSpeed);
 
     updateEccType(memoryInfo->phyArrayHandle);
@@ -202,6 +206,19 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
     memoryDeviceLocator(result);
 
     locationCode(result);
+    std::vector<uint8_t> slotVector(deviceLocator.begin(), deviceLocator.end());
+    uint8_t* p_slot = &slotVector[0];
+
+    std::string slot_delimiter = "_";
+    std::string cpuString =
+        deviceLocator.substr(0, deviceLocator.find(slot_delimiter));
+    std::string socket_str1 =
+        cpuString.substr(cpuString.find_first_of("0123456789"));
+    int socket_num = stoi(socket_str1) + 1;
+    uint8_t p_socket = static_cast<uint8_t>(socket_num);
+
+    slot(*(p_slot + slotVector.size() - 1));
+    socket(p_socket);
 }
 
 std::string Dimm::memoryDeviceLocator(std::string value)
@@ -227,6 +244,26 @@ DeviceType Dimm::memoryType(DeviceType value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
         memoryType(value);
+}
+
+void Dimm::dimmMedia(const uint8_t type)
+{
+    std::map<uint8_t, MemoryTechType>::const_iterator it =
+        dimmMemoryTechTypeMap.find(type);
+    if (it == dimmMemoryTechTypeMap.end())
+    {
+        memoryMedia(MemoryTechType::Unknown);
+    }
+    else
+    {
+        memoryMedia(it->second);
+    }
+}
+
+MemoryTechType Dimm::memoryMedia(MemoryTechType value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
+        memoryMedia(value);
 }
 
 void Dimm::dimmTypeDetail(uint16_t detail)
@@ -323,6 +360,18 @@ uint8_t Dimm::memoryAttributes(uint8_t value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
         memoryAttributes(value);
+}
+
+uint8_t Dimm::slot(uint8_t value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
+        MemoryLocation::slot(value);
+}
+
+uint8_t Dimm::socket(uint8_t value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
+        MemoryLocation::socket(value);
 }
 
 uint16_t Dimm::memoryConfiguredSpeedInMhz(uint16_t value)
