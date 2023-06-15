@@ -39,7 +39,7 @@
 sdbusplus::asio::object_server& getObjectServer(void);
 
 using RecordVariant =
-    std::variant<std::string, uint64_t, uint32_t, uint16_t, uint8_t>;
+    std::variant<std::string, uint64_t, uint32_t, uint16_t, uint8_t, size_t>;
 namespace phosphor
 {
 namespace smbios
