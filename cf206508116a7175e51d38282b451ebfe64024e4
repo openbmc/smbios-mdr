@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e376bf68_2981b1b2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-06-16T06:30:37Z",
+      "side": 1,
+      "message": "Sure, Will rebase again after merging this commit.\nhttps://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/63799",
+      "parentUuid": "37ce838f_b8b90803",
+      "revId": "cf206508116a7175e51d38282b451ebfe64024e4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9f8ff4d5_991b66f6",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-06-15T10:35:55Z",
       "side": 1,
       "message": "I suspect you\u0027ll need to use `dedup_variant` from sdbusplus or just drop the `size_t`.  The problem is that `size_t` is either `uint32_t` or `uint64_t` depending on the architecture, so you end up with duplicate entries in the variant which fails to compile.",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "cf206508116a7175e51d38282b451ebfe64024e4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52ec4d10_96a570b2",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000397
+      },
+      "writtenOn": "2023-06-16T06:30:37Z",
+      "side": 1,
+      "message": "Removed size_t",
+      "parentUuid": "9f8ff4d5_991b66f6",
       "range": {
         "startLine": 42,
         "startChar": 9,
