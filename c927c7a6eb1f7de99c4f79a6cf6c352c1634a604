@@ -22,6 +22,30 @@
       },
       "revId": "c927c7a6eb1f7de99c4f79a6cf6c352c1634a604",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8b8c2075_ffbeced3",
+        "filename": "CMakeLists.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2023-06-16T03:07:58Z",
+      "side": 1,
+      "message": "Hi Jonathan,\n\nThank for your review. I have updated it.",
+      "parentUuid": "20aff3b1_4ae26450",
+      "range": {
+        "startLine": 62,
+        "startChar": 16,
+        "endLine": 62,
+        "endChar": 40
+      },
+      "revId": "c927c7a6eb1f7de99c4f79a6cf6c352c1634a604",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
