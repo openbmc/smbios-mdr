@@ -542,6 +542,14 @@ static void
             {
                 i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
             }
+
+            auto key = cpuInfoMap.find(cpu);
+
+            if(key  != cpuInfoMap.end())
+            {
+                cpuInfoMap.erase(key);
+            }
+
             cpuInfoMap.insert_or_assign(
                 cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress, i2cBus,
                                                i2cDevice));
