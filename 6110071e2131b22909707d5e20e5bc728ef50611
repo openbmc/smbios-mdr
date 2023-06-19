@@ -16,6 +16,24 @@
       "message": "Please run clang-format to fix the CI error.",
       "revId": "6110071e2131b22909707d5e20e5bc728ef50611",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f655ebcd_f90c7840",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2023-06-19T13:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776ad9b3_dfd88eb7",
+      "revId": "6110071e2131b22909707d5e20e5bc728ef50611",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
