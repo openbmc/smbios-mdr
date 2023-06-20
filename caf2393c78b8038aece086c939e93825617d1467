@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "17b9e17e_05d90af2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-06-20T18:08:07Z",
+      "side": 1,
+      "message": "Fixes https://github.com/openbmc/smbios-mdr/issues/4",
+      "revId": "caf2393c78b8038aece086c939e93825617d1467",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
