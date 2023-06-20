@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc53aad0_55924cad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2023-06-20T03:53:24Z",
+      "side": 1,
+      "message": "Suggest to add the prefer reason here.",
+      "revId": "771277881c436a2fb658574b32465fea248e90d2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9750da3c_8374eb5d",
