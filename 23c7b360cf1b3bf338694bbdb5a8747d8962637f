@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea9c70bf_d97b1524",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2023-06-21T17:30:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0921fc9a_0d846425",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 37
+      },
+      "revId": "23c7b360cf1b3bf338694bbdb5a8747d8962637f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2eddde28_13a7417a",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-21T17:13:19Z",
       "side": 1,
       "message": "Can you explain how this works?\nAlso, need to check slowVector.size() \u003e 0",
+      "range": {
+        "startLine": 220,
+        "startChar": 1,
+        "endLine": 220,
+        "endChar": 44
+      },
+      "revId": "23c7b360cf1b3bf338694bbdb5a8747d8962637f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c919560_9ebdbfa5",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000416
+      },
+      "writtenOn": "2023-06-21T17:30:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2eddde28_13a7417a",
       "range": {
         "startLine": 220,
         "startChar": 1,
