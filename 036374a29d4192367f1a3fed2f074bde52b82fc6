@@ -1,0 +1,7 @@
+Code-Review+2: Kuiying Wang <wangkuiying.wky@alibaba-inc.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: George Liu <liuxiwei@ieisystem.com>
+Submitted-at: Thu, 29 Jun 2023 08:35:33 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/64213
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
