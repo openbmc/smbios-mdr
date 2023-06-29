@@ -223,6 +223,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
                          sizeof(MDRSMBIOSHeader));
         smbiosFile.write(reinterpret_cast<char*>(blobPtr->buffer.data()),
                          mdrHdr.dataSize);
+        smbiosFile.close();
         blobPtr->state |= blobs::StateFlags::committing;
     }
     catch (const std::ofstream::failure& e)
