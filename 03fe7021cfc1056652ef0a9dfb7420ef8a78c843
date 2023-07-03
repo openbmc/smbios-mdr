@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "694543aa_0820822e",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-03T09:07:50Z",
+      "side": 1,
+      "message": "Why Slot is uint8_T type, It must be string. Slot can be \"G1\" , \"H2\" etc..  It Need not to be guaranteed number always.",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ffaf72ee_17943c32",
         "filename": "include/dimm.hpp",
         "patchSetId": 6
@@ -48,6 +65,52 @@
       "writtenOn": "2023-07-03T08:58:00Z",
       "side": 1,
       "message": "stoi can throw exceptions. Please handle it: https://en.cppreference.com/w/cpp/string/basic_string/stol",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f97336e2_d346971b",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-03T09:07:50Z",
+      "side": 1,
+      "message": "Socket number always prefixed with \"CPU\" So better to use \"CPU\" prefix instead of \"_\" delimiter.",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7bcb7e23_03e30514",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-03T09:07:50Z",
+      "side": 1,
+      "message": "Assumption of SLOT number as ways the last one is also wrong. So better check for \"DIMM_\" prefix and determine the slot number.\nEx: \"BANK 1 CPU0 DIMM_B\" Where \"B\" is slot number",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 8
+      },
       "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
