@@ -16,6 +16,40 @@
       "message": "Can we move this to line 140 so that all dimmXXX commands are grouped together?",
       "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "70180ad8_86406d96",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000410
+      },
+      "writtenOn": "2023-07-03T08:58:00Z",
+      "side": 1,
+      "message": "Do we need 8/9 ? We support only upto Socket#7 right?\n\nAlso, can you put a comment explaining what type of substring you are looking for? Is the find_first_of the right logic to be used?",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22bede3a_fb8d0e6c",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000410
+      },
+      "writtenOn": "2023-07-03T08:58:00Z",
+      "side": 1,
+      "message": "stoi can throw exceptions. Please handle it: https://en.cppreference.com/w/cpp/string/basic_string/stol",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
