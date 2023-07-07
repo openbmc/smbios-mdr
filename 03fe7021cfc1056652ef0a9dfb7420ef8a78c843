@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "597084da_dacf4633",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Slot and Socket under memory in redfish dmtf are integers. And also in MemoryLocation.interface.yaml \n(..phosphor-dbus-interfaces/yaml/xyz/openbmc_project/Inventory/\nItem/Dimm/MemoryLocation.interface.yaml) considered as byte.",
+      "parentUuid": "694543aa_0820822e",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ffaf72ee_17943c32",
         "filename": "include/dimm.hpp",
         "patchSetId": 6
@@ -37,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "241754bc_064acb4a",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffaf72ee_17943c32",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "70180ad8_86406d96",
         "filename": "src/dimm.cpp",
         "patchSetId": 6
@@ -48,6 +84,24 @@
       "writtenOn": "2023-07-03T08:58:00Z",
       "side": 1,
       "message": "Do we need 8/9 ? We support only upto Socket#7 right?\n\nAlso, can you put a comment explaining what type of substring you are looking for? Is the find_first_of the right logic to be used?",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f72bdd66_37d867f6",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Fixed. Now the logic is been changed to finding CPU string from deviceLocator and then extract slot number from it.",
+      "parentUuid": "70180ad8_86406d96",
       "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -94,6 +148,48 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "afb3e072_1141f122",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Fixed. Exception handling implemented for stoi logic.",
+      "parentUuid": "22bede3a_fb8d0e6c",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "81dc82b1_0bb66d2c",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "f97336e2_d346971b",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7bcb7e23_03e30514",
         "filename": "src/dimm.cpp",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2023-07-03T09:07:50Z",
       "side": 1,
       "message": "Assumption of SLOT number as ways the last one is also wrong. So better check for \"DIMM_\" prefix and determine the slot number.\nEx: \"BANK 1 CPU0 DIMM_B\" Where \"B\" is slot number",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 8
+      },
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ed1dec09_f638f08a",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-07T05:28:59Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "7bcb7e23_03e30514",
       "range": {
         "startLine": 220,
         "startChar": 4,
