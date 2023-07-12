@@ -104,6 +104,7 @@ class Dimm :
                           const std::string& motherboard);
 
     uint16_t memoryDataWidth(uint16_t value) override;
+    uint16_t memoryTotalWidth(uint16_t value) override;
     size_t memorySizeInKB(size_t value) override;
     std::string memoryDeviceLocator(std::string value) override;
     DeviceType memoryType(DeviceType value) override;
