@@ -70,6 +70,7 @@ void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
     auto memoryInfo = reinterpret_cast<struct MemoryInfo*>(dataIn);
 
     memoryDataWidth(memoryInfo->dataWidth);
+    memoryTotalWidth(memoryInfo->totalWidth);
 
     if (memoryInfo->size == maxOldDimmSize)
     {
@@ -154,6 +155,12 @@ uint16_t Dimm::memoryDataWidth(uint16_t value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
         memoryDataWidth(value);
+}
+
+uint16_t Dimm::memoryTotalWidth(uint16_t value)
+{
+    return sdbusplus::xyz::openbmc_project::Inventory::Item::server::Dimm::
+        memoryTotalWidth(value);
 }
 
 static constexpr uint16_t baseNewVersionDimmSize = 0x8000;
