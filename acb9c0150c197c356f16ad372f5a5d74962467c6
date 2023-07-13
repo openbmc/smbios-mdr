@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f437dd45_e336c02d",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "This is taken according to interface only(Dimm.interface.yaml).  \n- name: MemoryMedia\n      type: enum[self.MemoryTech]\n      default: Unknown",
+      "parentUuid": "2c5cb607_e4701876",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd642cce_3eba228f",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-07-13T00:28:03Z",
       "side": 1,
       "message": "Is this needed? dimm.hpp has the same already",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 79
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbe4d6b_be3cf154",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd642cce_3eba228f",
       "range": {
         "startLine": 41,
         "startChar": 0,
@@ -72,6 +120,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a28aedb4_c58e1359",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2283973_4eb4f4d1",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 26
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "4de7f7cf_398684ed",
         "filename": "src/dimm.cpp",
         "patchSetId": 10
@@ -83,6 +155,30 @@
       "writtenOn": "2023-07-13T00:28:03Z",
       "side": 1,
       "message": "Maybe string_view can be used here",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d47cf962_53eb4c0d",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "std::string_view will have advantage over std::string when it is passed as an argument in a function(which avoids expensive copies).",
+      "parentUuid": "4de7f7cf_398684ed",
       "range": {
         "startLine": 214,
         "startChar": 4,
@@ -118,6 +214,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5d3fd67b_9c5b4fda",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "Used in next line (line no: 223)",
+      "parentUuid": "1946d8c0_1f962013",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 74
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3720dabd_f04353a5",
         "filename": "src/dimm.cpp",
         "patchSetId": 10
@@ -129,6 +249,30 @@
       "writtenOn": "2023-07-13T00:28:03Z",
       "side": 1,
       "message": "skip assigning socket(socketNum)",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 61
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5caab660_a3351002",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-13T21:13:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3720dabd_f04353a5",
       "range": {
         "startLine": 230,
         "startChar": 0,
