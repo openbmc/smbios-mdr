@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c5cb607_e4701876",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "nit: can we call this memoryTech?",
+      "range": {
+        "startLine": 118,
+        "startChar": 25,
+        "endLine": 118,
+        "endChar": 30
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd642cce_3eba228f",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "Is this needed? dimm.hpp has the same already",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 79
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2283973_4eb4f4d1",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 26
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4de7f7cf_398684ed",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "Maybe string_view can be used here",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1946d8c0_1f962013",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "not used",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 74
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3720dabd_f04353a5",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "skip assigning socket(socketNum)",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 61
+      },
+      "revId": "acb9c0150c197c356f16ad372f5a5d74962467c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}

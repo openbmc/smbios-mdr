@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "984568ea_589a8e91",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-13T00:28:03Z",
+      "side": 1,
+      "message": "make sense to use the same type as the interface",
+      "parentUuid": "597084da_dacf4633",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ffaf72ee_17943c32",
         "filename": "include/dimm.hpp",
         "patchSetId": 6
