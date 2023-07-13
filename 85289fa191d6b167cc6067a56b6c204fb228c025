@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3d2e2c67_441925af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2023-07-13T04:42:44Z",
+      "side": 1,
+      "message": "Please specify the background story here",
+      "revId": "85289fa191d6b167cc6067a56b6c204fb228c025",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "94da2c01_9715861c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2023-07-13T04:42:44Z",
+      "side": 1,
+      "message": "Not easy to see the different, please specify it directly.",
+      "revId": "85289fa191d6b167cc6067a56b6c204fb228c025",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
