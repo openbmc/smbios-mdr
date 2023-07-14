@@ -16,6 +16,52 @@
       "message": "Fixed review comments",
       "revId": "1ac04fba720c996838e304327ce61a574b5b21da",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4a213222_4e8eb02f",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-14T23:14:58Z",
+      "side": 1,
+      "message": "what would the slot be for example: 1) CPU0 DIMM_A or 2) CPU0 DIMM_12?\nShould we consider use the Bank number as the slot for 1), example \"BANK 0 CPU0 DIMM_A\" -\u003e slot 0",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 19
+      },
+      "revId": "1ac04fba720c996838e304327ce61a574b5b21da",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34420c6b_4b64addb",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-07-14T23:14:58Z",
+      "side": 1,
+      "message": "This whole section can be simplified, the location string is assumed to be of the format: CPU0_DIMM_A or CPU0 DIMM_A \nSomething like this:\n\ncpuPos \u003d deviceLocator.find(substrCpu);\nif (cpuPos !\u003d std::string::npos)\nstd::string socketString \u003d\n        deviceLocator.substr( cpuPos + substrCpu.length(), 1);\ndimmPos \u003d deviceLocator.find(substrDimm)\nif (dimmPos !\u003d std::string::npos)\nstd::string slotString \u003d\n        deviceLocator.substr( dimmPos + substrDimm.length() + 1);\n        \n        \n        \nAnother idea is to use regex to do the matching and str to number conversion",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 19
+      },
+      "revId": "1ac04fba720c996838e304327ce61a574b5b21da",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
