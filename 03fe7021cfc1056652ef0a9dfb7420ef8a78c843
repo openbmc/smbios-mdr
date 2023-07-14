@@ -72,6 +72,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "77281284_00d6dcdd",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-14T06:55:24Z",
+      "side": 1,
+      "message": "Hmmm Not in favor, ideally we should change dbus-interfaces and also propose same to DMTF to change it. But since its there as Int in DMTF, I am going with approval.",
+      "parentUuid": "6eef0332_d9c81478",
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ffaf72ee_17943c32",
@@ -224,6 +242,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cff6359d_5f246021",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-14T06:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81dc82b1_0bb66d2c",
+      "range": {
+        "startLine": 218,
+        "startChar": 12,
+        "endLine": 218,
+        "endChar": 21
+      },
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7bcb7e23_03e30514",
@@ -261,6 +303,30 @@
       "side": 1,
       "message": "Fixed",
       "parentUuid": "7bcb7e23_03e30514",
+      "range": {
+        "startLine": 220,
+        "startChar": 4,
+        "endLine": 220,
+        "endChar": 8
+      },
+      "revId": "03fe7021cfc1056652ef0a9dfb7420ef8a78c843",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa63ff72_346a702b",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-07-14T06:55:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed1dec09_f638f08a",
       "range": {
         "startLine": 220,
         "startChar": 4,
