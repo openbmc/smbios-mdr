@@ -16,14 +16,18 @@
 
 #include "mdrv2.hpp"
 
+#ifdef GRPC_BLOB
+#include "smbios_grpc.hpp"
+#endif
+
 #include <boost/asio/io_context.hpp>
 #include <phosphor-logging/elog-errors.hpp>
 #include <phosphor-logging/elog.hpp>
 #include <sdbusplus/asio/connection.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
-boost::asio::io_context io;
-auto connection = std::make_shared<sdbusplus::asio::connection>(io);
+auto io = std::make_shared<boost::asio::io_context>();
+auto connection = std::make_shared<sdbusplus::asio::connection>(*io);
 auto objServer = sdbusplus::asio::object_server(connection);
 
 sdbusplus::asio::object_server& getObjectServer(void)
@@ -41,7 +45,17 @@ int main(void)
 
     phosphor::smbios::MDRV2 mdrV2(bus, phosphor::smbios::mdrV2Path, io);
 
-    io.run();
+#ifdef GRPC_BLOB
+    blobs::SmbiosGrpcServer smbiosGrpcServer(io);
+
+    smbiosGrpcServer.start();
+#endif
+
+    io->run();
+
+#ifdef GRPC_BLOB
+    smbiosGrpcServer.stop();
+#endif
 
     return 0;
 }

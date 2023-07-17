@@ -44,16 +44,37 @@ set (SRC_FILES src/mdrv2.cpp src/mdrv2_main.cpp src/cpu.cpp src/dimm.cpp
 
 include_directories (${CMAKE_CURRENT_BINARY_DIR})
 
+option (GRPC_BLOB "Enable gRPC Interface" ON)
+
+if (GRPC_BLOB)
+    pkg_check_modules (GRPC grpc REQUIRED)
+    include_directories (${GRPC_INCLUDE_DIRS})
+    link_directories (${GRPC_LIBRARY_DIRS})
+
+    pkg_check_modules (GRPCPLUSPLUS grpc++ REQUIRED)
+    include_directories (${GRPCPLUSPLUS_INCLUDE_DIRS})
+    link_directories (${GRPCPLUSPLUS_LIBRARY_DIRS})
+endif ()
+
 add_executable (smbiosmdrv2app ${SRC_FILES})
 target_link_libraries (smbiosmdrv2app ${SYSTEMD_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${DBUSINTERFACE_LIBRARIES})
 target_link_libraries (smbiosmdrv2app ${SDBUSPLUSPLUS_LIBRARIES})
 target_link_libraries (smbiosmdrv2app phosphor_logging)
 
+if (GRPC_BLOB)
+    target_link_libraries (smbiosmdrv2app ${GRPC_LIBRARIES})
+    target_link_libraries (smbiosmdrv2app ${GRPCPLUSPLUS_LIBRARIES})
+endif ()
+
 option (DIMM_DBUS "Expose DIMM D-Bus Interface" ON)
 
 if (DIMM_DBUS)
     target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_DBUS)
+endif ()
+
+if (GRPC_BLOB)
+    target_compile_definitions (smbiosmdrv2app PRIVATE GRPC_BLOB)
 endif ()
 
 if (NOT DEFINED SYSTEMD_SYSTEM_UNIT_DIR)
@@ -70,7 +91,6 @@ option (DIMM_ONLY_LOCATOR "Only use the DIMM number, and not the bank" OFF)
 if (DIMM_ONLY_LOCATOR)
     target_compile_definitions (smbiosmdrv2app PRIVATE DIMM_ONLY_LOCATOR)
 endif ()
-
 
 option (CPU_INFO "Add Cpuinfo Service" ON)
 
@@ -178,4 +198,58 @@ if (IPMI_BLOB)
         target_link_libraries (runBlobStatClose smbiosstore
                                ${GTEST_BOTH_LIBRARIES})
     endif ()
+endif ()
+
+if (GRPC_BLOB)
+    # https://github.com/protocolbuffers/protobuf/blob/main/docs/cmake_protobuf_generate.md#basic-example
+    # https://github.com/faaxm/exmpl-cmake-grpc/blob/master/proto/CMakeLists.txt
+    # https://chromium.googlesource.com/external/github.com/grpc/grpc/+/chromium-deps/2016-08-17/examples/cpp/helloworld/CMakeLists.txt
+    # https://medium.com/3yourmind/generate-grpc-source-files-using-cmake-ec3acd246b45
+    # https://www.f-ax.de/dev/2020/11/08/grpc-plugin-cmake-support.html
+
+    find_package(protobuf CONFIG REQUIRED)
+    message(STATUS "Found package protobuf ${protobuf_VERSION}")
+
+    find_package(gRPC CONFIG REQUIRED)
+    message(STATUS "Found package gRPC ${gRPC_VERSION}")
+
+    set(GRPC_BLOBS_DIR "${CMAKE_CURRENT_LIST_DIR}/src/smbios-grpc-blobs")
+    set(PROTO_IMPORT_DIR "${GRPC_BLOBS_DIR}/proto")
+    message(STATUS "Directory import ${PROTO_IMPORT_DIR}")
+
+    set(PROTO_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+    message(STATUS "Directory output ${PROTO_BINARY_DIR}")
+
+    add_library(libSmbiosTransfer OBJECT "${PROTO_IMPORT_DIR}/SmbiosTransfer.proto")
+
+    target_link_libraries(libSmbiosTransfer PUBLIC protobuf::libprotobuf)
+    target_link_libraries(libSmbiosTransfer PUBLIC gRPC::grpc)
+    target_link_libraries(libSmbiosTransfer PUBLIC gRPC::grpc++)
+    target_link_libraries(libSmbiosTransfer PUBLIC gRPC::grpc++_reflection)
+
+    target_include_directories(libSmbiosTransfer PUBLIC "${PROTO_BINARY_DIR}")
+
+    find_program(GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
+    message(STATUS "Found program ${GRPC_CPP_PLUGIN_EXECUTABLE}")
+
+    protobuf_generate(
+        TARGET libSmbiosTransfer
+        LANGUAGE cpp
+        IMPORT_DIRS ${PROTO_IMPORT_DIR}
+        PROTOC_OUT_DIR "${PROTO_BINARY_DIR}")
+
+    protobuf_generate(
+        TARGET libSmbiosTransfer
+        LANGUAGE grpc
+        GENERATE_EXTENSIONS .grpc.pb.h .grpc.pb.cc
+        PLUGIN "protoc-gen-grpc=${GRPC_CPP_PLUGIN_EXECUTABLE}"
+        IMPORT_DIRS ${PROTO_IMPORT_DIR}
+        PROTOC_OUT_DIR "${PROTO_BINARY_DIR}")
+
+    target_link_libraries (smbiosmdrv2app libSmbiosTransfer)
+
+    target_include_directories(smbiosmdrv2app PUBLIC "${GRPC_BLOBS_DIR}")
+    target_include_directories(smbiosmdrv2app PUBLIC "${PROTO_BINARY_DIR}/src/smbios-grpc-blobs/proto")
+
+    target_sources(smbiosmdrv2app PUBLIC "${GRPC_BLOBS_DIR}/smbios_grpc.cpp")
 endif ()
