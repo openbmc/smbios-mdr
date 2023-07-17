@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package phosphor.smbios;
+
+// SmbiosTransfer
+// https://www.dmtf.org/standards/smbios/
+// https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.6.0.pdf
+
+// SMBIOS 3.0 (64-bit) is mandatory.
+// Old 32-bit SMBIOS, aka DMI, is not supported.
+message SmbiosTransferRequest {
+  // Binary blob: SMBIOS 3.0 (64-bit) Entry Point, size exactly 24 bytes
+  // /sys/firmware/dmi/tables/smbios_entry_point
+  bytes smbios_entry_point = 1;
+
+  // Binary blob: SMBIOS Structure Table, size varies, maximum 64KB
+  // /sys/firmware/dmi/tables/DMI
+  bytes smbios_structure_table = 2;
+}
+
+// The response is empty, no further indication is necessary.
+// gRPC already includes success/error status flag within each transaction.
+message SmbiosTransferResponse {}
+
+// The service to transfer SMBIOS data to BMC.
+service SmbiosTransferService {
+  // Transfer the SMBIOS data.
+  rpc SmbiosTransfer(SmbiosTransferRequest) returns (SmbiosTransferResponse) {}
+}
