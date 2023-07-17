@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f53fc18_10e193bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2023-07-17T11:18:16Z",
+      "side": 1,
+      "message": "Please attach test result here.",
+      "revId": "b3d83d197d489285da07fea4d42d1830668c7d27",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
