@@ -91,7 +91,7 @@ if (CPU_INFO)
         add_dependencies (cpuinfoapp libpeci)
         externalproject_add (libpeci PREFIX ${CMAKE_BINARY_DIR}/libpeci
             GIT_REPOSITORY https://github.com/openbmc/libpeci.git
-            GIT_TAG 50959a23b48e4f5af9c7110fc78214ea27c6f078
+            GIT_TAG b33f593d97cd814e73473376945d8bed27daeb37
             INSTALL_COMMAND "")
 
         externalproject_get_property (libpeci SOURCE_DIR)
