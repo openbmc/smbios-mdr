@@ -34,6 +34,24 @@
       "parentUuid": "98788311_b23d751d",
       "revId": "cd4007a3c035f3b17fea6e53be4e1f3b63145328",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3592664f_b5929382",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-07-20T08:24:01Z",
+      "side": 1,
+      "message": "Not yet, but the idea should be straightforward: receive the SMBIOS binary blob over the network, using gRPC, instead of receiving it using IPMI. Same behavior. Just a different protocol. I am thinking that a \"README.gRPC\" file might be appropriate to add to this directory. Will work on that as time permits.",
+      "parentUuid": "032b856d_b67f4172",
+      "revId": "cd4007a3c035f3b17fea6e53be4e1f3b63145328",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
