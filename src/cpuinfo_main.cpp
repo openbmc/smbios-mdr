@@ -407,6 +407,7 @@ static void
         case spr:
         case emr:
         case gnr:
+        case gnrd:
         case srf:
         {
             // PPIN can be read through PCS 19
