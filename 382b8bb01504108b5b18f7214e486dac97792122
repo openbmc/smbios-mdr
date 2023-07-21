@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cda2a3da_ba47ad0c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-21T05:02:51Z",
+      "side": 1,
+      "message": "Updated logic for slot and socket extraction from Location code and response for review comments given",
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
