@@ -1,0 +1,34 @@
+option(
+  'tests',
+   type: 'feature',
+   value: 'disabled',
+   description: 'Build tests'
+)
+
+option(
+  'dimm-dbus',
+  type: 'feature',
+  value: 'enabled',
+  description: 'Expose DIMM D-Bus Interface'
+)
+
+option(
+  'dimm-only-locator',
+  type: 'feature',
+  value: 'disabled',
+  description: 'Only use the DIMM number, and not the bank'
+)
+
+option(
+  'cpuinfo',
+  type: 'feature',
+  value: 'enabled',
+  description: 'Build CPUInfo service'
+)
+
+option(
+  'smbios-ipmi-blob',
+  type: 'feature',
+  value: 'enabled',
+  description: 'Build IPMI blob library for SMBIOS transfer'
+)
