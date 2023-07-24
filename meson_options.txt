@@ -1,0 +1,5 @@
+option('tests',             type: 'boolean',  value: false,   description: 'Build tests')
+option('dimm-dbus',         type: 'boolean',  value: true,    description: 'Expose DIMM D-Bus Interface')
+option('dimm-only-locator', type: 'boolean',  value: false,   description: 'Only use the DIMM number, and not the bank')
+option('cpuinfo',           type: 'boolean',  value: true,    description: 'Build CPUInfo service')
+option('smbios-ipmi-blob',  type: 'boolean',  value: true,    description: 'Build IPMI blob library for SMBIOS transfer')
