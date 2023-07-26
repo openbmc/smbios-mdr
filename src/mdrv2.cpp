@@ -225,7 +225,7 @@ bool MDRV2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
     }
     smbiosFile.clear();
     smbiosFile.seekg(0, std::ios_base::end);
-    int fileLength = smbiosFile.tellg();
+    size_t fileLength = smbiosFile.tellg();
     smbiosFile.seekg(0, std::ios_base::beg);
     if (fileLength < sizeof(MDRSMBIOSHeader))
     {
@@ -309,8 +309,9 @@ bool MDRV2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
     return teminate;
 }
 
-bool MDRV2::sendDataInformation(uint8_t idIndex, uint8_t flag, uint32_t dataLen,
-                                uint32_t dataVer, uint32_t timeStamp)
+bool MDRV2::sendDataInformation(uint8_t idIndex, uint8_t /* flag */,
+                                uint32_t dataLen, uint32_t dataVer,
+                                uint32_t timeStamp)
 {
     if (idIndex >= maxDirEntries)
     {
@@ -357,7 +358,7 @@ int MDRV2::findIdIndex(std::vector<uint8_t> dataInfo)
 
     for (int index = 0; index < smbiosDir.dirEntries; index++)
     {
-        int info = 0;
+        size_t info = 0;
         for (; info < arrayDataInfo.size(); info++)
         {
             if (arrayDataInfo[info] !=
@@ -419,7 +420,7 @@ void MDRV2::systemInfoUpdate()
                             sdbusplus::bus::match::rules::argNpath(
                                 0,
                                 "/xyz/openbmc_project/inventory/system/board/"),
-                        [this, systemInterface](sdbusplus::message_t& msg) {
+                        [this](sdbusplus::message_t& msg) {
                 sdbusplus::message::object_path objectName;
                 boost::container::flat_map<
                     std::string,
@@ -445,8 +446,8 @@ void MDRV2::systemInfoUpdate()
             phosphor::logging::entry("ERROR=%s", e.what()));
     }
 
-    int num = getTotalCpuSlot();
-    if (num == -1)
+    std::optional<size_t> num = getTotalCpuSlot();
+    if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "get cpu total slot failed");
@@ -454,12 +455,12 @@ void MDRV2::systemInfoUpdate()
     }
 
     // In case the new size is smaller than old, trim the vector
-    if (num < cpus.size())
+    if (*num < cpus.size())
     {
-        cpus.erase(cpus.begin() + num, cpus.end());
+        cpus.resize(*num);
     }
 
-    for (int index = 0; index < num; index++)
+    for (unsigned int index = 0; index < *num; index++)
     {
         std::string path = cpuPath + std::to_string(index);
         if (index + 1 > cpus.size())
@@ -478,7 +479,7 @@ void MDRV2::systemInfoUpdate()
 #ifdef DIMM_DBUS
 
     num = getTotalDimmSlot();
-    if (num == -1)
+    if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "get dimm total slot failed");
@@ -486,12 +487,12 @@ void MDRV2::systemInfoUpdate()
     }
 
     // In case the new size is smaller than old, trim the vector
-    if (num < dimms.size())
+    if (*num < dimms.size())
     {
-        dimms.erase(dimms.begin() + num, dimms.end());
+        dimms.resize(*num);
     }
 
-    for (int index = 0; index < num; index++)
+    for (unsigned int index = 0; index < *num; index++)
     {
         std::string path = dimmPath + std::to_string(index);
         if (index + 1 > dimms.size())
@@ -510,7 +511,7 @@ void MDRV2::systemInfoUpdate()
 #endif
 
     num = getTotalPcieSlot();
-    if (num == -1)
+    if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "get pcie total slot failed");
@@ -518,12 +519,12 @@ void MDRV2::systemInfoUpdate()
     }
 
     // In case the new size is smaller than old, trim the vector
-    if (num < pcies.size())
+    if (*num < pcies.size())
     {
-        pcies.erase(pcies.begin() + num, pcies.end());
+        pcies.resize(*num);
     }
 
-    for (int index = 0; index < num; index++)
+    for (unsigned int index = 0; index < *num; index++)
     {
         std::string path = pciePath + std::to_string(index);
         if (index + 1 > pcies.size())
@@ -544,16 +545,16 @@ void MDRV2::systemInfoUpdate()
         bus, systemPath, smbiosDir.dir[smbiosDirIndex].dataStorage);
 }
 
-int MDRV2::getTotalCpuSlot()
+std::optional<size_t> MDRV2::getTotalCpuSlot()
 {
     uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    int num = 0;
+    size_t num = 0;
 
     if (dataIn == nullptr)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "get cpu total slot failed - no storage data");
-        return -1;
+        return std::nullopt;
     }
 
     while (1)
@@ -578,16 +579,16 @@ int MDRV2::getTotalCpuSlot()
     return num;
 }
 
-int MDRV2::getTotalDimmSlot()
+std::optional<size_t> MDRV2::getTotalDimmSlot()
 {
     uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    uint8_t num = 0;
+    size_t num = 0;
 
     if (dataIn == nullptr)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Fail to get dimm total slot - no storage data");
-        return -1;
+        return std::nullopt;
     }
 
     while (1)
@@ -612,16 +613,16 @@ int MDRV2::getTotalDimmSlot()
     return num;
 }
 
-int MDRV2::getTotalPcieSlot()
+std::optional<size_t> MDRV2::getTotalPcieSlot()
 {
     uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    int num = 0;
+    size_t num = 0;
 
     if (dataIn == nullptr)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Fail to get total system slot - no storage data");
-        return -1;
+        return std::nullopt;
     }
 
     while (1)
@@ -677,7 +678,7 @@ bool MDRV2::checkSMBIOSVersion(uint8_t* dataIn)
     }
 
     auto pos = std::distance(std::begin(buffer), it);
-    auto length = smbiosTableStorageSize - pos;
+    size_t length = smbiosTableStorageSize - pos;
     uint8_t foundMajorVersion;
     uint8_t foundMinorVersion;
 
