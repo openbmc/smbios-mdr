@@ -34,7 +34,7 @@ namespace phosphor
 namespace smbios
 {
 
-std::string System::uuid(std::string value)
+std::string System::uuid(std::string /* value */)
 {
     uint8_t* dataIn = storage;
     dataIn = getSMBIOSTypePtr(dataIn, systemType);
@@ -120,7 +120,7 @@ static void setProperty(sdbusplus::bus_t& bus, const std::string& objectPath,
     bus.call_noreply(method);
 }
 
-std::string System::version(std::string value)
+std::string System::version(std::string /* value */)
 {
     std::string result = "No BIOS Version";
     uint8_t* dataIn = storage;
@@ -128,7 +128,6 @@ std::string System::version(std::string value)
     if (dataIn != nullptr)
     {
         auto biosInfo = reinterpret_cast<struct BIOSInfo*>(dataIn);
-        uint8_t biosVerByte = biosInfo->biosVersion;
         std::string tempS = positionToString(biosInfo->biosVersion,
                                              biosInfo->length, dataIn);
         if (std::find_if(tempS.begin(), tempS.end(),
