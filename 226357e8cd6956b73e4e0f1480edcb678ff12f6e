@@ -1,0 +1,11 @@
+Code-Review+2: AppaRao Puli <apparao.puli@intel.com>
+Code-Review+1: Jonathan Doman <jonathan.doman@intel.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Jason Bills <jason.m.bills@linux.intel.com>
+Code-Review+1: <raja.sekhar.reddy.gade@linux.intel.com>
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-by: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-at: Wed, 26 Jul 2023 21:21:24 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/65273
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
