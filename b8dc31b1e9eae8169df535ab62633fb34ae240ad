@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5ead62b_07e45c21",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-26T05:04:50Z",
+      "side": 1,
+      "message": "Looks like the CI unit-test.py forces meson projects to use `-Dwerror\u003dtrue` and `-Dwarning_level\u003d3`, which fails the build. So I will fix all the warnings in new commits underneath this one.",
+      "revId": "b8dc31b1e9eae8169df535ab62633fb34ae240ad",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
