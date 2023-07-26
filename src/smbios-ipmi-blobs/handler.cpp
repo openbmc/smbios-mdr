@@ -74,7 +74,7 @@ std::vector<std::string> SmbiosBlobHandler::getBlobIds()
     return std::vector<std::string>(1, blobId);
 }
 
-bool SmbiosBlobHandler::deleteBlob(const std::string& path)
+bool SmbiosBlobHandler::deleteBlob(const std::string& /* path */)
 {
     return false;
 }
@@ -111,8 +111,9 @@ bool SmbiosBlobHandler::open(uint16_t session, uint16_t flags,
     return true;
 }
 
-std::vector<uint8_t> SmbiosBlobHandler::read(uint16_t session, uint32_t offset,
-                                             uint32_t requestedSize)
+std::vector<uint8_t> SmbiosBlobHandler::read(uint16_t /* session */,
+                                             uint32_t /* offset */,
+                                             uint32_t /* requestedSize */)
 {
     /* SMBIOS blob handler does not support read. */
     return std::vector<uint8_t>();
@@ -157,8 +158,8 @@ bool SmbiosBlobHandler::write(uint16_t session, uint32_t offset,
     return true;
 }
 
-bool SmbiosBlobHandler::writeMeta(uint16_t session, uint32_t offset,
-                                  const std::vector<uint8_t>& data)
+bool SmbiosBlobHandler::writeMeta(uint16_t /* session */, uint32_t /* offset */,
+                                  const std::vector<uint8_t>& /* data */)
 {
     return false;
 }

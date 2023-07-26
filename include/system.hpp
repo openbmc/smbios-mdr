@@ -45,11 +45,10 @@ class System :
         sdbusplus::server::object_t<
             sdbusplus::server::xyz::openbmc_project::common::UUID>(
             bus, objPath.c_str()),
-        bus(bus),
         sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
                                         inventory::decorator::Revision>(
             bus, objPath.c_str()),
-        path(objPath), storage(smbiosTableStorage)
+        bus(bus), path(objPath), storage(smbiosTableStorage)
     {
         std::string input = "0";
         uuid(input);

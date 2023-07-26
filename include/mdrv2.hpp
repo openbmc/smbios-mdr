@@ -75,7 +75,7 @@ class MDRV2 :
           boost::asio::io_context& io) :
         sdbusplus::server::object_t<
             sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>(bus, path),
-        bus(bus), timer(io), smbiosInterface(getObjectServer().add_interface(
+        timer(io), bus(bus), smbiosInterface(getObjectServer().add_interface(
                                  smbiosPath, smbiosInterfaceName))
     {
         smbiosDir.agentVersion = smbiosAgentVersion;
@@ -143,9 +143,9 @@ class MDRV2 :
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
 
-    int getTotalCpuSlot(void);
-    int getTotalDimmSlot(void);
-    int getTotalPcieSlot(void);
+    std::optional<size_t> getTotalCpuSlot(void);
+    std::optional<size_t> getTotalDimmSlot(void);
+    std::optional<size_t> getTotalPcieSlot(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::vector<std::unique_ptr<Pcie>> pcies;
