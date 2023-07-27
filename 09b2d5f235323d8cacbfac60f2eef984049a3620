@@ -60,6 +60,46 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5b6ab4ed_6ae76609",
+        "filename": "meson_options.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2023-07-27T19:40:08Z",
+      "side": 1,
+      "message": "nit, these are generally of type \"feature\" rather than boolean.  Not required to be fixed, but consistency is good.",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58bbae42_9c054233",
+        "filename": "meson_options.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000153
+      },
+      "writtenOn": "2023-07-27T19:40:08Z",
+      "side": 1,
+      "message": "Not required, but consider formatting this file similar to:\nhttps://github.com/openbmc/bmcweb/blob/master/meson_options.txt\n\nwith line options in indented blocks, which makes it a lot more readable in review, and doesn\u0027t end up with lines larger than the coding standard (80)",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "84fc8ec9_e9e8b002",
         "filename": "src/smbios-ipmi-blobs/meson.build",
         "patchSetId": 5
