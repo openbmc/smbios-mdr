@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fb0b8b83_e9cea69b",
+        "filename": ".gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "Done. `/subprojects/*/` only ignores the auto-generated directories and not the .wrap files.",
+      "parentUuid": "598405b0_527ab983",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "adb4f33e_304fbdef",
@@ -31,6 +49,30 @@
       "writtenOn": "2023-07-27T18:26:10Z",
       "side": 1,
       "message": "Might as well set this to c++23 since almost all the other repos are on that now, right?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8e63983_d7fb1c6b",
+        "filename": "meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb4f33e_304fbdef",
       "range": {
         "startLine": 5,
         "startChar": 0,
@@ -60,6 +102,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4914cbf1_071ea565",
+        "filename": "meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "By my simple comparison, it saves about 3.5% on binary size (8 KiB for `smbiosmdrv2app`). I will opt to keep RTTI disabled for now.",
+      "parentUuid": "00052a38_38f50d65",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5b6ab4ed_6ae76609",
         "filename": "meson_options.txt",
         "patchSetId": 5
@@ -71,6 +131,30 @@
       "writtenOn": "2023-07-27T19:40:08Z",
       "side": 1,
       "message": "nit, these are generally of type \"feature\" rather than boolean.  Not required to be fixed, but consistency is good.",
+      "range": {
+        "startLine": 1,
+        "startChar": 35,
+        "endLine": 1,
+        "endChar": 42
+      },
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "130eb884_faf9a231",
+        "filename": "meson_options.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b6ab4ed_6ae76609",
       "range": {
         "startLine": 1,
         "startChar": 35,
@@ -98,6 +182,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "24f9e85c_e9466a3a",
+        "filename": "meson_options.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58bbae42_9c054233",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "84fc8ec9_e9e8b002",
@@ -111,6 +213,24 @@
       "writtenOn": "2023-07-27T18:26:10Z",
       "side": 1,
       "message": "I learned something new.  I think all our ipmi meson files could use this instead of shared_library and then eliminate the `b_lundef\u003dfalse`.",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2df59138_ad0424c7",
+        "filename": "src/smbios-ipmi-blobs/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-07-27T23:43:25Z",
+      "side": 1,
+      "message": "One difference is that it generates unversioned .so files, which Yocto (and maybe other tools) don\u0027t expect. But I agree it\u0027s probably the right tool for plugin-style shared libraries.",
+      "parentUuid": "84fc8ec9_e9e8b002",
       "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
