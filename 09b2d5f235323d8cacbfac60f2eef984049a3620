@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "598405b0_527ab983",
+        "filename": ".gitignore",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-27T18:26:10Z",
+      "side": 1,
+      "message": "Usually you want to ignore `build*/`.\nUsually you don\u0027t want to ignore the .wrap files.",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "adb4f33e_304fbdef",
+        "filename": "meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-27T18:26:10Z",
+      "side": 1,
+      "message": "Might as well set this to c++23 since almost all the other repos are on that now, right?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "00052a38_38f50d65",
+        "filename": "meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-27T18:26:10Z",
+      "side": 1,
+      "message": "Does this make a noticeable difference?  My opinion is we should try to reduce the repo-level customization.",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "84fc8ec9_e9e8b002",
+        "filename": "src/smbios-ipmi-blobs/meson.build",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-27T18:26:10Z",
+      "side": 1,
+      "message": "I learned something new.  I think all our ipmi meson files could use this instead of shared_library and then eliminate the `b_lundef\u003dfalse`.",
+      "revId": "09b2d5f235323d8cacbfac60f2eef984049a3620",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
