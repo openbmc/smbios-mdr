@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2ffbd9b8_859657e9",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ecbb08_5597570b",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 208,
+        "endChar": 34
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "09212aa0_726141e8",
         "filename": "src/dimm.cpp",
         "patchSetId": 14
@@ -54,6 +78,30 @@
       "writtenOn": "2023-07-27T03:32:16Z",
       "side": 1,
       "message": "auto or size_t",
+      "range": {
+        "startLine": 209,
+        "startChar": 4,
+        "endLine": 209,
+        "endChar": 11
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "126a8f9d_d83a2961",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09212aa0_726141e8",
       "range": {
         "startLine": 209,
         "startChar": 4,
@@ -89,6 +137,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "057bbeac_37eb1b60",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "881b4d90_5671e4a7",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 36
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "0e87d098_14c87330",
         "filename": "src/dimm.cpp",
         "patchSetId": 14
@@ -100,6 +172,30 @@
       "writtenOn": "2023-07-27T03:32:16Z",
       "side": 1,
       "message": "{}",
+      "range": {
+        "startLine": 211,
+        "startChar": 29,
+        "endLine": 211,
+        "endChar": 33
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d60c6a37_8827f639",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e87d098_14c87330",
       "range": {
         "startLine": 211,
         "startChar": 29,
@@ -135,6 +231,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b77731d3_374a299a",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d00532c4_d29798c9",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 20
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2f1877b0_936e5c89",
         "filename": "src/dimm.cpp",
         "patchSetId": 14
@@ -158,6 +278,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0f3355cb_32530ea4",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Added comments. Thanks",
+      "parentUuid": "2f1877b0_936e5c89",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 227,
+        "endChar": 35
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "3bfc168b_f312202c",
         "filename": "src/dimm.cpp",
         "patchSetId": 14
@@ -169,6 +313,30 @@
       "writtenOn": "2023-07-27T03:32:16Z",
       "side": 1,
       "message": "please re-order the code so it is easier to follow:\nHere is the logic:\n1. find cpuPos, if found do 2 and 3 \n2. find socketString\n3. convert it to socketNum\n4. find dimmPos, if find do 5 and 6\n5. find slotString\n6. convert it to slot",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 243,
+        "endChar": 5
+      },
+      "revId": "382b8bb01504108b5b18f7214e486dac97792122",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c131394_9b9e20f7",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001810
+      },
+      "writtenOn": "2023-07-28T09:30:15Z",
+      "side": 1,
+      "message": "Re-ordered the code as per comments. Thanks",
+      "parentUuid": "3bfc168b_f312202c",
       "range": {
         "startLine": 208,
         "startChar": 4,
