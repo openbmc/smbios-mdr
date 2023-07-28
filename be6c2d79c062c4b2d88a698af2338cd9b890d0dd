@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4af8be8_21c77b8d",
+        "filename": "service_files/meson.build",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-28T14:13:17Z",
+      "side": 1,
+      "message": "nit: `allowed` and not `enabled` (change throughout).",
+      "revId": "be6c2d79c062c4b2d88a698af2338cd9b890d0dd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
