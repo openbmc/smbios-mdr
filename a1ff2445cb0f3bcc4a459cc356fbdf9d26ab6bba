@@ -16,6 +16,23 @@
       "message": "Modified and re-ordered code as per the comments.",
       "revId": "a1ff2445cb0f3bcc4a459cc356fbdf9d26ab6bba",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dcbda24_442d0781",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000269
+      },
+      "writtenOn": "2023-08-01T05:21:57Z",
+      "side": 1,
+      "message": "code lgtm",
+      "revId": "a1ff2445cb0f3bcc4a459cc356fbdf9d26ab6bba",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
