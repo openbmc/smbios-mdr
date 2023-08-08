@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7215668a_4ecdb950",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-08-08T16:33:51Z",
+      "side": 1,
+      "message": "This is quite a big change. Do we understand what makes the command take longer?\nwhy is 2 seconds chosen? What is the actual time taken?",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "5b75a34cfaa3d202149108b6c9c4558c34afab0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98a6b865_03d87de4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-08-08T16:33:51Z",
+      "side": 1,
+      "message": "Please add the command here so other people knows how to test also",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 64
+      },
+      "revId": "5b75a34cfaa3d202149108b6c9c4558c34afab0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
