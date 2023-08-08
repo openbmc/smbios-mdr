@@ -47,7 +47,7 @@ constexpr uint32_t smbiosTableTimestamp = 0x45464748;
 constexpr uint32_t smbiosSMMemoryOffset = 0;
 constexpr uint32_t smbiosSMMemorySize = 1024 * 1024;
 constexpr uint32_t smbiosTableStorageSize = 64 * 1024;
-constexpr uint32_t defaultTimeout = 20000;
+constexpr uint32_t defaultTimeout = 2'000'000; // 2-seconds.
 
 enum class MDR2SMBIOSStatusEnum
 {
