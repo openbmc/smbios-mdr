@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0cbd505d_ae4d6140",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-08-08T11:59:40Z",
+      "side": 1,
+      "message": "Title should be :\nIncrease timeout to 2-sec for syncing SMBIOS data",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "65339d72d4159cb877ee4220707526bbb34f83ef",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b24d19ed_b6f9d144",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-08-08T11:59:40Z",
+      "side": 1,
+      "message": "nit:\nThis can be formatted like:\n\"\nMDRv2 (Send Data Set Done) command, sent from bios to BMC\nis taking more time in some cases.\n\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "65339d72d4159cb877ee4220707526bbb34f83ef",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f095b9ad_1b8dedd3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000418
+      },
+      "writtenOn": "2023-08-08T11:59:40Z",
+      "side": 1,
+      "message": "LGTM.\nnit comments in commit messages.",
+      "revId": "65339d72d4159cb877ee4220707526bbb34f83ef",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
