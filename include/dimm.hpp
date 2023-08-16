@@ -168,7 +168,7 @@ struct MemoryInfo
     uint8_t serialNum;
     uint8_t assetTag;
     uint8_t partNum;
-    size_t attributes;
+    uint8_t attributes;
     uint32_t extendedSize;
     uint16_t confClockSpeed;
     uint16_t minimumVoltage;
