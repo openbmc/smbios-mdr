@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d505bdaf_9804a303",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-08-22T23:43:42Z",
+      "side": 1,
+      "message": "It seems the tree is broken upstream, as `phosphor-ipmi-blobs` causes a compilation failure.",
+      "revId": "baf284cd8aca926be349b43af2c8a7385b0e9f3f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
