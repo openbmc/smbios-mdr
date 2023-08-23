@@ -152,13 +152,23 @@ void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
     socket(cpuInfo->socketDesignation, cpuInfo->length, dataIn); // offset 4h
 
     constexpr uint32_t socketPopulatedMask = 1 << 6;
+    constexpr uint32_t statusMask = 0x07;
     if ((cpuInfo->status & socketPopulatedMask) == 0)
     {
         // Don't attempt to fill in any other details if the CPU is not present.
         present(false);
+        functional(false);
         return;
     }
     present(true);
+    if ((cpuInfo->status & statusMask) == 1)
+    {
+        functional(true);
+    }
+    else
+    {
+        functional(false);
+    }
 
     // this class is for type CPU  //offset 5h
     family(cpuInfo->family, cpuInfo->family2); // offset 6h and 28h
