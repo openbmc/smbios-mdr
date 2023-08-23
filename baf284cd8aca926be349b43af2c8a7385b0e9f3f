@@ -16,6 +16,24 @@
       "message": "It seems the tree is broken upstream, as `phosphor-ipmi-blobs` causes a compilation failure.",
       "revId": "baf284cd8aca926be349b43af2c8a7385b0e9f3f",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f79930d3_3e5aeec0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-08-23T05:34:17Z",
+      "side": 1,
+      "message": "maybe need https://gerrit.openbmc.org/c/openbmc/phosphor-ipmi-blobs/+/66234?",
+      "parentUuid": "d505bdaf_9804a303",
+      "revId": "baf284cd8aca926be349b43af2c8a7385b0e9f3f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
