@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53dbb5f4_8b0a3fc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000900
+      },
+      "writtenOn": "2023-08-25T16:27:18Z",
+      "side": 1,
+      "message": "I can\u0027t comment on the functionality of this change yet, but the CMake build will be getting removed soon so please put your changes into the meson scripts.",
+      "revId": "9efbb2a6cc7f6c329afc2b2d62a999a53a0fa213",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
