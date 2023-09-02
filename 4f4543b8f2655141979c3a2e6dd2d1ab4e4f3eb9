@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "528b87d8_e337c263",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-02T09:20:42Z",
+      "side": 1,
+      "message": "The build failure is unrelated.",
+      "revId": "4f4543b8f2655141979c3a2e6dd2d1ab4e4f3eb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
