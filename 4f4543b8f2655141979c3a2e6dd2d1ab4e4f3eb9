@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "207000d3_73b650dc",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-02T13:09:29Z",
+      "side": 1,
+      "message": "Yeah, I don’t know. It is annoying behavior to me also.",
+      "parentUuid": "7965b9fa_ba2f45a6",
+      "revId": "4f4543b8f2655141979c3a2e6dd2d1ab4e4f3eb9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "528b87d8_e337c263",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
