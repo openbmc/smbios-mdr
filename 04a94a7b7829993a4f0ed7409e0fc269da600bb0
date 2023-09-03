@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12bb8c91_2777c6f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-03T05:58:31Z",
+      "side": 1,
+      "message": "Thanks. There\u0027s an unrelated bizarre build error in the libraries that is causing Jenkins to fail.",
+      "revId": "04a94a7b7829993a4f0ed7409e0fc269da600bb0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
