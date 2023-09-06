@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "54cacf64_a2295396",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-06T20:01:41Z",
+      "side": 1,
+      "message": "What are the possible status values and definitions for these values?",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "d6d58f1a034a79ff19eaa06c56a42643a0582ffb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
