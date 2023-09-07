@@ -16,6 +16,23 @@
       "message": "Annoying behavior isn\u0027t it :(",
       "revId": "0e5b658f5859e62d7a6e97f6afe7a7505d40a004",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff63fff1_3d6b3113",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-07T09:48:39Z",
+      "side": 1,
+      "message": "I found how to retry a build: go to the Jenkins URL from the `Build Failed` comment, and look for `Retrigger` at left. Need to be logged into Jenkins, not just Gerrit. After the retry, however, I am still getting a strange `sdbusplus` error, so the top of tree still appears broken to Jenkins (this trivial `.gitignore` patch can not possibly change the build).",
+      "revId": "0e5b658f5859e62d7a6e97f6afe7a7505d40a004",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
