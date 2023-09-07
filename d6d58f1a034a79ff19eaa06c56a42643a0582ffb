@@ -22,6 +22,30 @@
       },
       "revId": "d6d58f1a034a79ff19eaa06c56a42643a0582ffb",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503f7349_0537b8c4",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000856
+      },
+      "writtenOn": "2023-09-07T09:58:18Z",
+      "side": 1,
+      "message": "It\u0027s a revert from a past [commit](https://github.com/openbmc/smbios-mdr/commit/18a5ab914474eaae356c925d2357d6bcd2453c92#diff-5d0f83ec10072563f207142aeaff30a5562591c9892c139924622224a6f33beeL156)\n\nRefer to [DSP0134_3.7.0.pdf](https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.7.0.pdf)\nTable 21 – Processor Information (Type 4) structure\n\n|  18h   | Status | |\n|  ----  | ---- | --- |\n| | Bit 7 | eserved, must be zero |\n| | Bit 6 | CPU Socket Populated |\n| | | 1 – CPU Socket Populated |\n| | | 0 – CPU Socket Unpopulated |\n| | Bits 5:3 | Reserved, must be zero |\n| | Bits 2:0 | CPU Status |\n| | | 0h – Unknown |\n| | | 1h – CPU Enabled |\n| | | 2h – CPU Disabled by User through BIOS Setup |\n| | | 3h – CPU Disabled By BIOS (POST Error) |\n| | | 4h – CPU is Idle, waiting to be enabled |\n| | | 5-6h – Reserved |\n| | | 7h – Other |\n\n    \nI\u0027m not quite sure how this works,\nbut it seems that if the status is not \"unknown\" then it is set to functional.",
+      "parentUuid": "54cacf64_a2295396",
+      "range": {
+        "startLine": 155,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 41
+      },
+      "revId": "d6d58f1a034a79ff19eaa06c56a42643a0582ffb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
