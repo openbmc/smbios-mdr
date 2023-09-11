@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <ctime>
+#include <filesystem>
 #include <fstream>
 #include <memory>
 #include <string>
@@ -34,7 +35,7 @@ bool syncSmbiosData()
     bool status = false;
     sdbusplus::bus_t bus = sdbusplus::bus_t(ipmid_get_sd_bus_connection());
     sdbusplus::message_t method =
-        bus.new_method_call(mdrV2Service, phosphor::smbios::mdrV2Path,
+        bus.new_method_call(mdrV2Service, phosphor::smbios::defaultObjectPath,
                             mdrV2Interface, "AgentSynchronizeData");
 
     try
@@ -48,7 +49,8 @@ bool syncSmbiosData()
             "Error Sync data with service",
             phosphor::logging::entry("ERROR=%s", e.what()),
             phosphor::logging::entry("SERVICE=%s", mdrV2Service),
-            phosphor::logging::entry("PATH=%s", phosphor::smbios::mdrV2Path));
+            phosphor::logging::entry("PATH=%s",
+                                     phosphor::smbios::defaultObjectPath));
         return false;
     }
 
@@ -191,24 +193,27 @@ bool SmbiosBlobHandler::commit(uint16_t session,
     /* Clear the commit_error bit. */
     blobPtr->state &= ~blobs::StateFlags::commit_error;
 
+    std::string defaultDir =
+        std::filesystem::path(mdrDefaultFile).parent_path();
+
     MDRSMBIOSHeader mdrHdr;
     mdrHdr.dirVer = mdrDirVersion;
     mdrHdr.mdrType = mdrTypeII;
     mdrHdr.timestamp = std::time(nullptr);
     mdrHdr.dataSize = blobPtr->buffer.size();
-    if (access(smbiosPath, F_OK) == -1)
+    if (access(defaultDir.c_str(), F_OK) == -1)
     {
-        int flag = mkdir(smbiosPath, S_IRWXU);
+        int flag = mkdir(defaultDir.c_str(), S_IRWXU);
         if (flag != 0)
         {
             phosphor::logging::log<phosphor::logging::level::ERR>(
-                "create folder failed for writting smbios file");
+                "create folder failed for writing smbios file");
             blobPtr->state |= blobs::StateFlags::commit_error;
             return false;
         }
     }
 
-    std::ofstream smbiosFile(mdrType2File,
+    std::ofstream smbiosFile(mdrDefaultFile,
                              std::ios_base::binary | std::ios_base::trunc);
     if (!smbiosFile.good())
     {

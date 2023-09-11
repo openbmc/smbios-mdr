@@ -35,7 +35,7 @@ std::vector<uint8_t> MDRV2::getDirectoryInformation(uint8_t dirIndex)
 {
     std::vector<uint8_t> responseDir;
 
-    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    std::ifstream smbiosFile(smbiosFilePath, std::ios_base::binary);
     if (!smbiosFile.good())
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -216,7 +216,7 @@ bool MDRV2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
             "Read data from flash error - Invalid data point");
         return false;
     }
-    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    std::ifstream smbiosFile(smbiosFilePath, std::ios_base::binary);
     if (!smbiosFile.good())
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -377,7 +377,7 @@ int MDRV2::findIdIndex(std::vector<uint8_t> dataInfo)
 
 uint8_t MDRV2::directoryEntries(uint8_t value)
 {
-    std::ifstream smbiosFile(mdrType2File, std::ios_base::binary);
+    std::ifstream smbiosFile(smbiosFilePath, std::ios_base::binary);
     if (!smbiosFile.good())
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -394,53 +394,88 @@ uint8_t MDRV2::directoryEntries(uint8_t value)
 
 void MDRV2::systemInfoUpdate()
 {
+    // By default, look for System interface on any system/board/* object
+    std::string mapperAncestorPath = smbiosInventoryPath;
+    std::string matchParentPath = smbiosInventoryPath + "/board/";
+    bool requireExactMatch = false;
+
+    // If customized, look for System on only that custom object
+    if (smbiosInventoryPath != defaultInventoryPath)
+    {
+        std::filesystem::path path(smbiosInventoryPath);
+
+        // Search under parent to find exact match for self
+        mapperAncestorPath = path.parent_path().string();
+        matchParentPath = mapperAncestorPath;
+        requireExactMatch = true;
+    }
+
     std::string motherboardPath;
-    auto method = bus.new_method_call(mapperBusName, mapperPath,
-                                      mapperInterface, "GetSubTreePaths");
-    method.append(systemInterfacePath);
+    auto method = bus->new_method_call(mapperBusName, mapperPath,
+                                       mapperInterface, "GetSubTreePaths");
+    method.append(mapperAncestorPath);
     method.append(0);
     method.append(std::vector<std::string>({systemInterface}));
 
     try
     {
         std::vector<std::string> paths;
-        sdbusplus::message_t reply = bus.call(method);
+        sdbusplus::message_t reply = bus->call(method);
         reply.read(paths);
-        if (paths.size() < 1)
+
+        size_t pathsCount = paths.size();
+        for (size_t i = 0; i < pathsCount; ++i)
+        {
+            if (requireExactMatch && (paths[i] != smbiosInventoryPath))
+            {
+                continue;
+            }
+
+            motherboardPath = std::move(paths[i]);
+            break;
+        }
+
+        if (motherboardPath.empty())
         {
             phosphor::logging::log<phosphor::logging::level::ERR>(
                 "Failed to get system motherboard dbus path. Setting up a "
                 "match rule");
-            // Add match rule if motherboard dbus path is not yet created
-            static std::unique_ptr<sdbusplus::bus::match_t>
+
+            if (!motherboardConfigMatch)
+            {
                 motherboardConfigMatch =
                     std::make_unique<sdbusplus::bus::match_t>(
-                        bus,
+                        *bus,
                         sdbusplus::bus::match::rules::interfacesAdded() +
                             sdbusplus::bus::match::rules::argNpath(
-                                0,
-                                "/xyz/openbmc_project/inventory/system/board/"),
+                                0, matchParentPath),
                         [this](sdbusplus::message_t& msg) {
-                sdbusplus::message::object_path objectName;
-                boost::container::flat_map<
-                    std::string,
+                    sdbusplus::message::object_path objectName;
                     boost::container::flat_map<
-                        std::string, std::variant<std::string, uint64_t>>>
-                    msgData;
-                msg.read(objectName, msgData);
-                if (msgData.contains(systemInterface))
-                {
-                    this->systemInfoUpdate();
-                }
+                        std::string,
+                        boost::container::flat_map<
+                            std::string, std::variant<std::string, uint64_t>>>
+                        msgData;
+                    msg.read(objectName, msgData);
+                    if (msgData.contains(systemInterface))
+                    {
+                        systemInfoUpdate();
+                    }
                         });
+            }
         }
         else
         {
-            motherboardPath = std::move(paths[0]);
+            lg2::info(
+                "Found Inventory anchor object for SMBIOS content {I}: {M}",
+                "I", smbiosInventoryPath, "M", motherboardPath);
         }
     }
     catch (const sdbusplus::exception_t& e)
     {
+        lg2::error(
+            "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
+            "I", smbiosInventoryPath, "E", e.what());
         phosphor::logging::log<phosphor::logging::level::ERR>(
             "Failed to query system motherboard",
             phosphor::logging::entry("ERROR=%s", e.what()));
@@ -462,11 +497,12 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = cpuPath + std::to_string(index);
+        std::string path = smbiosInventoryPath + cpuSuffix +
+                           std::to_string(index);
         if (index + 1 > cpus.size())
         {
             cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
-                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
                 motherboardPath));
         }
         else
@@ -494,11 +530,12 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = dimmPath + std::to_string(index);
+        std::string path = smbiosInventoryPath + dimmSuffix +
+                           std::to_string(index);
         if (index + 1 > dimms.size())
         {
             dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
-                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
                 motherboardPath));
         }
         else
@@ -526,11 +563,12 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = pciePath + std::to_string(index);
+        std::string path = smbiosInventoryPath + pcieSuffix +
+                           std::to_string(index);
         if (index + 1 > pcies.size())
         {
             pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
-                bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
                 motherboardPath));
         }
         else
@@ -541,8 +579,9 @@ void MDRV2::systemInfoUpdate()
     }
 
     system.reset();
-    system = std::make_unique<System>(
-        bus, systemPath, smbiosDir.dir[smbiosDirIndex].dataStorage);
+    system = std::make_unique<System>(bus, smbiosInventoryPath + systemSuffix,
+                                      smbiosDir.dir[smbiosDirIndex].dataStorage,
+                                      smbiosFilePath);
 }
 
 std::optional<size_t> MDRV2::getTotalCpuSlot()
@@ -768,7 +807,7 @@ std::vector<uint32_t> MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex,
 
     timer.expires_after(usec);
     timer.async_wait([this](boost::system::error_code ec) {
-        if (ec || this == nullptr)
+        if (ec)
         {
             phosphor::logging::log<phosphor::logging::level::ERR>(
                 "Timer Error!");
