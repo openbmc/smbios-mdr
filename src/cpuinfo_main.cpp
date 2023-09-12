@@ -596,7 +596,7 @@ static void getCpuConfiguration(
             }
             getCpuConfiguration(io, conn, objServer);
         });
-            });
+    });
 
     conn->async_method_call(
         [&io, conn](

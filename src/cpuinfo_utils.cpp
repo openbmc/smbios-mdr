@@ -181,7 +181,7 @@ static void subscribeToProperty(
             return;
         }
         handler(newValue);
-        });
+            });
 
     using ChangedPropertiesType =
         std::vector<std::pair<std::string, InterfaceVariant>>;

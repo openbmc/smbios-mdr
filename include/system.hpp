@@ -41,14 +41,15 @@ class System :
     System& operator=(System&&) = default;
 
     System(sdbusplus::bus_t& bus, const std::string& objPath,
-           uint8_t* smbiosTableStorage) :
+           uint8_t* smbiosTableStorage, std::string filePath) :
         sdbusplus::server::object_t<
             sdbusplus::server::xyz::openbmc_project::common::UUID>(
             bus, objPath.c_str()),
         sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
                                         inventory::decorator::Revision>(
             bus, objPath.c_str()),
-        bus(bus), path(objPath), storage(smbiosTableStorage)
+        bus(bus), path(objPath), storage(smbiosTableStorage),
+        smbiosFilePath(std::move(filePath))
     {
         std::string input = "0";
         uuid(input);
@@ -108,6 +109,8 @@ class System :
         uint8_t skuNum;
         uint8_t family;
     } __attribute__((packed));
+
+    std::string smbiosFilePath;
 };
 
 } // namespace smbios
