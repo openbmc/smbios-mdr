@@ -16,6 +16,23 @@
       "message": "The Jenkins error is due to the same unrelated error within an upstream library that is also blocking the https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/66452 change.",
       "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48526ed3_36d5e9b1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T06:10:38Z",
+      "side": 1,
+      "message": "The Jenkins error is due to the same unrelated error within an upstream library that is also blocking the https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/66452 change.",
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
