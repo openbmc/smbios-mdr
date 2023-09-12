@@ -58,6 +58,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "196ed3d6_aca91d55",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "I thought about that, but the class is written to prefer `std::string` usage, and I wanted to minimize the amount of refactoring. Also, `std::string` is well-understood and easy to work with.",
+      "parentUuid": "06d6fef6_4204c3a9",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b7903bab_1b9ce0d9",
@@ -71,6 +95,30 @@
       "writtenOn": "2023-09-12T12:14:39Z",
       "side": 1,
       "message": "const std::string\u0026",
+      "range": {
+        "startLine": 93,
+        "startChar": 55,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6af8a55_757e2790",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "I am using `std::move` to move them, and a reference can\u0027t be safely moved.",
+      "parentUuid": "b7903bab_1b9ce0d9",
       "range": {
         "startLine": 93,
         "startChar": 55,
@@ -104,6 +152,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3889903f_794fc5ae",
+        "filename": "include/system.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "As above, I am using `std::move` on that string, so it can\u0027t be a ref.",
+      "parentUuid": "99b19bd8_77a2d679",
+      "range": {
+        "startLine": 44,
+        "startChar": 40,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "31ab1628_2bcd99c1",
@@ -117,6 +189,30 @@
       "writtenOn": "2023-09-12T12:14:39Z",
       "side": 1,
       "message": "std::formt?",
+      "range": {
+        "startLine": 463,
+        "startChar": 27,
+        "endLine": 464,
+        "endChar": 48
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18c07500_11f263c8",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "Using `std::format` was my first choice, but the compiler/linker couldn\u0027t find it, interestingly enough, so I had to fall back to `fmt::fmt` which worked. Also, I did not want to change this code here, because upstream did it a certain way, and I wanted to avoid making changes that would deviate from the way upstream was doing things unless there was a tangible benefit in doing so.",
+      "parentUuid": "31ab1628_2bcd99c1",
       "range": {
         "startLine": 463,
         "startChar": 27,
@@ -150,6 +246,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ec18120_2c75f5c0",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "c1863b88_42d174d1",
+      "range": {
+        "startLine": 496,
+        "startChar": 27,
+        "endLine": 497,
+        "endChar": 48
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3c38e64d_ad9fa98a",
@@ -163,6 +283,30 @@
       "writtenOn": "2023-09-12T12:14:39Z",
       "side": 1,
       "message": "std::format?",
+      "range": {
+        "startLine": 529,
+        "startChar": 27,
+        "endLine": 530,
+        "endChar": 48
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa075921_ea8637e4",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-12T22:30:00Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "3c38e64d_ad9fa98a",
       "range": {
         "startLine": 529,
         "startChar": 27,
