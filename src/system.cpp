@@ -133,7 +133,7 @@ std::string System::version(std::string /* value */)
         if (std::find_if(tempS.begin(), tempS.end(),
                          [](char ch) { return !isprint(ch); }) != tempS.end())
         {
-            std::ofstream smbiosFile(mdrType2File, std::ios_base::trunc);
+            std::ofstream smbiosFile(smbiosFilePath, std::ios_base::trunc);
             if (!smbiosFile.good())
             {
                 phosphor::logging::log<phosphor::logging::level::ERR>(
