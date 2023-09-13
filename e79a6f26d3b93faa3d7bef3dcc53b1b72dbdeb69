@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cae485a1_ea9e0cc7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-13T13:06:13Z",
+      "side": 1,
+      "message": "I also added some weak_ptr through the callbacks, instead of just using \"this\", as a step towards getting this class to be able to destruct and construct again cleanly, without having to restart the process.",
+      "revId": "e79a6f26d3b93faa3d7bef3dcc53b1b72dbdeb69",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
