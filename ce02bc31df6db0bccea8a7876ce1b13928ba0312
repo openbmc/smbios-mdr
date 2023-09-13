@@ -153,6 +153,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d7294759_f7a5391c",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-13T07:44:22Z",
+      "side": 1,
+      "message": "This says it better than I can: https://stackoverflow.com/questions/51705967/advantages-of-pass-by-value-and-stdmove-over-pass-by-reference",
+      "parentUuid": "2eb1f22a_da34b754",
+      "range": {
+        "startLine": 93,
+        "startChar": 55,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "99b19bd8_77a2d679",
@@ -261,6 +285,30 @@
       "side": 1,
       "message": "wouldn\u0027t that just mean that your local env is not up to date?\n\nDo you have gcc13 support when you build?\n\nWe are moving to std::fmt for the repos and slowly dropping the dependencies on the fmt lib, this repo was just not updated yet.",
       "parentUuid": "18c07500_11f263c8",
+      "range": {
+        "startLine": 463,
+        "startChar": 27,
+        "endLine": 464,
+        "endChar": 48
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e3921148_5dcf7577",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-13T07:44:22Z",
+      "side": 1,
+      "message": "That\u0027s good to know. When we have std::format ready here, I can change it to use the new syntax. I also didn\u0027t want to rock the boat by introducing any new requirements, as this is refactoring only.",
+      "parentUuid": "367cd160_ff0ae857",
       "range": {
         "startLine": 463,
         "startChar": 27,
