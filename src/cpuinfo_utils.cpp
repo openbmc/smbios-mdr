@@ -181,7 +181,7 @@ static void subscribeToProperty(
             return;
         }
         handler(newValue);
-        });
+    });
 
     using ChangedPropertiesType =
         std::vector<std::pair<std::string, InterfaceVariant>>;
@@ -224,7 +224,7 @@ static void subscribeToProperty(
 
         DEBUG_PRINT << "PropertiesChanged handled\n";
         commonPropHandler(changedProps);
-        });
+    });
 
     // Set up a match for the InterfacesAdded signal from the service's
     // ObjectManager. This is useful in the case where the object is not added
@@ -257,7 +257,7 @@ static void subscribeToProperty(
             DEBUG_PRINT << "InterfacesAdded handled\n";
             commonPropHandler(changedProps);
         }
-        });
+    });
 
     if (propertiesChangedMatch != nullptr)
     {

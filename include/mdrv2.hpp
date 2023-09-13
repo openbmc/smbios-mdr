@@ -36,32 +36,52 @@
 #include <sdbusplus/timer.hpp>
 #include <xyz/openbmc_project/Smbios/MDR_V2/server.hpp>
 
-sdbusplus::asio::object_server& getObjectServer(void);
+#include <filesystem>
+#include <memory>
 
-using RecordVariant =
-    std::variant<std::string, uint64_t, uint32_t, uint16_t, uint8_t>;
 namespace phosphor
 {
 namespace smbios
 {
 
-static constexpr const char* mdrV2Path = "/xyz/openbmc_project/Smbios/MDR_V2";
-static constexpr const char* smbiosPath = "/xyz/openbmc_project/Smbios";
+std::shared_ptr<sdbusplus::asio::object_server> getObjectServer();
+
+using RecordVariant =
+    std::variant<std::string, uint64_t, uint32_t, uint16_t, uint8_t>;
+
+static constexpr const char* defaultObjectPath =
+    "/xyz/openbmc_project/Smbios/MDR_V2";
 static constexpr const char* smbiosInterfaceName =
     "xyz.openbmc_project.Smbios.GetRecordType";
 static constexpr const char* mapperBusName = "xyz.openbmc_project.ObjectMapper";
 static constexpr const char* mapperPath = "/xyz/openbmc_project/object_mapper";
 static constexpr const char* mapperInterface =
     "xyz.openbmc_project.ObjectMapper";
-static constexpr const char* systemInterfacePath =
+static constexpr const char* defaultInventoryPath =
     "/xyz/openbmc_project/inventory/system";
 static constexpr const char* systemInterface =
     "xyz.openbmc_project.Inventory.Item.System";
 constexpr const int limitEntryLen = 0xff;
 
+// Avoid putting multiple interfaces with same name on same object
+static std::string placeGetRecordType(const std::string& objectPath)
+{
+    if (objectPath != defaultObjectPath)
+    {
+        // Place GetRecordType interface on object itself, not parent
+        return objectPath;
+    }
+
+    std::filesystem::path path(objectPath);
+
+    // As there is only one default, safe to place it on the common parent
+    return path.parent_path().string();
+}
+
 class MDRV2 :
     sdbusplus::server::object_t<
-        sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>
+        sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>,
+    std::enable_shared_from_this<MDRV2>
 {
   public:
     MDRV2() = delete;
@@ -69,14 +89,20 @@ class MDRV2 :
     MDRV2& operator=(const MDRV2&) = delete;
     MDRV2(MDRV2&&) = delete;
     MDRV2& operator=(MDRV2&&) = delete;
-    ~MDRV2() = default;
+    virtual ~MDRV2() = default;
 
-    MDRV2(sdbusplus::bus_t& bus, const char* path,
-          boost::asio::io_context& io) :
+    MDRV2(std::shared_ptr<sdbusplus::asio::connection> bus,
+          std::shared_ptr<boost::asio::io_context> io, std::string filePath,
+          std::string objectPath, std::string inventoryPath) :
         sdbusplus::server::object_t<
-            sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>(bus, path),
-        timer(io), bus(bus), smbiosInterface(getObjectServer().add_interface(
-                                 smbiosPath, smbiosInterfaceName))
+            sdbusplus::server::xyz::openbmc_project::smbios::MDRV2>(
+            *bus, objectPath.c_str()),
+        timer(*io), bus(std::move(bus)),
+        smbiosInterface(getObjectServer()->add_interface(
+            placeGetRecordType(objectPath), smbiosInterfaceName)),
+        smbiosFilePath(std::move(filePath)),
+        smbiosObjectPath(std::move(objectPath)),
+        smbiosInventoryPath(std::move(inventoryPath))
     {
         smbiosDir.agentVersion = smbiosAgentVersion;
         smbiosDir.dirVersion = 1;
@@ -92,8 +118,15 @@ class MDRV2 :
 
         agentSynchronizeData();
 
-        smbiosInterface->register_method("GetRecordType", [this](size_t type) {
-            return getRecordType(type);
+        auto weakThis = weak_from_this();
+        smbiosInterface->register_method("GetRecordType",
+                                         [weakThis](size_t type) {
+            auto lockThis = weakThis.lock();
+            if (lockThis)
+            {
+                return lockThis->getRecordType(type);
+            }
+            return decltype(lockThis->getRecordType(type))();
         });
         smbiosInterface->initialize();
     }
@@ -127,7 +160,7 @@ class MDRV2 :
   private:
     boost::asio::steady_timer timer;
 
-    sdbusplus::bus_t& bus;
+    std::shared_ptr<sdbusplus::asio::connection> bus;
 
     Mdr2DirStruct smbiosDir;
 
@@ -151,6 +184,11 @@ class MDRV2 :
     std::vector<std::unique_ptr<Pcie>> pcies;
     std::unique_ptr<System> system;
     std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
+
+    std::string smbiosFilePath;
+    std::string smbiosObjectPath;
+    std::string smbiosInventoryPath;
+    std::unique_ptr<sdbusplus::bus::match_t> motherboardConfigMatch;
 };
 
 } // namespace smbios
