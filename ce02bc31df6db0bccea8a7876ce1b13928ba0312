@@ -131,6 +131,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2eb1f22a_da34b754",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-09-13T01:45:05Z",
+      "side": 1,
+      "message": "what\u0027s the benefits of copy -\u003e move compared to reference -\u003e copy?",
+      "parentUuid": "a6af8a55_757e2790",
+      "range": {
+        "startLine": 93,
+        "startChar": 55,
+        "endLine": 94,
+        "endChar": 59
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "99b19bd8_77a2d679",
         "filename": "include/system.hpp",
         "patchSetId": 3
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "Using `std::format` was my first choice, but the compiler/linker couldn\u0027t find it, interestingly enough, so I had to fall back to `fmt::fmt` which worked. Also, I did not want to change this code here, because upstream did it a certain way, and I wanted to avoid making changes that would deviate from the way upstream was doing things unless there was a tangible benefit in doing so.",
       "parentUuid": "31ab1628_2bcd99c1",
+      "range": {
+        "startLine": 463,
+        "startChar": 27,
+        "endLine": 464,
+        "endChar": 48
+      },
+      "revId": "ce02bc31df6db0bccea8a7876ce1b13928ba0312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "367cd160_ff0ae857",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000885
+      },
+      "writtenOn": "2023-09-13T01:45:05Z",
+      "side": 1,
+      "message": "wouldn\u0027t that just mean that your local env is not up to date?\n\nDo you have gcc13 support when you build?\n\nWe are moving to std::fmt for the repos and slowly dropping the dependencies on the fmt lib, this repo was just not updated yet.",
+      "parentUuid": "18c07500_11f263c8",
       "range": {
         "startLine": 463,
         "startChar": 27,
