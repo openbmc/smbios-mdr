@@ -261,7 +261,7 @@ struct OsMailboxCommand
     };
 
     uint32_t value;
-    PECIManager::MailboxStatus status;
+    PECIManager::MailboxStatus status = PECIManager::MailboxStatus::NoError;
     /**
      * Construct the command object with required PECI address and up to 4
      * optional 1-byte input data parameters.
