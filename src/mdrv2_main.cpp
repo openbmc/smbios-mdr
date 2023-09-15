@@ -22,26 +22,24 @@
 #include <sdbusplus/asio/connection.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
-boost::asio::io_context io;
-auto connection = std::make_shared<sdbusplus::asio::connection>(io);
-auto objServer = sdbusplus::asio::object_server(connection);
-
-sdbusplus::asio::object_server& getObjectServer(void)
+int main()
 {
-    return objServer;
-}
+    auto io = std::make_shared<boost::asio::io_context>();
+    auto connection = std::make_shared<sdbusplus::asio::connection>(*io);
+    auto objServer =
+        std::make_shared<sdbusplus::asio::object_server>(connection);
 
-int main(void)
-{
-    sdbusplus::bus_t& bus = static_cast<sdbusplus::bus_t&>(*connection);
-    sdbusplus::server::manager_t objManager(bus,
+    sdbusplus::server::manager_t objManager(*connection,
                                             "/xyz/openbmc_project/inventory");
 
-    bus.request_name("xyz.openbmc_project.Smbios.MDR_V2");
+    connection->request_name("xyz.openbmc_project.Smbios.MDR_V2");
 
-    phosphor::smbios::MDRV2 mdrV2(bus, phosphor::smbios::mdrV2Path, io);
+    auto mdrV2 = std::make_shared<phosphor::smbios::MDRV2>(
+        io, connection, objServer, mdrDefaultFile,
+        phosphor::smbios::defaultObjectPath,
+        phosphor::smbios::defaultInventoryPath);
 
-    io.run();
+    io->run();
 
     return 0;
 }

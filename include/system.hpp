@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <sdbusplus/asio/connection.hpp>
 #include <xyz/openbmc_project/Common/UUID/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
 
@@ -40,15 +41,17 @@ class System :
     System(System&&) = default;
     System& operator=(System&&) = default;
 
-    System(sdbusplus::bus_t& bus, const std::string& objPath,
-           uint8_t* smbiosTableStorage) :
+    System(std::shared_ptr<sdbusplus::asio::connection> bus,
+           std::string objPath, uint8_t* smbiosTableStorage,
+           std::string filePath) :
         sdbusplus::server::object_t<
             sdbusplus::server::xyz::openbmc_project::common::UUID>(
-            bus, objPath.c_str()),
+            *bus, objPath.c_str()),
         sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
                                         inventory::decorator::Revision>(
-            bus, objPath.c_str()),
-        bus(bus), path(objPath), storage(smbiosTableStorage)
+            *bus, objPath.c_str()),
+        bus(std::move(bus)), path(std::move(objPath)),
+        storage(smbiosTableStorage), smbiosFilePath(std::move(filePath))
     {
         std::string input = "0";
         uuid(input);
@@ -58,7 +61,8 @@ class System :
     std::string uuid(std::string value) override;
 
     std::string version(std::string value) override;
-    sdbusplus::bus_t& bus;
+
+    std::shared_ptr<sdbusplus::asio::connection> bus;
 
   private:
     /** @brief Path of the group instance */
@@ -108,6 +112,8 @@ class System :
         uint8_t skuNum;
         uint8_t family;
     } __attribute__((packed));
+
+    std::string smbiosFilePath;
 };
 
 } // namespace smbios
