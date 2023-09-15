@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "88f4ae42_fff91059",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-15T15:11:43Z",
+      "side": 1,
+      "message": "Jenkins still blocked on the same library error, unrelated to this change.",
+      "revId": "77b8fd3753740a601e591b044a90bb55ba8bc1aa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
