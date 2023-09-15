@@ -19,9 +19,9 @@
 #include <phosphor-logging/elog-errors.hpp>
 
 #include <array>
+#include <string>
 
-static constexpr const char* mdrType2File = "/var/lib/smbios/smbios2";
-static constexpr const char* smbiosPath = "/var/lib/smbios";
+static constexpr const char* mdrDefaultFile = "/var/lib/smbios/smbios2";
 
 static constexpr uint16_t mdrSMBIOSSize = 32 * 1024;
 
@@ -155,17 +155,13 @@ struct EntryPointStructure30
     uint64_t structTableAddr;
 } __attribute__((packed));
 
-static constexpr const char* cpuPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/cpu";
+static constexpr const char* cpuSuffix = "/chassis/motherboard/cpu";
 
-static constexpr const char* dimmPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/dimm";
+static constexpr const char* dimmSuffix = "/chassis/motherboard/dimm";
 
-static constexpr const char* pciePath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/pcieslot";
+static constexpr const char* pcieSuffix = "/chassis/motherboard/pcieslot";
 
-static constexpr const char* systemPath =
-    "/xyz/openbmc_project/inventory/system/chassis/motherboard/bios";
+static constexpr const char* systemSuffix = "/chassis/motherboard/bios";
 
 constexpr std::array<SMBIOSVersion, 3> supportedSMBIOSVersions{
     SMBIOSVersion{3, 2}, SMBIOSVersion{3, 3}, SMBIOSVersion{3, 5}};
