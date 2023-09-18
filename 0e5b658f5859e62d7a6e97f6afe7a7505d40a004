@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Patrick Williams <patrick@stwcx.xyz>
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Code-Review+1: Jonathan Doman <jonathan.doman@intel.com>
+Submitted-by: Josh Lehan <krellan@google.com>
+Submitted-at: Mon, 18 Sep 2023 20:33:37 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/66452
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
