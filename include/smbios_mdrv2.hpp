@@ -32,10 +32,12 @@ constexpr uint8_t maxDirEntries = 4;
 constexpr uint32_t mdr2SMSize = 0x00100000;
 constexpr uint32_t mdr2SMBaseAddress = 0x9FF00000;
 
+constexpr uint8_t mdrDirVersion = 1;
 constexpr uint8_t mdrTypeII = 2;
 
 constexpr uint8_t mdr2Version = 2;
 constexpr uint8_t smbiosAgentVersion = 1;
+constexpr uint8_t smbiosDirVersion = 1;
 
 constexpr uint32_t pageMask = 0xf000;
 constexpr int smbiosDirIndex = 0;
