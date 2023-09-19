@@ -79,7 +79,7 @@ class MDRV2 :
                                  smbiosPath, smbiosInterfaceName))
     {
         smbiosDir.agentVersion = smbiosAgentVersion;
-        smbiosDir.dirVersion = 1;
+        smbiosDir.dirVersion = smbiosDirVersion;
         smbiosDir.dirEntries = 1;
         directoryEntries(smbiosDir.dirEntries);
         smbiosDir.status = 1;
