@@ -192,6 +192,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
     blobPtr->state &= ~blobs::StateFlags::commit_error;
 
     MDRSMBIOSHeader mdrHdr;
+    mdrHdr.dirVer = mdrDirVersion;
     mdrHdr.mdrType = mdrTypeII;
     mdrHdr.timestamp = std::time(nullptr);
     mdrHdr.dataSize = blobPtr->buffer.size();
