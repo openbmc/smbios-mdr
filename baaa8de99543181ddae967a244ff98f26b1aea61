@@ -1,6 +1,52 @@
 {
   "comments": [
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "ec4ef898_c1838782",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-20T23:50:28Z",
+      "side": 1,
+      "message": "Why multiple MDRV2 is needed? Is this for multi-host use cases? Please explain",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98615459_d8224846",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-20T23:50:28Z",
+      "side": 1,
+      "message": "Can you show example of the objectPath used and dbus interfaces created as a result? This would help other people to use this feature.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "1627354f_223797e4",
@@ -14,6 +60,52 @@
       "writtenOn": "2023-09-16T11:28:52Z",
       "side": 1,
       "message": "Removed spammy logging message left in by accident from earlier testing. Still blocked on Jenkins `unpackArgs` library error.",
+      "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a0be34a_7dae60c4",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-20T23:50:28Z",
+      "side": 1,
+      "message": "can we call this getInterfaceFromObjectPath or something similar that describe the intend here?",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "750d2b2b_5d8f3d1d",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-20T23:50:28Z",
+      "side": 1,
+      "message": "Why this change?",
+      "range": {
+        "startLine": 432,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 27
+      },
       "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
