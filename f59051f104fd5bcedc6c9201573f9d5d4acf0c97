@@ -1,0 +1,9 @@
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Code-Review+1: Jonathan Doman <jonathan.doman@intel.com>
+Code-Review+1: Meghan Saitwal <meghan.saitwal@intel.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Submitted-by: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-at: Wed, 20 Sep 2023 21:43:51 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/66520
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
