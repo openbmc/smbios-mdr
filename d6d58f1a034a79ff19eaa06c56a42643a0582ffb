@@ -46,6 +46,23 @@
       },
       "revId": "d6d58f1a034a79ff19eaa06c56a42643a0582ffb",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4c8f948_998c580b",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-09-21T00:00:31Z",
+      "side": 1,
+      "message": "Looks like functional is always true except \"unknown\" based on above table. That does not seem right.\n\nOld logic is here: \nhttps://github.com/openbmc/smbios-mdr/commit/18a5ab914474eaae356c925d2357d6bcd2453c92#diff-5d0f83ec10072563f207142aeaff30a5562591c9892c139924622224a6f33beeL166",
+      "revId": "d6d58f1a034a79ff19eaa06c56a42643a0582ffb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
