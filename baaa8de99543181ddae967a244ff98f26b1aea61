@@ -183,6 +183,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "76890394_775bb310",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2023-09-29T21:21:31Z",
+      "side": 1,
+      "message": "Thanks, no problem. I have changed back the name.",
+      "parentUuid": "e4fa8074_d973a51f",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "baaa8de99543181ddae967a244ff98f26b1aea61",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "750d2b2b_5d8f3d1d",
