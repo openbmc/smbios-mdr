@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c7396955_28cd3ca9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-10-04T15:57:42Z",
+      "side": 1,
+      "message": "Still waiting for author\u0027s response",
+      "parentUuid": "7215668a_4ecdb950",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "5b75a34cfaa3d202149108b6c9c4558c34afab0d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "98a6b865_03d87de4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
