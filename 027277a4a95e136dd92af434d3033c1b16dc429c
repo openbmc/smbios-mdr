@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "feb3b330_6371e131",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-10-04T15:56:31Z",
+      "side": 1,
+      "message": "Code change looks good to me. Leave it up for couple more days to see if there is any additional comment from other reviewer.",
+      "revId": "027277a4a95e136dd92af434d3033c1b16dc429c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
