@@ -290,7 +290,7 @@ static void
                 "Cannot set CPU property!");
             return;
         }
-        },
+    },
         cpuProcessName, newProp.object.c_str(),
         "org.freedesktop.DBus.Properties", "Set", newProp.interface,
         newProp.name, std::variant<std::string>{newProp.value});
@@ -342,7 +342,7 @@ static void createCpuUpdatedMatch(
                 setDbusProperty(conn, cpu, prop);
             }
         }
-            }));
+    }));
 }
 
 static void
@@ -557,7 +557,7 @@ static void
 
             getProcessorInfo(io, conn, cpu);
         }
-        },
+    },
         service, object, "org.freedesktop.DBus.Properties", "GetAll",
         interface);
 }
@@ -596,7 +596,7 @@ static void getCpuConfiguration(
             }
             getCpuConfiguration(io, conn, objServer);
         });
-            });
+    });
 
     conn->async_method_call(
         [&io, conn](
@@ -631,7 +631,7 @@ static void getCpuConfiguration(
             std::cerr << "getCpuConfiguration callback complete\n";
 
         return;
-        },
+    },
         "xyz.openbmc_project.ObjectMapper",
         "/xyz/openbmc_project/object_mapper",
         "xyz.openbmc_project.ObjectMapper", "GetSubTree",

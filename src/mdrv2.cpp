@@ -461,7 +461,7 @@ void MDRV2::systemInfoUpdate()
                     {
                         systemInfoUpdate();
                     }
-                        });
+                });
             }
         }
         else
