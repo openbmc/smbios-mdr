@@ -16,6 +16,24 @@
       "message": "Nit: Adjust paragraphs to fit in 72 chars.",
       "revId": "9a95030509bded3d0f3e466d1a6d4115009ae5ca",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a75ce8fe_4104b9ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001087
+      },
+      "writtenOn": "2023-11-21T11:53:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba7eacc_7ee47f1a",
+      "revId": "9a95030509bded3d0f3e466d1a6d4115009ae5ca",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
