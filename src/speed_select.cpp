@@ -253,9 +253,9 @@ class CPUConfig : public BaseCurrentOperatingConfig
             std::cerr << __func__ << ": Failed to get SST provider instance\n";
             return sdbusplus::message::object_path();
         }
-        setPropertyCheckOrThrow(*sst);
         try
         {
+            setPropertyCheckOrThrow(*sst);
             sst->setCurrentLevel(newConfig->level);
             currentLevel = newConfig->level;
         }
