@@ -94,6 +94,30 @@
       },
       "revId": "1f2b83e840697ae800b740db402476fb8ed42db8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "65aad75c_b6ccbf74",
+        "filename": "include/pcieslot.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001087
+      },
+      "writtenOn": "2023-12-12T07:49:50Z",
+      "side": 1,
+      "message": "Hi Zhikui,\n\nI updated the CL. Please check and let me know if you have any other question. Thanks!",
+      "parentUuid": "56001067_aa0fbc86",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 155,
+        "endChar": 55
+      },
+      "revId": "1f2b83e840697ae800b740db402476fb8ed42db8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
