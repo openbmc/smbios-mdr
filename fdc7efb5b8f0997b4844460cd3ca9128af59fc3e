@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bd0d862_8c069ae7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-12-19T21:33:04Z",
+      "side": 1,
+      "message": "What is google mapping?",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "22699b0e_060d4f7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-12-19T21:33:04Z",
+      "side": 1,
+      "message": "Please format it according to https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#formatting-commit-messages",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
