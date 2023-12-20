@@ -36,6 +36,41 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bb27488_7461b78a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-12-20T00:44:50Z",
+      "side": 1,
+      "message": "ACK. Minimum test should still be done to make sure working cases is not broken, which you probably have done. Having said that, I can\u0027t think of a reason why this change would break the normal working case. +1 and leave it up for couple more days to see if there are other feedback.",
+      "parentUuid": "dac54955_190f712b",
+      "revId": "117671edb829f9495cbb725a2f38e62389d3fe64",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2bb180c_722875bd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-12-20T00:44:50Z",
+      "side": 1,
+      "message": "Code change looks good even though test can\u0027t be easily tested.",
+      "revId": "117671edb829f9495cbb725a2f38e62389d3fe64",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b5acb23e_c5b50e76",
@@ -73,6 +108,30 @@
       "side": 1,
       "message": "The backend-specific implementation of `SSTInterface::supportsControl()` (called from `setPropertyCheckOrThrow()` may throw a `PECIError`, which needs to be translated into the D-Bus error on line 266. All PECI accesses that may fail need to be wrapped in a try/catch.",
       "parentUuid": "b5acb23e_c5b50e76",
+      "range": {
+        "startLine": 258,
+        "startChar": 12,
+        "endLine": 258,
+        "endChar": 42
+      },
+      "revId": "117671edb829f9495cbb725a2f38e62389d3fe64",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d28227f_8513c701",
+        "filename": "src/speed_select.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2023-12-20T00:44:50Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "efc458a2_7f057af1",
       "range": {
         "startLine": 258,
         "startChar": 12,
