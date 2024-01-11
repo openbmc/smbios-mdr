@@ -139,6 +139,27 @@ class SSTInterface
 };
 
 /**
+ * Policy for whether the SST interface should wake up an idle CPU to complete
+ * requested operations. Waking should be used sparingly to avoid excess CPU
+ * power draw, so the policy depends on the context.
+ */
+enum WakePolicy
+{
+    /**
+     * If CPU rejects the request due to being in a low-power state, enable
+     * wake-on-PECI on the CPU and retry. Wake-on-PECI is disabled for the CPU
+     * when the SST interface is destroyed.
+     */
+    wakeAllowed,
+
+    /**
+     * If CPU rejects the request due to being in a low-power state, it results
+     * in a PECIError exception.
+     */
+    dontWake
+};
+
+/**
  * BackendProvider represents a function which may create an SSTInterface given
  * a CPU PECI address, and the CPU Model information. Usually the CPUModel is
  * sufficient to determine if the backend is supported.
@@ -147,7 +168,7 @@ class SSTInterface
  * arbitrary order until one of them returns a non-null pointer.
  */
 using BackendProvider =
-    std::function<std::unique_ptr<SSTInterface>(uint8_t, CPUModel)>;
+    std::function<std::unique_ptr<SSTInterface>(uint8_t, CPUModel, WakePolicy)>;
 
 /**
  * Backends should use 1 instance of the SSTProviderRegistration macro at file
