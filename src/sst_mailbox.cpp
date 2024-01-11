@@ -38,9 +38,11 @@ struct PECIManager
     bool peciWoken;
     CPUModel cpuModel;
     uint8_t mbBus;
+    WakePolicy wakePolicy;
 
-    PECIManager(uint8_t address, CPUModel model) :
-        peciAddress(address), peciWoken(false), cpuModel(model)
+    PECIManager(uint8_t address, CPUModel model, WakePolicy wakePolicy_) :
+        peciAddress(address), peciWoken(false), cpuModel(model),
+        wakePolicy(wakePolicy_)
     {
         mbBus = (model == icx) ? mbBusICX : mbBusOther;
     }
@@ -120,7 +122,7 @@ struct PECIManager
     void wrMailboxReg(uint16_t regAddress, uint32_t data)
     {
         uint8_t completionCode;
-        bool tryWaking = true;
+        bool tryWaking = (wakePolicy == wakeAllowed);
         while (true)
         {
             EPECIStatus libStatus = peci_WrEndPointPCIConfigLocal(
@@ -152,7 +154,7 @@ struct PECIManager
     {
         uint8_t completionCode;
         uint32_t outputData;
-        bool tryWaking = true;
+        bool tryWaking = (wakePolicy == wakeAllowed);
         while (true)
         {
             EPECIStatus libStatus = peci_RdEndPointConfigPciLocal(
@@ -397,9 +399,9 @@ class SSTMailbox : public SSTInterface
     static constexpr int mhzPerRatio = 100;
 
   public:
-    SSTMailbox(uint8_t _address, CPUModel _model) :
+    SSTMailbox(uint8_t _address, CPUModel _model, WakePolicy wakePolicy) :
         address(_address), model(_model),
-        pm(static_cast<uint8_t>(address), model)
+        pm(static_cast<uint8_t>(address), model, wakePolicy)
     {}
     ~SSTMailbox() {}
 
@@ -568,8 +570,8 @@ class SSTMailbox : public SSTInterface
     }
 };
 
-static std::unique_ptr<SSTInterface> createMailbox(uint8_t address,
-                                                   CPUModel model)
+static std::unique_ptr<SSTInterface>
+    createMailbox(uint8_t address, CPUModel model, WakePolicy wakePolicy)
 {
     DEBUG_PRINT << "createMailbox\n";
     switch (model)
@@ -578,7 +580,7 @@ static std::unique_ptr<SSTInterface> createMailbox(uint8_t address,
         case icxd:
         case spr:
         case emr:
-            return std::make_unique<SSTMailbox>(address, model);
+            return std::make_unique<SSTMailbox>(address, model, wakePolicy);
         default:
             return nullptr;
     }

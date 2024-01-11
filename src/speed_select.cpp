@@ -80,7 +80,8 @@ void registerBackend(BackendProvider providerFn)
     getProviders().push_back(providerFn);
 }
 
-std::unique_ptr<SSTInterface> getInstance(uint8_t address, CPUModel model)
+std::unique_ptr<SSTInterface> getInstance(uint8_t address, CPUModel model,
+                                          WakePolicy wakePolicy)
 {
     DEBUG_PRINT << "Searching for provider for " << address << ", model "
                 << std::hex << model << std::dec << '\n';
@@ -88,7 +89,7 @@ std::unique_ptr<SSTInterface> getInstance(uint8_t address, CPUModel model)
     {
         try
         {
-            auto interface = provider(address, model);
+            auto interface = provider(address, model, wakePolicy);
             DEBUG_PRINT << "returned " << interface << '\n';
             if (interface)
             {
@@ -161,12 +162,13 @@ class CPUConfig : public BaseCurrentOperatingConfig
     }
 
   public:
-    CPUConfig(sdbusplus::bus_t& bus_, uint8_t index, CPUModel model) :
+    CPUConfig(sdbusplus::bus_t& bus_, uint8_t index, CPUModel model,
+              unsigned int currentLevel_, bool bfEnabled_) :
         BaseCurrentOperatingConfig(bus_, generatePath(index).c_str(),
                                    action::defer_emit),
         bus(bus_), peciAddress(index + MIN_CLIENT_ADDR),
-        path(generatePath(index)), cpuModel(model), currentLevel(0),
-        bfEnabled(false)
+        path(generatePath(index)), cpuModel(model), currentLevel(currentLevel_),
+        bfEnabled(bfEnabled_)
     {}
 
     //
@@ -179,7 +181,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         if (hostState != HostState::off)
         {
             // Otherwise, try to read current state
-            auto sst = getInstance(peciAddress, cpuModel);
+            auto sst = getInstance(peciAddress, cpuModel, dontWake);
             if (!sst || !sst->ready())
             {
                 std::cerr << __func__
@@ -206,7 +208,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         DEBUG_PRINT << "Reading BaseSpeedPriorityEnabled\n";
         if (hostState != HostState::off)
         {
-            auto sst = getInstance(peciAddress, cpuModel);
+            auto sst = getInstance(peciAddress, cpuModel, dontWake);
             if (!sst || !sst->ready())
             {
                 std::cerr << __func__
@@ -247,7 +249,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
                 InvalidArgument();
         }
 
-        auto sst = getInstance(peciAddress, cpuModel);
+        auto sst = getInstance(peciAddress, cpuModel, wakeAllowed);
         if (!sst)
         {
             std::cerr << __func__ << ": Failed to get SST provider instance\n";
@@ -422,7 +424,8 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
             continue;
         }
 
-        std::unique_ptr<SSTInterface> sst = getInstance(i, cpuModel);
+        std::unique_ptr<SSTInterface> sst = getInstance(i, cpuModel,
+                                                        wakeAllowed);
 
         if (!sst)
         {
@@ -445,8 +448,10 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
         }
 
         // Create the per-CPU configuration object
+        unsigned int currentLevel = sst->currentLevel();
         cpuList.emplace_back(
-            std::make_unique<CPUConfig>(conn, cpuIndex, cpuModel));
+            std::make_unique<CPUConfig>(conn, cpuIndex, cpuModel, currentLevel,
+                                        sst->bfEnabled(currentLevel)));
         CPUConfig& cpu = *cpuList.back();
 
         bool foundCurrentLevel = false;
@@ -467,13 +472,13 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
 
             getSingleConfig(*sst, level, cpu.newConfig(level));
 
-            if (level == sst->currentLevel())
+            if (level == currentLevel)
             {
                 foundCurrentLevel = true;
             }
         }
 
-        DEBUG_PRINT << "current level is " << sst->currentLevel() << '\n';
+        DEBUG_PRINT << "current level is " << currentLevel << '\n';
 
         if (!foundCurrentLevel)
         {
