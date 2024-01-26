@@ -3,6 +3,10 @@ if get_option('dimm-dbus').allowed()
   cpp_args_smbios += ['-DDIMM_DBUS']
 endif
 
+if get_option('assoc-trim-path').allowed()
+  cpp_args_smbios += ['-DASSOC_TRIM_PATH']
+endif
+
 if get_option('dimm-only-locator').allowed()
   cpp_args_smbios += ['-DDIMM_ONLY_LOCATOR']
 endif
