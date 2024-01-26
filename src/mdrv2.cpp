@@ -415,7 +415,14 @@ void MDRV2::systemInfoUpdate()
                                        mapperInterface, "GetSubTreePaths");
     method.append(mapperAncestorPath);
     method.append(0);
-    method.append(std::vector<std::string>({systemInterface}));
+
+    // If customized, also accept Board as anchor, not just System
+    std::vector<std::string> desiredInterfaces{systemInterface};
+    if (requireExactMatch)
+    {
+        desiredInterfaces.emplace_back(boardInterface);
+    }
+    method.append(desiredInterfaces);
 
     try
     {
@@ -434,42 +441,6 @@ void MDRV2::systemInfoUpdate()
             motherboardPath = std::move(paths[i]);
             break;
         }
-
-        if (motherboardPath.empty())
-        {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Failed to get system motherboard dbus path. Setting up a "
-                "match rule");
-
-            if (!motherboardConfigMatch)
-            {
-                motherboardConfigMatch =
-                    std::make_unique<sdbusplus::bus::match_t>(
-                        *bus,
-                        sdbusplus::bus::match::rules::interfacesAdded() +
-                            sdbusplus::bus::match::rules::argNpath(
-                                0, matchParentPath),
-                        [this](sdbusplus::message_t& msg) {
-                    sdbusplus::message::object_path objectName;
-                    boost::container::flat_map<
-                        std::string,
-                        boost::container::flat_map<
-                            std::string, std::variant<std::string, uint64_t>>>
-                        msgData;
-                    msg.read(objectName, msgData);
-                    if (msgData.contains(systemInterface))
-                    {
-                        systemInfoUpdate();
-                    }
-                });
-            }
-        }
-        else
-        {
-            lg2::info(
-                "Found Inventory anchor object for SMBIOS content {I}: {M}",
-                "I", smbiosInventoryPath, "M", motherboardPath);
-        }
     }
     catch (const sdbusplus::exception_t& e)
     {
@@ -480,6 +451,75 @@ void MDRV2::systemInfoUpdate()
             "Failed to query system motherboard",
             phosphor::logging::entry("ERROR=%s", e.what()));
     }
+
+    if (motherboardPath.empty())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Failed to get system motherboard dbus path. Setting up a "
+            "match rule");
+
+        if (motherboardConfigMatch)
+        {
+            lg2::info("Motherboard match rule already exists");
+        }
+        else
+        {
+            motherboardConfigMatch = std::make_unique<sdbusplus::bus::match_t>(
+                *bus,
+                sdbusplus::bus::match::rules::interfacesAdded() +
+                    sdbusplus::bus::match::rules::argNpath(0, matchParentPath),
+                [this, requireExactMatch](sdbusplus::message_t& msg) {
+                sdbusplus::message::object_path objectName;
+                boost::container::flat_map<
+                    std::string,
+                    boost::container::flat_map<
+                        std::string, std::variant<std::string, uint64_t>>>
+                    msgData;
+                msg.read(objectName, msgData);
+                bool gotMatch = false;
+
+                if (msgData.contains(systemInterface))
+                {
+                    lg2::info("Successful match on system interface");
+                    gotMatch = true;
+                }
+
+                // If customized, also accept Board as anchor, not just System
+                if (requireExactMatch && msgData.contains(boardInterface))
+                {
+                    lg2::info("Successful match on board interface");
+                    gotMatch = true;
+                }
+
+                if (gotMatch)
+                {
+                    // There is a race condition here: our desired interface
+                    // has just been created, triggering the D-Bus callback,
+                    // but Object Mapper has not been told of it yet. The
+                    // mapper must also add it. Stall for time, so it can.
+                    sleep(2);
+                    systemInfoUpdate();
+                }
+            });
+        }
+    }
+    else
+    {
+#ifdef ASSOC_TRIM_PATH
+        // When enabled, chop off last component of motherboardPath, to trim one
+        // layer, so that associations are built to the underlying chassis itself,
+        // not the system boards in the chassis. This is for compatibility with
+        // traditional systems which only have one motherboard per chassis.
+        std::filesystem::path foundPath(motherboardPath);
+        motherboardPath = foundPath.parent_path().string();
+#endif
+
+        lg2::info("Found Inventory anchor object for SMBIOS content {I}: {M}",
+                  "I", smbiosInventoryPath, "M", motherboardPath);
+    }
+
+    lg2::info("Using Inventory anchor object for SMBIOS content {I}: {M}", "I",
+              smbiosInventoryPath, "M", motherboardPath);
 
     std::optional<size_t> num = getTotalCpuSlot();
     if (!num)
