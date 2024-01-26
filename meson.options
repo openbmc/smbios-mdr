@@ -20,6 +20,13 @@ option(
 )
 
 option(
+  'assoc-trim-path',
+  type: 'feature',
+  value: 'disabled',
+  description: 'Trim one object path component from CPU and DIMM associations'
+)
+
+option(
   'cpuinfo',
   type: 'feature',
   value: 'enabled',

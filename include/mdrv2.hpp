@@ -59,6 +59,8 @@ static constexpr const char* defaultInventoryPath =
     "/xyz/openbmc_project/inventory/system";
 static constexpr const char* systemInterface =
     "xyz.openbmc_project.Inventory.Item.System";
+static constexpr const char* boardInterface =
+    "xyz.openbmc_project.Inventory.Item.Board";
 constexpr const int limitEntryLen = 0xff;
 
 // Avoid putting multiple interfaces with same name on same object
