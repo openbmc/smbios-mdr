@@ -128,6 +128,7 @@ class MDRV2 :
         std::copy(smbiosTableId.begin(), smbiosTableId.end(),
                   smbiosDir.dir[smbiosDirIndex].common.id.dataInfo);
 
+        memset(smbiosTableStorage, 0, smbiosTableStorageSize);
         smbiosDir.dir[smbiosDirIndex].dataStorage = smbiosTableStorage;
 
         agentSynchronizeData();
