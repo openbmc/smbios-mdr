@@ -697,7 +697,8 @@ bool MDRV2::checkSMBIOSVersion(uint8_t* dataIn)
 {
     const std::string anchorString21 = "_SM_";
     const std::string anchorString30 = "_SM3_";
-    std::string buffer(dataIn, dataIn + smbiosTableStorageSize);
+    std::string buffer(reinterpret_cast<const char*>(dataIn),
+                       smbiosTableStorageSize);
 
     auto it = std::search(std::begin(buffer), std::end(buffer),
                           std::begin(anchorString21), std::end(anchorString21));

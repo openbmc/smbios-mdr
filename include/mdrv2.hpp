@@ -177,7 +177,7 @@ class MDRV2 :
 
     const std::array<uint8_t, 16> smbiosTableId{
         40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 0x42};
-    uint8_t smbiosTableStorage[smbiosTableStorageSize];
+    uint8_t smbiosTableStorage[smbiosTableStorageSize] = {};
 
     bool smbiosIsUpdating(uint8_t index);
     bool smbiosIsAvailForUpdate(uint8_t index);
