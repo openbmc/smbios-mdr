@@ -6,7 +6,7 @@
 /subprojects/function2.wrap
 /subprojects/googletest.wrap
 /subprojects/ipmiblob.wrap
-/subprojects/nlohmann-json.wrap
+/subprojects/nlohmann_json.wrap
 /subprojects/phosphor-objmgr.wrap
 /subprojects/sdeventplus.wrap
 /subprojects/stdplus.wrap
