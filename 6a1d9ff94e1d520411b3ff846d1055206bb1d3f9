@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "49f3e6db_f50eb0c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-10T23:59:05Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2f83f0d1_17c6a70e",
+      "revId": "6a1d9ff94e1d520411b3ff846d1055206bb1d3f9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "68bab545_3c7387dd",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2024-02-09T21:48:52Z",
       "side": 1,
       "message": "should this be within clause of if (!motherboardPath.isEmpty()) ?, i.e. within else at line 506?",
+      "range": {
+        "startLine": 517,
+        "startChar": 35,
+        "endLine": 517,
+        "endChar": 53
+      },
+      "revId": "6a1d9ff94e1d520411b3ff846d1055206bb1d3f9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c987d23e_2011e288",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-10T23:59:05Z",
+      "side": 1,
+      "message": "I will move it in there, for cleanliness.\n\nIt won\u0027t make a difference in the code, because if `motherboardPath` is an empty string, `parent_path()` of it will also be an empty string.\n\nhttps://godbolt.org/#z:OYLghAFBqd5QCxAYwPYBMCmBRdBLAF1QCcAaPECAM1QDsCBlZAQwBtMQBGAFlJvoCqAZ0wAFAB4gA5AAYppAFZdSrZrVDIApACYAQjt2kR7ZATx1KmWugDCqVgFcAtrRDbSV9ABk8tTADlnACNMYi4ZUgAHVCFCc1o7Rxc3KJi4uh8/QKcQsM4I40xTeIYCZmICROdXd0LiulLygkyA4NDwozKKquTarubfVpz2/IBKI1QHYmQOKR0AZl9kRywAak15myo8diEATyECTCcN7E0ZAEEFpZXMdc3zQ%2BJMZhP5s8uAN1Q8dFWhBCoADuAH1IuUrAQIId0CAQE9fMB/qNzlcAOz6S6rbH/AiwkDbXYHI5OOHgggIVaRaEo%2BaYi443H4wmYfaHY5k5gUqmRe4AESpADpwc96GCuQgILT6YyYXC0A4CPcbBsbOttNpyZTNABWFUanTaZWqoUI9RSjYynFylCTJWqk2G3X6o0AWlOVIhYq16z1To1xs2PMFZuAFrpqNlePldsDaqdfoNAYdQZtnlYltRmjRfNRviVTmYvgg31%2BKMu2at2IBwPFoqh/u00sj1sBoJFkIghoA9Ibm1jW7WO/QuxruzRUH3MwPq22652exPu0FylOIzP/nPhw2x0uV8QQUDCAgQQRiEXWIiQUJVADexr%2BwzB%2B2vTvtM9VGZPpg11XN0PX1Hd9ME/PBv2XZgAC9fxbWcAPrICPy5MDMAgyDD2PU9zx2K8b2YO9f3WDdngIKZaFWGRp3RXNLikcZWGkHV5FcWR5FQaR9X0PR/kmaY7gWTh5AIaQ5FGcYAGsQB1CIGKkbhmJEtjpHkIQQAiYTWPGOBYCQTBxCKRUSHIShymAIRRDUECGDbFjBNINAnEiHZkLoCy/FYazgRYuR7NQRydnaYBOHmdwHKc9hiH8V5ZnkMKAuIAB5RVPKBbz5D0ooLmIMzlI8fTkFKfAWPkfhGBYdguF4UrhDESRWMUZRVHUFADAMFQ8CCVTIHGVBIjMOhVKkFTeJmZQYV8NyrJs6Q7KBc9IhmuiVEYhT6vYqRsHywziFWcQAA4ADZXQO7hVmAZBkFWYLBSNCBOLa1ZcEIEh1XmThRiExSxNISTpOWuTVp89aVLU0gNNE%2BjpG0QGlKGsGvvGb9iFiCxuCAA%3D%3D",
+      "parentUuid": "03bb3295_66a33571",
       "range": {
         "startLine": 517,
         "startChar": 35,
