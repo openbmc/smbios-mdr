@@ -33,6 +33,24 @@
       "message": "Conceptual question. What happens if there is more than one object at the same path? With the old way of allocating numbers in sequence, this was impossible. However, with this new way of allocating numbers based on the detected content, it is conceivable that an untrustworthy or buggy SMBIOS table could create more than one DIMM object with exactly the same number. Would this cause the D-Bus call to error out and thus not create the object?",
       "revId": "d907be4d6e469a08bcc58bcd944328957d49a6c6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f11d7266_4362881e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-13T23:43:29Z",
+      "side": 1,
+      "message": "(didn\u0027t mean to mark this as Resolved)",
+      "parentUuid": "5ea01674_b8c62832",
+      "revId": "d907be4d6e469a08bcc58bcd944328957d49a6c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
