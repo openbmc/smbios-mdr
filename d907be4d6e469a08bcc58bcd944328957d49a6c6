@@ -69,6 +69,24 @@
       "parentUuid": "f11d7266_4362881e",
       "revId": "d907be4d6e469a08bcc58bcd944328957d49a6c6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0bbc206b_68f3cd22",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-13T23:53:31Z",
+      "side": 1,
+      "message": "OK, good. It won\u0027t crash or do other bothersome behavior if a duplicate object is detected, I\u0027m assuming? It\u0027s OK to simply drop the duplicate object and not create it, since as you said, that indicates a bug in the underlying BIOS. I was just concerned about a doubled-up object or weird crash happening.",
+      "parentUuid": "bc5f6a2c_78ffced0",
+      "revId": "d907be4d6e469a08bcc58bcd944328957d49a6c6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
