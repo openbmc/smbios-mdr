@@ -530,8 +530,10 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = smbiosInventoryPath + dimmSuffix +
-                           std::to_string(index);
+        std::string path =
+            getDimmObjectPath(smbiosInventoryPath,
+                              smbiosDir.dir[smbiosDirIndex].dataStorage, index);
+
         if (index + 1 > dimms.size())
         {
             dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
@@ -902,6 +904,48 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
 
     throw std::invalid_argument("Invalid record type");
     return ret;
+}
+
+std::string MDRV2::getDimmObjectPath(const std::string& smbiosInventoryPath,
+                                     uint8_t* smbiosTableStorage, int dimmNum)
+{
+    // If some error happens, then abort out early with default object path
+    std::string dimmObjectPath = smbiosInventoryPath + dimmSuffix +
+                                 std::to_string(dimmNum);
+#ifdef USE_DEVICE_LOCATOR_AS_DIMM_OBJECT_PATH
+    uint8_t* dataIn = smbiosTableStorage;
+
+    dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
+
+    if (dataIn == nullptr)
+    {
+        return dimmObjectPath;
+    }
+    for (uint8_t index = 0; index < dimmNum; index++)
+    {
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            return dimmObjectPath;
+        }
+        dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
+        if (dataIn == nullptr)
+        {
+            return dimmObjectPath;
+        }
+    }
+
+    auto memoryInfo = reinterpret_cast<struct MemoryInfo*>(dataIn);
+    std::string deviceLocator = positionToString(memoryInfo->deviceLocator,
+                                                 memoryInfo->length, dataIn);
+
+    // Adding 4 because "DIMM".size()
+    std::string dimmLocatorIndex =
+        deviceLocator.substr(deviceLocator.find("DIMM") + 4);
+
+    dimmObjectPath = smbiosInventoryPath + dimmSuffix + dimmLocatorIndex;
+#endif
+    return dimmObjectPath;
 }
 
 } // namespace smbios
