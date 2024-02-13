@@ -7,6 +7,10 @@ if get_option('dimm-only-locator').allowed()
   cpp_args_smbios += ['-DDIMM_ONLY_LOCATOR']
 endif
 
+if get_option('use-device-locator-as-dimm-object-path').allowed()
+  cpp_args_smbios += ['-DUSE_DEVICE_LOCATOR_AS_DIMM_OBJECT_PATH']
+endif
+
 executable(
   'smbiosmdrv2app',
   'mdrv2.cpp',
