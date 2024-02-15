@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "55b3610f_2b52076d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-15T22:34:55Z",
+      "side": 1,
+      "message": "This does need to be worded better, I agree. Why change `Unknown` to `OEM`, when the term \"unknown\" most accurately describes the physical size of this slot, since as mentioned in your commit message, there is no slot height in v3.4.0? If there is another technical reason why this needs to change, please say it here.",
+      "parentUuid": "9bd0d862_8c069ae7",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22699b0e_060d4f7c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -37,6 +61,30 @@
       "writtenOn": "2023-12-19T21:33:04Z",
       "side": 1,
       "message": "Please format it according to https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#formatting-commit-messages",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d11c17_6b128c95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-15T22:34:55Z",
+      "side": 1,
+      "message": "This needs word wrap at 72 characters (or so).",
+      "parentUuid": "22699b0e_060d4f7c",
       "range": {
         "startLine": 9,
         "startChar": 0,
