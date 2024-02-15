@@ -157,6 +157,8 @@ struct EntryPointStructure30
     uint64_t structTableAddr;
 } __attribute__((packed));
 
+static constexpr const char* motherboardSuffix = "/chassis/motherboard/";
+
 static constexpr const char* cpuSuffix = "/chassis/motherboard/cpu";
 
 static constexpr const char* dimmSuffix = "/chassis/motherboard/dimm";
