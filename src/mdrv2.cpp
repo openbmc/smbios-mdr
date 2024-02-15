@@ -20,6 +20,7 @@
 
 #include <sys/mman.h>
 
+#include <boost/algorithm/string.hpp>
 #include <phosphor-logging/elog-errors.hpp>
 #include <sdbusplus/exception.hpp>
 #include <xyz/openbmc_project/Smbios/MDR_V2/error.hpp>
@@ -569,6 +570,46 @@ void MDRV2::systemInfoUpdate()
         dimms.resize(*num);
     }
 
+#ifdef USE_DEVICE_LOCATOR_AS_DIMM_OBJECT_PATH
+    // Use sorted map to map deviceLocator to index
+    std::map<std::string, unsigned int> deviceLocatorToIndex;
+
+    for (unsigned int index = 0; index < *num; index++)
+    {
+        std::optional<std::string> deviceLocator = getDeviceLocatorFromIndex(
+            smbiosDir.dir[smbiosDirIndex].dataStorage, index);
+
+        if (!deviceLocator)
+        {
+            continue;
+        }
+
+        deviceLocatorToIndex[boost::algorithm::to_lower_copy(*deviceLocator)] =
+            index;
+    }
+
+    unsigned int dimmsIndex = 0;
+
+    for (const auto& [deviceLocator, index] : deviceLocatorToIndex)
+    {
+        std::string path = smbiosInventoryPath + motherboardSuffix +
+                           deviceLocator;
+
+        if (dimmsIndex + 1 > dimms.size())
+        {
+            dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                motherboardPath));
+        }
+        else
+        {
+            dimms[index]->memoryInfoUpdate(
+                smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
+        }
+
+        ++dimmsIndex;
+    }
+#else
     for (unsigned int index = 0; index < *num; index++)
     {
         std::string path =
@@ -585,6 +626,7 @@ void MDRV2::systemInfoUpdate()
                 smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
         }
     }
+#endif
 
 #endif
 
@@ -943,6 +985,36 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
 
     throw std::invalid_argument("Invalid record type");
     return ret;
+}
+
+std::optional<std::string>
+    MDRV2::getDeviceLocatorFromIndex(uint8_t* smbiosTableStorage, int dimmNum)
+{
+    uint8_t* dataIn = smbiosTableStorage;
+
+    dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
+
+    if (dataIn == nullptr)
+    {
+        return std::nullopt;
+    }
+    for (uint8_t index = 0; index < dimmNum; index++)
+    {
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            return std::nullopt;
+        }
+        dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
+        if (dataIn == nullptr)
+        {
+            return std::nullopt;
+        }
+    }
+
+    auto memoryInfo = reinterpret_cast<struct MemoryInfo*>(dataIn);
+    return positionToString(memoryInfo->deviceLocator, memoryInfo->length,
+                            dataIn);
 }
 
 } // namespace smbios

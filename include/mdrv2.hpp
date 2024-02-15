@@ -165,6 +165,9 @@ class MDRV2 :
     std::vector<boost::container::flat_map<std::string, RecordVariant>>
         getRecordType(size_t type);
 
+    std::optional<std::string>
+        getDeviceLocatorFromIndex(uint8_t* smbiosTableStorage, int dimmNum);
+
   private:
     boost::asio::steady_timer timer;
 
