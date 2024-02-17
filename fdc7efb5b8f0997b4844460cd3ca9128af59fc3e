@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2f81e4a4_1bddf176",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001087
+      },
+      "writtenOn": "2024-02-17T08:18:58Z",
+      "side": 1,
+      "message": "\u003e What is google mapping?\n\nSorry I thought I updated the title but I actually didn\u0027t. Updated now.\n\n\u003e If there is another technical reason why this needs to change, please say it here.\n\nThe main issue is `Unknown` would cause these data to not be propagated to bmcweb.\n\nThe side issue is that there is no way to get the proper slot type based on spec v3.4.0 (full-length, half-length, or low-profile for instace). It\u0027s possible that BIOS is not updating the info for that in the table even if there is an optional entry in the spec.\n\nI understand `Unknown` might be better to decribe the size of the slot but I am thinking `OEM` can be used here as it doesn\u0027t tell the info of the size.",
+      "parentUuid": "55b3610f_2b52076d",
+      "range": {
+        "startLine": 7,
+        "startChar": 16,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "22699b0e_060d4f7c",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "This needs word wrap at 72 characters (or so).",
       "parentUuid": "22699b0e_060d4f7c",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "fdc7efb5b8f0997b4844460cd3ca9128af59fc3e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf2b4105_2d652ee2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001087
+      },
+      "writtenOn": "2024-02-17T08:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d11c17_6b128c95",
       "range": {
         "startLine": 9,
         "startChar": 0,

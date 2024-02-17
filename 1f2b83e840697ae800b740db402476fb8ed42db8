@@ -142,6 +142,30 @@
       },
       "revId": "1f2b83e840697ae800b740db402476fb8ed42db8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92f2df8a_1b545fb6",
+        "filename": "include/pcieslot.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001087
+      },
+      "writtenOn": "2024-02-17T08:18:58Z",
+      "side": 1,
+      "message": "It\u0027s not guaranteed that BIOS would provide those values. There is Slot Length in v3.4.0 (the supported version at the moment) but it\u0027s not required to be set. It can be unknown (02) or other (01) for instance). \n\nAlso, there is no height entry so that we don\u0027t know if it\u0027s low-profile for example.",
+      "parentUuid": "dfd87dda_d492bb23",
+      "range": {
+        "startLine": 143,
+        "startChar": 33,
+        "endLine": 155,
+        "endChar": 55
+      },
+      "revId": "1f2b83e840697ae800b740db402476fb8ed42db8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
