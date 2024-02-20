@@ -16,6 +16,23 @@
       "message": "Nice, this is a good cleanup. Someone in the future should also do this for CPU and PCIe objects.",
       "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ea8751d1_4f96fa9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2024-02-20T01:43:24Z",
+      "side": 1,
+      "message": "Good to see such improvement, but suggest to attach all the modification into this gerrit commit as normal which will be better to review and commit comments.",
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
