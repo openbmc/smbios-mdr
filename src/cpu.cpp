@@ -183,7 +183,8 @@ void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
     {
         std::string familyStr = it->second;
         if ((familyStr.find(" Xeon ") != std::string::npos) ||
-            (familyStr.find(" Intel ") != std::string::npos))
+            (familyStr.find(" Intel ") != std::string::npos) ||
+            (familyStr.find(" Zen ") != std::string::npos))
         {
             // Processor ID field
             // SteppinID:   4;
