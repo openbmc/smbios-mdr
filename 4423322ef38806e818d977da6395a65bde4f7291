@@ -33,6 +33,24 @@
       "message": "Why move it out of the try scope?",
       "revId": "4423322ef38806e818d977da6395a65bde4f7291",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af210839_b5542a48",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-02-21T00:33:00Z",
+      "side": 1,
+      "message": "The `try` makes the D-Bus call, and deals with the situation in which it fails. Setting up the D-Bus match rule is a separate operation. If the match rule also fails, it should be treated as a genuine error, because it essentially should not fail now (I added a test for the match rule already existing, which is mostly why it failed before).",
+      "parentUuid": "2ca940d9_022c3374",
+      "revId": "4423322ef38806e818d977da6395a65bde4f7291",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
