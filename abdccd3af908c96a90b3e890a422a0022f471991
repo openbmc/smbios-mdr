@@ -1,0 +1,9 @@
+Code-Review+2: Kuiying Wang <wangkuiying.wky@alibaba-inc.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Edward Lee <edwarddl@google.com>
+Submitted-by: Josh Lehan <krellan@google.com>
+Submitted-at: Wed, 21 Feb 2024 23:58:03 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/69054
+Comments-Total: 9
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
