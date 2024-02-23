@@ -33,6 +33,138 @@
       "message": "Good to see such improvement, but suggest to attach all the modification into this gerrit commit as normal which will be better to review and commit comments.",
       "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3e7ca337_fcd80885",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "Nice improvement.",
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e3ae8f6_60cffcdf",
+        "filename": "meson.options",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "Please add clarification this only takes affect when dimm-dbus is enabled, which is the default",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b485e557_4df53e3f",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "size_t ?",
+      "range": {
+        "startLine": 536,
+        "startChar": 9,
+        "endLine": 536,
+        "endChar": 21
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44c87163_67c7711c",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "It can be problematic if the deviceLocators are missing for some of the dimms.\nMay need to give up and fallback to use index for all dimms.",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 9
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6f36ce51_6b587a6b",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "Potential invalid access since index is not checked against dimms size",
+      "range": {
+        "startLine": 565,
+        "startChar": 0,
+        "endLine": 566,
+        "endChar": 76
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "749bbde9_91ad65a8",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-02-23T20:40:04Z",
+      "side": 1,
+      "message": "Can we just keep the loop the same and change this to use deviceLocator when the feature is enabled?",
+      "range": {
+        "startLine": 575,
+        "startChar": 27,
+        "endLine": 575,
+        "endChar": 49
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
