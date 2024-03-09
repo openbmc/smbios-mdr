@@ -16,7 +16,6 @@
 
 #include "cpuinfo.hpp"
 #include "cpuinfo_utils.hpp"
-#include "speed_select.hpp"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -39,7 +38,11 @@ extern "C"
 #include <linux/i2c-dev.h>
 }
 
+#if PECI_ENABLED
+#include "speed_select.hpp"
+
 #include <peci.h>
+#endif
 
 #include <phosphor-logging/log.hpp>
 #include <sdbusplus/asio/object_server.hpp>
@@ -189,15 +192,19 @@ static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
  * This handles retrying the PIROM reads until two subsequent reads are
  * successful and return matching data. When we have confidence that the data
  * read is correct, then set the property on D-Bus.
- *
- * @param[in,out]   conn        D-Bus connection.
- * @param[in]       cpuInfo     CPU to read from.
  */
 static void
     tryReadSSpec(const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                 const std::shared_ptr<CPUInfo>& cpuInfo)
+                 size_t cpuIndex)
 {
     static int failedReads = 0;
+
+    auto cpuInfoIt = cpuInfoMap.find(cpuIndex);
+    if (cpuInfoIt == cpuInfoMap.end())
+    {
+        return;
+    }
+    auto cpuInfo = cpuInfoIt->second;
 
     std::optional<std::string> newSSpec =
         readSSpec(cpuInfo->i2cBus, cpuInfo->i2cDevice, sspecRegAddr, sspecSize);
@@ -234,12 +241,12 @@ static void
     auto sspecTimer = std::make_shared<boost::asio::steady_timer>(
         conn->get_io_context(), std::chrono::seconds(retrySeconds));
     sspecTimer->async_wait(
-        [sspecTimer, conn, cpuInfo](boost::system::error_code ec) {
+        [sspecTimer, conn, cpuIndex](boost::system::error_code ec) {
         if (ec)
         {
             return;
         }
-        tryReadSSpec(conn, cpuInfo);
+        tryReadSSpec(conn, cpuIndex);
     });
 }
 
@@ -345,10 +352,10 @@ static void createCpuUpdatedMatch(
     }));
 }
 
-static void
-    getProcessorInfo(boost::asio::io_service& io,
-                     const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                     const size_t& cpu)
+#if PECI_ENABLED
+static void getPPIN(boost::asio::io_service& io,
+                    const std::shared_ptr<sdbusplus::asio::connection>& conn,
+                    const size_t& cpu)
 {
     if (cpuInfoMap.find(cpu) == cpuInfoMap.end() || cpuInfoMap[cpu] == nullptr)
     {
@@ -395,7 +402,7 @@ static void
                 }
                 return;
             }
-            getProcessorInfo(io, conn, cpu);
+            getPPIN(io, conn, cpu);
         });
         return;
     }
@@ -453,13 +460,8 @@ static void
                 std::stringstream stream;
                 stream << std::hex << cpuPPIN;
                 std::string serialNumber(stream.str());
-                cpuInfo->uniqueIdentifier(serialNumber);
-                // Signal that the iface is added now so that ObjectMapper and
-                // others can find it.
-                cpuInfo->emit_added();
+                cpuInfo->publishUUID(*conn, serialNumber);
             }
-
-            tryReadSSpec(conn, cpuInfo);
             break;
         }
         default:
@@ -468,6 +470,7 @@ static void
             break;
     }
 }
+#endif
 
 /**
  * Get cpu and pirom address
@@ -485,11 +488,10 @@ static void
                         std::variant<std::string, uint64_t, uint32_t, uint16_t,
                                      std::vector<std::string>>>& properties) {
         const uint64_t* value = nullptr;
-        uint8_t peciAddress = 0;
+        std::optional<uint8_t> peciAddress;
         uint8_t i2cBus = defaultI2cBus;
-        uint8_t i2cDevice;
-        bool i2cDeviceFound = false;
-        size_t cpu = 0;
+        std::optional<uint8_t> i2cDevice;
+        std::optional<size_t> cpu;
 
         if (ec)
         {
@@ -523,7 +525,6 @@ static void
                 if (value != nullptr)
                 {
                     i2cDevice = static_cast<uint8_t>(*value);
-                    i2cDeviceFound = true;
                 }
             }
             if (property.first == "PiromI2cBus")
@@ -536,27 +537,31 @@ static void
             }
         }
 
-        ///\todo replace this with present + power state
-        if (cpu != 0 && peciAddress != 0)
+        if (!cpu || !peciAddress)
         {
-            if (!i2cDeviceFound)
-            {
-                i2cDevice = defaultI2cSlaveAddr0 + cpu - 1;
-            }
-
-            auto key = cpuInfoMap.find(cpu);
-
-            if (key != cpuInfoMap.end())
-            {
-                cpuInfoMap.erase(key);
-            }
-
-            cpuInfoMap.insert_or_assign(
-                cpu, std::make_shared<CPUInfo>(*conn, cpu, peciAddress, i2cBus,
-                                               i2cDevice));
-
-            getProcessorInfo(io, conn, cpu);
+            return;
         }
+
+        if (!i2cDevice)
+        {
+            i2cDevice = defaultI2cSlaveAddr0 + *cpu - 1;
+        }
+
+        auto key = cpuInfoMap.find(*cpu);
+
+        if (key != cpuInfoMap.end())
+        {
+            cpuInfoMap.erase(key);
+        }
+
+        cpuInfoMap.emplace(*cpu, std::make_shared<CPUInfo>(*cpu, *peciAddress,
+                                                           i2cBus, *i2cDevice));
+
+        tryReadSSpec(conn, *cpu);
+
+#if PECI_ENABLED
+        getPPIN(io, conn, *cpu);
+#endif
     },
         service, object, "org.freedesktop.DBus.Properties", "GetAll",
         interface);
@@ -659,7 +664,9 @@ int main()
 
     cpu_info::hostStateSetup(conn);
 
+#if PECI_ENABLED
     cpu_info::sst::init();
+#endif
 
     // shared_ptr conn is global for the service
     // const reference of conn is passed to async calls

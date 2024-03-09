@@ -34,6 +34,13 @@ option(
 )
 
 option(
+  'cpuinfo-peci',
+  type: 'feature',
+  value: 'enabled',
+  description: 'Enable CPUInfo features that depend on PECI'
+)
+
+option(
   'smbios-ipmi-blob',
   type: 'feature',
   value: 'enabled',
