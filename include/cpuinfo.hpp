@@ -32,27 +32,28 @@ static constexpr const char* cpuPath =
 static constexpr const int configCheckInterval = 10;
 static constexpr const int peciCheckInterval = 60;
 
-/** \ todo add cpu interface to CPUInfo and consolidate with smbios service
- * using processor =
-    sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu;
-*/
-
-using UniqueIdentifierBase =
+using UniqueIdentifier =
     sdbusplus::server::object_t<sdbusplus::server::xyz::openbmc_project::
                                     inventory::decorator::UniqueIdentifier>;
 
-struct CPUInfo : public UniqueIdentifierBase
+struct CPUInfo
 {
-    CPUInfo(sdbusplus::bus_t& bus, const size_t cpuId,
+    CPUInfo(const size_t cpuId,
             const uint8_t peciAddress, const uint8_t i2cBusNum,
             const uint8_t i2cSlaveAddress) :
-        // use defer_emit for UniqueIdentifier iface so that ObjectMapper
-        // doesn't find it until we have a valid PPIN
-        UniqueIdentifierBase(bus, (cpuPath + std::to_string(cpuId - 1)).c_str(),
-                             action::defer_emit),
         id(cpuId), peciAddr(peciAddress), i2cBus(i2cBusNum),
         i2cDevice(i2cSlaveAddress)
     {}
+
+    void publishUUID(sdbusplus::bus_t& bus, const std::string& uuid)
+    {
+        uuidInterface.emplace(bus, (cpuPath + std::to_string(id - 1)).c_str(),
+                              UniqueIdentifier::action::defer_emit);
+        uuidInterface->uniqueIdentifier(uuid);
+        uuidInterface->emit_added();
+    }
+
+    std::optional<UniqueIdentifier> uuidInterface;
 
     uint8_t id;
     uint8_t peciAddr;
