@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "70c81310_a40d87aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001264
+      },
+      "writtenOn": "2024-03-22T05:33:00Z",
+      "side": 1,
+      "message": "Hi Kuiying,\n\nWe want to make x86-power-control and phosphor-state-manager consistent on the busname \u0026 objpath of OS state.\n\nPlease have a look on the discussion from the other commit, thank you.\nhttps://gerrit.openbmc.org/c/openbmc/dbus-sensors/+/69026/comment/fca968b1_681be1fd/",
+      "parentUuid": "0a9fb186_998adab6",
+      "revId": "56d2c560df15b4ed8c2753fb16d60a6600473682",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "ecd5232a_6adc00d3",
