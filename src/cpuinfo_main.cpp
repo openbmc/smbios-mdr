@@ -56,7 +56,7 @@ static constexpr const char* cpuProcessName =
     "xyz.openbmc_project.Smbios.MDR_V2";
 
 // constants for reading SSPEC or QDF string from PIROM
-// Currently, they are the same for platforms with icx
+// Currently, they are the same for platforms with Ice Lake
 static constexpr uint8_t defaultI2cBus = 13;
 static constexpr uint8_t defaultI2cSlaveAddr0 = 0x50;
 static constexpr uint8_t sspecRegAddr = 0xd;
@@ -409,13 +409,13 @@ static void getPPIN(boost::asio::io_service& io,
 
     switch (model)
     {
-        case icx:
-        case icxd:
-        case spr:
-        case emr:
-        case gnr:
-        case gnrd:
-        case srf:
+        case iceLake:
+        case iceLakeD:
+        case sapphireRapids:
+        case emeraldRapids:
+        case graniteRapids:
+        case graniteRapidsD:
+        case sierraForest:
         {
             // PPIN can be read through PCS 19
             static constexpr uint8_t u8Size = 4; // default to a DWORD
