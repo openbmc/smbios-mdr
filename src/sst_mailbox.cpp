@@ -44,7 +44,7 @@ struct PECIManager
         peciAddress(address), peciWoken(false), cpuModel(model),
         wakePolicy(wakePolicy_)
     {
-        mbBus = (model == icx) ? mbBusICX : mbBusOther;
+        mbBus = (model == iceLake) ? mbBusIceLake : mbBusOther;
     }
 
     ~PECIManager()
@@ -96,7 +96,7 @@ struct PECIManager
     }
 
     // PCode OS Mailbox interface register locations
-    static constexpr int mbBusICX = 14;
+    static constexpr int mbBusIceLake = 14;
     static constexpr int mbBusOther = 31;
     static constexpr int mbSegment = 0;
     static constexpr int mbDevice = 30;
@@ -414,8 +414,8 @@ class SSTMailbox : public SSTInterface
     {
         switch (model)
         {
-            case spr:
-            case emr:
+            case sapphireRapids:
+            case emeraldRapids:
                 return true;
             default:
                 return false;
@@ -576,10 +576,10 @@ static std::unique_ptr<SSTInterface>
     DEBUG_PRINT << "createMailbox\n";
     switch (model)
     {
-        case icx:
-        case icxd:
-        case spr:
-        case emr:
+        case iceLake:
+        case iceLakeD:
+        case sapphireRapids:
+        case emeraldRapids:
             return std::make_unique<SSTMailbox>(address, model, wakePolicy);
         default:
             return nullptr;
