@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba657a91_6dc3f7a7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-04-05T21:49:08Z",
+      "side": 1,
+      "message": "Build failed because dependency on \nhttps://gerrit.openbmc.org/c/openbmc/libpeci/+/70443",
+      "revId": "556a3a9d21f360766e116839976e42ba236e05ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
