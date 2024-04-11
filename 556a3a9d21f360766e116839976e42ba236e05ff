@@ -16,6 +16,23 @@
       "message": "Build failed because dependency on \nhttps://gerrit.openbmc.org/c/openbmc/libpeci/+/70443",
       "revId": "556a3a9d21f360766e116839976e42ba236e05ff",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae824e9_73cc20fb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-04-11T21:16:52Z",
+      "side": 1,
+      "message": "Change looks good +2, merge after build passes",
+      "revId": "556a3a9d21f360766e116839976e42ba236e05ff",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
