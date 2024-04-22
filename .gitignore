@@ -10,3 +10,5 @@
 /subprojects/phosphor-objmgr.wrap
 /subprojects/sdeventplus.wrap
 /subprojects/stdplus.wrap
+
+!subprojects/packagefiles
