@@ -40,8 +40,8 @@ struct CPUInfo
 {
     CPUInfo(const size_t cpuId, const uint8_t peciAddress,
             const uint8_t i2cBusNum, const uint8_t i2cSlaveAddress) :
-        id(cpuId),
-        peciAddr(peciAddress), i2cBus(i2cBusNum), i2cDevice(i2cSlaveAddress)
+        id(cpuId), peciAddr(peciAddress), i2cBus(i2cBusNum),
+        i2cDevice(i2cSlaveAddress)
     {}
 
     void publishUUID(sdbusplus::bus_t& bus, const std::string& uuid)

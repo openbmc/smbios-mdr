@@ -48,9 +48,8 @@ bool checkPECIStatus(EPECIStatus libStatus, uint8_t completionCode)
 {
     if (libStatus != PECI_CC_SUCCESS || completionCode != PECI_DEV_CC_SUCCESS)
     {
-        std::cerr << "PECI command failed."
-                  << " Driver Status = " << libStatus << ","
-                  << " Completion Code = " << completionCode << '\n';
+        std::cerr << "PECI command failed." << " Driver Status = " << libStatus
+                  << "," << " Completion Code = " << completionCode << '\n';
         return false;
     }
     return true;
