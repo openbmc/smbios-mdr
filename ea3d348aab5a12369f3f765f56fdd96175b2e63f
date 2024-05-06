@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89a7b8a8_26848dff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-05-06T15:50:54Z",
+      "side": 1,
+      "message": "LGTM. +2 so it is ready to go when CI is updated to 18",
+      "revId": "ea3d348aab5a12369f3f765f56fdd96175b2e63f",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
