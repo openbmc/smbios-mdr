@@ -52,6 +52,23 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3c66e0e3_64841333",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000520
+      },
+      "writtenOn": "2024-05-25T09:44:15Z",
+      "side": 1,
+      "message": "Revoking my earlier +1 as Zhikui Ren has some valid questions",
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6e3ae8f6_60cffcdf",
