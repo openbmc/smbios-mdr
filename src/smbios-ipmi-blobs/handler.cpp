@@ -181,7 +181,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
         return false;
     }
 
-    /* If a blob is committing or commited, return true directly. But if last
+    /* If a blob is committing or committed, return true directly. But if last
      * commit fails, may try to commit again.
      */
     if (blobPtr->state &
