@@ -27,7 +27,7 @@ namespace sst
  * Local accesses to the OS Mailbox require the package to pop up to PC2. Also
  * provides PCode OS Mailbox routine.
  *
- * Since multiple applications may be modifing WOP, we'll use this algorithm:
+ * Since multiple applications may be modifying WOP, we'll use this algorithm:
  * Whenever a PECI command fails with associated error code, set WOP bit and
  * retry command. Upon manager destruction, clear WOP bit only if we previously
  * set it.

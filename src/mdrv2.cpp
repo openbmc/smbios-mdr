@@ -259,7 +259,7 @@ bool MDRV2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
                                      uint8_t remainingEntries,
                                      std::vector<uint8_t> dirEntry)
 {
-    bool teminate = false;
+    bool terminate = false;
     if ((dirIndex >= maxDirEntries) || (returnedEntries < 1))
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -277,17 +277,17 @@ bool MDRV2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
     }
     if (dirVersion == smbiosDir.dirVersion)
     {
-        teminate = true;
+        terminate = true;
     }
     else
     {
         if (remainingEntries > 0)
         {
-            teminate = false;
+            terminate = false;
         }
         else
         {
-            teminate = true;
+            terminate = true;
             smbiosDir.dirVersion = dirVersion;
         }
         uint8_t idIndex = dirIndex;
@@ -306,7 +306,7 @@ bool MDRV2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
             pData += sizeof(DataIdStruct);
         }
     }
-    return teminate;
+    return terminate;
 }
 
 bool MDRV2::sendDataInformation(uint8_t idIndex, uint8_t /* flag */,
@@ -827,7 +827,7 @@ bool MDRV2::agentSynchronizeData()
     }
 
     systemInfoUpdate();
-    smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
+    smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.driver;
     smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
     smbiosDir.dir[smbiosDirIndex].common.size = mdr2SMBIOS.dataSize;
     smbiosDir.dir[smbiosDirIndex].stage = MDR2SMBIOSStatusEnum::mdr2Loaded;
@@ -922,9 +922,9 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
             record["Configured voltage"] =
                 uint16_t(memoryInfo->configuredVoltage);
             record["Memory Technology"] = memoryInfo->memoryTechnology;
-            record["Memory Operating Mode Capabilty"] =
+            record["Memory Operating Mode Capability"] =
                 uint16_t(memoryInfo->memoryOperatingModeCap);
-            record["Firmare Version"] = memoryInfo->firwareVersion;
+            record["Firmware Version"] = memoryInfo->firwareVersion;
             record["Module Manufacturer ID"] =
                 uint16_t(memoryInfo->modelManufId);
             record["Module Product ID"] = uint16_t(memoryInfo->modelProdId);

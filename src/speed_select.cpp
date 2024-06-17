@@ -299,7 +299,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
 
     /**
      * Emit the interface added signals which were deferred. This is required
-     * for ObjectMapper to pick up the objects, if we initially defered the
+     * for ObjectMapper to pick up the objects, if we initially deferred the
      * signal emitting.
      */
     void finalize()

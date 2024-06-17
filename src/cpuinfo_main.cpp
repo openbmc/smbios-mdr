@@ -80,7 +80,7 @@ struct CpuProperty
 
 /**
  * List of properties we want to set on other D-Bus objects. This list is kept
- * around so that if any target objects are removed+readded, then we can set the
+ * around so that if any target objects are removed+re-added, then we can set the
  * values again.
  */
 static std::list<CpuProperty> propertiesToSet;
