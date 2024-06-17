@@ -115,7 +115,7 @@ typedef struct
 
 struct MDRSMBIOSHeader
 {
-    uint8_t dirVer;
+    uint8_t driver;
     uint8_t mdrType;
     uint32_t timestamp;
     uint32_t dataSize;

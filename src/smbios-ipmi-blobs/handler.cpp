@@ -181,7 +181,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
         return false;
     }
 
-    /* If a blob is committing or commited, return true directly. But if last
+    /* If a blob is committing or committed, return true directly. But if last
      * commit fails, may try to commit again.
      */
     if (blobPtr->state &
@@ -197,7 +197,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
         std::filesystem::path(mdrDefaultFile).parent_path();
 
     MDRSMBIOSHeader mdrHdr;
-    mdrHdr.dirVer = mdrDirVersion;
+    mdrHdr.driver = mdrDirVersion;
     mdrHdr.mdrType = mdrTypeII;
     mdrHdr.timestamp = std::time(nullptr);
     mdrHdr.dataSize = blobPtr->buffer.size();
