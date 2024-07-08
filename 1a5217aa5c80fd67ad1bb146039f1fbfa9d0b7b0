@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a71b5c_79006971",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2024-07-08T03:35:49Z",
+      "side": 1,
+      "message": "@Patrick, seems CI does not switch to Clang-format 18, right?",
+      "revId": "1a5217aa5c80fd67ad1bb146039f1fbfa9d0b7b0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
