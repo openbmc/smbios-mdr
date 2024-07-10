@@ -21,6 +21,8 @@
 #include <boost/algorithm/string.hpp>
 #include <phosphor-logging/elog-errors.hpp>
 
+#include <fstream>
+#include <iostream>
 #include <regex>
 
 namespace phosphor
@@ -41,6 +43,10 @@ using EccType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::Ecc;
 
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
+
+static constexpr const char* filename =
+    "/usr/share/smbios-mdr/memoryLocationTable.json";
+
 void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
                             const std::string& motherboard)
 {
@@ -215,21 +221,54 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
     const std::string substrCpu = "CPU";
     auto cpuPos = deviceLocator.find(substrCpu);
 
-    if (cpuPos != std::string::npos)
+    auto data = parseConfigFile();
+
+    if (!data.empty())
     {
-        std::string socketString =
-            deviceLocator.substr(cpuPos + substrCpu.length(), 1);
-        try
+        auto it = data.find(deviceLocator);
+
+        if (it != data.end())
         {
-            uint8_t socketNum =
-                static_cast<uint8_t>(std::stoi(socketString) + 1);
-            socket(socketNum);
+            uint8_t memoryControllerValue =
+                it.value()["MemoryController"].get<uint8_t>();
+            uint8_t socketValue = it.value()["Socket"].get<uint8_t>();
+            uint8_t slotValue = it.value()["Slot"].get<uint8_t>();
+            uint8_t channelValue = it.value()["Channel"].get<uint8_t>();
+
+            socket(memoryControllerValue);
+            memoryController(socketValue);
+            slot(slotValue);
+            channel(channelValue);
         }
-        catch (const sdbusplus::exception_t& ex)
+        else
         {
+            socket(0);
+            memoryController(0);
+            slot(0);
+            channel(0);
             phosphor::logging::log<phosphor::logging::level::ERR>(
-                "std::stoi operation failed ",
-                phosphor::logging::entry("ERROR=%s", ex.what()));
+                "Failed find the corresponding table for dimm ",
+                phosphor::logging::entry("DIMM:%s", deviceLocator.c_str()));
+        }
+    }
+    else
+    {
+        if (cpuPos != std::string::npos)
+        {
+            std::string socketString =
+                deviceLocator.substr(cpuPos + substrCpu.length(), 1);
+            try
+            {
+                uint8_t socketNum =
+                    static_cast<uint8_t>(std::stoi(socketString) + 1);
+                socket(socketNum);
+            }
+            catch (const sdbusplus::exception_t& ex)
+            {
+                phosphor::logging::log<phosphor::logging::level::ERR>(
+                    "std::stoi operation failed ",
+                    phosphor::logging::entry("ERROR=%s", ex.what()));
+            }
         }
     }
 
@@ -398,6 +437,18 @@ uint8_t Dimm::slot(uint8_t value)
         MemoryLocation::slot(value);
 }
 
+uint8_t Dimm::memoryController(uint8_t value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
+        MemoryLocation::memoryController(value);
+}
+
+uint8_t Dimm::channel(uint8_t value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
+        MemoryLocation::channel(value);
+}
+
 uint8_t Dimm::socket(uint8_t value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
@@ -414,6 +465,29 @@ bool Dimm::functional(bool value)
 {
     return sdbusplus::server::xyz::openbmc_project::state::decorator::
         OperationalStatus::functional(value);
+}
+
+Json Dimm::parseConfigFile()
+{
+    std::ifstream memoryLocationFile(filename);
+
+    if (!memoryLocationFile.is_open())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "config JSON file not found, FILENAME ",
+            phosphor::logging::entry("%s", filename));
+        return {};
+    }
+
+    auto data = Json::parse(memoryLocationFile, nullptr, false);
+    if (data.is_discarded())
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "config readings JSON parser failure");
+        return {};
+    }
+
+    return data;
 }
 
 } // namespace smbios
