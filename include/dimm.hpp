@@ -17,6 +17,7 @@
 #pragma once
 #include "smbios_mdrv2.hpp"
 
+#include <nlohmann/json.hpp>
 #include <xyz/openbmc_project/Association/Definitions/server.hpp>
 #include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
@@ -25,6 +26,8 @@
 #include <xyz/openbmc_project/Inventory/Item/Dimm/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/server.hpp>
 #include <xyz/openbmc_project/State/Decorator/OperationalStatus/server.hpp>
+
+
 
 namespace phosphor
 {
@@ -40,6 +43,8 @@ using EccType =
 
 using MemoryTechType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::MemoryTech;
+
+using Json = nlohmann::json;
 
 class Dimm :
     sdbusplus::server::object_t<
@@ -119,9 +124,11 @@ class Dimm :
     MemoryTechType memoryMedia(MemoryTechType value) override;
     uint8_t slot(uint8_t value) override;
     uint8_t socket(uint8_t value) override;
+    uint8_t memoryController(uint8_t value) override;
     uint16_t memoryConfiguredSpeedInMhz(uint16_t value) override;
     bool functional(bool value) override;
     EccType ecc(EccType value) override;
+    Json parseConfigFile();
 
   private:
     uint8_t dimmNum;
@@ -249,6 +256,12 @@ const std::map<uint8_t, MemoryTechType> dimmMemoryTechTypeMap = {
     {0x3, MemoryTechType::DRAM},       {0x4, MemoryTechType::NVDIMM_N},
     {0x5, MemoryTechType::NVDIMM_F},   {0x6, MemoryTechType::NVDIMM_P},
     {0x7, MemoryTechType::IntelOptane}};
+
+struct memoryLocation
+{
+    uint8_t memoryController;
+    uint8_t socket;
+};
 
 } // namespace smbios
 

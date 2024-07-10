@@ -21,6 +21,8 @@
 #include <boost/algorithm/string.hpp>
 #include <phosphor-logging/elog-errors.hpp>
 
+#include <fstream>
+#include <iostream>
 #include <regex>
 
 namespace phosphor
@@ -41,6 +43,9 @@ using EccType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::Ecc;
 
 static constexpr uint16_t maxOldDimmSize = 0x7fff;
+
+const char* filename = "/usr/share/smbios-mdr/memoryLocationTable.json";
+
 void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
                             const std::string& motherboard)
 {
@@ -199,6 +204,48 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
     std::string bankLocator = positionToString(bankLocatorPositionNum,
                                                structLen, dataIn);
 
+
+    std::map<std::string, memoryLocation> memoryLocationTable;
+
+    auto data = parseConfigFile();
+
+    for (auto it = data.begin(); it != data.end(); ++it)
+    {
+        if (it.value().contains("MemoryController") &&
+            it.value().contains("Socket"))
+        {
+            memoryLocation info;
+            info.memoryController =
+                it.value()["MemoryController"].get<uint8_t>();
+            info.socket = it.value()["Socket"].get<uint8_t>();
+            memoryLocationTable[it.key()] = info;
+        }
+    }
+
+    std::map<std::string, memoryLocation>::const_iterator it =
+        memoryLocationTable.find(deviceLocator);
+    if (it == memoryLocationTable.end())
+    {
+        socket(0);
+    }
+    else
+    {
+        socket(it->second.socket);
+    }
+
+    std::map<std::string, memoryLocation>::const_iterator it2 =
+        memoryLocationTable.find(deviceLocator);
+
+
+    if (it2 == memoryLocationTable.end())
+    {
+        memoryController(0);
+    }
+    else
+    {
+        memoryController(it2->second.memoryController);
+    }
+
     std::string result;
     if (bankLocator.empty() || onlyDimmLocationCode)
     {
@@ -212,26 +259,6 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
     memoryDeviceLocator(result);
 
     locationCode(result);
-    const std::string substrCpu = "CPU";
-    auto cpuPos = deviceLocator.find(substrCpu);
-
-    if (cpuPos != std::string::npos)
-    {
-        std::string socketString =
-            deviceLocator.substr(cpuPos + substrCpu.length(), 1);
-        try
-        {
-            uint8_t socketNum =
-                static_cast<uint8_t>(std::stoi(socketString) + 1);
-            socket(socketNum);
-        }
-        catch (const sdbusplus::exception_t& ex)
-        {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "std::stoi operation failed ",
-                phosphor::logging::entry("ERROR=%s", ex.what()));
-        }
-    }
 
     const std::string substrDimm = "DIMM";
     auto dimmPos = deviceLocator.find(substrDimm);
@@ -398,6 +425,12 @@ uint8_t Dimm::slot(uint8_t value)
         MemoryLocation::slot(value);
 }
 
+uint8_t Dimm::memoryController(uint8_t value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
+        MemoryLocation::memoryController(value);
+}
+
 uint8_t Dimm::socket(uint8_t value)
 {
     return sdbusplus::server::xyz::openbmc_project::inventory::item::dimm::
@@ -414,6 +447,26 @@ bool Dimm::functional(bool value)
 {
     return sdbusplus::server::xyz::openbmc_project::state::decorator::
         OperationalStatus::functional(value);
+}
+
+Json Dimm::parseConfigFile()
+{
+    std::ifstream memoryLocationFile(filename);
+
+    if (!memoryLocationFile.is_open())
+    {
+        std::cerr << "config JSON file not found, FILENAME " << filename;
+        return {};
+    }
+
+    auto data = Json::parse(memoryLocationFile, nullptr, false);
+    if (data.is_discarded())
+    {
+        std::cerr << "config readings JSON parser failure";
+        throw std::exception{};
+    }
+
+    return data;
 }
 
 } // namespace smbios
