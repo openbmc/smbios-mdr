@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83c271a0_450218a6",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-07-24T15:47:53Z",
+      "side": 0,
+      "message": "I think we want to preserve this function when MemoryLocation table json does not exist or mal formed.",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 234,
+        "endChar": 5
+      },
+      "revId": "0fe13aba22a36e0b0b6a369c010ff637b43b4d63",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
