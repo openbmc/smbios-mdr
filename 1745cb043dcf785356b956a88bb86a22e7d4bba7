@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c47b257c_3d617f86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-07-30T09:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd60004_7e6ef5f3",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "1745cb043dcf785356b956a88bb86a22e7d4bba7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b52f5800_8cf3618f",
@@ -47,6 +71,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6dd07bf2_eb810ec4",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-07-30T09:16:20Z",
+      "side": 1,
+      "message": "But this name is equal to the dbus interface which is \nsdbusplus::server::xyz::openbmc_project::inventory::item::dimm::\nMemoryLocation. If I capitalize it will get compile error.",
+      "parentUuid": "b52f5800_8cf3618f",
+      "range": {
+        "startLine": 258,
+        "startChar": 7,
+        "endLine": 258,
+        "endChar": 8
+      },
+      "revId": "1745cb043dcf785356b956a88bb86a22e7d4bba7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "66b6e051_d2ae328c",
@@ -60,6 +108,30 @@
       "writtenOn": "2024-07-24T15:47:53Z",
       "side": 1,
       "message": "static constexpr",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 5
+      },
+      "revId": "1745cb043dcf785356b956a88bb86a22e7d4bba7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12b88614_34232d93",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-07-30T09:16:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66b6e051_d2ae328c",
       "range": {
         "startLine": 47,
         "startChar": 0,
