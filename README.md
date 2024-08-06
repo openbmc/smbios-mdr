@@ -1,4 +1,6 @@
-# SMBIOS Parser
+# smbios-mdr
+
+## SMBIOS Parser
 
 The main application in this repo is `smbiosmdrv2app`, capable of parsing a
 binary [SMBIOS][1] table and publishing the system information on D-Bus, to be
@@ -8,7 +10,7 @@ The SMBIOS table is usually sent to the BMC by the host firmware (BIOS). The
 system designer can theoretically choose any transport and mechanism for sending
 the SMBIOS data, but there are at least two implementation today:
 
-## MDRv2
+### MDRv2
 
 The primary API is a set of Intel OEM IPMI commands called Managed Data Region
 version 2 (MDRv2), which provides a means for host firmware to send data through
@@ -21,7 +23,7 @@ needs to send an updated SMBIOS table.
 data to the correct agent (e.g. `smbios-mdr`). The [D-Bus interface][3] between
 the IPMI handler and `smbios-mdr` is largely a mirror of IPMI commands.
 
-## phosphor-ipmi-blobs
+### phosphor-ipmi-blobs
 
 [`phosphor-ipmi-blobs`][4] is an alternative implementation of a generic IPMI
 blob transfer API. Compared to MDRv2, it is simpler and easier to use, but also
@@ -36,7 +38,7 @@ blob handler for the `/smbios` blob. It works by writing the data into
 calling the `AgentSynchronizeData` D-Bus method to trigger `smbios-mdr` to
 reload and parse the table from that file.
 
-# Intel CPU Info
+## Intel CPU Info
 
 `cpuinfoapp` is an Intel-specific application that uses I2C and PECI to gather
 more details about Xeon CPUs that aren't included in the SMBIOS table for some
