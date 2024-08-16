@@ -59,8 +59,8 @@ std::vector<uint8_t> MDRV2::getDirectoryInformation(uint8_t dirIndex)
     }
     else
     {
-        responseDir.push_back(smbiosDir.dirEntries - dirIndex -
-                              returnedEntries);
+        responseDir.push_back(
+            smbiosDir.dirEntries - dirIndex - returnedEntries);
     }
     for (uint8_t index = dirIndex; index < smbiosDir.dirEntries; index++)
     {
@@ -254,10 +254,9 @@ bool MDRV2::readDataFromFlash(MDRSMBIOSHeader* mdrHdr, uint8_t* data)
     return true;
 }
 
-bool MDRV2::sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
-                                     uint8_t returnedEntries,
-                                     uint8_t remainingEntries,
-                                     std::vector<uint8_t> dirEntry)
+bool MDRV2::sendDirectoryInformation(
+    uint8_t dirVersion, uint8_t dirIndex, uint8_t returnedEntries,
+    uint8_t remainingEntries, std::vector<uint8_t> dirEntry)
 {
     bool terminate = false;
     if ((dirIndex >= maxDirEntries) || (returnedEntries < 1))
@@ -469,38 +468,39 @@ void MDRV2::systemInfoUpdate()
                 sdbusplus::bus::match::rules::interfacesAdded() +
                     sdbusplus::bus::match::rules::argNpath(0, matchParentPath),
                 [this, requireExactMatch](sdbusplus::message_t& msg) {
-                sdbusplus::message::object_path objectName;
-                boost::container::flat_map<
-                    std::string,
+                    sdbusplus::message::object_path objectName;
                     boost::container::flat_map<
-                        std::string, std::variant<std::string, uint64_t>>>
-                    msgData;
-                msg.read(objectName, msgData);
-                bool gotMatch = false;
+                        std::string,
+                        boost::container::flat_map<
+                            std::string, std::variant<std::string, uint64_t>>>
+                        msgData;
+                    msg.read(objectName, msgData);
+                    bool gotMatch = false;
 
-                if (msgData.contains(systemInterface))
-                {
-                    lg2::info("Successful match on system interface");
-                    gotMatch = true;
-                }
+                    if (msgData.contains(systemInterface))
+                    {
+                        lg2::info("Successful match on system interface");
+                        gotMatch = true;
+                    }
 
-                // If customized, also accept Board as anchor, not just System
-                if (requireExactMatch && msgData.contains(boardInterface))
-                {
-                    lg2::info("Successful match on board interface");
-                    gotMatch = true;
-                }
+                    // If customized, also accept Board as anchor, not just
+                    // System
+                    if (requireExactMatch && msgData.contains(boardInterface))
+                    {
+                        lg2::info("Successful match on board interface");
+                        gotMatch = true;
+                    }
 
-                if (gotMatch)
-                {
-                    // There is a race condition here: our desired interface
-                    // has just been created, triggering the D-Bus callback,
-                    // but Object Mapper has not been told of it yet. The
-                    // mapper must also add it. Stall for time, so it can.
-                    sleep(2);
-                    systemInfoUpdate();
-                }
-            });
+                    if (gotMatch)
+                    {
+                        // There is a race condition here: our desired interface
+                        // has just been created, triggering the D-Bus callback,
+                        // but Object Mapper has not been told of it yet. The
+                        // mapper must also add it. Stall for time, so it can.
+                        sleep(2);
+                        systemInfoUpdate();
+                    }
+                });
         }
     }
     else
@@ -538,8 +538,8 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = smbiosInventoryPath + cpuSuffix +
-                           std::to_string(index);
+        std::string path =
+            smbiosInventoryPath + cpuSuffix + std::to_string(index);
         if (index + 1 > cpus.size())
         {
             cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
@@ -571,8 +571,8 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = smbiosInventoryPath + dimmSuffix +
-                           std::to_string(index);
+        std::string path =
+            smbiosInventoryPath + dimmSuffix + std::to_string(index);
         if (index + 1 > dimms.size())
         {
             dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
@@ -604,8 +604,8 @@ void MDRV2::systemInfoUpdate()
 
     for (unsigned int index = 0; index < *num; index++)
     {
-        std::string path = smbiosInventoryPath + pcieSuffix +
-                           std::to_string(index);
+        std::string path =
+            smbiosInventoryPath + pcieSuffix + std::to_string(index);
         if (index + 1 > pcies.size())
         {
             pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
@@ -794,12 +794,12 @@ bool MDRV2::checkSMBIOSVersion(uint8_t* dataIn)
     lg2::info("SMBIOS VERSION - {MAJOR}.{MINOR}", "MAJOR", foundMajorVersion,
               "MINOR", foundMinorVersion);
 
-    auto itr = std::find_if(std::begin(supportedSMBIOSVersions),
-                            std::end(supportedSMBIOSVersions),
-                            [&](SMBIOSVersion versionItr) {
-        return versionItr.majorVersion == foundMajorVersion &&
-               versionItr.minorVersion == foundMinorVersion;
-    });
+    auto itr = std::find_if(
+        std::begin(supportedSMBIOSVersions), std::end(supportedSMBIOSVersions),
+        [&](SMBIOSVersion versionItr) {
+            return versionItr.majorVersion == foundMajorVersion &&
+                   versionItr.minorVersion == foundMinorVersion;
+        });
     if (itr == std::end(supportedSMBIOSVersions))
     {
         return false;
@@ -836,8 +836,8 @@ bool MDRV2::agentSynchronizeData()
     return true;
 }
 
-std::vector<uint32_t> MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex,
-                                                            uint32_t size)
+std::vector<uint32_t>
+    MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex, uint32_t size)
 {
     std::chrono::microseconds usec(
         defaultTimeout); // default lock time out is 2s
@@ -875,8 +875,8 @@ std::vector<boost::container::flat_map<std::string, RecordVariant>>
 
         do
         {
-            dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType,
-                                      sizeof(MemoryInfo));
+            dataIn =
+                getSMBIOSTypePtr(dataIn, memoryDeviceType, sizeof(MemoryInfo));
             if (dataIn == nullptr)
             {
                 break;

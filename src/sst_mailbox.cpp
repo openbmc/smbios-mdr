@@ -81,9 +81,9 @@ struct PECIManager
     void setWakeOnPECI(bool enable)
     {
         uint8_t completionCode;
-        EPECIStatus libStatus = peci_WrPkgConfig(peciAddress, 5, enable ? 1 : 0,
-                                                 0, sizeof(uint32_t),
-                                                 &completionCode);
+        EPECIStatus libStatus =
+            peci_WrPkgConfig(peciAddress, 5, enable ? 1 : 0, 0,
+                             sizeof(uint32_t), &completionCode);
         if (!checkPECIStatus(libStatus, completionCode))
         {
             throw PECIError("Failed to set Wake-On-PECI mode bit");
@@ -279,8 +279,8 @@ struct OsMailboxCommand
     {
         DEBUG_PRINT << "Running OS Mailbox command "
                     << static_cast<int>(subcommand) << '\n';
-        PECIManager::MailboxStatus* callStatus = errorPolicy == Throw ? nullptr
-                                                                      : &status;
+        PECIManager::MailboxStatus* callStatus =
+            errorPolicy == Throw ? nullptr : &status;
         uint32_t param = (static_cast<uint32_t>(param4) << 24) |
                          (static_cast<uint32_t>(param3) << 16) |
                          (static_cast<uint32_t>(param2) << 8) | param1;
@@ -530,12 +530,12 @@ class SSTMailbox : public SSTInterface
     std::vector<unsigned int>
         bfHighPriorityCoreList(unsigned int level) override
     {
-        uint64_t coreMaskLo = PbfGetCoreMaskInfo(pm,
-                                                 static_cast<uint8_t>(level), 0)
-                                  .p1HiCoreMask();
-        uint64_t coreMaskHi = PbfGetCoreMaskInfo(pm,
-                                                 static_cast<uint8_t>(level), 1)
-                                  .p1HiCoreMask();
+        uint64_t coreMaskLo =
+            PbfGetCoreMaskInfo(pm, static_cast<uint8_t>(level), 0)
+                .p1HiCoreMask();
+        uint64_t coreMaskHi =
+            PbfGetCoreMaskInfo(pm, static_cast<uint8_t>(level), 1)
+                .p1HiCoreMask();
         std::bitset<64> hiFreqCoreList = (coreMaskHi << 32) | coreMaskLo;
         return convertMaskToList(hiFreqCoreList);
     }

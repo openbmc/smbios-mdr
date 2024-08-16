@@ -424,8 +424,8 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
             continue;
         }
 
-        std::unique_ptr<SSTInterface> sst = getInstance(i, cpuModel,
-                                                        wakeAllowed);
+        std::unique_ptr<SSTInterface> sst =
+            getInstance(i, cpuModel, wakeAllowed);
 
         if (!sst)
         {

@@ -144,10 +144,9 @@ class MDRV2 :
 
     std::vector<uint8_t> getDataInformation(uint8_t idIndex) override;
 
-    bool sendDirectoryInformation(uint8_t dirVersion, uint8_t dirIndex,
-                                  uint8_t returnedEntries,
-                                  uint8_t remainingEntries,
-                                  std::vector<uint8_t> dirEntry) override;
+    bool sendDirectoryInformation(
+        uint8_t dirVersion, uint8_t dirIndex, uint8_t returnedEntries,
+        uint8_t remainingEntries, std::vector<uint8_t> dirEntry) override;
 
     std::vector<uint8_t> getDataOffer() override;
 

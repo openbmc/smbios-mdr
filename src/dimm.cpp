@@ -194,10 +194,10 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
                              const uint8_t deviceLocatorPositionNum,
                              const uint8_t structLen, uint8_t* dataIn)
 {
-    std::string deviceLocator = positionToString(deviceLocatorPositionNum,
-                                                 structLen, dataIn);
-    std::string bankLocator = positionToString(bankLocatorPositionNum,
-                                               structLen, dataIn);
+    std::string deviceLocator =
+        positionToString(deviceLocatorPositionNum, structLen, dataIn);
+    std::string bankLocator =
+        positionToString(bankLocatorPositionNum, structLen, dataIn);
 
     std::string result;
     if (bankLocator.empty() || onlyDimmLocationCode)

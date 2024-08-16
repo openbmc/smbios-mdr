@@ -113,9 +113,8 @@ bool SmbiosBlobHandler::open(uint16_t session, uint16_t flags,
     return true;
 }
 
-std::vector<uint8_t> SmbiosBlobHandler::read(uint16_t /* session */,
-                                             uint32_t /* offset */,
-                                             uint32_t /* requestedSize */)
+std::vector<uint8_t> SmbiosBlobHandler::read(
+    uint16_t /* session */, uint32_t /* offset */, uint32_t /* requestedSize */)
 {
     /* SMBIOS blob handler does not support read. */
     return std::vector<uint8_t>();

@@ -289,22 +289,23 @@ static const std::map<uint16_t, const char*> family2Table = {
 
 // Definition follow smbios spec DSP0134 3.0.0
 static const std::array<std::optional<processor::Capability>, 16>
-    characteristicsTable{std::nullopt,
-                         std::nullopt,
-                         processor::Capability::Capable64bit,
-                         processor::Capability::MultiCore,
-                         processor::Capability::HardwareThread,
-                         processor::Capability::ExecuteProtection,
-                         processor::Capability::EnhancedVirtualization,
-                         processor::Capability::PowerPerformanceControl,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt,
-                         std::nullopt};
+    characteristicsTable{
+        std::nullopt,
+        std::nullopt,
+        processor::Capability::Capable64bit,
+        processor::Capability::MultiCore,
+        processor::Capability::HardwareThread,
+        processor::Capability::ExecuteProtection,
+        processor::Capability::EnhancedVirtualization,
+        processor::Capability::PowerPerformanceControl,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt,
+        std::nullopt};
 
 class Cpu :
     sdbusplus::server::object_t<processor, asset, location, connector, rev,
