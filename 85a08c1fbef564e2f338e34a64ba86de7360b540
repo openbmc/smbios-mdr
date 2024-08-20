@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe3ad1b5_9d2fe8b8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-08-20T02:43:34Z",
+      "side": 1,
+      "message": "CI fail with /include/cpuinfo.hpp which not related this change.",
+      "revId": "85a08c1fbef564e2f338e34a64ba86de7360b540",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
