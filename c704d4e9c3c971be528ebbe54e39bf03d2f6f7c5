@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a134df59_facf6682",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-17T05:09:12Z",
+      "side": 1,
+      "message": "What is this memoryServiceLabel?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a09ab1e6_82fb532a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-17T05:09:12Z",
+      "side": 1,
+      "message": "This needs to be updated.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 64
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f87345cc_b43b7b18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-17T05:09:12Z",
+      "side": 1,
+      "message": "Can you show actual Redfish results with and without the change?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "349380ea_19fb6804",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-17T05:09:12Z",
+      "side": 1,
+      "message": "Only one element in memoryLocationTable is used, i don\u0027t see the need to build the table.  We can just search the keys for \"deviceLocator\"",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 52
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "28fc1097_ec382f77",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-17T05:09:12Z",
+      "side": 1,
+      "message": "Ideally, we would want to have all the properties to be unknown for missing entries in the table. But I am not sure we can do it with uint8_t.\nAt least we should log an error since this is not expected of not finding the entry on table.",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 9
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
