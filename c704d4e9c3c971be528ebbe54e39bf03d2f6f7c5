@@ -48,6 +48,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e7fe247_ee8d564a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-20T16:35:45Z",
+      "side": 1,
+      "message": "Will this be \"DIMM4\" in a real memoryLocationTable.json for your test case:\n\n  \"Location\": {\n    \"PartLocation\": {\n      \"LocationType\": \"Slot\",\n      \"ServiceLabel\": \"DIMM4\"\n    }\n  }",
+      "parentUuid": "7b893a30_3c16b9e6",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a09ab1e6_82fb532a",
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "Sorry, I don\u0027t understand, it also used to save the properties and mapping.",
       "parentUuid": "349380ea_19fb6804",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 52
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3918f0f1_6a497541",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-09-20T16:35:45Z",
+      "side": 1,
+      "message": "I think there is no need to construct the table. can just do:\nfor (auto it \u003d data.begin(); it !\u003d data.end(); ++it)\n        {\n            if (it.key() \u003d\u003d deviceLocator)\n            {\n                socket \u003d it.value()[\"Socket\"].get\u003cuint8_t\u003e();\n                ....\n            }\n        }",
+      "parentUuid": "985c430b_00ba6574",
       "range": {
         "startLine": 246,
         "startChar": 12,
