@@ -120,6 +120,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "495cea98_26d0899d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-10-07T06:31:50Z",
+      "side": 1,
+      "message": "patchset 16 already change to \"\u003cMemoryDeviceLocator\u003e\"",
+      "parentUuid": "cf1e5426_4259ae75",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 24
+      },
+      "revId": "c704d4e9c3c971be528ebbe54e39bf03d2f6f7c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a09ab1e6_82fb532a",
