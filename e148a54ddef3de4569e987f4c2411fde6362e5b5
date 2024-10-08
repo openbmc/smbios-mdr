@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e043b575_236acec3",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-10-08T18:20:38Z",
+      "side": 1,
+      "message": "I believe the get\u003c\u003e here can throw exception. Have you tried to test with an mal formed json table?",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 72
+      },
+      "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
