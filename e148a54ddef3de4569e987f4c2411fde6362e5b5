@@ -46,6 +46,30 @@
       },
       "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d5c7b32_9d3b7616",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-10-18T18:28:46Z",
+      "side": 1,
+      "message": "What I meant is test with a json file that these field does not have number, but a string, for example \"socket\": \"A1\", instead of \"Socket\":48,",
+      "parentUuid": "bc7ff312_5b8bbc56",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 72
+      },
+      "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
