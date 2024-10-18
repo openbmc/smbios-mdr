@@ -22,6 +22,30 @@
       },
       "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc7ff312_5b8bbc56",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-10-18T07:08:22Z",
+      "side": 1,
+      "message": "After I test with an mal formed json table, I got \"config readings JSON parser failure\" in journal.",
+      "parentUuid": "e043b575_236acec3",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 72
+      },
+      "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
