@@ -94,6 +94,30 @@
       },
       "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0de80fda_51907645",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2024-11-04T23:38:10Z",
+      "side": 1,
+      "message": "What was the result? \nWhen \"socket\": \"A1\" in the json, I would expect this line to fail \"uint8_t socketValue \u003d it.value()[\"Socket\"].get\u003cuint8_t\u003e();\" I could be missing something",
+      "parentUuid": "c9ebae44_7be14b65",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 72
+      },
+      "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
