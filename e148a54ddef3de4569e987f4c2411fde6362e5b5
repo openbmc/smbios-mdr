@@ -118,6 +118,30 @@
       },
       "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3bbf0911_d49b694e",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000335
+      },
+      "writtenOn": "2024-11-15T06:03:51Z",
+      "side": 1,
+      "message": "I got \"config readings JSON parser failure\" in journal.",
+      "parentUuid": "0de80fda_51907645",
+      "range": {
+        "startLine": 232,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 72
+      },
+      "revId": "e148a54ddef3de4569e987f4c2411fde6362e5b5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
