@@ -235,8 +235,8 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
             uint8_t slotValue = it.value()["Slot"].get<uint8_t>();
             uint8_t channelValue = it.value()["Channel"].get<uint8_t>();
 
-            socket(memoryControllerValue);
-            memoryController(socketValue);
+            socket(socketValue);
+            memoryController(memoryControllerValue);
             slot(slotValue);
             channel(channelValue);
         }
