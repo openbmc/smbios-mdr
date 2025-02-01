@@ -90,18 +90,18 @@ static std::ostream& logStream(int cpu)
     return std::cerr << "[CPU " << cpu << "] ";
 }
 
-static void
-    setCpuProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                   size_t cpu, const std::string& interface,
-                   const std::string& propName, const std::string& propVal);
-static void
-    setDbusProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                    size_t cpu, const CpuProperty& newProp);
+static void setCpuProperty(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu,
+    const std::string& interface, const std::string& propName,
+    const std::string& propVal);
+static void setDbusProperty(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu,
+    const CpuProperty& newProp);
 static void createCpuUpdatedMatch(
     const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu);
 
-static std::optional<std::string>
-    readSSpec(uint8_t bus, uint8_t slaveAddr, uint8_t regAddr, size_t count)
+static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
+                                            uint8_t regAddr, size_t count)
 {
     unsigned long funcs = 0;
     std::string devPath = "/dev/i2c-" + std::to_string(bus);
@@ -259,10 +259,10 @@ static void tryReadSSpec(
  * @param[in]       propName    Property to set.
  * @param[in]       propVal     Value to set.
  */
-static void
-    setCpuProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                   size_t cpu, const std::string& interface,
-                   const std::string& propName, const std::string& propVal)
+static void setCpuProperty(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu,
+    const std::string& interface, const std::string& propName,
+    const std::string& propVal)
 {
     // cpuId from configuration is one based as
     // dbus object path used by smbios is 0 based
@@ -283,9 +283,9 @@ static void
  * @param[in]       cpu     1-baesd CPU index.
  * @param[in]       newProp Property to set.
  */
-static void
-    setDbusProperty(const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                    size_t cpu, const CpuProperty& newProp)
+static void setDbusProperty(
+    const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu,
+    const CpuProperty& newProp)
 {
     createCpuUpdatedMatch(conn, cpu);
     conn->async_method_call(
@@ -476,11 +476,11 @@ static void getPPIN(boost::asio::io_service& io,
 /**
  * Get cpu and pirom address
  */
-static void
-    getCpuAddress(boost::asio::io_service& io,
-                  const std::shared_ptr<sdbusplus::asio::connection>& conn,
-                  const std::string& service, const std::string& object,
-                  const std::string& interface)
+static void getCpuAddress(
+    boost::asio::io_service& io,
+    const std::shared_ptr<sdbusplus::asio::connection>& conn,
+    const std::string& service, const std::string& object,
+    const std::string& interface)
 {
     conn->async_method_call(
         [&io, conn](boost::system::error_code ec,
