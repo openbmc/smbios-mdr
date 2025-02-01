@@ -157,8 +157,8 @@ class MDRV2 :
 
     bool agentSynchronizeData() override;
 
-    std::vector<uint32_t>
-        synchronizeDirectoryCommonData(uint8_t idIndex, uint32_t size) override;
+    std::vector<uint32_t> synchronizeDirectoryCommonData(
+        uint8_t idIndex, uint32_t size) override;
 
     uint8_t directoryEntries(uint8_t value) override;
 
