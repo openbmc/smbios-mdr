@@ -1,48 +1,43 @@
+option('tests', type: 'feature', value: 'disabled', description: 'Build tests')
+
 option(
-  'tests',
-   type: 'feature',
-   value: 'disabled',
-   description: 'Build tests'
+    'dimm-dbus',
+    type: 'feature',
+    value: 'enabled',
+    description: 'Expose DIMM D-Bus Interface',
 )
 
 option(
-  'dimm-dbus',
-  type: 'feature',
-  value: 'enabled',
-  description: 'Expose DIMM D-Bus Interface'
+    'dimm-only-locator',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Only use the DIMM number, and not the bank',
 )
 
 option(
-  'dimm-only-locator',
-  type: 'feature',
-  value: 'disabled',
-  description: 'Only use the DIMM number, and not the bank'
+    'assoc-trim-path',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Trim one object path component from CPU and DIMM associations',
 )
 
 option(
-  'assoc-trim-path',
-  type: 'feature',
-  value: 'disabled',
-  description: 'Trim one object path component from CPU and DIMM associations'
+    'cpuinfo',
+    type: 'feature',
+    value: 'enabled',
+    description: 'Build CPUInfo service',
 )
 
 option(
-  'cpuinfo',
-  type: 'feature',
-  value: 'enabled',
-  description: 'Build CPUInfo service'
+    'cpuinfo-peci',
+    type: 'feature',
+    value: 'enabled',
+    description: 'Enable CPUInfo features that depend on PECI',
 )
 
 option(
-  'cpuinfo-peci',
-  type: 'feature',
-  value: 'enabled',
-  description: 'Enable CPUInfo features that depend on PECI'
-)
-
-option(
-  'smbios-ipmi-blob',
-  type: 'feature',
-  value: 'enabled',
-  description: 'Build IPMI blob library for SMBIOS transfer'
+    'smbios-ipmi-blob',
+    type: 'feature',
+    value: 'enabled',
+    description: 'Build IPMI blob library for SMBIOS transfer',
 )
