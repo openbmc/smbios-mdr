@@ -123,8 +123,8 @@ class SSTInterface
      * Return the list of logical core indices which have high priority when
      * SST-BF is enabled for a given level.
      */
-    virtual std::vector<unsigned int>
-        bfHighPriorityCoreList(unsigned int level) = 0;
+    virtual std::vector<unsigned int> bfHighPriorityCoreList(
+        unsigned int level) = 0;
     /** Return the high priority base frequency for a given level. */
     virtual unsigned int bfHighPriorityFreq(unsigned int level) = 0;
     /** Return the low priority base frequency for a given level. */
