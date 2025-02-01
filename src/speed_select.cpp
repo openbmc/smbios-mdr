@@ -230,8 +230,8 @@ class CPUConfig : public BaseCurrentOperatingConfig
         return bfEnabled;
     }
 
-    sdbusplus::message::object_path
-        appliedConfig(sdbusplus::message::object_path value) override
+    sdbusplus::message::object_path appliedConfig(
+        sdbusplus::message::object_path value) override
     {
         DEBUG_PRINT << "Writing AppliedConfig\n";
         const OperatingConfig* newConfig = nullptr;

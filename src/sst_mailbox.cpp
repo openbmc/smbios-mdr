@@ -527,8 +527,8 @@ class SSTMailbox : public SSTInterface
     {
         return GetTjmaxInfo(pm, static_cast<uint8_t>(level)).tProchot();
     }
-    std::vector<unsigned int>
-        bfHighPriorityCoreList(unsigned int level) override
+    std::vector<unsigned int> bfHighPriorityCoreList(
+        unsigned int level) override
     {
         uint64_t coreMaskLo =
             PbfGetCoreMaskInfo(pm, static_cast<uint8_t>(level), 0)
@@ -570,8 +570,8 @@ class SSTMailbox : public SSTInterface
     }
 };
 
-static std::unique_ptr<SSTInterface>
-    createMailbox(uint8_t address, CPUModel model, WakePolicy wakePolicy)
+static std::unique_ptr<SSTInterface> createMailbox(
+    uint8_t address, CPUModel model, WakePolicy wakePolicy)
 {
     DEBUG_PRINT << "createMailbox\n";
     switch (model)

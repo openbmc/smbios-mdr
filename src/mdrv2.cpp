@@ -836,8 +836,8 @@ bool MDRV2::agentSynchronizeData()
     return true;
 }
 
-std::vector<uint32_t>
-    MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex, uint32_t size)
+std::vector<uint32_t> MDRV2::synchronizeDirectoryCommonData(uint8_t idIndex,
+                                                            uint32_t size)
 {
     std::chrono::microseconds usec(
         defaultTimeout); // default lock time out is 2s
