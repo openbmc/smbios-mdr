@@ -165,6 +165,9 @@ class MDRV2 :
     std::vector<boost::container::flat_map<std::string, RecordVariant>>
         getRecordType(size_t type);
 
+    std::optional<std::string>
+        getDeviceLocatorFromIndex(uint8_t* smbiosTableStorage, int dimmNum);
+
   private:
     boost::asio::steady_timer timer;
 
@@ -184,6 +187,8 @@ class MDRV2 :
     bool smbiosIsAvailForUpdate(uint8_t index);
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
+
+    void upsertDimms(size_t dimm_count);
 
     std::optional<size_t> getTotalCpuSlot(void);
     std::optional<size_t> getTotalDimmSlot(void);
