@@ -46,3 +46,15 @@ option(
   value: 'enabled',
   description: 'Build IPMI blob library for SMBIOS transfer'
 )
+
+option(
+    'use-device-locator-as-dimm-object-path',
+    type: 'feature',
+    value: 'disabled',
+    description: '''SMBIOS creates DIMM Dbus objects as filepath dimmX.
+                  If this feature is enabled, then the deviceLocator
+                  index will be the X. If the feature is disabled,
+                  the order of dimm in SMBIOS table will be the X.
+                  This only takes effect when dimm-dubs is enabled,
+                  which is the default.''',
+)
