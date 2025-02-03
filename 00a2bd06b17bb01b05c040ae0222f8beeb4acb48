@@ -127,6 +127,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3b3cf8e7_10e4f41c",
+        "filename": "meson.options",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e3ae8f6_60cffcdf",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b485e557_4df53e3f",
@@ -150,6 +174,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67769cfd_e1f446d1",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b485e557_4df53e3f",
+      "range": {
+        "startLine": 536,
+        "startChar": 9,
+        "endLine": 536,
+        "endChar": 21
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "44c87163_67c7711c",
@@ -163,6 +211,30 @@
       "writtenOn": "2024-02-23T20:40:04Z",
       "side": 1,
       "message": "It can be problematic if the deviceLocators are missing for some of the dimms.\nMay need to give up and fallback to use index for all dimms.",
+      "range": {
+        "startLine": 541,
+        "startChar": 0,
+        "endLine": 544,
+        "endChar": 9
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb9cb945_36fd4ec9",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c87163_67c7711c",
       "range": {
         "startLine": 541,
         "startChar": 0,
@@ -198,6 +270,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ad290b64_72892f6d",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "This pattern is already used in the current code.\n\nline 511:\n```\n            cpus[index]-\u003einfoUpdate(smbiosDir.dir[smbiosDirIndex].dataStorage,\n                                    motherboardPath);\n```\n\nIf it were to fail here, it would have already failed.",
+      "parentUuid": "6f36ce51_6b587a6b",
+      "range": {
+        "startLine": 565,
+        "startChar": 0,
+        "endLine": 566,
+        "endChar": 76
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "749bbde9_91ad65a8",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 6
@@ -221,6 +317,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "82268bca_0cd27eaf",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "We are iterating over different things, so I dont believe so. \n\nWe have to emplace_back in a specific order via the ordered map.",
+      "parentUuid": "749bbde9_91ad65a8",
+      "range": {
+        "startLine": 575,
+        "startChar": 27,
+        "endLine": 575,
+        "endChar": 49
+      },
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "653c3e03_81f58773",
         "filename": "src/mdrv2.cpp",
         "patchSetId": 6
@@ -232,6 +352,24 @@
       "writtenOn": "2024-05-26T05:11:00Z",
       "side": 1,
       "message": "null check for smbiosTableStorage ?",
+      "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29d43b9a_6f133811",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-03T21:33:59Z",
+      "side": 1,
+      "message": "This is already done in getSMBIOSTypePtr()",
+      "parentUuid": "653c3e03_81f58773",
       "revId": "00a2bd06b17bb01b05c040ae0222f8beeb4acb48",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
