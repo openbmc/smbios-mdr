@@ -29,6 +29,13 @@ option(
 )
 
 option(
+  'slot-drive-presence',
+  type: 'feature',
+  value: 'disabled',
+  description: 'Sets drive presence on slot objects'
+)
+
+option(
     'cpuinfo-peci',
     type: 'feature',
     value: 'enabled',
