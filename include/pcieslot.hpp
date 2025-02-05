@@ -158,6 +158,15 @@ static const std::map<uint8_t, PCIeType> pcieTypeTable = {
 const std::map<uint8_t, size_t> pcieLanesTable = {
     {0x08, 1}, {0x09, 2}, {0xa, 4}, {0xb, 8}, {0xc, 12}, {0xd, 16}, {0xe, 32}};
 
+enum class Availability : uint8_t {
+    Other = 0x01,
+    Unknown = 0x02,
+    Available = 0x03,
+    InUse = 0x04,
+    Unavailable = 0x05
+};
+
+
 }; // namespace smbios
 
 }; // namespace phosphor
