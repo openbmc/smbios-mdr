@@ -20,6 +20,7 @@
 #include <xyz/openbmc_project/Association/Definitions/server.hpp>
 #include <xyz/openbmc_project/Inventory/Connector/Slot/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
+#include <xyz/openbmc_project/Inventory/Decorator/AssetTag/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/LocationCode/server.hpp>
 #include <xyz/openbmc_project/Inventory/Decorator/Revision/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/Cpu/server.hpp>
@@ -46,6 +47,8 @@ using association =
     sdbusplus::server::xyz::openbmc_project::association::Definitions;
 using operationalStatus = sdbusplus::xyz::openbmc_project::State::Decorator::
     server::OperationalStatus;
+using assetTagType =
+    sdbusplus::xyz::openbmc_project::Inventory::Decorator::server::AssetTag;
 
 // This table is up to date as of SMBIOS spec DSP0134 3.7.0
 static const std::map<uint8_t, const char*> familyTable = {
@@ -309,7 +312,8 @@ static const std::array<std::optional<processor::Capability>, 16>
 
 class Cpu :
     sdbusplus::server::object_t<processor, asset, location, connector, rev,
-                                Item, association, operationalStatus>
+                                Item, association, operationalStatus,
+                                assetTagType>
 {
   public:
     Cpu() = delete;
@@ -322,8 +326,8 @@ class Cpu :
     Cpu(sdbusplus::bus_t& bus, const std::string& objPath, const uint8_t& cpuId,
         uint8_t* smbiosTableStorage, const std::string& motherboard) :
         sdbusplus::server::object_t<processor, asset, location, connector, rev,
-                                    Item, association, operationalStatus>(
-            bus, objPath.c_str()),
+                                    Item, association, operationalStatus,
+                                    assetTagType>(bus, objPath.c_str()),
         cpuNum(cpuId), storage(smbiosTableStorage), motherboardPath(motherboard)
     {
         infoUpdate(smbiosTableStorage, motherboard);
@@ -384,6 +388,8 @@ class Cpu :
     void version(const uint8_t positionNum, const uint8_t structLen,
                  uint8_t* dataIn);
     void characteristics(const uint16_t value);
+    void assetTagString(const uint8_t positionNum, const uint8_t structLen,
+                        uint8_t* dataIn);
 };
 
 } // namespace smbios
