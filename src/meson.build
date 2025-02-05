@@ -11,6 +11,10 @@ if get_option('dimm-only-locator').allowed()
     cpp_args_smbios += ['-DDIMM_ONLY_LOCATOR']
 endif
 
+if get_option('slot-drive-presence').allowed()
+    cpp_args_smbios += ['-DSLOT_DRIVE_PRESENCE']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
