@@ -118,6 +118,13 @@ void Cpu::characteristics(uint16_t value)
     processor::characteristics(result);
 }
 
+void Cpu::assetTagString(const uint8_t positionNum, const uint8_t structLen,
+                         uint8_t* dataIn)
+{
+    std::string result = positionToString(positionNum, structLen, dataIn);
+    assetTagType::assetTag(result);
+}
+
 static constexpr uint8_t maxOldVersionCount = 0xff;
 void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
                      const std::string& motherboard)
@@ -224,6 +231,8 @@ void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
     maxSpeedInMhz(cpuInfo->maxSpeed);                   // offset 14h
     serialNumber(cpuInfo->serialNum, cpuInfo->length,
                  dataIn);                               // offset 20h
+    assetTagString(cpuInfo->assetTag, cpuInfo->length,
+                   dataIn);                             // offset 21h
     partNumber(cpuInfo->partNum, cpuInfo->length,
                dataIn);                                 // offset 22h
     if (cpuInfo->coreCount < maxOldVersionCount)        // offset 23h or 2Ah
