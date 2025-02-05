@@ -50,8 +50,14 @@ void Pcie::pcieInfoUpdate(uint8_t* smbiosTableStorage,
     pcieIsHotPluggable(pcieInfo->characteristics2);
     pcieLocation(pcieInfo->slotDesignation, pcieInfo->length, dataIn);
 
+#ifdef SLOT_DRIVE_PRESENCE
+    /* Set PCIeSlot presence based on its current Usage */
+    Item::present(pcieInfo->currUsage ==
+                  static_cast<uint8_t>(Availability::InUse));
+#else
     /* Pcie slot is embedded on the board. Always be true */
     Item::present(true);
+#endif
 
     if (!motherboardPath.empty())
     {
