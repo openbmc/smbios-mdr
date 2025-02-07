@@ -79,7 +79,7 @@ class Pcie :
     } __attribute__((packed));
 
     void pcieGeneration(const uint8_t type);
-    void pcieType(const uint8_t type);
+    void pcieType(const uint8_t type, const uint8_t slotLength);
     void pcieLaneSize(const uint8_t width);
     void pcieIsHotPluggable(const uint8_t characteristics);
     void pcieLocation(const uint8_t slotDesignation, const uint8_t structLen,
@@ -124,36 +124,17 @@ static const std::map<uint8_t, PCIeGeneration> pcieGenerationTable = {
     {0xc3, PCIeGeneration::Gen5},    {0xc4, PCIeGeneration::Unknown},
     {0xc5, PCIeGeneration::Unknown}, {0xc6, PCIeGeneration::Unknown}};
 
-static const std::map<uint8_t, PCIeType> pcieTypeTable = {
+static const std::unordered_map<uint8_t, PCIeType> pcieTypeTable = {
     {0x09, PCIeType::OEM},       {0x14, PCIeType::M_2},
     {0x15, PCIeType::M_2},       {0x16, PCIeType::M_2},
-    {0x17, PCIeType::M_2},       {0x18, PCIeType::Unknown},
-    {0x19, PCIeType::Unknown},   {0x1a, PCIeType::Unknown},
-    {0x1b, PCIeType::Unknown},   {0x1c, PCIeType::Unknown},
-    {0x1d, PCIeType::Unknown},   {0x1e, PCIeType::Unknown},
-    {0xa8, PCIeType::Unknown},   {0xa9, PCIeType::Unknown},
-    {0x1F, PCIeType::U_2},       {0x20, PCIeType::U_2},
-    {0x21, PCIeType::Mini},      {0x22, PCIeType::Mini},
-    {0x23, PCIeType::Mini},      {0x24, PCIeType::U_2},
-    {0x25, PCIeType::U_2},       {0x26, PCIeType::OCP3Small},
-    {0x27, PCIeType::OCP3Large}, {0x28, PCIeType::Unknown},
-    {0x29, PCIeType::Unknown},   {0xa5, PCIeType::Unknown},
-    {0xa6, PCIeType::Unknown},   {0xa7, PCIeType::Unknown},
-    {0xa8, PCIeType::Unknown},   {0xa9, PCIeType::Unknown},
-    {0xaa, PCIeType::Unknown},   {0xab, PCIeType::Unknown},
-    {0xac, PCIeType::Unknown},   {0xad, PCIeType::Unknown},
-    {0xae, PCIeType::Unknown},   {0xaf, PCIeType::Unknown},
-    {0xb0, PCIeType::Unknown},   {0xb1, PCIeType::Unknown},
-    {0xb2, PCIeType::Unknown},   {0xb3, PCIeType::Unknown},
-    {0xb4, PCIeType::Unknown},   {0xb5, PCIeType::Unknown},
-    {0xb6, PCIeType::Unknown},   {0xb8, PCIeType::Unknown},
-    {0xb9, PCIeType::Unknown},   {0xba, PCIeType::Unknown},
-    {0xbb, PCIeType::Unknown},   {0xbc, PCIeType::Unknown},
-    {0xbd, PCIeType::Unknown},   {0xbe, PCIeType::Unknown},
-    {0xbf, PCIeType::Unknown},   {0xc0, PCIeType::Unknown},
-    {0xc1, PCIeType::Unknown},   {0xc2, PCIeType::Unknown},
-    {0xc3, PCIeType::Unknown},   {0xc4, PCIeType::Unknown},
-    {0xc5, PCIeType::Unknown},   {0xc6, PCIeType::Unknown}};
+    {0x17, PCIeType::M_2},       {0x1F, PCIeType::U_2},
+    {0x20, PCIeType::U_2},       {0x21, PCIeType::Mini},
+    {0x22, PCIeType::Mini},      {0x23, PCIeType::Mini},
+    {0x24, PCIeType::U_2},       {0x25, PCIeType::U_2},
+    {0x26, PCIeType::OCP3Small}, {0x27, PCIeType::OCP3Large}};
+
+static const std::unordered_map<uint8_t, PCIeType> PCIeTypeByLength = {
+    {0x03, PCIeType::HalfLength}, {0x04, PCIeType::FullLength}};
 
 const std::map<uint8_t, size_t> pcieLanesTable = {
     {0x08, 1}, {0x09, 2}, {0xa, 4}, {0xb, 8}, {0xc, 12}, {0xd, 16}, {0xe, 32}};

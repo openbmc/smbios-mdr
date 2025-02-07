@@ -45,7 +45,7 @@ void Pcie::pcieInfoUpdate(uint8_t* smbiosTableStorage,
     auto pcieInfo = reinterpret_cast<struct SystemSlotInfo*>(dataIn);
 
     pcieGeneration(pcieInfo->slotType);
-    pcieType(pcieInfo->slotType);
+    pcieType(pcieInfo->slotType, pcieInfo->slotLength);
     pcieLaneSize(pcieInfo->slotDataBusWidth);
     pcieIsHotPluggable(pcieInfo->characteristics2);
     pcieLocation(pcieInfo->slotDesignation, pcieInfo->length, dataIn);
@@ -75,17 +75,30 @@ void Pcie::pcieGeneration(const uint8_t type)
     }
 }
 
-void Pcie::pcieType(const uint8_t type)
+void Pcie::pcieType(const uint8_t type, const uint8_t slotLength)
 {
-    std::map<uint8_t, PCIeType>::const_iterator it = pcieTypeTable.find(type);
-    if (it == pcieTypeTable.end())
+    // Try to find PCIeType in the main table
+    auto it = pcieTypeTable.find(type);
+    std::optional<PCIeType> pcieSlotType =
+        (it != pcieTypeTable.end()) ? std::make_optional(it->second)
+                                    : std::nullopt;
+
+    // If not found in `pcieTypeTable`, check `PCIeTypeByLength`
+    if (!pcieSlotType)
     {
-        PCIeSlot::slotType(PCIeType::Unknown);
+        auto slotIt = PCIeTypeByLength.find(slotLength);
+        if (slotIt != PCIeTypeByLength.end())
+        {
+            pcieSlotType = slotIt->second;
+        }
+        else
+        {
+            pcieSlotType = PCIeType::Unknown;
+        }
     }
-    else
-    {
-        PCIeSlot::slotType(it->second);
-    }
+
+    // Set the slot type
+    PCIeSlot::slotType(*pcieSlotType);
 }
 
 void Pcie::pcieLaneSize(const uint8_t width)
