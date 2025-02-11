@@ -11,6 +11,10 @@ if get_option('dimm-only-locator').allowed()
     cpp_args_smbios += ['-DDIMM_ONLY_LOCATOR']
 endif
 
+if get_option('tpm-dbus').allowed()
+    cpp_args_smbios += ['-DTPM_DBUS']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
@@ -19,6 +23,7 @@ executable(
     'dimm.cpp',
     'system.cpp',
     'pcieslot.cpp',
+    'tpm.cpp',
     cpp_args: cpp_args_smbios,
     dependencies: [
         boost_dep,

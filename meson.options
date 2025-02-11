@@ -41,3 +41,10 @@ option(
     value: 'enabled',
     description: 'Build IPMI blob library for SMBIOS transfer',
 )
+
+option(
+    'tpm-dbus',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Expose TPM D-Bus Interface',
+)
