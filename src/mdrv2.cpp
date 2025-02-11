@@ -619,6 +619,13 @@ void MDRV2::systemInfoUpdate()
         }
     }
 
+    tpm.reset();
+    if (getTotalTpm() == 1)
+    {
+        tpm = std::make_unique<Tpm>(bus, smbiosInventoryPath + tpmSuffix,
+                                    smbiosDir.dir[smbiosDirIndex].dataStorage);
+    }
+
     system.reset();
     system = std::make_unique<System>(bus, smbiosInventoryPath + systemSuffix,
                                       smbiosDir.dir[smbiosDirIndex].dataStorage,
@@ -720,6 +727,40 @@ std::optional<size_t> MDRV2::getTotalPcieSlot()
         {
             num++;
         }
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
+std::optional<size_t> MDRV2::getTotalTpm()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    size_t num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Fail to get tpm total slot - no storage data");
+        return std::nullopt;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, tpmDeviceType);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        num++;
         dataIn = smbiosNextPtr(dataIn);
         if (dataIn == nullptr)
         {
