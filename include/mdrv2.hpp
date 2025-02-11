@@ -20,6 +20,7 @@
 #include "pcieslot.hpp"
 #include "smbios_mdrv2.hpp"
 #include "system.hpp"
+#include "tpm.hpp"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -188,9 +189,11 @@ class MDRV2 :
     std::optional<size_t> getTotalCpuSlot(void);
     std::optional<size_t> getTotalDimmSlot(void);
     std::optional<size_t> getTotalPcieSlot(void);
+    std::optional<size_t> getTotalTpm(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::vector<std::unique_ptr<Pcie>> pcies;
+    std::vector<std::unique_ptr<Tpm>> tpms;
     std::unique_ptr<System> system;
     std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
 
