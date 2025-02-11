@@ -15,6 +15,10 @@ if get_option('slot-drive-presence').allowed()
     cpp_args_smbios += ['-DSLOT_DRIVE_PRESENCE']
 endif
 
+if get_option('tpm-dbus').allowed()
+    cpp_args_smbios += ['-DTPM_DBUS']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
@@ -23,6 +27,7 @@ executable(
     'dimm.cpp',
     'system.cpp',
     'pcieslot.cpp',
+    'tpm.cpp',
     cpp_args: cpp_args_smbios,
     dependencies: [
         boost_dep,
