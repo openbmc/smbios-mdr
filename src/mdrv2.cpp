@@ -619,6 +619,34 @@ void MDRV2::systemInfoUpdate()
         }
     }
 
+    num = getTotalTpm();
+    if (!num)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>("get tpm failed");
+    }
+    // In case the new size is smaller than old, trim the vector
+    if (*num < tpms.size())
+    {
+        tpms.resize(*num);
+    }
+
+    for (unsigned int index = 0; index < *num; index++)
+    {
+        std::string path =
+            smbiosInventoryPath + tpmSuffix + std::to_string(index);
+        if (index + 1 > tpms.size())
+        {
+            tpms.emplace_back(std::make_unique<phosphor::smbios::Tpm>(
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage,
+                motherboardPath));
+        }
+        else
+        {
+            tpms[index]->tpmInfoUpdate(
+                smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
+        }
+    }
+
     system.reset();
     system = std::make_unique<System>(bus, smbiosInventoryPath + systemSuffix,
                                       smbiosDir.dir[smbiosDirIndex].dataStorage,
@@ -720,6 +748,40 @@ std::optional<size_t> MDRV2::getTotalPcieSlot()
         {
             num++;
         }
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
+std::optional<size_t> MDRV2::getTotalTpm()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    size_t num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Fail to get tpm total slot - no storage data");
+        return std::nullopt;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, tpmDeviceType);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        num++;
         dataIn = smbiosNextPtr(dataIn);
         if (dataIn == nullptr)
         {
