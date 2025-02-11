@@ -235,6 +235,15 @@ void Cpu::infoUpdate(uint8_t* smbiosTableStorage,
         coreCount(cpuInfo->coreCount2);
     }
 
+    if (cpuInfo->coreEnable < maxOldVersionCount)
+    {
+        coreEnable(cpuInfo->coreEnable);
+    }
+    else
+    {
+        coreEnable(cpuInfo->coreEnable2);
+    }
+
     if (cpuInfo->threadCount < maxOldVersionCount) // offset 25h or 2Eh)
     {
         threadCount(cpuInfo->threadCount);
