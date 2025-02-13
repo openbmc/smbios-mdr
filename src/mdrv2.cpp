@@ -826,6 +826,12 @@ bool MDRV2::agentSynchronizeData()
         return false;
     }
 
+    if (0 == static_cast<uint8_t>(sdbusplus::server::xyz::openbmc_project::
+                                      smbios::MDRV2::directoryEntries()))
+    {
+        directoryEntries(smbiosDir.dirEntries);
+    }
+
     systemInfoUpdate();
     smbiosDir.dir[smbiosDirIndex].common.dataVersion = mdr2SMBIOS.dirVer;
     smbiosDir.dir[smbiosDirIndex].common.timestamp = mdr2SMBIOS.timestamp;
