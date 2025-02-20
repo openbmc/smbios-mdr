@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "6cfe4b30_6013d038",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-20T21:57:21Z",
+      "side": 1,
+      "message": "43",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 8
+      },
+      "revId": "63e199bba41af3d2528739bf62dbef9c09428fc1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "eb531452_58a2b8da",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -19,6 +42,29 @@
         "startChar": 24,
         "endLine": 10,
         "endChar": 54
+      },
+      "revId": "63e199bba41af3d2528739bf62dbef9c09428fc1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9beaca69_3779a0f9",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-20T21:57:21Z",
+      "side": 1,
+      "message": "Is this needed? The code only support one tpm since it is a single unique_ptr",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 44
       },
       "revId": "63e199bba41af3d2528739bf62dbef9c09428fc1",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
