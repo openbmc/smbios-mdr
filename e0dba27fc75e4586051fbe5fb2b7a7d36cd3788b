@@ -51,6 +51,24 @@
       "parentUuid": "b23fb26a_16668f44",
       "revId": "e0dba27fc75e4586051fbe5fb2b7a7d36cd3788b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffe1eebe_908726e2",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-20T21:01:29Z",
+      "side": 1,
+      "message": "Thanks for detailed information. I am still trying to understand what the issue is and evaluating whether the change is the right way to fix.\n\nWhen smbios file exists, line 388 and 391 would assign the dbus Property directoryEntries to one since smbios.dirEntries is always one.\n\nMy follow up questions is why MDRV2 object\u0027s smbiosDir.dirEntries is hard coded to 1 regardless of existance of smbios file and why dbus property directoryEntries is set to 0 when there is no smbios file.",
+      "parentUuid": "4178f31b_106607c5",
+      "revId": "e0dba27fc75e4586051fbe5fb2b7a7d36cd3788b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
