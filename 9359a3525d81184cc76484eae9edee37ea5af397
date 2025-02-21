@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "60b7d7bf_3bfdabb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-21T01:33:44Z",
+      "side": 1,
+      "message": "Please add test section in the commit message",
+      "revId": "9359a3525d81184cc76484eae9edee37ea5af397",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa1d98e1_a8432a57",
+        "filename": "src/cpu.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-21T01:33:44Z",
+      "side": 1,
+      "message": "follow the convention here add comment like \"// offset xxxx\" for the info",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 49
+      },
+      "revId": "9359a3525d81184cc76484eae9edee37ea5af397",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
