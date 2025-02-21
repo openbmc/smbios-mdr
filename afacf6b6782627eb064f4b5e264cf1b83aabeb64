@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b9cf2ca0_07a8a7f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-21T01:24:24Z",
+      "side": 1,
+      "message": "Please add tested section in the commit message",
+      "revId": "afacf6b6782627eb064f4b5e264cf1b83aabeb64",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f030364d_a55875bd",
+        "filename": "src/pcieslot.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-21T01:24:24Z",
+      "side": 1,
+      "message": "I think it is simpler without using the optional here:\n\nif (it \u003d\u003d pcieTypeTable.end())\n{\n   if (find in length table) slotType \u003d typeByLength\n   else slotType \u003d Unknown\n}\nelse\n{\n   slotType \u003d it-\u003esecond;\n}",
+      "range": {
+        "startLine": 82,
+        "startChar": 1,
+        "endLine": 84,
+        "endChar": 51
+      },
+      "revId": "afacf6b6782627eb064f4b5e264cf1b83aabeb64",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
