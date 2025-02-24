@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31d40865_57a3c703",
+        "filename": "include/tpm.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-24T20:19:01Z",
+      "side": 1,
+      "message": "not sure we need it be reference for uint8_t, pass by value should be ok.",
+      "range": {
+        "startLine": 40,
+        "startChar": 59,
+        "endLine": 40,
+        "endChar": 79
+      },
+      "revId": "f26ae43df9868cd08f191cc0d26d81053bfdbe99",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e1da3a0_825e76c4",
+        "filename": "include/tpm.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-24T20:19:01Z",
+      "side": 1,
+      "message": "nit: should this be tpmId also? tpmNum can be confused with \"number of tpms\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 18
+      },
+      "revId": "f26ae43df9868cd08f191cc0d26d81053bfdbe99",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
