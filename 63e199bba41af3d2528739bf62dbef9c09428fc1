@@ -200,6 +200,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57636faa_b772e8cb",
+        "filename": "src/tpm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-02-24T07:30:20Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c6f24ae0_50026eda",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "63e199bba41af3d2528739bf62dbef9c09428fc1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2ef0aff_35f558e9",
@@ -213,6 +237,30 @@
       "writtenOn": "2025-02-20T21:36:29Z",
       "side": 1,
       "message": "What about other specMajor? should version be empty to some other string like unknown?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "63e199bba41af3d2528739bf62dbef9c09428fc1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ec6206ac_2f71d2fb",
+        "filename": "src/tpm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-02-24T07:30:20Z",
+      "side": 1,
+      "message": "I m very sorry I couldn\u0027t understand could you please help me understand the comment. \nThe specMajor field indicates the TPM device specification v1 or v2. \nAnd the FirmwareVersion1 and FirmwareVersion2 indicates the firmware version of the TPM device on the system. \nThis is from `Table 126 – TPM Device (Type 43) structure`",
+      "parentUuid": "c2ef0aff_35f558e9",
       "range": {
         "startLine": 67,
         "startChar": 0,
