@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <sys/ioctl.h>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <boost/container/flat_map.hpp>
 
@@ -354,7 +354,7 @@ static void createCpuUpdatedMatch(
 }
 
 #if PECI_ENABLED
-static void getPPIN(boost::asio::io_service& io,
+static void getPPIN(boost::asio::io_context& io,
                     const std::shared_ptr<sdbusplus::asio::connection>& conn,
                     const size_t& cpu)
 {
@@ -477,7 +477,7 @@ static void getPPIN(boost::asio::io_service& io,
  * Get cpu and pirom address
  */
 static void getCpuAddress(
-    boost::asio::io_service& io,
+    boost::asio::io_context& io,
     const std::shared_ptr<sdbusplus::asio::connection>& conn,
     const std::string& service, const std::string& object,
     const std::string& interface)
@@ -573,7 +573,7 @@ static void getCpuAddress(
  * D-Bus client: to get platform specific configs
  */
 static void getCpuConfiguration(
-    boost::asio::io_service& io,
+    boost::asio::io_context& io,
     const std::shared_ptr<sdbusplus::asio::connection>& conn,
     sdbusplus::asio::object_server& objServer)
 {
@@ -654,7 +654,7 @@ static void getCpuConfiguration(
 int main()
 {
     // setup connection to dbus
-    boost::asio::io_service& io = cpu_info::dbus::getIOContext();
+    boost::asio::io_context& io = cpu_info::dbus::getIOContext();
     std::shared_ptr<sdbusplus::asio::connection> conn =
         cpu_info::dbus::getConnection();
 
