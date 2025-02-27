@@ -69,6 +69,24 @@
       "parentUuid": "4178f31b_106607c5",
       "revId": "e0dba27fc75e4586051fbe5fb2b7a7d36cd3788b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ec3949_5418cc69",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-02-27T19:16:14Z",
+      "side": 1,
+      "message": "I think this maybe a better place to update directoryEntries when agentSynchronizeData is called.\n\nhttps://github.com/openbmc/smbios-mdr/blob/master/src/mdrv2.cpp#L828",
+      "parentUuid": "ffe1eebe_908726e2",
+      "revId": "e0dba27fc75e4586051fbe5fb2b7a7d36cd3788b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
