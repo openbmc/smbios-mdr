@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9bddbfc_3b99e973",
+        "filename": "include/mdrv2.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-28T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ea6262_fd4be774",
+      "range": {
+        "startLine": 191,
+        "startChar": 28,
+        "endLine": 191,
+        "endChar": 38
+      },
+      "revId": "28f2ecd602b68da4eff0e4c062fa1fba6e69b662",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3a04e5d9_c7ce7f00",
@@ -47,6 +71,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8517ec1b_6ef4b671",
+        "filename": "meson.options",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-28T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a04e5d9_c7ce7f00",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 288
+      },
+      "revId": "28f2ecd602b68da4eff0e4c062fa1fba6e69b662",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2243f05e_5662b5be",
@@ -60,6 +108,30 @@
       "writtenOn": "2025-02-24T20:46:35Z",
       "side": 1,
       "message": "Should this be dimmIndex, which is used for size checking at line 426",
+      "range": {
+        "startLine": 435,
+        "startChar": 22,
+        "endLine": 435,
+        "endChar": 27
+      },
+      "revId": "28f2ecd602b68da4eff0e4c062fa1fba6e69b662",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c193a139_f4ad57cc",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001584
+      },
+      "writtenOn": "2025-02-28T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2243f05e_5662b5be",
       "range": {
         "startLine": 435,
         "startChar": 22,
