@@ -157,6 +157,13 @@ struct EntryPointStructure30
     uint64_t structTableAddr;
 } __attribute__((packed));
 
+struct StructureHeader
+{
+    uint8_t type;
+    uint8_t length;
+    uint16_t handle;
+} __attribute__((packed));
+
 static constexpr const char* cpuSuffix = "/chassis/motherboard/cpu";
 
 static constexpr const char* dimmSuffix = "/chassis/motherboard/dimm";
@@ -166,6 +173,8 @@ static constexpr const char* pcieSuffix = "/chassis/motherboard/pcieslot";
 static constexpr const char* systemSuffix = "/chassis/motherboard/bios";
 
 static constexpr const char* tpmSuffix = "/chassis/motherboard/tpm";
+
+static constexpr const char* firmwarePath = "/xyz/openbmc_project/software";
 
 constexpr std::array<SMBIOSVersion, 8> supportedSMBIOSVersions{
     SMBIOSVersion{3, 0}, SMBIOSVersion{3, 2}, SMBIOSVersion{3, 3},
@@ -192,7 +201,10 @@ typedef enum
     systemEventLogType = 15,
     physicalMemoryArrayType = 16,
     memoryDeviceType = 17,
+    systemPowerSupply = 39,
+    onboardDevicesExtended = 41,
     tpmDeviceType = 43,
+    firmwareInventoryInformationType = 45,
 } SmbiosType;
 
 static constexpr uint8_t separateLen = 2;
@@ -252,6 +264,51 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
             return nullptr;
         }
         return reinterpret_cast<uint8_t*>(smbiosData);
+    }
+    return nullptr;
+}
+
+static inline uint8_t* smbiosSkipEntryPoint(uint8_t* smbiosDataIn)
+{
+    const std::string anchorString30 = "_SM3_";
+    if (smbiosDataIn == nullptr)
+    {
+        return nullptr;
+    }
+
+    // Jump to starting address of the SMBIOS Structure Table from Entry Point
+    auto anchor = reinterpret_cast<const char*>(smbiosDataIn);
+    if (std::string_view(anchor, anchorString30.length())
+            .compare(anchorString30) == 0)
+    {
+        auto epStructure =
+            reinterpret_cast<const EntryPointStructure30*>(smbiosDataIn);
+        if (epStructure->structTableAddr < mdrSMBIOSSize)
+        {
+            smbiosDataIn += epStructure->structTableAddr;
+        }
+    }
+
+    return smbiosDataIn;
+}
+
+static inline uint8_t* smbiosHandlePtr(uint8_t* smbiosDataIn, uint16_t handle)
+{
+    auto ptr = smbiosSkipEntryPoint(smbiosDataIn);
+    struct StructureHeader* header;
+    while (ptr != nullptr)
+    {
+        header = reinterpret_cast<struct StructureHeader*>(ptr);
+        if (header->length < sizeof(StructureHeader))
+        {
+            return nullptr;
+        }
+
+        if (header->handle == handle)
+        {
+            return ptr;
+        }
+        ptr = smbiosNextPtr(ptr);
     }
     return nullptr;
 }

@@ -19,6 +19,14 @@ if get_option('tpm-dbus').allowed()
     cpp_args_smbios += ['-DTPM_DBUS']
 endif
 
+if get_option('firmware-inventory-dbus').allowed()
+    cpp_args_smbios += ['-DFIRMWARE_INVENTORY_DBUS']
+endif
+
+if get_option('expose-firmware-component-name').allowed()
+    cpp_args_smbios += ['-DEXPOSE_FW_COMPONENT_NAME']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
@@ -28,6 +36,7 @@ executable(
     'system.cpp',
     'pcieslot.cpp',
     'tpm.cpp',
+    'firmware_inventory.cpp',
     cpp_args: cpp_args_smbios,
     dependencies: [
         boost_dep,
