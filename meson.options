@@ -48,3 +48,10 @@ option(
     value: 'enabled',
     description: 'Build IPMI blob library for SMBIOS transfer',
 )
+
+option(
+    'firmware-inventory-dbus',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Expose Firmware Inventory D-Bus Interface',
+)
