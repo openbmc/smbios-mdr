@@ -649,6 +649,39 @@ void MDRV2::systemInfoUpdate()
                 smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath);
         }
     }
+
+#endif
+
+#ifdef FIRMWARE_INVENTORY_DBUS
+
+    auto existingVersionPaths = utils::getExistingVersionPaths(*bus);
+    num = getTotalFirmwareInventory();
+    if (!num)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "get firmware inventory failed");
+        existingVersionPaths.clear();
+        return;
+    }
+
+    // In case the new size is smaller than old, trim the vector
+    if (*num < firmwareCollection.size())
+    {
+        firmwareCollection.resize(*num);
+    }
+    for (unsigned int index = 0; index < *num; index++)
+    {
+        auto path = FirmwareInventory::checkAndCreateFirmwarePath(
+            smbiosDir.dir[smbiosDirIndex].dataStorage, index,
+            existingVersionPaths);
+        if (path.empty())
+        {
+            continue;
+        }
+        firmwareCollection.emplace_back(
+            std::make_unique<phosphor::smbios::FirmwareInventory>(
+                *bus, path, index, smbiosDir.dir[smbiosDirIndex].dataStorage));
+    }
 #endif
 
     system.reset();
@@ -781,6 +814,40 @@ std::optional<size_t> MDRV2::getTotalTpm()
     while (1)
     {
         dataIn = getSMBIOSTypePtr(dataIn, tpmDeviceType);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        num++;
+        dataIn = smbiosNextPtr(dataIn);
+        if (dataIn == nullptr)
+        {
+            break;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
+    }
+
+    return num;
+}
+
+std::optional<size_t> MDRV2::getTotalFirmwareInventory()
+{
+    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+    size_t num = 0;
+
+    if (dataIn == nullptr)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Fail to get firmware inventory - no storage data");
+        return std::nullopt;
+    }
+
+    while (1)
+    {
+        dataIn = getSMBIOSTypePtr(dataIn, firmwareInventoryInformationType);
         if (dataIn == nullptr)
         {
             break;

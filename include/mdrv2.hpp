@@ -17,6 +17,7 @@
 #pragma once
 #include "cpu.hpp"
 #include "dimm.hpp"
+#include "firmware_inventory.hpp"
 #include "pcieslot.hpp"
 #include "smbios_mdrv2.hpp"
 #include "system.hpp"
@@ -62,6 +63,8 @@ static constexpr const char* systemInterface =
     "xyz.openbmc_project.Inventory.Item.System";
 static constexpr const char* boardInterface =
     "xyz.openbmc_project.Inventory.Item.Board";
+static constexpr const char* versionInterface =
+    "xyz.openbmc_project.Software.Version";
 constexpr const int limitEntryLen = 0xff;
 
 // Avoid putting multiple interfaces with same name on same object
@@ -190,10 +193,12 @@ class MDRV2 :
     std::optional<size_t> getTotalDimmSlot(void);
     std::optional<size_t> getTotalPcieSlot(void);
     std::optional<size_t> getTotalTpm(void);
+    std::optional<size_t> getTotalFirmwareInventory(void);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::vector<std::unique_ptr<Pcie>> pcies;
     std::vector<std::unique_ptr<Tpm>> tpms;
+    std::vector<std::unique_ptr<FirmwareInventory>> firmwareCollection;
     std::unique_ptr<System> system;
     std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
 
