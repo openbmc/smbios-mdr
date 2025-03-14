@@ -15,6 +15,10 @@ if get_option('slot-drive-presence').allowed()
     cpp_args_smbios += ['-DSLOT_DRIVE_PRESENCE']
 endif
 
+if get_option('firmware-inventory-dbus').allowed()
+    cpp_args_smbios += ['-DFIRMWARE_INVENTORY_DBUS']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
@@ -23,6 +27,7 @@ executable(
     'dimm.cpp',
     'system.cpp',
     'pcieslot.cpp',
+    'firmware_inventory.cpp',
     cpp_args: cpp_args_smbios,
     dependencies: [
         boost_dep,
