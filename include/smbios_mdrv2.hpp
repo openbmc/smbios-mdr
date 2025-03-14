@@ -165,6 +165,8 @@ static constexpr const char* pcieSuffix = "/chassis/motherboard/pcieslot";
 
 static constexpr const char* systemSuffix = "/chassis/motherboard/bios";
 
+static constexpr const char* firmwarePath = "/xyz/openbmc_project/software";
+
 constexpr std::array<SMBIOSVersion, 8> supportedSMBIOSVersions{
     SMBIOSVersion{3, 0}, SMBIOSVersion{3, 2}, SMBIOSVersion{3, 3},
     SMBIOSVersion{3, 4}, SMBIOSVersion{3, 5}, SMBIOSVersion{3, 6},
@@ -190,6 +192,9 @@ typedef enum
     systemEventLogType = 15,
     physicalMemoryArrayType = 16,
     memoryDeviceType = 17,
+    systemPowerSupply = 39,
+    onboardDevicesExtended = 41,
+    firmwareInventoryInformationType = 45,
 } SmbiosType;
 
 static constexpr uint8_t separateLen = 2;
