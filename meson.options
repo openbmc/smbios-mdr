@@ -55,3 +55,17 @@ option(
     value: 'disabled',
     description: 'Expose TPM D-Bus Interface',
 )
+
+option(
+    'firmware-inventory-dbus',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Expose Firmware Inventory D-Bus Interface',
+)
+
+option(
+    'expose-firmware-component-name',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Use Firmware Component value as dbus object path',
+)
