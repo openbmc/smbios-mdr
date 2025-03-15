@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "36689cd5_db51a194",
+        "filename": "include/firmware_inventory.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-15T14:40:22Z",
+      "side": 1,
+      "message": "As I understanding, you are define the dbus interface for the firmware property.\nasset for Release Date and Manufacturer. Item for Firmware Component Name. softwareVersion for Firmware Version.\nWhat is dbus interface for Firmware ID?",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11549166_dfafcef0",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-15T14:40:22Z",
+      "side": 1,
+      "message": "Where is define this function?",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b02c48e5_b9eebf58",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-15T14:40:22Z",
+      "side": 1,
+      "message": "This will compile fail because missing the dbus interface for Firmware Id.",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
