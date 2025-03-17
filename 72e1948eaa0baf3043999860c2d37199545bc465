@@ -36,6 +36,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f5d3a063_31291397",
+        "filename": "include/firmware_inventory.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-17T07:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e74e023_02e5e0e8",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "11549166_dfafcef0",
@@ -73,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "cabefd94_4fc62cf9",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-17T07:41:29Z",
+      "side": 1,
+      "message": "I mean where is `smbiosHandlePtr` defined. I don\u0027t see this defined in source code.",
+      "parentUuid": "d0d815e8_790ad178",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b02c48e5_b9eebf58",
         "filename": "src/firmware_inventory.cpp",
         "patchSetId": 3
@@ -102,6 +138,24 @@
       "side": 1,
       "message": "https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/78934\nNeed to defined dbus interface to expose FirmwareId",
       "parentUuid": "b02c48e5_b9eebf58",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8517892_64199408",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-17T07:41:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c9bdc1_dc7f96c2",
       "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
