@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "48305a03_e450033b",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-18T06:55:10Z",
+      "side": 1,
+      "message": "Addressed added function smbiosHandlePtr",
+      "parentUuid": "cabefd94_4fc62cf9",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b02c48e5_b9eebf58",
         "filename": "src/firmware_inventory.cpp",
         "patchSetId": 3
