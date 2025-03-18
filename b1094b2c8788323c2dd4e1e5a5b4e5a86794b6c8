@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Prithvi Pai <prithvi24pai@gmail.com>
+Code-Review+2: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-by: Zhikui Ren <zhikui.ren@intel.com>
+Submitted-at: Tue, 18 Mar 2025 19:34:45 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/78008
+Comments-Total: 4
+Project: openbmc/smbios-mdr
+Branch: refs/heads/master
