@@ -125,6 +125,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04c490ba_131f0fb8",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-19T10:07:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48305a03_e450033b",
+      "revId": "72e1948eaa0baf3043999860c2d37199545bc465",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b02c48e5_b9eebf58",
