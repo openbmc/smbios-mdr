@@ -35,6 +35,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b1999d4_e50fc2f0",
+        "filename": "include/tpm.hpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T06:23:50Z",
+      "side": 1,
+      "message": "There is a possibility of multiple TPM records. \nEach TPM object will have associated TPM-Id. \nThis is required for smbios record parsing to identify the specific TPM record of our interest and populate the properties on dbus.",
+      "parentUuid": "e48eece1_09cac345",
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d88cc501_5262907f",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-20T06:16:30Z",
       "side": 1,
       "message": "can we not add dbus ? do we have alternates to keep dbus here ? is it coming from existing pattern ? i am fine its from existing pattern",
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "694f2f11_36de96e1",
+        "filename": "meson.options",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T06:23:50Z",
+      "side": 1,
+      "message": "Yes it is from existing pattern\nFor exposing dimm information on dbus there is a option as dimm-dbus. \nFollowed the same pattern here",
+      "parentUuid": "d88cc501_5262907f",
       "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
