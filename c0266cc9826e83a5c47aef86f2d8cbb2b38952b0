@@ -16,6 +16,24 @@
       "message": "Build is failing",
       "revId": "c0266cc9826e83a5c47aef86f2d8cbb2b38952b0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb2a37a7_cd71641f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T03:37:26Z",
+      "side": 1,
+      "message": "resolved the build error. \nThanks a lot for reviewing the patch set",
+      "parentUuid": "f7a96173_ec02868d",
+      "revId": "c0266cc9826e83a5c47aef86f2d8cbb2b38952b0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
