@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0553a6bb_55918991",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-20T03:36:52Z",
+      "side": 1,
+      "message": "Like mentioned in inline comment, refactor can be a separate review, keeping this to be adding support for tpm",
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5c48ee8a_7a5778c3",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-20T03:36:52Z",
+      "side": 1,
+      "message": "Sorry I did not notice this before because they are existing functions - but there are several almost identical functions here, i think they can be refactor into one function. But it probably be better to do a separate refactor patch.",
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7ae0d8ef_2eb5278a",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-20T03:36:52Z",
+      "side": 1,
+      "message": "this can be right after num++;",
+      "range": {
+        "startLine": 794,
+        "startChar": 0,
+        "endLine": 797,
+        "endChar": 9
+      },
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
