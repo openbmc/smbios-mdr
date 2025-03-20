@@ -53,6 +53,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be4aa03c_eb7c9b13",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T04:09:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0a2a0542_fe05b38a",
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7ae0d8ef_2eb5278a",
@@ -90,6 +108,30 @@
       "side": 1,
       "message": "Will address in refactor MR.",
       "parentUuid": "7ae0d8ef_2eb5278a",
+      "range": {
+        "startLine": 794,
+        "startChar": 0,
+        "endLine": 797,
+        "endChar": 9
+      },
+      "revId": "5af42bbf374907888c09d7aaf2cbf74d74c7707d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12425bc0_8606c323",
+        "filename": "src/mdrv2.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T04:09:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3aa483a6_4d50ec2a",
       "range": {
         "startLine": 794,
         "startChar": 0,
