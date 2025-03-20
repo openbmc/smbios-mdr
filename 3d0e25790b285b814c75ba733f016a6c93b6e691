@@ -35,6 +35,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d59aa02_80dbf108",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T10:45:41Z",
+      "side": 1,
+      "message": "Other services also expose Version(example pldm, entity-manager).\nHence we check if the version path already exists. \nBased on that we create FirmwareInventory for only those which is not duplicate.",
+      "parentUuid": "ca9fd743_3b581d3b",
+      "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9cf177c1_620d0429",
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-20T10:20:00Z",
       "side": 1,
       "message": "As comment above, do not need to create firmware object path based on Firmware ID. This should be based on Firmware Component Name.",
+      "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c5fd57f_e78c884a",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-20T10:45:41Z",
+      "side": 1,
+      "message": "As per your requirement FirmwareId and FirmwareComponent has different names ?",
+      "parentUuid": "9cf177c1_620d0429",
       "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
