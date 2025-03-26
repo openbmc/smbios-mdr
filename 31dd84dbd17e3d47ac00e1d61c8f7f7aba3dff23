@@ -41,6 +41,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "80b83428_ddd4b3c1",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-26T17:59:12Z",
+      "side": 1,
+      "message": "Addressed removed std::cerr and used phosphor logging",
+      "parentUuid": "d07a70c7_32191404",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c2b89ac7_f5348424",
@@ -58,6 +82,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "06e8002c_96d86996",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-26T17:59:12Z",
+      "side": 1,
+      "message": "Addressed",
+      "parentUuid": "c2b89ac7_f5348424",
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ea1ff945_c5b3126e",
@@ -71,6 +113,30 @@
       "writtenOn": "2025-03-26T16:09:03Z",
       "side": 1,
       "message": "these lines duplicate with line 47-66. Can one function uses the result from other if they are trying to find and parse the data structure the same way.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 76
+      },
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f890798_90c9d67f",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-26T17:59:12Z",
+      "side": 1,
+      "message": "As suggested added a function to avoid duplication",
+      "parentUuid": "ea1ff945_c5b3126e",
       "range": {
         "startLine": 96,
         "startChar": 0,
