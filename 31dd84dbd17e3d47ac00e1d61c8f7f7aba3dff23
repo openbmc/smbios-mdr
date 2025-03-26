@@ -16,6 +16,69 @@
       "message": "@wangkuiying.wky@alibaba-inc.com @hieuh@os.amperecomputing.com could you please review",
       "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d07a70c7_32191404",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-26T16:09:03Z",
+      "side": 1,
+      "message": "use phosphor logger to be consistent with rest of code",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2b89ac7_f5348424",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-26T16:09:03Z",
+      "side": 1,
+      "message": "Is the intention to return empty string here? I think it is clear it just return empty string explicitly here and move line89 down into line 110",
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea1ff945_c5b3126e",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-03-26T16:09:03Z",
+      "side": 1,
+      "message": "these lines duplicate with line 47-66. Can one function uses the result from other if they are trying to find and parse the data structure the same way.",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 76
+      },
+      "revId": "31dd84dbd17e3d47ac00e1d61c8f7f7aba3dff23",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
