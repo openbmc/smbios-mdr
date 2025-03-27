@@ -36,6 +36,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9484a658_a4f3aba9",
+        "filename": "include/firmware_inventory.hpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-27T06:30:20Z",
+      "side": 1,
+      "message": "IMO, we can keep the xyz.openbmc_project.Inventory.Item\u0027s Present property to indicates the presence of the device. But, do not need to support PrettyName property.",
+      "parentUuid": "6bb22119_4d51b49f",
+      "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ca9fd743_3b581d3b",
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "As per your requirement FirmwareId and FirmwareComponent has different names ?",
       "parentUuid": "9cf177c1_620d0429",
+      "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a74384d8_127e43f7",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-03-27T06:30:20Z",
+      "side": 1,
+      "message": "Yes, they has different names in our system. That why we create object path based on the Firmware Component Name.",
+      "parentUuid": "2c5fd57f_e78c884a",
       "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
