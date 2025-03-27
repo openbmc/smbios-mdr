@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8588482_1397a5fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2025-03-27T06:06:25Z",
+      "side": 1,
+      "message": "Two comments, but overall is ok.",
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "91997983_951d7006",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2025-03-27T06:06:25Z",
+      "side": 1,
+      "message": "Why append three times? one time is ok, like below:\n.append(firmwarePath, 0, interfaces);",
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64805ff5_e47f0f27",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2025-03-27T06:06:25Z",
+      "side": 1,
+      "message": "Suggest to use auto here, like below:\nauto reply \u003d bus.call(getVersionPaths);\n    std::vector\u003cSensorTree\u003e tree;\n    reply.read(tree);",
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
