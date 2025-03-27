@@ -16,6 +16,24 @@
       "message": "Is it dimm-dbus ?",
       "revId": "7139eae741e2e20574cf301ffa2d6351b4b7d644",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd988d3f_789332da",
+        "filename": "meson.options",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2025-03-27T06:15:08Z",
+      "side": 1,
+      "message": "good, it\u0027s typo. please correct it.",
+      "parentUuid": "d49a6ba9_cc973d2e",
+      "revId": "7139eae741e2e20574cf301ffa2d6351b4b7d644",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
