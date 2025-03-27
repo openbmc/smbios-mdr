@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0263b42d_1f471463",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-27T10:14:50Z",
+      "side": 1,
+      "message": "I used the approach which we have in smbios-mdr to maintain consistency",
+      "parentUuid": "91997983_951d7006",
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "64805ff5_e47f0f27",
         "filename": "src/firmware_inventory.cpp",
         "patchSetId": 13
@@ -48,6 +66,24 @@
       "writtenOn": "2025-03-27T06:06:25Z",
       "side": 1,
       "message": "Suggest to use auto here, like below:\nauto reply \u003d bus.call(getVersionPaths);\n    std::vector\u003cSensorTree\u003e tree;\n    reply.read(tree);",
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "609902e9_4d661317",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-03-27T10:14:50Z",
+      "side": 1,
+      "message": "Used `sdbusplus::message_t` in this case to avoid compile time overhead",
+      "parentUuid": "64805ff5_e47f0f27",
       "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
