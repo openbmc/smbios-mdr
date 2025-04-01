@@ -158,6 +158,24 @@
       "parentUuid": "a74384d8_127e43f7",
       "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b16a2871_ce03bac9",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-01T06:22:29Z",
+      "side": 1,
+      "message": "As requested added meson option which helps in selecting firmware component name as dbus object path",
+      "parentUuid": "5452f286_3b89247e",
+      "revId": "3d0e25790b285b814c75ba733f016a6c93b6e691",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }

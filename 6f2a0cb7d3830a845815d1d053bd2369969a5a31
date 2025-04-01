@@ -58,6 +58,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b2657565_abe4238c",
+        "filename": "include/firmware_inventory.hpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-01T06:22:29Z",
+      "side": 1,
+      "message": "Changed to `item`",
+      "parentUuid": "87acd189_8d8b0e6e",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 7
+      },
+      "revId": "6f2a0cb7d3830a845815d1d053bd2369969a5a31",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "91997983_951d7006",
