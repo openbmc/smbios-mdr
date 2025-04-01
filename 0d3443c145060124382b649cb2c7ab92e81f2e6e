@@ -51,6 +51,24 @@
       "parentUuid": "a1ff73e5_247088e6",
       "revId": "0d3443c145060124382b649cb2c7ab92e81f2e6e",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c3d6c56_f714d95b",
+        "filename": "src/firmware_inventory.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000992
+      },
+      "writtenOn": "2025-04-01T09:02:44Z",
+      "side": 1,
+      "message": "Per SMBIOS spec, Firmware Component Name\u0027s description is \"String number of the Firmware Component Name.\". Therefore, this field can contains whitespace at the end.",
+      "parentUuid": "1b545c72_b6dfd344",
+      "revId": "0d3443c145060124382b649cb2c7ab92e81f2e6e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
