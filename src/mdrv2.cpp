@@ -512,7 +512,7 @@ void MDRV2::systemInfoUpdate()
     lg2::info("Using Inventory anchor object for SMBIOS content {I}: {M}", "I",
               smbiosInventoryPath, "M", motherboardPath);
 
-    std::optional<size_t> num = getTotalCpuSlot();
+    std::optional<size_t> num = getTotalSmbiosEntries(processorsType);
     if (!num)
     {
         lg2::error("get cpu total slot failed");
@@ -544,7 +544,7 @@ void MDRV2::systemInfoUpdate()
 
 #ifdef DIMM_DBUS
 
-    num = getTotalDimmSlot();
+    num = getTotalSmbiosEntries(memoryDeviceType);
     if (!num)
     {
         lg2::error("get dimm total slot failed");
@@ -576,7 +576,7 @@ void MDRV2::systemInfoUpdate()
 
 #endif
 
-    num = getTotalPcieSlot();
+    num = getTotalSmbiosEntries(systemSlots);
     if (!num)
     {
         lg2::error("get pcie total slot failed");
@@ -608,7 +608,7 @@ void MDRV2::systemInfoUpdate()
 
 #ifdef TPM_DBUS
 
-    num = getTotalTpm();
+    num = getTotalSmbiosEntries(tpmDeviceType);
     if (!num)
     {
         lg2::error("get tpm failed");
@@ -641,7 +641,7 @@ void MDRV2::systemInfoUpdate()
 #ifdef FIRMWARE_INVENTORY_DBUS
 
     auto existingVersionPaths = utils::getExistingVersionPaths(*bus);
-    num = getTotalFirmwareInventory();
+    num = getTotalSmbiosEntries(firmwareInventoryInformationType);
     if (!num)
     {
         lg2::error("get firmware inventory failed");
@@ -676,19 +676,27 @@ void MDRV2::systemInfoUpdate()
                                       smbiosFilePath);
 }
 
-std::optional<size_t> MDRV2::getTotalCpuSlot()
+std::optional<size_t> MDRV2::getTotalSmbiosEntries(uint8_t smbiosType)
 {
     uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
     size_t num = 0;
 
     if (dataIn == nullptr)
     {
+<<<<<<< PATCH SET (946cd6 Remove duplicate functions to get smbios slot counts)
+        lg2::error("Failed to get SMBIOS entries for type {TYPE}", "TYPE",
+                   smbiosType);
+=======
         lg2::error("get cpu total slot failed - no storage data");
+>>>>>>> BASE      (6981b7 Port phosphor::logging to lg2)
         return std::nullopt;
     }
 
     while (1)
     {
+<<<<<<< PATCH SET (946cd6 Remove duplicate functions to get smbios slot counts)
+        dataIn = getSMBIOSTypePtr(dataIn, smbiosType);
+=======
         dataIn = getSMBIOSTypePtr(dataIn, processorsType);
         if (dataIn == nullptr)
         {
@@ -756,28 +764,36 @@ std::optional<size_t> MDRV2::getTotalPcieSlot()
     while (1)
     {
         dataIn = getSMBIOSTypePtr(dataIn, systemSlots);
+>>>>>>> BASE      (6981b7 Port phosphor::logging to lg2)
         if (dataIn == nullptr)
         {
             break;
         }
 
-        /* System slot type offset. Check if the slot is a PCIE slots. All
-         * PCIE slot type are hardcoded in a table.
-         */
-        if (pcieSmbiosType.find(*(dataIn + 5)) != pcieSmbiosType.end())
+        // Special handling for PCIe slots
+        if (smbiosType == systemSlots)
+        {
+            if (pcieSmbiosType.find(*(dataIn + 5)) != pcieSmbiosType.end())
+            {
+                num++;
+            }
+        }
+        else
         {
             num++;
+        }
+        if (num >= limitEntryLen)
+        {
+            break;
         }
         dataIn = smbiosNextPtr(dataIn);
         if (dataIn == nullptr)
         {
             break;
         }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
     }
+<<<<<<< PATCH SET (946cd6 Remove duplicate functions to get smbios slot counts)
+=======
 
     return num;
 }
@@ -845,6 +861,7 @@ std::optional<size_t> MDRV2::getTotalFirmwareInventory()
         }
     }
 
+>>>>>>> BASE      (6981b7 Port phosphor::logging to lg2)
     return num;
 }
 

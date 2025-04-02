@@ -189,11 +189,7 @@ class MDRV2 :
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
 
-    std::optional<size_t> getTotalCpuSlot(void);
-    std::optional<size_t> getTotalDimmSlot(void);
-    std::optional<size_t> getTotalPcieSlot(void);
-    std::optional<size_t> getTotalTpm(void);
-    std::optional<size_t> getTotalFirmwareInventory(void);
+    std::optional<size_t> getTotalSmbiosEntries(uint8_t smbiosType);
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::vector<std::unique_ptr<Pcie>> pcies;
