@@ -20,6 +20,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <phosphor-logging/elog-errors.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <fstream>
 #include <iostream>
@@ -126,8 +127,7 @@ void Dimm::updateEccType(uint16_t exPhyArrayHandle)
         dataIn = getSMBIOSTypePtr(dataIn, physicalMemoryArrayType);
         if (dataIn == nullptr)
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Failed to get SMBIOS table type-16 data.");
+            lg2::error("Failed to get SMBIOS table type-16 data.");
             return;
         }
 
@@ -149,9 +149,9 @@ void Dimm::updateEccType(uint16_t exPhyArrayHandle)
 
         dataIn = smbiosNextPtr(dataIn);
     }
-    phosphor::logging::log<phosphor::logging::level::ERR>(
-        "Failed find the corresponding SMBIOS table type-16 data for dimm:",
-        phosphor::logging::entry("DIMM:%d", dimmNum));
+    lg2::error(
+        "Failed find the corresponding SMBIOS table type-16 data for dimm: {DIMM}",
+        "DIMM", dimmNum);
 }
 
 EccType Dimm::ecc(EccType value)
@@ -246,9 +246,8 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
             memoryController(0);
             slot(0);
             channel(0);
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Failed find the corresponding table for dimm ",
-                phosphor::logging::entry("DIMM:%s", deviceLocator.c_str()));
+            lg2::error("Failed find the corresponding table for dimm {DIMM}",
+                       "DIMM", deviceLocator.c_str());
         }
     }
     else
@@ -265,9 +264,8 @@ void Dimm::dimmDeviceLocator(const uint8_t bankLocatorPositionNum,
             }
             catch (const sdbusplus::exception_t& ex)
             {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "std::stoi operation failed ",
-                    phosphor::logging::entry("ERROR=%s", ex.what()));
+                lg2::error("std::stoi operation failed {ERROR}", "ERROR",
+                           ex.what());
             }
         }
     }
@@ -473,17 +471,15 @@ Json Dimm::parseConfigFile()
 
     if (!memoryLocationFile.is_open())
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "config JSON file not found, FILENAME ",
-            phosphor::logging::entry("%s", filename));
+        lg2::error("config JSON file not found, FILENAME {FILENAME}",
+                   "FILENAME", filename);
         return {};
     }
 
     auto data = Json::parse(memoryLocationFile, nullptr, false);
     if (data.is_discarded())
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "config readings JSON parser failure");
+        lg2::error("config readings JSON parser failure");
         return {};
     }
 

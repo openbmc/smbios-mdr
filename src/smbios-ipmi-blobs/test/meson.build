@@ -16,7 +16,12 @@ foreach t : tests
             t + '.cpp',
             '../handler.cpp',
             include_directories: ['../', root_inc],
-            dependencies: [smbiosstore_common_deps, gtest, gmock],
+            dependencies: [
+                smbiosstore_common_deps,
+                gtest,
+                gmock,
+                phosphor_logging_dep,
+            ],
         ),
         protocol: 'gtest',
     )
