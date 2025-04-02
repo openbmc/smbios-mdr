@@ -7,7 +7,12 @@ shared_module(
     'smbiosstore',
     'main.cpp',
     'handler.cpp',
-    dependencies: [smbiosstore_common_deps, phosphor_logging_dep],
+    dependencies: [
+        smbiosstore_common_deps,
+        gtest,
+        gmock,
+        phosphor_logging_dep,
+    ],
     include_directories: root_inc,
     install: true,
     install_dir: get_option('libdir') / 'blob-ipmid',
