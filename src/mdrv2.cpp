@@ -522,7 +522,7 @@ void MDRV2::systemInfoUpdate()
     lg2::info("Using Inventory anchor object for SMBIOS content {I}: {M}", "I",
               smbiosInventoryPath, "M", motherboardPath);
 
-    std::optional<size_t> num = getTotalCpuSlot();
+    std::optional<size_t> num = getTotalSmbiosEntries(processorsType);
     if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -555,7 +555,7 @@ void MDRV2::systemInfoUpdate()
 
 #ifdef DIMM_DBUS
 
-    num = getTotalDimmSlot();
+    num = getTotalSmbiosEntries(memoryDeviceType);
     if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -588,7 +588,7 @@ void MDRV2::systemInfoUpdate()
 
 #endif
 
-    num = getTotalPcieSlot();
+    num = getTotalSmbiosEntries(systemSlots);
     if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -621,7 +621,7 @@ void MDRV2::systemInfoUpdate()
 
 #ifdef TPM_DBUS
 
-    num = getTotalTpm();
+    num = getTotalSmbiosEntries(tpmDeviceType);
     if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>("get tpm failed");
@@ -654,7 +654,7 @@ void MDRV2::systemInfoUpdate()
 #ifdef FIRMWARE_INVENTORY_DBUS
 
     auto existingVersionPaths = utils::getExistingVersionPaths(*bus);
-    num = getTotalFirmwareInventory();
+    num = getTotalSmbiosEntries(firmwareInventoryInformationType);
     if (!num)
     {
         phosphor::logging::log<phosphor::logging::level::ERR>(
@@ -690,180 +690,48 @@ void MDRV2::systemInfoUpdate()
                                       smbiosFilePath);
 }
 
-std::optional<size_t> MDRV2::getTotalCpuSlot()
+std::optional<size_t> MDRV2::getTotalSmbiosEntries(uint8_t smbiosType)
 {
     uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
     size_t num = 0;
 
     if (dataIn == nullptr)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "get cpu total slot failed - no storage data");
+        lg2::error("Failed to get SMBIOS entries for type {TYPE}", "TYPE",
+                   smbiosType);
         return std::nullopt;
     }
 
     while (1)
     {
-        dataIn = getSMBIOSTypePtr(dataIn, processorsType);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        num++;
-        dataIn = smbiosNextPtr(dataIn);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
-    }
-
-    return num;
-}
-
-std::optional<size_t> MDRV2::getTotalDimmSlot()
-{
-    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    size_t num = 0;
-
-    if (dataIn == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Fail to get dimm total slot - no storage data");
-        return std::nullopt;
-    }
-
-    while (1)
-    {
-        dataIn = getSMBIOSTypePtr(dataIn, memoryDeviceType);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        num++;
-        dataIn = smbiosNextPtr(dataIn);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
-    }
-
-    return num;
-}
-
-std::optional<size_t> MDRV2::getTotalPcieSlot()
-{
-    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    size_t num = 0;
-
-    if (dataIn == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Fail to get total system slot - no storage data");
-        return std::nullopt;
-    }
-
-    while (1)
-    {
-        dataIn = getSMBIOSTypePtr(dataIn, systemSlots);
+        dataIn = getSMBIOSTypePtr(dataIn, smbiosType);
         if (dataIn == nullptr)
         {
             break;
         }
 
-        /* System slot type offset. Check if the slot is a PCIE slots. All
-         * PCIE slot type are hardcoded in a table.
-         */
-        if (pcieSmbiosType.find(*(dataIn + 5)) != pcieSmbiosType.end())
+        // Special handling for PCIe slots
+        if (smbiosType == systemSlots)
+        {
+            if (pcieSmbiosType.find(*(dataIn + 5)) != pcieSmbiosType.end())
+            {
+                num++;
+            }
+        }
+        else
         {
             num++;
         }
+        if (num >= limitEntryLen)
+        {
+            break;
+        }
         dataIn = smbiosNextPtr(dataIn);
         if (dataIn == nullptr)
         {
             break;
         }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
     }
-
-    return num;
-}
-
-std::optional<size_t> MDRV2::getTotalTpm()
-{
-    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    size_t num = 0;
-
-    if (dataIn == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Fail to get tpm total slot - no storage data");
-        return std::nullopt;
-    }
-
-    while (1)
-    {
-        dataIn = getSMBIOSTypePtr(dataIn, tpmDeviceType);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        num++;
-        dataIn = smbiosNextPtr(dataIn);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
-    }
-
-    return num;
-}
-
-std::optional<size_t> MDRV2::getTotalFirmwareInventory()
-{
-    uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
-    size_t num = 0;
-
-    if (dataIn == nullptr)
-    {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Fail to get firmware inventory - no storage data");
-        return std::nullopt;
-    }
-
-    while (1)
-    {
-        dataIn = getSMBIOSTypePtr(dataIn, firmwareInventoryInformationType);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        num++;
-        dataIn = smbiosNextPtr(dataIn);
-        if (dataIn == nullptr)
-        {
-            break;
-        }
-        if (num >= limitEntryLen)
-        {
-            break;
-        }
-    }
-
     return num;
 }
 
