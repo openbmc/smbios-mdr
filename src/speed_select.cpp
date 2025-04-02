@@ -21,6 +21,7 @@
 
 #include <boost/asio/error.hpp>
 #include <boost/asio/steady_timer.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <xyz/openbmc_project/Common/Device/error.hpp>
 #include <xyz/openbmc_project/Common/error.hpp>
 #include <xyz/openbmc_project/Control/Processor/CurrentOperatingConfig/server.hpp>
@@ -48,9 +49,9 @@ bool checkPECIStatus(EPECIStatus libStatus, uint8_t completionCode)
 {
     if (libStatus != PECI_CC_SUCCESS || completionCode != PECI_DEV_CC_SUCCESS)
     {
-        std::cerr << "PECI command failed."
-                  << " Driver Status = " << libStatus << ","
-                  << " Completion Code = " << completionCode << '\n';
+        lg2::error(
+            "PECI command failed. Driver Status = {STATUS}, Completion Code = {CODE}",
+            "STATUS", libStatus, "CODE", completionCode);
         return false;
     }
     return true;
@@ -184,8 +185,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
             auto sst = getInstance(peciAddress, cpuModel, dontWake);
             if (!sst || !sst->ready())
             {
-                std::cerr << __func__
-                          << ": Failed to get SST provider instance\n";
+                lg2::error("Failed to get SST provider instance");
             }
             else
             {
@@ -195,8 +195,8 @@ class CPUConfig : public BaseCurrentOperatingConfig
                 }
                 catch (const PECIError& error)
                 {
-                    std::cerr << "Failed to get SST-PP level: " << error.what()
-                              << "\n";
+                    lg2::error("Failed to get SST-PP level: {ERROR}", "ERROR",
+                               error.what());
                 }
             }
         }
@@ -211,8 +211,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
             auto sst = getInstance(peciAddress, cpuModel, dontWake);
             if (!sst || !sst->ready())
             {
-                std::cerr << __func__
-                          << ": Failed to get SST provider instance\n";
+                lg2::error("Failed to get SST provider instance");
             }
             else
             {
@@ -222,8 +221,8 @@ class CPUConfig : public BaseCurrentOperatingConfig
                 }
                 catch (const PECIError& error)
                 {
-                    std::cerr << "Failed to get SST-BF status: " << error.what()
-                              << "\n";
+                    lg2::error("Failed to get SST-BF status: {ERROR}", "ERROR",
+                               error.what());
                 }
             }
         }
@@ -252,7 +251,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         auto sst = getInstance(peciAddress, cpuModel, wakeAllowed);
         if (!sst)
         {
-            std::cerr << __func__ << ": Failed to get SST provider instance\n";
+            lg2::error("Failed to get SST provider instance");
             return sdbusplus::message::object_path();
         }
         try
@@ -263,8 +262,8 @@ class CPUConfig : public BaseCurrentOperatingConfig
         }
         catch (const PECIError& error)
         {
-            std::cerr << "Failed to set new SST-PP level: " << error.what()
-                      << "\n";
+            lg2::error("Failed to set new SST-PP level: {ERROR}", "ERROR",
+                       error.what());
             throw sdbusplus::xyz::openbmc_project::Common::Device::Error::
                 WriteFailure();
         }
@@ -436,14 +435,14 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
         if (!sst->ready())
         {
             // Supported CPU but it can't be queried yet. Try again later.
-            std::cerr << "sst not ready yet\n";
+            lg2::error("SST not ready yet");
             return false;
         }
 
         if (!sst->ppEnabled())
         {
             // Supported CPU but the specific SKU doesn't support SST-PP.
-            std::cerr << "CPU doesn't support SST-PP\n";
+            lg2::error("CPU doesn't support SST-PP");
             continue;
         }
 
@@ -486,8 +485,8 @@ static bool discoverCPUsAndConfigs(boost::asio::io_context& ioc,
             // the config which is supposedly applied, we won't be able to
             // populate the CurrentOperatingConfig so we have to remove this CPU
             // from consideration.
-            std::cerr << "CPU " << cpuIndex
-                      << " claimed SST support but invalid configs\n";
+            lg2::error("CPU {INDEX} claimed SST support but invalid configs",
+                       "INDEX", cpuIndex);
             cpuList.pop_back();
             continue;
         }
@@ -519,18 +518,18 @@ static void discoverOrWait()
     }
     catch (const PECIError& err)
     {
-        std::cerr << "PECI Error: " << err.what() << '\n';
+        lg2::error("PECI Error: {ERROR}", "ERROR", err.what());
 
         // In case of repeated failure to finish discovery, turn off this
         // feature altogether. Possible cause is that the CPU model does not
         // actually support the necessary commands.
         if (++peciErrorCount >= 50)
         {
-            std::cerr << "Aborting SST discovery\n";
+            lg2::error("Aborting SST discovery");
             return;
         }
 
-        std::cerr << "Retrying SST discovery later\n";
+        lg2::error("Retrying SST discovery later");
     }
 
     DEBUG_PRINT << "Finished discovery attempt: " << finished << '\n';
@@ -544,7 +543,8 @@ static void discoverOrWait()
             {
                 if (ec != boost::asio::error::operation_aborted)
                 {
-                    std::cerr << "SST PECI Retry Timer failed: " << ec << '\n';
+                    lg2::error("SST PECI Retry Timer failed: {ERROR}", "ERROR",
+                               ec);
                 }
                 return;
             }

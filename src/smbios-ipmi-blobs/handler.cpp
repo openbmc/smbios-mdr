@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 #include <ipmid/api.hpp>
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <sdbusplus/bus.hpp>
 #include <sdbusplus/exception.hpp>
 #include <sdbusplus/message.hpp>
@@ -45,19 +45,15 @@ bool syncSmbiosData()
     }
     catch (const sdbusplus::exception_t& e)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Error Sync data with service",
-            phosphor::logging::entry("ERROR=%s", e.what()),
-            phosphor::logging::entry("SERVICE=%s", mdrV2Service),
-            phosphor::logging::entry("PATH=%s",
-                                     phosphor::smbios::defaultObjectPath));
+        lg2::error("Error Sync data with service: {E} SERVICE={S} PATH={P}",
+                   "E", e.what(), "S", mdrV2Service, "P",
+                   phosphor::smbios::defaultObjectPath);
         return false;
     }
 
     if (!status)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Sync data with service failure");
+        lg2::error("Sync data with service failure");
         return false;
     }
 
@@ -130,8 +126,7 @@ bool SmbiosBlobHandler::write(uint16_t session, uint32_t offset,
 
     if (!(blobPtr->state & blobs::StateFlags::open_write))
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "No open blob to write");
+        lg2::error("No open blob to write");
         return false;
     }
 
@@ -170,8 +165,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
 {
     if (!data.empty())
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Unexpected data provided to commit call");
+        lg2::error("Unexpected data provided to commit call");
         return false;
     }
 
@@ -205,8 +199,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
         int flag = mkdir(defaultDir.c_str(), S_IRWXU);
         if (flag != 0)
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "create folder failed for writing smbios file");
+            lg2::error("create folder failed for writing smbios file");
             blobPtr->state |= blobs::StateFlags::commit_error;
             return false;
         }
@@ -216,7 +209,7 @@ bool SmbiosBlobHandler::commit(uint16_t session,
                              std::ios_base::binary | std::ios_base::trunc);
     if (!smbiosFile.good())
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
+        lg2::error(
             "Write data from flash error - Open SMBIOS table file failure");
         blobPtr->state |= blobs::StateFlags::commit_error;
         return false;
@@ -234,9 +227,8 @@ bool SmbiosBlobHandler::commit(uint16_t session,
     }
     catch (const std::ofstream::failure& e)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Write data from flash error - write data error",
-            phosphor::logging::entry("ERROR=%s", e.what()));
+        lg2::error("Write data from flash error - write data error: {E}", "E",
+                   e.what());
         blobPtr->state |= blobs::StateFlags::commit_error;
         return false;
     }

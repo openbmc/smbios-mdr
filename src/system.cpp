@@ -136,13 +136,12 @@ std::string System::version(std::string /* value */)
             std::ofstream smbiosFile(smbiosFilePath, std::ios_base::trunc);
             if (!smbiosFile.good())
             {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "Open MDRV2 table file failure");
+                lg2::error("Open MDRV2 table file failure");
                 return result;
             }
             smbiosFile.clear();
             smbiosFile.close();
-            phosphor::logging::log<phosphor::logging::level::ERR>(
+            lg2::error(
                 "Find non-print char, delete the broken MDRV2 table file!");
             return sdbusplus::server::xyz::openbmc_project::inventory::
                 decorator::Revision::version(result);
