@@ -50,6 +50,23 @@
       "message": "Thanks for the patch, nice improvement!",
       "revId": "946cd6c43266873a074e0d1d6fb7daffe018f70a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "60e20375_735ee83a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-04-09T15:49:21Z",
+      "side": 1,
+      "message": "Need rebase before able to merge",
+      "revId": "946cd6c43266873a074e0d1d6fb7daffe018f70a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
