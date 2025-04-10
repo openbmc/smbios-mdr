@@ -67,6 +67,24 @@
       "message": "Need rebase before able to merge",
       "revId": "946cd6c43266873a074e0d1d6fb7daffe018f70a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "384c4c47_5e5a8235",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-10T03:35:33Z",
+      "side": 1,
+      "message": "Tried rebase but the gerrit says its up to date.",
+      "parentUuid": "60e20375_735ee83a",
+      "revId": "946cd6c43266873a074e0d1d6fb7daffe018f70a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
