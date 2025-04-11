@@ -99,6 +99,7 @@ void Dimm::memoryInfoUpdate(uint8_t* smbiosTableStorage,
     dimmType(memoryInfo->memoryType);
     dimmTypeDetail(memoryInfo->typeDetail);
     maxMemorySpeedInMhz(memoryInfo->speed);
+    updateFormFactor(memoryInfo->formFactor);
     dimmManufacturer(memoryInfo->manufacturer, memoryInfo->length, dataIn);
     dimmSerialNum(memoryInfo->serialNum, memoryInfo->length, dataIn);
     dimmPartNum(memoryInfo->partNum, memoryInfo->length, dataIn);
@@ -463,6 +464,22 @@ bool Dimm::functional(bool value)
 {
     return sdbusplus::server::xyz::openbmc_project::state::decorator::
         OperationalStatus::functional(value);
+}
+
+void Dimm::updateFormFactor(const uint8_t formFactorKey)
+{
+    std::map<uint8_t, FormFactor>::const_iterator it =
+        dimmFormFactorMap.find(formFactorKey);
+    if (it != dimmFormFactorMap.end())
+    {
+        formFactor(it->second);
+    }
+}
+
+FormFactor Dimm::formFactor(FormFactor value)
+{
+    return sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::
+        formFactor(value);
 }
 
 Json Dimm::parseConfigFile()
