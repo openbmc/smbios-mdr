@@ -42,6 +42,9 @@ using EccType =
 using MemoryTechType =
     sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::MemoryTech;
 
+using FormFactor =
+    sdbusplus::server::xyz::openbmc_project::inventory::item::Dimm::FormFactor;
+
 using Json = nlohmann::json;
 
 class Dimm :
@@ -127,6 +130,7 @@ class Dimm :
     uint16_t memoryConfiguredSpeedInMhz(uint16_t value) override;
     bool functional(bool value) override;
     EccType ecc(EccType value) override;
+    FormFactor formFactor(FormFactor value) override;
     Json parseConfigFile();
 
   private:
@@ -151,6 +155,7 @@ class Dimm :
     void dimmPartNum(const uint8_t positionNum, const uint8_t structLen,
                      uint8_t* dataIn);
     void updateEccType(uint16_t exPhyArrayHandle);
+    void updateFormFactor(const uint8_t formFactorKey);
 };
 
 struct MemoryInfo
@@ -263,6 +268,9 @@ struct memoryLocation
     uint8_t slot;
     uint8_t channel;
 };
+
+const std::map<uint8_t, FormFactor> dimmFormFactorMap = {
+    {0x10, FormFactor::Die}};
 
 } // namespace smbios
 
