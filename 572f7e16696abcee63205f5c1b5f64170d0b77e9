@@ -16,6 +16,29 @@
       "message": "LGTM",
       "revId": "572f7e16696abcee63205f5c1b5f64170d0b77e9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98463c74_255bfbf9",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000559
+      },
+      "writtenOn": "2025-04-17T15:46:49Z",
+      "side": 1,
+      "message": "Why is this default chosen? Is it based off any spec?",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 38
+      },
+      "revId": "572f7e16696abcee63205f5c1b5f64170d0b77e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
