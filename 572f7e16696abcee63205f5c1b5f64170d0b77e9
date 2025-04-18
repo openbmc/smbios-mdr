@@ -39,6 +39,30 @@
       },
       "revId": "572f7e16696abcee63205f5c1b5f64170d0b77e9",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd1b9903_bd30795c",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-18T08:35:09Z",
+      "side": 1,
+      "message": "We have no document suggesting default as RDIMM. \nHence modified the code to have FormFactor when it is found in the map",
+      "parentUuid": "98463c74_255bfbf9",
+      "range": {
+        "startLine": 475,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 38
+      },
+      "revId": "572f7e16696abcee63205f5c1b5f64170d0b77e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
