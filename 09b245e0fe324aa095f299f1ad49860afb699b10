@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f462ec4_6ca3a1e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-24T09:14:32Z",
+      "side": 1,
+      "message": "Yes here is the possible values https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml",
+      "parentUuid": "8c097947_0ff0d35a",
+      "revId": "09b245e0fe324aa095f299f1ad49860afb699b10",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "24e83be3_b6bf0cdd",
@@ -52,6 +70,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ad3f5e6_9700d05a",
+        "filename": "include/dimm.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-24T09:14:32Z",
+      "side": 1,
+      "message": "On the platform where I tested I only had DIMM of FormFactor Die\nPossible ones are https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml",
+      "parentUuid": "449a5bb0_17778acf",
+      "revId": "09b245e0fe324aa095f299f1ad49860afb699b10",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0248c11d_84815ba2",
@@ -65,6 +101,24 @@
       "writtenOn": "2025-04-24T09:05:25Z",
       "side": 1,
       "message": "update if its not the same ?",
+      "revId": "09b245e0fe324aa095f299f1ad49860afb699b10",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "14c4e671_9a63b2e5",
+        "filename": "src/dimm.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1002307
+      },
+      "writtenOn": "2025-04-24T09:14:32Z",
+      "side": 1,
+      "message": "There is no default value so kept it as empty https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Inventory/Item/Dimm.interface.yaml",
+      "parentUuid": "0248c11d_84815ba2",
       "revId": "09b245e0fe324aa095f299f1ad49860afb699b10",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
