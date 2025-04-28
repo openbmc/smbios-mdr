@@ -60,6 +60,14 @@ class Pcie :
     uint8_t* storage;
     std::string motherboardPath;
 
+    struct PeerGroup
+    {
+        uint16_t segGroupNum;
+        uint8_t busNum;
+        uint8_t deviceNum;
+        uint8_t dataBusWidth;
+    } __attribute__((packed));
+
     struct SystemSlotInfo
     {
         uint8_t type;
@@ -76,10 +84,22 @@ class Pcie :
         uint16_t segGroupNum;
         uint8_t busNum;
         uint8_t deviceNum;
+        uint8_t dataBusWidth;
+        uint8_t peerGorupingCount;
+        PeerGroup peerGroups[1];
+    } __attribute__((packed));
+
+    struct SystemSlotInfoAfterPeerGroups
+    {
+        uint8_t slotInformation;
+        uint8_t slotPhysicalWidth;
+        uint16_t slotPitch;
+        uint8_t slotHeight;
     } __attribute__((packed));
 
     void pcieGeneration(const uint8_t type);
-    void pcieType(const uint8_t type, const uint8_t slotLength);
+    void pcieType(const uint8_t type, const uint8_t slotLength,
+                  const uint8_t slotHeight);
     void pcieLaneSize(const uint8_t width);
     void pcieIsHotPluggable(const uint8_t characteristics);
     void pcieLocation(const uint8_t slotDesignation, const uint8_t structLen,
@@ -135,6 +155,9 @@ static const std::unordered_map<uint8_t, PCIeType> pcieTypeTable = {
 
 static const std::unordered_map<uint8_t, PCIeType> PCIeTypeByLength = {
     {0x03, PCIeType::HalfLength}, {0x04, PCIeType::FullLength}};
+
+static const std::unordered_map<uint8_t, PCIeType> PCIeTypeByHeight = {
+    {0x04, PCIeType::LowProfile}};
 
 const std::map<uint8_t, size_t> pcieLanesTable = {
     {0x08, 1}, {0x09, 2}, {0xa, 4}, {0xb, 8}, {0xc, 12}, {0xd, 16}, {0xe, 32}};

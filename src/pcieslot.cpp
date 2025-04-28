@@ -44,8 +44,32 @@ void Pcie::pcieInfoUpdate(uint8_t* smbiosTableStorage,
 
     auto pcieInfo = reinterpret_cast<struct SystemSlotInfo*>(dataIn);
 
+    uint8_t slotHeight;
+    // check if the data inside the valid length, some data might not exist in
+    // older SMBIOS version
+    auto isValid = [pcieInfo](void* varAddr, size_t length = 1) {
+        char* base = reinterpret_cast<char*>(pcieInfo);
+        char* data = reinterpret_cast<char*>(varAddr);
+        size_t offset = data - base;
+        if ((data >= base) && (offset + length - 1) < pcieInfo->length)
+        {
+            return true;
+        }
+        return false;
+    };
+    if (isValid(&pcieInfo->peerGorupingCount))
+    {
+        auto pcieInfoAfterPeerGroups =
+            reinterpret_cast<struct SystemSlotInfoAfterPeerGroups*>(
+                &(pcieInfo->peerGroups[pcieInfo->peerGorupingCount]));
+        if (isValid(&pcieInfoAfterPeerGroups->slotHeight))
+        {
+            slotHeight = pcieInfoAfterPeerGroups->slotHeight;
+        }
+    }
+
     pcieGeneration(pcieInfo->slotType);
-    pcieType(pcieInfo->slotType, pcieInfo->slotLength);
+    pcieType(pcieInfo->slotType, pcieInfo->slotLength, slotHeight);
     pcieLaneSize(pcieInfo->slotDataBusWidth);
     pcieIsHotPluggable(pcieInfo->characteristics2);
     pcieLocation(pcieInfo->slotDesignation, pcieInfo->length, dataIn);
@@ -81,24 +105,27 @@ void Pcie::pcieGeneration(const uint8_t type)
     }
 }
 
-void Pcie::pcieType(const uint8_t type, const uint8_t slotLength)
+void Pcie::pcieType(const uint8_t type, const uint8_t slotLength,
+                    const uint8_t slotHeight)
 {
-    // Try to find PCIeType in the main table
-    auto it = pcieTypeTable.find(type);
+    // First, try to find the PCIe type in the main table
     PCIeType pcieSlotType = PCIeType::Unknown;
 
-    if (it != pcieTypeTable.end())
+    auto findPcieSlotType = [&](const auto& table, uint8_t key) {
+        auto it = table.find(key);
+        return (it != table.end()) ? it->second : PCIeType::Unknown;
+    };
+
+    // Check each table in order: pcieTypeTable, PCIeTypeByLength,
+    // PCIeTypeByHeight
+    pcieSlotType = findPcieSlotType(pcieTypeTable, type);
+    if (pcieSlotType == PCIeType::Unknown)
     {
-        pcieSlotType = it->second;
+        pcieSlotType = findPcieSlotType(PCIeTypeByLength, slotLength);
     }
-    else
+    if (pcieSlotType == PCIeType::Unknown)
     {
-        // If not found in `pcieTypeTable`, check `PCIeTypeByLength`
-        auto slotIt = PCIeTypeByLength.find(slotLength);
-        if (slotIt != PCIeTypeByLength.end())
-        {
-            pcieSlotType = slotIt->second;
-        }
+        pcieSlotType = findPcieSlotType(PCIeTypeByHeight, slotHeight);
     }
 
     // Set the slot type
