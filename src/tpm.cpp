@@ -44,12 +44,7 @@ void Tpm::tpmInfoUpdate(uint8_t* smbiosTableStorage,
     tpmVendor(tpmInfo);
     tpmFirmwareVersion(tpmInfo);
     tpmDescription(tpmInfo->description, tpmInfo->length, dataIn);
-    if (!motherboardPath.empty())
-    {
-        std::vector<std::tuple<std::string, std::string, std::string>> assocs;
-        assocs.emplace_back("chassis", "trusted_components", motherboardPath);
-        association::associations(assocs);
-    }
+    trustedComponentType(trustedComponent::ComponentAttachType::Discrete);
 }
 
 void Tpm::tpmVendor(const struct TPMInfo* tpmInfo)
