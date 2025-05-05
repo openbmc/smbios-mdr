@@ -69,3 +69,10 @@ option(
     value: 'disabled',
     description: 'Use Firmware Component value as dbus object path',
 )
+
+option(
+    'custom-dbus-path',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Use the Custom DBus bject path for Inventory'
+)

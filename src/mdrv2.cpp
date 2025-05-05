@@ -528,7 +528,7 @@ void MDRV2::systemInfoUpdate()
     for (unsigned int index = 0; index < *num; index++)
     {
         std::string path =
-            smbiosInventoryPath + cpuSuffix + std::to_string(index);
+            phosphor::smbios::getObjectPath(smbiosInventoryPath, motherboardPath, cpuSuffix, index);
         if (index + 1 > cpus.size())
         {
             cpus.emplace_back(std::make_unique<phosphor::smbios::Cpu>(
@@ -560,7 +560,7 @@ void MDRV2::systemInfoUpdate()
     for (unsigned int index = 0; index < *num; index++)
     {
         std::string path =
-            smbiosInventoryPath + dimmSuffix + std::to_string(index);
+            phosphor::smbios::getObjectPath(smbiosInventoryPath, motherboardPath, dimmSuffix, index);
         if (index + 1 > dimms.size())
         {
             dimms.emplace_back(std::make_unique<phosphor::smbios::Dimm>(
@@ -592,7 +592,7 @@ void MDRV2::systemInfoUpdate()
     for (unsigned int index = 0; index < *num; index++)
     {
         std::string path =
-            smbiosInventoryPath + pcieSuffix + std::to_string(index);
+            phosphor::smbios::getObjectPath(smbiosInventoryPath, motherboardPath, pcieSuffix, index);
         if (index + 1 > pcies.size())
         {
             pcies.emplace_back(std::make_unique<phosphor::smbios::Pcie>(
@@ -623,7 +623,7 @@ void MDRV2::systemInfoUpdate()
     for (unsigned int index = 0; index < *num; index++)
     {
         std::string path =
-            smbiosInventoryPath + tpmSuffix + std::to_string(index);
+            phosphor::smbios::getObjectPath(smbiosInventoryPath, motherboardPath, tpmSuffix, index);
         if (index + 1 > tpms.size())
         {
             tpms.emplace_back(std::make_unique<phosphor::smbios::Tpm>(
