@@ -349,3 +349,18 @@ static inline std::string positionToString(uint8_t positionNum,
     std::string result = target;
     return result;
 }
+
+static inline std::string getObjectPath(
+    const std::string& smbiosInventoryPath,
+    [[maybe_unused]] const std::string& motherboardPath,
+    const std::string& suffix, const unsigned int& index)
+{
+    std::string path = smbiosInventoryPath + suffix + std::to_string(index);
+#ifdef CUSTOM_DBUS_PATH
+    if (!motherboardPath.empty() && path.starts_with(defaultMotherboardPath))
+    {
+        path.replace(0, strlen(defaultMotherboardPath), motherboardPath);
+    }
+#endif
+    return path;
+}
