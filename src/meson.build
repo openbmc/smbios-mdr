@@ -27,6 +27,10 @@ if get_option('expose-firmware-component-name').allowed()
     cpp_args_smbios += ['-DEXPOSE_FW_COMPONENT_NAME']
 endif
 
+if get_option('custom-dbus-path').allowed()
+    cpp_args_smbios += ['-DCUSTOM_DBUS_PATH']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
