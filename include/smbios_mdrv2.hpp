@@ -176,6 +176,9 @@ static constexpr const char* tpmSuffix = "/chassis/motherboard/tpm";
 
 static constexpr const char* firmwarePath = "/xyz/openbmc_project/software";
 
+static constexpr const char* defaultMotherboardPath =
+    "/xyz/openbmc_project/inventory/system/chassis/motherboard";
+
 constexpr std::array<SMBIOSVersion, 8> supportedSMBIOSVersions{
     SMBIOSVersion{3, 0}, SMBIOSVersion{3, 2}, SMBIOSVersion{3, 3},
     SMBIOSVersion{3, 4}, SMBIOSVersion{3, 5}, SMBIOSVersion{3, 6},
