@@ -89,11 +89,6 @@ void FirmwareInventory::firmwareInfoUpdate(uint8_t* smbiosTableStorage)
                          dataIn);
     present(true);
     purpose(softwareVersion::VersionPurpose::Other);
-
-    std::vector<std::tuple<std::string, std::string, std::string>> assocs;
-    assocs.emplace_back("software_version", "functional",
-                        "/xyz/openbmc_project/software");
-    association::associations(assocs);
 }
 
 std::string FirmwareInventory::checkAndCreateFirmwarePath(
@@ -205,7 +200,7 @@ void FirmwareInventory::firmwareReleaseDate(
     const uint8_t positionNum, const uint8_t structLen, uint8_t* dataIn)
 {
     std::string result = positionToString(positionNum, structLen, dataIn);
-    buildDate(result);
+    releaseDate(result);
 }
 
 void FirmwareInventory::firmwareManufacturer(

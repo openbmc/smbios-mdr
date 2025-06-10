@@ -2,9 +2,8 @@
 #include "smbios_mdrv2.hpp"
 
 #include <sdbusplus/asio/connection.hpp>
-#include <xyz/openbmc_project/Association/Definitions/server.hpp>
-#include <xyz/openbmc_project/Inventory/Decorator/Asset/server.hpp>
 #include <xyz/openbmc_project/Inventory/Item/server.hpp>
+#include <xyz/openbmc_project/Software/Asset/server.hpp>
 #include <xyz/openbmc_project/Software/ExtendedVersion/server.hpp>
 #include <xyz/openbmc_project/Software/Version/server.hpp>
 
@@ -20,10 +19,7 @@ namespace utils
 std::vector<std::string> getExistingVersionPaths(sdbusplus::bus_t& bus);
 }
 
-using association =
-    sdbusplus::server::xyz::openbmc_project::association::Definitions;
-using asset =
-    sdbusplus::server::xyz::openbmc_project::inventory::decorator::Asset;
+using softwareAsset = sdbusplus::server::xyz::openbmc_project::software::Asset;
 using item = sdbusplus::server::xyz::openbmc_project::inventory::Item;
 using softwareVersion =
     sdbusplus::server::xyz::openbmc_project::software::Version;
@@ -31,7 +27,7 @@ using softwareExtendedVersion =
     sdbusplus::server::xyz::openbmc_project::software::ExtendedVersion;
 
 class FirmwareInventory :
-    sdbusplus::server::object_t<asset, item, association, softwareVersion,
+    sdbusplus::server::object_t<softwareAsset, item, softwareVersion,
                                 softwareExtendedVersion>
 {
   public:
@@ -44,7 +40,7 @@ class FirmwareInventory :
 
     FirmwareInventory(sdbusplus::bus_t& bus, const std::string& objPath,
                       const uint8_t index, uint8_t* smbiosTableStorage) :
-        sdbusplus::server::object_t<asset, item, association, softwareVersion,
+        sdbusplus::server::object_t<softwareAsset, item, softwareVersion,
                                     softwareExtendedVersion>(bus,
                                                              objPath.c_str()),
         firmwareInventoryIndex(index), storage(smbiosTableStorage)
