@@ -670,6 +670,21 @@ void MDRV2::systemInfoUpdate()
 
 #endif
 
+    {
+        uint8_t* dataIn = smbiosDir.dir[smbiosDirIndex].dataStorage;
+        if (dataIn == nullptr)
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "instantiate cpu links failed - no storage data");
+            return;
+        }
+        dataIn = getSMBIOSTypePtr(dataIn, systemBootInformationType);
+        auto systemBootInfo = reinterpret_cast<struct SystemBootInfo*>(dataIn);
+        system_boot = std::make_unique<SystemBoot>(objServer, systemBootInfo,
+                                                   smbiosInventoryPath);
+        lg2::info("system boot info added");
+    }
+
     system.reset();
     system = std::make_unique<System>(bus, smbiosInventoryPath + systemSuffix,
                                       smbiosDir.dir[smbiosDirIndex].dataStorage,

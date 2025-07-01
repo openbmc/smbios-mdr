@@ -157,6 +157,16 @@ struct EntryPointStructure30
     uint64_t structTableAddr;
 } __attribute__((packed));
 
+struct SystemBootInfo
+{
+    uint8_t type;
+    uint8_t length;
+    uint16_t handle;
+    uint8_t reserved[6];
+    uint8_t statusCode;
+    uint32_t bootCount;
+} __attribute__((packed));
+
 struct StructureHeader
 {
     uint8_t type;
@@ -204,6 +214,7 @@ typedef enum
     systemEventLogType = 15,
     physicalMemoryArrayType = 16,
     memoryDeviceType = 17,
+    systemBootInformationType = 32,
     systemPowerSupply = 39,
     onboardDevicesExtended = 41,
     tpmDeviceType = 43,

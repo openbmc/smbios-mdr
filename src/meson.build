@@ -38,6 +38,7 @@ executable(
     'cpu.cpp',
     'dimm.cpp',
     'system.cpp',
+    'system_boot.cpp',
     'pcieslot.cpp',
     'tpm.cpp',
     'firmware_inventory.cpp',

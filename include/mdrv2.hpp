@@ -21,6 +21,7 @@
 #include "pcieslot.hpp"
 #include "smbios_mdrv2.hpp"
 #include "system.hpp"
+#include "system_boot.hpp"
 #include "tpm.hpp"
 
 #include <sys/stat.h>
@@ -196,6 +197,7 @@ class MDRV2 :
     std::vector<std::unique_ptr<Tpm>> tpms;
     std::vector<std::unique_ptr<FirmwareInventory>> firmwareCollection;
     std::unique_ptr<System> system;
+    std::unique_ptr<SystemBoot> system_boot;
     std::shared_ptr<sdbusplus::asio::dbus_interface> smbiosInterface;
 
     std::string smbiosFilePath;
