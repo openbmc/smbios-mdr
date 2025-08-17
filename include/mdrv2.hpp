@@ -188,6 +188,9 @@ class MDRV2 :
     bool smbiosIsAvailForUpdate(uint8_t index);
     inline uint8_t smbiosValidFlag(uint8_t index);
     void systemInfoUpdate(void);
+    void onMotherboardPathFound(const std::string& moboPath,
+                                const std::string& matchParentPath,
+                                bool requireExactMatch);
 
     std::optional<size_t> getTotalSmbiosEntries(uint8_t smbiosType);
     std::vector<std::unique_ptr<Cpu>> cpus;

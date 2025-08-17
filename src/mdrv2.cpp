@@ -401,48 +401,54 @@ void MDRV2::systemInfoUpdate()
         requireExactMatch = true;
     }
 
-    std::string motherboardPath;
-    auto method = bus->new_method_call(mapperBusName, mapperPath,
-                                       mapperInterface, "GetSubTreePaths");
-    method.append(mapperAncestorPath);
-    method.append(0);
-
     // If customized, also accept Board as anchor, not just System
     std::vector<std::string> desiredInterfaces{systemInterface};
     if (requireExactMatch)
     {
         desiredInterfaces.emplace_back(boardInterface);
     }
-    method.append(desiredInterfaces);
 
-    try
-    {
-        std::vector<std::string> paths;
-        sdbusplus::message_t reply = bus->call(method);
-        reply.read(paths);
-
-        size_t pathsCount = paths.size();
-        for (size_t i = 0; i < pathsCount; ++i)
-        {
-            if (requireExactMatch && (paths[i] != smbiosInventoryPath))
+    bus->async_method_call(
+        [this, requireExactMatch,
+         matchParentPath](const boost::system::error_code ec,
+                          const std::vector<std::string>& paths) {
+            if (ec)
             {
-                continue;
+                lg2::error(
+                    "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
+                    "I", smbiosInventoryPath, "E", ec.what());
+                lg2::error("Failed to query system motherboard: {ERROR}",
+                           "ERROR", e.what());
+                // If the call fails, proceed as if no path was found.
+                onMotherboardPathFound("", matchParentPath, requireExactMatch);
+                return;
             }
 
-            motherboardPath = std::move(paths[i]);
-            break;
-        }
-    }
-    catch (const sdbusplus::exception_t& e)
-    {
-        lg2::error(
-            "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
-            "I", smbiosInventoryPath, "E", e.what());
-        lg2::error("Failed to query system motherboard: {ERROR}", "ERROR",
-                   e.what());
-    }
+            std::string motherboardPath;
+            for (const auto& path : paths)
+            {
+                if (requireExactMatch && (path != smbiosInventoryPath))
+                {
+                    continue;
+                }
+                motherboardPath = path;
+                break;
+            }
 
-    if (motherboardPath.empty())
+            // Call the continuation function with the result.
+            onMotherboardPathFound(motherboardPath, matchParentPath,
+                                   requireExactMatch);
+        },
+        mapperBusName, mapperPath, mapperInterface, "GetSubTreePaths",
+        mapperAncestorPath, 0, desiredInterfaces);
+}
+
+void MDRV2::onMotherboardPathFound(const std::string& moboPath,
+                                   const std::string& matchParentPath,
+                                   bool requireExactMatch)
+{
+    std::string motherboardPath = moboPath;
+    if (moboPath.empty())
     {
         lg2::error(
             "Failed to get system motherboard dbus path. Setting up a match rule");
@@ -473,8 +479,8 @@ void MDRV2::systemInfoUpdate()
                         gotMatch = true;
                     }
 
-                    // If customized, also accept Board as anchor, not just
-                    // System
+                    // If customized, also accept Board as anchor, not
+                    // just System
                     if (requireExactMatch && msgData.contains(boardInterface))
                     {
                         lg2::info("Successful match on board interface");
