@@ -402,10 +402,6 @@ void MDRV2::systemInfoUpdate()
     }
 
     std::string motherboardPath;
-    auto method = bus->new_method_call(mapperBusName, mapperPath,
-                                       mapperInterface, "GetSubTreePaths");
-    method.append(mapperAncestorPath);
-    method.append(0);
 
     // If customized, also accept Board as anchor, not just System
     std::vector<std::string> desiredInterfaces{systemInterface};
@@ -413,34 +409,34 @@ void MDRV2::systemInfoUpdate()
     {
         desiredInterfaces.emplace_back(boardInterface);
     }
-    method.append(desiredInterfaces);
 
-    try
-    {
-        std::vector<std::string> paths;
-        sdbusplus::message_t reply = bus->call(method);
-        reply.read(paths);
-
-        size_t pathsCount = paths.size();
-        for (size_t i = 0; i < pathsCount; ++i)
-        {
-            if (requireExactMatch && (paths[i] != smbiosInventoryPath))
+    bus->async_method_call(
+        [this, requireExactMatch,
+         motherboardPath](const boost::system::error_code ec,
+                          const std::vector<std::string>& paths) {
+            if (ec)
             {
-                continue;
+                lg2::error(
+                    "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
+                    "I", smbiosInventoryPath, "E", ec.what());
+                lg2::error("Failed to query system motherboard: {ERROR}",
+                           "ERROR", ec.what());
             }
 
-            motherboardPath = std::move(paths[i]);
-            break;
-        }
-    }
-    catch (const sdbusplus::exception_t& e)
-    {
-        lg2::error(
-            "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
-            "I", smbiosInventoryPath, "E", e.what());
-        lg2::error("Failed to query system motherboard: {ERROR}", "ERROR",
-                   e.what());
-    }
+            size_t pathsCount = paths.size();
+            for (size_t i = 0; i < pathsCount; ++i)
+            {
+                if (requireExactMatch && (paths[i] != smbiosInventoryPath))
+                {
+                    continue;
+                }
+
+                motherboardPath = paths[i];
+                break;
+            }
+        },
+        mapperBusName, mapperPath, mapperInterface, "GetSubTreePaths",
+        mapperAncestorPath, 0, desiredInterfaces);
 
     if (motherboardPath.empty())
     {
