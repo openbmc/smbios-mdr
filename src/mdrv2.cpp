@@ -417,8 +417,6 @@ void MDRV2::systemInfoUpdate()
                 lg2::error(
                     "Exception while trying to find Inventory anchor object for SMBIOS content {I}: {E}",
                     "I", smbiosInventoryPath, "E", ec.what());
-                lg2::error("Failed to query system motherboard: {ERROR}",
-                           "ERROR", e.what());
                 // If the call fails, proceed as if no path was found.
                 onMotherboardPathFound("", matchParentPath, requireExactMatch);
                 return;
@@ -447,7 +445,6 @@ void MDRV2::onMotherboardPathFound(const std::string& moboPath,
                                    const std::string& matchParentPath,
                                    bool requireExactMatch)
 {
-    std::string motherboardPath = moboPath;
     if (moboPath.empty())
     {
         lg2::error(
@@ -463,7 +460,8 @@ void MDRV2::onMotherboardPathFound(const std::string& moboPath,
                 *bus,
                 sdbusplus::bus::match::rules::interfacesAdded() +
                     sdbusplus::bus::match::rules::argNpath(0, matchParentPath),
-                [this, requireExactMatch](sdbusplus::message_t& msg) {
+                [this, requireExactMatch,
+                 matchParentPath](sdbusplus::message_t& msg) {
                     sdbusplus::message::object_path objectName;
                     boost::container::flat_map<
                         std::string,
@@ -489,31 +487,33 @@ void MDRV2::onMotherboardPathFound(const std::string& moboPath,
 
                     if (gotMatch)
                     {
-                        // There is a race condition here: our desired interface
-                        // has just been created, triggering the D-Bus callback,
-                        // but Object Mapper has not been told of it yet. The
-                        // mapper must also add it. Stall for time, so it can.
-                        sleep(2);
-                        systemInfoUpdate();
+                        // We have the object path directly from the signal.
+                        // Call the continuation function immediately with the
+                        // path.
+                        lg2::info("Found motherboard via match: {PATH}", "PATH",
+                                  objectName.str);
+
+                        // Destroy the match, it has served its purpose.
+                        motherboardConfigMatch.reset();
+
+                        onMotherboardPathFound(objectName.str, matchParentPath,
+                                               requireExactMatch);
                     }
                 });
         }
+        // Return early if no path was found to avoid empty motherboard object
+        return;
     }
-    else
-    {
+    std::string motherboardPath = moboPath;
 #ifdef ASSOC_TRIM_PATH
-        // When enabled, chop off last component of motherboardPath, to trim one
-        // layer, so that associations are built to the underlying chassis
-        // itself, not the system boards in the chassis. This is for
-        // compatibility with traditional systems which only have one
-        // motherboard per chassis.
-        std::filesystem::path foundPath(motherboardPath);
-        motherboardPath = foundPath.parent_path().string();
+    // When enabled, chop off last component of motherboardPath, to trim
+    // one layer, so that associations are built to the underlying
+    // chassis itself, not the system boards in the chassis. This is for
+    // compatibility with traditional systems which only have one
+    // motherboard per chassis.
+    std::filesystem::path foundPath(motherboardPath);
+    motherboardPath = foundPath.parent_path().string();
 #endif
-
-        lg2::info("Found Inventory anchor object for SMBIOS content {I}: {M}",
-                  "I", smbiosInventoryPath, "M", motherboardPath);
-    }
 
     lg2::info("Using Inventory anchor object for SMBIOS content {I}: {M}", "I",
               smbiosInventoryPath, "M", motherboardPath);
