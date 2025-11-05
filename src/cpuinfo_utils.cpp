@@ -236,16 +236,16 @@ static void subscribeToProperty(
             sdbusplus::bus::match::rules::interfacesAdded(),
         [object = std::string(object), interface = std::string(interface),
          commonPropHandler](sdbusplus::message_t& reply) {
-            sdbusplus::message::object_path changedObject;
-            reply.read(changedObject);
+            auto changedObject =
+                reply.unpack<sdbusplus::message::object_path>();
+
             if (changedObject != object)
             {
                 return;
             }
 
-            std::vector<std::pair<std::string, ChangedPropertiesType>>
-                changedInterfaces;
-            reply.read(changedInterfaces);
+            auto changedInterfaces = reply.unpack<
+                std::vector<std::pair<std::string, ChangedPropertiesType>>>();
 
             for (const auto& [changedInterface, changedProps] :
                  changedInterfaces)
