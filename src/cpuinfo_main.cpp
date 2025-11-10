@@ -26,6 +26,7 @@
 #include <boost/asio/steady_timer.hpp>
 #include <boost/container/flat_map.hpp>
 
+#include <filesystem>
 #include <iostream>
 #include <list>
 #include <optional>
@@ -100,11 +101,98 @@ static void setDbusProperty(
 static void createCpuUpdatedMatch(
     const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu);
 
+static std::vector<uint8_t> parseI2cMuxDevices(const std::string& muxPath)
+{
+    std::vector<uint8_t> busNumbers;
+
+    try
+    {
+        // Iterate through the mux directory to find symlinks
+        for (const auto& entry : std::filesystem::directory_iterator(muxPath))
+        {
+            if (entry.is_symlink())
+            {
+                auto ec = std::error_code();
+                auto targetPath =
+                    std::filesystem::read_symlink(entry.path(), ec);
+                if (!ec)
+                {
+                    std::string targetName = targetPath.filename().string();
+                    // Extract bus number from "/dev/i2c-XX" format
+                    if (targetName.starts_with("i2c-"))
+                    {
+                        try
+                        {
+                            uint8_t busNumber = static_cast<uint8_t>(
+                                std::stoul(targetName.substr(4)));
+                            busNumbers.push_back(busNumber);
+                        }
+                        catch (const std::exception& e)
+                        {
+                            phosphor::logging::log<
+                                phosphor::logging::level::ERR>(
+                                "Failed to parse bus number from symlink",
+                                phosphor::logging::entry("TARGET=%s",
+                                                         targetName.c_str()),
+                                phosphor::logging::entry(
+                                    "SYMLINK=%s",
+                                    entry.path().filename().string().c_str()));
+                        }
+                    }
+                }
+                else
+                {
+                    phosphor::logging::log<phosphor::logging::level::ERR>(
+                        "Failed to read symlink in mux directory",
+                        phosphor::logging::entry(
+                            "SYMLINK=%s", entry.path().string().c_str()));
+                }
+            }
+        }
+
+        std::sort(busNumbers.begin(), busNumbers.end());
+    }
+    catch (const std::exception& e)
+    {
+        phosphor::logging::log<phosphor::logging::level::ERR>(
+            "Exception in parseI2cMuxDevices",
+            phosphor::logging::entry("ERROR=%s", e.what()),
+            phosphor::logging::entry("PATH=%s", muxPath.c_str()));
+    }
+
+    return busNumbers;
+}
+
 static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
                                             uint8_t regAddr, size_t count)
 {
     unsigned long funcs = 0;
-    std::string devPath = "/dev/i2c-" + std::to_string(bus);
+    std::string devPath;
+
+    if (std::filesystem::exists("/dev/i2c-mux/SMB_PIROM_Mux"))
+    {
+        // Parse I2C mux devices and get available bus numbers
+        auto muxBusNumbers = parseI2cMuxDevices("/dev/i2c-mux/SMB_PIROM_Mux");
+
+        if (!muxBusNumbers.empty())
+        {
+            devPath = "/dev/i2c-" + std::to_string(muxBusNumbers[0]);
+        }
+        else
+        {
+            phosphor::logging::log<phosphor::logging::level::ERR>(
+                "No I2C mux devices found in SMB_PIROM_Mux");
+            return std::nullopt;
+        }
+    }
+    else
+    {
+        devPath = "/dev/i2c-" + std::to_string(bus);
+    }
+
+    phosphor::logging::log<phosphor::logging::level::INFO>(
+        "Using I2C device path",
+        phosphor::logging::entry("PATH=%s", devPath.c_str()));
 
     int fd = ::open(devPath.c_str(), O_RDWR);
     if (fd < 0)
