@@ -35,8 +35,8 @@ class FirmwareInventory :
     ~FirmwareInventory() = default;
     FirmwareInventory(const FirmwareInventory&) = delete;
     FirmwareInventory& operator=(const FirmwareInventory&) = delete;
-    FirmwareInventory(FirmwareInventory&&) = default;
-    FirmwareInventory& operator=(FirmwareInventory&&) = default;
+    FirmwareInventory(FirmwareInventory&&) = delete;
+    FirmwareInventory& operator=(FirmwareInventory&&) = delete;
 
     FirmwareInventory(sdbusplus::bus_t& bus, const std::string& objPath,
                       const uint8_t index, uint8_t* smbiosTableStorage) :
