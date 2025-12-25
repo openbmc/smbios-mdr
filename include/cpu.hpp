@@ -316,6 +316,20 @@ class Cpu :
                                 assetTagType>
 {
   public:
+    // Re‑expose Asset properties
+    using sdbusplus::server::xyz::openbmc_project::inventory::decorator::Asset::
+        manufacturer;
+    using sdbusplus::server::xyz::openbmc_project::inventory::decorator::Asset::
+        partNumber;
+    using sdbusplus::server::xyz::openbmc_project::inventory::decorator::Asset::
+        serialNumber;
+    using sdbusplus::server::xyz::openbmc_project::inventory::decorator::
+        Revision::version;
+    using sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu::
+        characteristics;
+    using sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu::family;
+    using sdbusplus::server::xyz::openbmc_project::inventory::item::Cpu::socket;
+
     Cpu() = delete;
     Cpu(const Cpu&) = delete;
     Cpu& operator=(const Cpu&) = delete;
