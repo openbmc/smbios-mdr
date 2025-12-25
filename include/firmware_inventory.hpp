@@ -43,7 +43,7 @@ class FirmwareInventory :
         sdbusplus::server::object_t<softwareAsset, item, softwareVersion,
                                     softwareExtendedVersion>(bus,
                                                              objPath.c_str()),
-        firmwareInventoryIndex(index), storage(smbiosTableStorage)
+        firmwareInventoryIndex(index)
     {
         firmwareInfoUpdate(smbiosTableStorage);
     }
@@ -56,8 +56,6 @@ class FirmwareInventory :
 
   private:
     int firmwareInventoryIndex;
-
-    uint8_t* storage;
 
     struct FirmwareInfo
     {
