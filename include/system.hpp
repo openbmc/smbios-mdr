@@ -38,8 +38,8 @@ class System :
     ~System() = default;
     System(const System&) = delete;
     System& operator=(const System&) = delete;
-    System(System&&) = default;
-    System& operator=(System&&) = default;
+    System(System&&) = delete;
+    System& operator=(System&&) = delete;
 
     System(std::shared_ptr<sdbusplus::asio::connection> bus,
            std::string objPath, uint8_t* smbiosTableStorage,

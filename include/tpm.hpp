@@ -32,8 +32,8 @@ class Tpm :
     ~Tpm() = default;
     Tpm(const Tpm&) = delete;
     Tpm& operator=(const Tpm&) = delete;
-    Tpm(Tpm&&) = default;
-    Tpm& operator=(Tpm&&) = default;
+    Tpm(Tpm&&) = delete;
+    Tpm& operator=(Tpm&&) = delete;
 
     Tpm(sdbusplus::bus_t& bus, const std::string& objPath, const uint8_t tpmID,
         uint8_t* smbiosTableStorage, const std::string& motherboard) :

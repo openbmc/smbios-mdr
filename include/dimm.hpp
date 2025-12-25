@@ -70,8 +70,8 @@ class Dimm :
     ~Dimm() = default;
     Dimm(const Dimm&) = delete;
     Dimm& operator=(const Dimm&) = delete;
-    Dimm(Dimm&&) = default;
-    Dimm& operator=(Dimm&&) = default;
+    Dimm(Dimm&&) = delete;
+    Dimm& operator=(Dimm&&) = delete;
 
     Dimm(sdbusplus::bus_t& bus, const std::string& objPath,
          const uint8_t& dimmId, uint8_t* smbiosTableStorage,
