@@ -39,11 +39,6 @@ owners:
 reviewers:
 
 
-matchers:
-- regex: .*(speed_select|sst).*
-  owners:
-  - jonathan.doman@intel.com
-
 openbmc:
 - name: Chen Yugang
   email: yugang.chen@linux.intel.com
