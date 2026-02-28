@@ -50,6 +50,13 @@ option(
 )
 
 option(
+    'pcie-device-dbus',
+    type: 'feature',
+    value: 'disabled',
+    description: 'Expose PCIeDevice D-Bus objects from SMBIOS Type 9 slots',
+)
+
+option(
     'tpm-dbus',
     type: 'feature',
     value: 'disabled',

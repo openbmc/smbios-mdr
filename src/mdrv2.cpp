@@ -606,6 +606,39 @@ void MDRV2::systemInfoUpdate()
         }
     }
 
+#ifdef PCIE_DEVICE_DBUS
+    // Create a PCIeDevice object for each PCIeSlot.
+    // Reuses the same slot count (*num) from getTotalSmbiosEntries above.
+    if (*num < pcieDevices.size())
+    {
+        pcieDevices.resize(*num);
+    }
+
+    for (unsigned int index = 0; index < *num; index++)
+    {
+        std::string devicePath = getObjectPath(
+            smbiosInventoryPath, motherboardPath, pcieDeviceSuffix, index);
+        std::string slotPath = getObjectPath(smbiosInventoryPath,
+                                             motherboardPath, pcieSuffix,
+                                             index);
+
+        if (index + 1 > pcieDevices.size())
+        {
+            pcieDevices.emplace_back(
+                std::make_unique<phosphor::smbios::PcieDevice>(
+                    *bus, devicePath, index,
+                    smbiosDir.dir[smbiosDirIndex].dataStorage,
+                    motherboardPath, slotPath));
+        }
+        else
+        {
+            pcieDevices[index]->pcieDeviceInfoUpdate(
+                smbiosDir.dir[smbiosDirIndex].dataStorage, motherboardPath,
+                slotPath);
+        }
+    }
+#endif
+
 #ifdef TPM_DBUS
 
     num = getTotalSmbiosEntries(tpmDeviceType);
