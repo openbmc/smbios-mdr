@@ -23,6 +23,10 @@
 #include "system.hpp"
 #include "tpm.hpp"
 
+#ifdef PCIE_DEVICE_DBUS
+#include "pciedevice.hpp"
+#endif
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -193,6 +197,9 @@ class MDRV2 :
     std::vector<std::unique_ptr<Cpu>> cpus;
     std::vector<std::unique_ptr<Dimm>> dimms;
     std::vector<std::unique_ptr<Pcie>> pcies;
+#ifdef PCIE_DEVICE_DBUS
+    std::vector<std::unique_ptr<PcieDevice>> pcieDevices;
+#endif
     std::vector<std::unique_ptr<Tpm>> tpms;
     std::vector<std::unique_ptr<FirmwareInventory>> firmwareCollection;
     std::unique_ptr<System> system;

@@ -31,6 +31,15 @@ if get_option('custom-dbus-path').allowed()
     cpp_args_smbios += ['-DCUSTOM_DBUS_PATH']
 endif
 
+if get_option('pcie-device-dbus').allowed()
+    cpp_args_smbios += ['-DPCIE_DEVICE_DBUS']
+endif
+
+pcie_device_src = []
+if get_option('pcie-device-dbus').allowed()
+    pcie_device_src = ['pciedevice.cpp']
+endif
+
 executable(
     'smbiosmdrv2app',
     'mdrv2.cpp',
@@ -41,6 +50,7 @@ executable(
     'pcieslot.cpp',
     'tpm.cpp',
     'firmware_inventory.cpp',
+    pcie_device_src,
     cpp_args: cpp_args_smbios,
     dependencies: [
         boost_dep,
