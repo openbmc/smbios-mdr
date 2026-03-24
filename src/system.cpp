@@ -37,7 +37,7 @@ namespace smbios
 std::string System::uuid(std::string /* value */)
 {
     uint8_t* dataIn = storage;
-    dataIn = getSMBIOSTypePtr(dataIn, systemType);
+    dataIn = getSMBIOSTypePtr(dataIn, systemType, sizeof(SystemInfo));
     if (dataIn != nullptr)
     {
         auto systemInfo = reinterpret_cast<struct SystemInfo*>(dataIn);
@@ -124,7 +124,7 @@ std::string System::version(std::string /* value */)
 {
     std::string result = "No BIOS Version";
     uint8_t* dataIn = storage;
-    dataIn = getSMBIOSTypePtr(dataIn, biosType);
+    dataIn = getSMBIOSTypePtr(dataIn, biosType, sizeof(BIOSInfo));
     if (dataIn != nullptr)
     {
         auto biosInfo = reinterpret_cast<struct BIOSInfo*>(dataIn);

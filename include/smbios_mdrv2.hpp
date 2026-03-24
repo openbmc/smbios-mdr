@@ -17,6 +17,7 @@
 #pragma once
 
 #include <phosphor-logging/elog-errors.hpp>
+#include <phosphor-logging/lg2.hpp>
 
 #include <array>
 #include <string>
@@ -244,32 +245,34 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
     {
         return nullptr;
     }
-    char* smbiosData = reinterpret_cast<char*>(smbiosDataIn);
+    uint8_t* smbiosData = smbiosDataIn;
     while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
     {
         uint32_t len = *(smbiosData + 1);
         if (*smbiosData != typeId)
         {
-            smbiosData += len;
-            while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
+            smbiosData = smbiosNextPtr(smbiosData);
+            if (smbiosData == nullptr)
             {
-                smbiosData++;
-                len++;
-                if (len >= mdrSMBIOSSize) // To avoid endless loop
-                {
-                    return nullptr;
-                }
+                return nullptr;
             }
-            smbiosData += separateLen;
             continue;
         }
         if (len < size)
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Record size mismatch!");
-            return nullptr;
+            // Skip undersized entry, same as type-mismatch path above
+            lg2::warning(
+                "SMBIOS type {TYPE} entry too short ({LEN} < {MIN}), skipping",
+                "TYPE", static_cast<uint8_t>(*smbiosData), "LEN", len, "MIN",
+                size);
+            smbiosData = smbiosNextPtr(smbiosData);
+            if (smbiosData == nullptr)
+            {
+                return nullptr;
+            }
+            continue;
         }
-        return reinterpret_cast<uint8_t*>(smbiosData);
+        return smbiosData;
     }
     return nullptr;
 }
