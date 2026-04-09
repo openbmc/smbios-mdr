@@ -175,7 +175,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
     // D-Bus Property Overrides
     //
 
-    sdbusplus::message::object_path appliedConfig() const override
+    sdbusplus::object_path appliedConfig() const override
     {
         DEBUG_PRINT << "Reading AppliedConfig\n";
         if (hostState != HostState::off)
@@ -230,8 +230,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         return bfEnabled;
     }
 
-    sdbusplus::message::object_path appliedConfig(
-        sdbusplus::message::object_path value) override
+    sdbusplus::object_path appliedConfig(sdbusplus::object_path value) override
     {
         DEBUG_PRINT << "Writing AppliedConfig\n";
         const OperatingConfig* newConfig = nullptr;
@@ -253,7 +252,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         if (!sst)
         {
             std::cerr << __func__ << ": Failed to get SST provider instance\n";
-            return sdbusplus::message::object_path();
+            return sdbusplus::object_path();
         }
         try
         {
@@ -270,7 +269,7 @@ class CPUConfig : public BaseCurrentOperatingConfig
         }
 
         // return value not used
-        return sdbusplus::message::object_path();
+        return sdbusplus::object_path();
     }
 
     bool baseSpeedPriorityEnabled(bool /* value */) override

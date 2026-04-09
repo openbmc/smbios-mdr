@@ -331,7 +331,7 @@ static void createCpuUpdatedMatch(
             sdbusplus::bus::match::rules::interfacesAdded() +
                 sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
             [conn, cpu](sdbusplus::message_t& msg) {
-                sdbusplus::message::object_path objectName;
+                sdbusplus::object_path objectName;
                 boost::container::flat_map<
                     std::string,
                     boost::container::flat_map<

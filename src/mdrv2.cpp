@@ -458,7 +458,7 @@ void MDRV2::systemInfoUpdate()
                 sdbusplus::bus::match::rules::interfacesAdded() +
                     sdbusplus::bus::match::rules::argNpath(0, matchParentPath),
                 [this, requireExactMatch](sdbusplus::message_t& msg) {
-                    sdbusplus::message::object_path objectName;
+                    sdbusplus::object_path objectName;
                     boost::container::flat_map<
                         std::string,
                         boost::container::flat_map<
