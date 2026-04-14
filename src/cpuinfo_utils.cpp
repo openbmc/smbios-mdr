@@ -168,7 +168,7 @@ static void subscribeToProperty(
     using InterfaceVariant = typename sdbusplus::utility::dedup_variant_t<
         PropertyType, CustomVariantTypes..., bool, uint8_t, uint16_t, int16_t,
         uint32_t, int32_t, uint64_t, int64_t, size_t, ssize_t, double,
-        std::string, sdbusplus::message::object_path>;
+        std::string, sdbusplus::object_path>;
 
     sdbusplus::asio::getProperty<PropertyType>(
         *dbusConn, service, object, interface, propertyName,
@@ -236,8 +236,7 @@ static void subscribeToProperty(
             sdbusplus::bus::match::rules::interfacesAdded(),
         [object = std::string(object), interface = std::string(interface),
          commonPropHandler](sdbusplus::message_t& reply) {
-            auto changedObject =
-                reply.unpack<sdbusplus::message::object_path>();
+            auto changedObject = reply.unpack<sdbusplus::object_path>();
 
             if (changedObject != object)
             {
