@@ -34,6 +34,24 @@
       "parentUuid": "3aa6e262_aa1756b7",
       "revId": "df128b7b0dce038716aef67d826d5fb6870fcaaa",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0864b7a_30c660e7",
+        "filename": "include/smbios_mdrv2.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000218
+      },
+      "writtenOn": "2026-04-16T07:17:23Z",
+      "side": 1,
+      "message": "right, pciedevice is better.",
+      "parentUuid": "16ba78f3_e229f474",
+      "revId": "df128b7b0dce038716aef67d826d5fb6870fcaaa",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
