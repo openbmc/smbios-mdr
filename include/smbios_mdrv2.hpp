@@ -212,6 +212,8 @@ typedef enum
 
 static constexpr uint8_t separateLen = 2;
 
+static inline uint8_t* smbiosSkipEntryPoint(uint8_t* smbiosDataIn);
+
 static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
 {
     if (smbiosDataIn == nullptr)
@@ -241,7 +243,8 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
     {
         return nullptr;
     }
-    char* smbiosData = reinterpret_cast<char*>(smbiosDataIn);
+    char* smbiosData =
+        reinterpret_cast<char*>(smbiosSkipEntryPoint(smbiosDataIn));
     while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
     {
         uint32_t len = *(smbiosData + 1);
