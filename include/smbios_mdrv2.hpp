@@ -216,6 +216,8 @@ typedef enum
 
 static constexpr uint8_t separateLen = 2;
 
+static inline uint8_t* smbiosSkipEntryPoint(uint8_t* smbiosDataIn);
+
 static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
 {
     if (smbiosDataIn == nullptr)
@@ -236,8 +238,9 @@ static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
     return smbiosData + separateLen;
 }
 
-// When first time run getSMBIOSTypePtr, need to send the RegionS[].regionData
-// to smbiosDataIn
+// smbiosDataIn may point to the raw SMBIOS MDR region data or to an
+// already-advanced SMBIOS structure. Skip an SMBIOS entry point when present
+// before scanning for the requested type.
 static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
                                         size_t size = 0)
 {
@@ -245,7 +248,7 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
     {
         return nullptr;
     }
-    uint8_t* smbiosData = smbiosDataIn;
+    uint8_t* smbiosData = smbiosSkipEntryPoint(smbiosDataIn);
     while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
     {
         uint32_t len = *(smbiosData + 1);
