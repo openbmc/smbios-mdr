@@ -44,7 +44,7 @@ extern "C"
 #include <peci.h>
 #endif
 
-#include <phosphor-logging/log.hpp>
+#include <phosphor-logging/lg2.hpp>
 #include <sdbusplus/asio/object_server.hpp>
 
 namespace cpu_info
@@ -109,39 +109,31 @@ static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
     int fd = ::open(devPath.c_str(), O_RDWR);
     if (fd < 0)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Error in open!",
-            phosphor::logging::entry("PATH=%s", devPath.c_str()),
-            phosphor::logging::entry("SLAVEADDR=0x%x", slaveAddr));
+        lg2::error("Error in open!", "PATH", devPath.c_str(), "SLAVEADDR",
+                   lg2::hex, slaveAddr);
         return std::nullopt;
     }
 
     if (::ioctl(fd, I2C_FUNCS, &funcs) < 0)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Error in I2C_FUNCS!",
-            phosphor::logging::entry("PATH=%s", devPath.c_str()),
-            phosphor::logging::entry("SLAVEADDR=0x%x", slaveAddr));
+        lg2::error("Error in I2C_FUNCS!", "PATH", devPath.c_str(), "SLAVEADDR",
+                   lg2::hex, slaveAddr);
         ::close(fd);
         return std::nullopt;
     }
 
     if (!(funcs & I2C_FUNC_SMBUS_READ_BYTE_DATA))
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "i2c bus does not support read!",
-            phosphor::logging::entry("PATH=%s", devPath.c_str()),
-            phosphor::logging::entry("SLAVEADDR=0x%x", slaveAddr));
+        lg2::error("i2c bus does not support read!", "PATH", devPath.c_str(),
+                   "SLAVEADDR", lg2::hex, slaveAddr);
         ::close(fd);
         return std::nullopt;
     }
 
     if (::ioctl(fd, I2C_SLAVE_FORCE, slaveAddr) < 0)
     {
-        phosphor::logging::log<phosphor::logging::level::ERR>(
-            "Error in I2C_SLAVE_FORCE!",
-            phosphor::logging::entry("PATH=%s", devPath.c_str()),
-            phosphor::logging::entry("SLAVEADDR=0x%x", slaveAddr));
+        lg2::error("Error in I2C_SLAVE_FORCE!", "PATH", devPath.c_str(),
+                   "SLAVEADDR", lg2::hex, slaveAddr);
         ::close(fd);
         return std::nullopt;
     }
@@ -155,17 +147,14 @@ static std::optional<std::string> readSSpec(uint8_t bus, uint8_t slaveAddr,
         value = ::i2c_smbus_read_byte_data(fd, regAddr + i);
         if (value < 0)
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Error in i2c read!",
-                phosphor::logging::entry("PATH=%s", devPath.c_str()),
-                phosphor::logging::entry("SLAVEADDR=0x%x", slaveAddr));
+            lg2::error("Error in i2c read!", "PATH", devPath.c_str(),
+                       "SLAVEADDR", lg2::hex, slaveAddr);
             ::close(fd);
             return std::nullopt;
         }
         if (!std::isprint(static_cast<unsigned char>(value)))
         {
-            phosphor::logging::log<phosphor::logging::level::ERR>(
-                "Non printable value in sspec, ignored.");
+            lg2::error("Non printable value in sspec, ignored.");
             continue;
         }
         // sspec always starts with S,
@@ -292,8 +281,7 @@ static void setDbusProperty(
         [](const boost::system::error_code ec) {
             if (ec)
             {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "Cannot set CPU property!");
+                lg2::error("Cannot set CPU property!");
                 return;
             }
         },
@@ -397,9 +385,8 @@ static void getPPIN(boost::asio::io_context& io,
                     // before completion.
                     if (ec != boost::asio::error::operation_aborted)
                     {
-                        phosphor::logging::log<phosphor::logging::level::ERR>(
-                            "info update timer async_wait failed ",
-                            phosphor::logging::entry("EC=0x%x", ec.value()));
+                        lg2::error("info update timer async_wait failed {EC}",
+                                   "EC", lg2::hex, ec.value());
                     }
                     return;
                 }
@@ -431,11 +418,10 @@ static void getPPIN(boost::asio::io_context& io,
                                  u8Size, (uint8_t*)&u32PkgValue, &cc);
             if (0 != ret)
             {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "peci read package config failed at address",
-                    phosphor::logging::entry("PECIADDR=0x%x",
-                                             (unsigned)cpuAddr),
-                    phosphor::logging::entry("CC=0x%x", cc));
+                lg2::error(
+                    "peci read package config failed at address {PECIADDR}, CC {CC}",
+                    "PECIADDR", lg2::hex, (unsigned)cpuAddr, "CC", lg2::hex,
+                    cc);
                 u32PkgValue = 0;
             }
 
@@ -444,11 +430,10 @@ static void getPPIN(boost::asio::io_context& io,
                                    u8Size, (uint8_t*)&u32PkgValue, &cc);
             if (0 != ret)
             {
-                phosphor::logging::log<phosphor::logging::level::ERR>(
-                    "peci read package config failed at address",
-                    phosphor::logging::entry("PECIADDR=0x%x",
-                                             (unsigned)cpuAddr),
-                    phosphor::logging::entry("CC=0x%x", cc));
+                lg2::error(
+                    "peci read package config failed at address {PECIADDR}, CC {CC}",
+                    "PECIADDR", lg2::hex, (unsigned)cpuAddr, "CC", lg2::hex,
+                    cc);
                 cpuPPIN = 0;
                 u32PkgValue = 0;
             }
@@ -466,8 +451,7 @@ static void getPPIN(boost::asio::io_context& io,
             break;
         }
         default:
-            phosphor::logging::log<phosphor::logging::level::INFO>(
-                "in-compatible cpu for cpu asset info");
+            lg2::error("in-compatible cpu for cpu asset info");
             break;
     }
 }
