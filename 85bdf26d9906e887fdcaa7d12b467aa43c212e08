@@ -16,6 +16,24 @@
       "message": "IIUC this fixes an issue with a datastructure, which has a malformed smbios table type 0 on one specific machine. \n\nWhy isn\u0027t it possible to fix the datastructure itself?",
       "revId": "85bdf26d9906e887fdcaa7d12b467aa43c212e08",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32e886e5_b8fff1f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002321
+      },
+      "writtenOn": "2026-05-20T07:55:24Z",
+      "side": 1,
+      "message": "The UEFI is proprietary (HPE) and not in our responsibility. The bug was reported to them but it may take a bit until they fix it. Further that, a user may want to run an older UEFI version for compatibility reasons, meaning we\u0027d still need the fix.",
+      "parentUuid": "51278a7b_342a7b9f",
+      "revId": "85bdf26d9906e887fdcaa7d12b467aa43c212e08",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
