@@ -212,6 +212,30 @@ typedef enum
 
 static constexpr uint8_t separateLen = 2;
 
+static inline uint8_t* smbiosSkipEntryPoint(uint8_t* smbiosDataIn)
+{
+    const std::string anchorString30 = "_SM3_";
+    if (smbiosDataIn == nullptr)
+    {
+        return nullptr;
+    }
+
+    // Jump to starting address of the SMBIOS Structure Table from Entry Point
+    auto anchor = reinterpret_cast<const char*>(smbiosDataIn);
+    if (std::string_view(anchor, anchorString30.length())
+            .compare(anchorString30) == 0)
+    {
+        auto epStructure =
+            reinterpret_cast<const EntryPointStructure30*>(smbiosDataIn);
+        if (epStructure->structTableAddr < mdrSMBIOSSize)
+        {
+            smbiosDataIn += epStructure->structTableAddr;
+        }
+    }
+
+    return smbiosDataIn;
+}
+
 static inline uint8_t* smbiosNextPtr(uint8_t* smbiosDataIn)
 {
     if (smbiosDataIn == nullptr)
@@ -241,7 +265,8 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
     {
         return nullptr;
     }
-    char* smbiosData = reinterpret_cast<char*>(smbiosDataIn);
+    char* smbiosData =
+        reinterpret_cast<char*>(smbiosSkipEntryPoint(smbiosDataIn));
     while ((*smbiosData != '\0') || (*(smbiosData + 1) != '\0'))
     {
         uint32_t len = *(smbiosData + 1);
@@ -269,30 +294,6 @@ static inline uint8_t* getSMBIOSTypePtr(uint8_t* smbiosDataIn, uint8_t typeId,
         return reinterpret_cast<uint8_t*>(smbiosData);
     }
     return nullptr;
-}
-
-static inline uint8_t* smbiosSkipEntryPoint(uint8_t* smbiosDataIn)
-{
-    const std::string anchorString30 = "_SM3_";
-    if (smbiosDataIn == nullptr)
-    {
-        return nullptr;
-    }
-
-    // Jump to starting address of the SMBIOS Structure Table from Entry Point
-    auto anchor = reinterpret_cast<const char*>(smbiosDataIn);
-    if (std::string_view(anchor, anchorString30.length())
-            .compare(anchorString30) == 0)
-    {
-        auto epStructure =
-            reinterpret_cast<const EntryPointStructure30*>(smbiosDataIn);
-        if (epStructure->structTableAddr < mdrSMBIOSSize)
-        {
-            smbiosDataIn += epStructure->structTableAddr;
-        }
-    }
-
-    return smbiosDataIn;
 }
 
 static inline uint8_t* smbiosHandlePtr(uint8_t* smbiosDataIn, uint16_t handle)
