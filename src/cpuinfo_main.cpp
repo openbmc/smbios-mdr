@@ -313,8 +313,7 @@ static void setDbusProperty(
 static void createCpuUpdatedMatch(
     const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu)
 {
-    static boost::container::flat_map<size_t,
-                                      std::unique_ptr<sdbusplus::bus::match_t>>
+    static boost::container::flat_map<size_t, std::unique_ptr<sdbusplus::match>>
         cpuUpdatedMatch;
 
     if (cpuUpdatedMatch[cpu])
@@ -325,32 +324,32 @@ static void createCpuUpdatedMatch(
     const std::string objectPath = cpuPath + std::to_string(cpu - 1);
 
     cpuUpdatedMatch.insert_or_assign(
-        cpu,
-        std::make_unique<sdbusplus::bus::match_t>(
-            static_cast<sdbusplus::bus_t&>(*conn),
-            sdbusplus::bus::match::rules::interfacesAdded() +
-                sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
-            [conn, cpu](sdbusplus::message_t& msg) {
-                sdbusplus::object_path objectName;
-                boost::container::flat_map<
-                    std::string,
-                    boost::container::flat_map<
-                        std::string, std::variant<std::string, uint64_t>>>
-                    msgData;
+        cpu, std::make_unique<sdbusplus::match>(
+                 static_cast<sdbusplus::bus_t&>(*conn),
+                 sdbusplus::match_rules::interfacesAdded() +
+                     sdbusplus::match_rules::argNpath(0, objectPath.c_str()),
+                 [conn, cpu](sdbusplus::message_t& msg) {
+                     sdbusplus::object_path objectName;
+                     boost::container::flat_map<
+                         std::string,
+                         boost::container::flat_map<
+                             std::string, std::variant<std::string, uint64_t>>>
+                         msgData;
 
-                msg.read(objectName, msgData);
+                     msg.read(objectName, msgData);
 
-                // Go through all the property changes, and retry all of them
-                // targeting this object/interface which was just added.
-                for (const CpuProperty& prop : propertiesToSet)
-                {
-                    if (prop.object == objectName &&
-                        msgData.contains(prop.interface))
-                    {
-                        setDbusProperty(conn, cpu, prop);
-                    }
-                }
-            }));
+                     // Go through all the property changes, and retry all of
+                     // them targeting this object/interface which was just
+                     // added.
+                     for (const CpuProperty& prop : propertiesToSet)
+                     {
+                         if (prop.object == objectName &&
+                             msgData.contains(prop.interface))
+                         {
+                             setDbusProperty(conn, cpu, prop);
+                         }
+                     }
+                 }));
 }
 
 #if PECI_ENABLED
@@ -579,8 +578,8 @@ static void getCpuConfiguration(
 {
     // Get the Cpu configuration
     // In case it's not available, set a match for it
-    static std::unique_ptr<sdbusplus::bus::match_t> cpuConfigMatch =
-        std::make_unique<sdbusplus::bus::match_t>(
+    static std::unique_ptr<sdbusplus::match> cpuConfigMatch =
+        std::make_unique<sdbusplus::match>(
             *conn,
             "type='signal',interface='org.freedesktop.DBus.Properties',member='"
             "PropertiesChanged',arg0='xyz.openbmc_project."

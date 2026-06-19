@@ -201,7 +201,7 @@ class MDRV2 :
     std::string smbiosFilePath;
     std::string smbiosObjectPath;
     std::string smbiosInventoryPath;
-    std::unique_ptr<sdbusplus::bus::match_t> motherboardConfigMatch;
+    std::unique_ptr<sdbusplus::match> motherboardConfigMatch;
 };
 
 } // namespace smbios
