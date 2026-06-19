@@ -158,8 +158,8 @@ template <typename... CustomVariantTypes, typename Handler>
 static void subscribeToProperty(
     const char* service, const char* object, const char* interface,
     const char* propertyName, Handler&& handler,
-    sdbusplus::bus::match_t** propertiesChangedMatch = nullptr,
-    sdbusplus::bus::match_t** interfacesAddedMatch = nullptr)
+    sdbusplus::match** propertiesChangedMatch = nullptr,
+    sdbusplus::match** interfacesAddedMatch = nullptr)
 {
     // Type of first parameter to Handler, with const/& removed
     using PropertyType = std::remove_const_t<std::remove_reference_t<
@@ -213,7 +213,7 @@ static void subscribeToProperty(
     };
 
     // Set up a match for PropertiesChanged signal
-    auto* propMatch = new sdbusplus::bus::match_t(
+    auto* propMatch = new sdbusplus::match(
         *dbusConn,
         sdbusplus::bus::match::rules::sender(service) +
             sdbusplus::bus::match::rules::propertiesChanged(object, interface),
@@ -230,7 +230,7 @@ static void subscribeToProperty(
     // ObjectManager. This is useful in the case where the object is not added
     // yet, and when it's added they choose to not emit PropertiesChanged. So in
     // order to see the initial value when it comes, we need to watch this too.
-    auto* intfMatch = new sdbusplus::bus::match_t(
+    auto* intfMatch = new sdbusplus::match(
         *dbusConn,
         sdbusplus::bus::match::rules::sender(service) +
             sdbusplus::bus::match::rules::interfacesAdded(),

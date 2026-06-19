@@ -453,7 +453,7 @@ void MDRV2::systemInfoUpdate()
         }
         else
         {
-            motherboardConfigMatch = std::make_unique<sdbusplus::bus::match_t>(
+            motherboardConfigMatch = std::make_unique<sdbusplus::match>(
                 *bus,
                 sdbusplus::bus::match::rules::interfacesAdded() +
                     sdbusplus::bus::match::rules::argNpath(0, matchParentPath),

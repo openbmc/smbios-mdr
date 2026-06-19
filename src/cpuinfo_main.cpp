@@ -313,8 +313,7 @@ static void setDbusProperty(
 static void createCpuUpdatedMatch(
     const std::shared_ptr<sdbusplus::asio::connection>& conn, size_t cpu)
 {
-    static boost::container::flat_map<size_t,
-                                      std::unique_ptr<sdbusplus::bus::match_t>>
+    static boost::container::flat_map<size_t, std::unique_ptr<sdbusplus::match>>
         cpuUpdatedMatch;
 
     if (cpuUpdatedMatch[cpu])
@@ -326,7 +325,7 @@ static void createCpuUpdatedMatch(
 
     cpuUpdatedMatch.insert_or_assign(
         cpu,
-        std::make_unique<sdbusplus::bus::match_t>(
+        std::make_unique<sdbusplus::match>(
             static_cast<sdbusplus::bus_t&>(*conn),
             sdbusplus::bus::match::rules::interfacesAdded() +
                 sdbusplus::bus::match::rules::argNpath(0, objectPath.c_str()),
@@ -579,8 +578,8 @@ static void getCpuConfiguration(
 {
     // Get the Cpu configuration
     // In case it's not available, set a match for it
-    static std::unique_ptr<sdbusplus::bus::match_t> cpuConfigMatch =
-        std::make_unique<sdbusplus::bus::match_t>(
+    static std::unique_ptr<sdbusplus::match> cpuConfigMatch =
+        std::make_unique<sdbusplus::match>(
             *conn,
             "type='signal',interface='org.freedesktop.DBus.Properties',member='"
             "PropertiesChanged',arg0='xyz.openbmc_project."
