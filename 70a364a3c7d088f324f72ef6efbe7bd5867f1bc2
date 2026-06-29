@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "595beacd_5d3e9954",
+        "filename": "include/smbios_mdrv2.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2026-06-29T13:17:27Z",
+      "side": 0,
+      "message": "This says it needs the regions pointer but you now call a header skip function.\n\nDoes this need to be updated?\n\nShould it be done in the caller instead?",
+      "revId": "70a364a3c7d088f324f72ef6efbe7bd5867f1bc2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
