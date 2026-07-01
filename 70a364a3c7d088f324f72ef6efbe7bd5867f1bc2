@@ -16,6 +16,24 @@
       "message": "This says it needs the regions pointer but you now call a header skip function.\n\nDoes this need to be updated?\n\nShould it be done in the caller instead?",
       "revId": "70a364a3c7d088f324f72ef6efbe7bd5867f1bc2",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "63e7f0b4_1b88cf66",
+        "filename": "include/smbios_mdrv2.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1003023
+      },
+      "writtenOn": "2026-07-01T12:44:46Z",
+      "side": 0,
+      "message": "Thanks for pointing this out. I prefer updating the comment here to describe the new input handling more clearly.\n\nThe intention is to keep the entry-point handling inside getSMBIOSTypePtr().\nSome callers pass the raw MDR region data on the first lookup, while repeated\nlookups pass pointers returned by smbiosNextPtr(). smbiosSkipEntryPoint() only\nadvances the pointer when an SMBIOS 3 entry point is present, so pointers that\nalready refer to SMBIOS structures are left unchanged.\n\nKeeping this in getSMBIOSTypePtr() makes the type lookup helper handle both\nforms consistently and avoids requiring each caller to skip the entry point\nseparately.\n\nPlease let me know if this is ok.",
+      "parentUuid": "595beacd_5d3e9954",
+      "revId": "70a364a3c7d088f324f72ef6efbe7bd5867f1bc2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
