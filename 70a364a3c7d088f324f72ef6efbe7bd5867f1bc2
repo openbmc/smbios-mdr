@@ -34,6 +34,24 @@
       "parentUuid": "595beacd_5d3e9954",
       "revId": "70a364a3c7d088f324f72ef6efbe7bd5867f1bc2",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d676f849_a50a53a6",
+        "filename": "include/smbios_mdrv2.hpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2026-07-01T14:34:42Z",
+      "side": 0,
+      "message": "As a said I\u0027m not familiar with the specification and the history so I\u0027m not going to offer a go ahead.\n\nI also noticed that the file name is smbios v2 , so I would need to review the history of both the code and specification.  I don\u0027t know the extent of changes to know if I would suggest separating the code into v2 , v3, and a common library of utilities.    I don\u0027t know how much support for v3 is complicating v2 paths.\n\nI\u0027ll defer to the repository owners for such decisions.",
+      "parentUuid": "63e7f0b4_1b88cf66",
+      "revId": "70a364a3c7d088f324f72ef6efbe7bd5867f1bc2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
