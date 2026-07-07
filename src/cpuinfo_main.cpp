@@ -450,7 +450,7 @@ static void getPPIN(boost::asio::io_context& io,
             break;
         }
         default:
-            lg2::error("in-compatible cpu for cpu asset info");
+            lg2::info("in-compatible cpu for cpu asset info");
             break;
     }
 }
