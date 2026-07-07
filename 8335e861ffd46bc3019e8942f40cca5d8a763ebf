@@ -16,6 +16,24 @@
       "message": "was changing the \"in-compatible cpu for cpu asset info\" log level from INFO to ERROR intentional?",
       "revId": "8335e861ffd46bc3019e8942f40cca5d8a763ebf",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99b66b44_1e294945",
+        "filename": "src/cpuinfo_main.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002321
+      },
+      "writtenOn": "2026-07-07T20:22:12Z",
+      "side": 1,
+      "message": "nope. copy pasta error on replace. follow up: https://gerrit.openbmc.org/c/openbmc/smbios-mdr/+/92124",
+      "parentUuid": "00bc3011_5a3e00f1",
+      "revId": "8335e861ffd46bc3019e8942f40cca5d8a763ebf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
